@@ -17,8 +17,6 @@
 **.gzip
 **.tar
 
-# Keep specific files
-!install-dfyblog.sh
+# Keep project files
+!/dfyblog
 !.gitignore
-!dfyblog.sql
-!loose-ends.txt
