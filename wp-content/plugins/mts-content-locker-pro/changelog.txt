@@ -1,0 +1,79 @@
+v1.0.16 (Sep 19, 2018)
+----------------------------------
+- Fixed an important configuration issue
+
+v1.0.15 (May 09, 2018)
+----------------------------------
+- Made plugin GDPR compliant.
+
+v1.0.14 (Apr 19, 2018)
+----------------------------------
+- Updated BenchmarkEmail Library
+
+v1.0.13 (Apr 17, 2018)
+----------------------------------
+- Fixed compatibility issues with PHP v7.2.4
+- CMB2 library updated
+
+v1.0.12 (Jan 30, 2018)
+----------------------------------
+- Fixed YouTube Subscription triggering issue
+- POT file updated
+
+v1.0.11 (Sep 19, 2017)
+----------------------------------
+- Fixed Google Plus and Google Share buttons
+
+v1.0.10 (Jul 6, 2017)
+----------------------------------
+- Added translation option for email subscription form
+
+v1.0.9 (Apr 14, 2017)
+----------------------------------
+- Fixed CSS Selectors batch locking
+
+v1.0.8 (Apr 6, 2017)
+----------------------------------
+- Added Drip.co subscription service
+
+v1.0.7 (Mar 21, 2017)
+----------------------------------
+- Fixed Facebook Feed Dialog Name, Description and Image
+- Added default social image
+
+v1.0.6 (Mar 20, 2017)
+----------------------------------
+- Fixed CSS for Square, Drawer themes
+
+v1.0.5 (Mar 18, 2017)
+----------------------------------
+- Fixed No need to submit Facebook App for review to make share button work
+
+v1.0.4 (Mar 15, 2017)
+----------------------------------
+- Fixed PHP compatibility issue
+
+v1.0.3 (Mar 15, 2017)
+----------------------------------
+- Fixed Facebook Share deprecated functionality
+
+v1.0.2 (Mar 14, 2017)
+----------------------------------
+- CSS improvements in few themes
+- Added enhanced stats dropdown for instant results on dropdown change
+- Fixed typos in the description
+- Improved Flat theme in the Sign-in Locker
+
+v1.0.1 (Mar 13, 2017)
+----------------------------------
+- Added link to locker title in the Stats page
+- Added 'Post Title' if message field is empty [Example tweet post title + url]
+- Fixed 'Old School' theme issues
+- Fixed page breaking if locker is trashed or deleted
+- Fixed unlocking of all the lockers of same type on same page
+- Fixed activation error when activating premium version
+- Improved few elements in the admin UI
+
+v1.0.0 (Mar 12, 2017)
+----------------------------------
+- Plugin Release
