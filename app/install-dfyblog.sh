@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
-REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-WP_DIR=$(wp eval 'echo ABSPATH;')
+if ! command -v wp &> /dev/null; then
+  echo "ERROR: wp-cli is not installed"
+  exit
+fi
+
+SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+DEST_DIR=$(wp eval 'echo ABSPATH;')
 
 # Replace the wp-content folder
-rm -rf "$WP_DIR/wp-content"
-echo $REPO_DIR
-cp -r "$REPO_DIR/wp-content" "$WP_DIR/wp-content"
+rm -rf "$DEST_DIR/wp-content"
+echo $SRC_DIR
+cp -r "$SRC_DIR/wp-content" "$DEST_DIR/wp-content"
 
-wp db import "$REPO_DIR/db-original.sql"
+# wp db import "$SRC_DIR/app/dfyblog.sql"
