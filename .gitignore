@@ -20,5 +20,6 @@
 # Keep project files
 !/loose-ends.txt
 !/install-dfyblog.sh
+!/build.sh
 !/dfyblog.sql
 !.gitignore
