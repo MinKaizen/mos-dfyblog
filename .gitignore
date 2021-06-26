@@ -18,5 +18,7 @@
 **.tar
 
 # Keep project files
-!/app
+!/loose-ends.txt
+!/install-dfyblog.sh
+!/dfyblog.sql
 !.gitignore
