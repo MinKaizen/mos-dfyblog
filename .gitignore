@@ -18,5 +18,5 @@
 **.tar
 
 # Keep project files
-!/dfyblog
+!/app
 !.gitignore
