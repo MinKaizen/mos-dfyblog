@@ -5,21 +5,20 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
-usage() {
-  cat << EOF # remove the space between << and EOF, this is due to web plugin issue
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-f] -p param_value arg1 [arg2...]
+SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "$SRC_DIR/header.sh"
+DEST_DIR=$(wp eval 'echo ABSPATH;')
+SRC_WP_CONTENT="$SRC_DIR/../wp-content"
+DEST_WP_CONTENT="$DEST_DIR/wp-content"
+SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
-Script description here.
-
-Available options:
-
--h, --help      Print this help and exit
--v, --verbose   Print script debug info
--f, --flag      Some flag description
--p, --param     Some param description
-EOF
-  exit
-}
+# Search and replace values
+OLD_DOMAIN=$DOMAIN_PLACEHOLDER
+NEW_DOMAIN=$domain
+OLD_ABSPATH=$ABSPATH_PLACEHOLDER
+NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
+OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
+NEW_TABLE_PREFIX=$(wp db prefix)
 
 cleanup() {
   trap - SIGINT SIGTERM ERR EXIT
@@ -86,21 +85,6 @@ if ! command -v wp &> /dev/null; then
   echo "ERROR: wp-cli is not installed"
   exit
 fi
-
-SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-source "$SRC_DIR/header.sh"
-DEST_DIR=$(wp eval 'echo ABSPATH;')
-SRC_WP_CONTENT="$SRC_DIR/../wp-content"
-DEST_WP_CONTENT="$DEST_DIR/wp-content"
-SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
-
-# Search and replace values
-OLD_DOMAIN=$DOMAIN_PLACEHOLDER
-NEW_DOMAIN=$domain
-OLD_ABSPATH=$ABSPATH_PLACEHOLDER
-NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
-OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
-NEW_TABLE_PREFIX=$(wp db prefix)
 
 # Replace the wp-content folder
 rm -rf $DEST_WP_CONTENT
