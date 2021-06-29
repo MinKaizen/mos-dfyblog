@@ -27,15 +27,15 @@ parse_params() {
   while :; do
     case "${1-}" in
     --domain=*)
-      domain="${2-}"
+      domain="${1#*=}"
       shift
       ;;
     --name=*)
-      name="${2-}"
+      name="${1#*=}"
       shift
       ;;
     --email=*)
-      email="${2-}"
+      email="${1#*=}"
       shift
       ;;
     -?*) die "Unknown option: $1" ;;
