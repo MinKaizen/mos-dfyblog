@@ -92,7 +92,7 @@ sed -i "s/$OLD_TABLE_PREFIX/$NEW_TABLE_PREFIX/g" $SQL_ADJUSTED
 wp db import $SQL_ADJUSTED
 
 # Update admin user
-wp db user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
+wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
 
 # Clean up
 rm $SQL_ADJUSTED
