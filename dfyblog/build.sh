@@ -6,7 +6,7 @@ if ! command -v wp &> /dev/null; then
 fi
 
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-source "$SRC_DIR/.env"
+source "$SRC_DIR/header.sh"
 OUTPUT="$SRC_DIR/dfyblog.sql"
 
 # Search Replace values
