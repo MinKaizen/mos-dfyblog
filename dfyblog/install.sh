@@ -92,9 +92,9 @@ SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
 # Search and replace values
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
-NEW_DOMAIN=$(sed_esc $domain)
+NEW_DOMAIN=$(esc_sed $domain)
 OLD_ABSPATH=$ABSPATH_PLACEHOLDER
-NEW_ABSPATH=$(sed_esc $(wp eval 'echo rtrim(ABSPATH, "/");'))
+NEW_ABSPATH=$(esc_sed $(wp eval 'echo rtrim(ABSPATH, "/");'))
 OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
 NEW_TABLE_PREFIX=$(wp db prefix)
 
