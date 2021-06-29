@@ -1,5 +1,39 @@
 #!/usr/bin/env bash
 
+parse_params() {
+  while :; do
+    case "${1-}" in
+    --domain)
+      domain="${2-}"
+      shift
+      ;;
+    --name)
+      name="${2-}"
+      shift
+      ;;
+    --email)
+      email="${2-}"
+      shift
+      ;;
+    -?*) die "Unknown option: $1" ;;
+    *) break ;;
+    esac
+    shift
+  done
+
+  args=("$@")
+
+  # check required params and arguments
+  [[ -z "${domain-}" ]] && die "Missing required parameter: domain"
+  [[ -z "${name-}" ]] && die "Missing required parameter: name"
+  [[ -z "${email-}" ]] && die "Missing required parameter: email"
+  [[ ${#args[@]} -eq 0 ]] && die "Missing script arguments"
+
+  return 0
+}
+
+parse_params "$@"
+
 if ! command -v wp &> /dev/null; then
   echo "ERROR: wp-cli is not installed"
   exit
@@ -14,7 +48,7 @@ SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
 # Search and replace values
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
-NEW_DOMAIN="dfyblog\.local"
+NEW_DOMAIN=$domain
 OLD_ABSPATH=$ABSPATH_PLACEHOLDER
 NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
 OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
@@ -32,7 +66,9 @@ sed -i "s/$OLD_TABLE_PREFIX/$NEW_TABLE_PREFIX/g" $SQL_ADJUSTED
 
 # Import database
 wp db import $SQL_ADJUSTED
-# Make sure to update the admin user
+
+# Update admin user
+wp db user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
 
 # Clean up
 rm $SQL_ADJUSTED
