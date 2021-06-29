@@ -120,6 +120,6 @@ wp db import $SQL_ADJUSTED
 wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
 
 # Clean up
-rm $SQL_ADJUSTED
+# rm $SQL_ADJUSTED
 
 # END MAIN SCRIPT
