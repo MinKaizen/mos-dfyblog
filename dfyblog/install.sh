@@ -53,6 +53,31 @@ parse_params() {
   return 0
 }
 
+function replace() {
+  if [ $# -ne 3 ]; then
+    echo "Function replace() requires 3 arguments. $# passed."
+    exit 1
+  fi
+
+  local subject=$1
+  local search=$2
+  local replace=$3
+
+  echo "${subject//$search/$replace}"
+}
+
+function esc_sed() {
+  if [ $# -ne 1 ]; then
+    echo "Function replace() requires 1 argument. $# passed."
+    exit 1
+  fi
+
+  local old_string=$1
+  local esc_slashes=$(replace $old_string "/" "\/")
+  local esc_slashes_and_dots=$(replace $esc_slashes "." "\.")
+  echo "$esc_slashes_and_dots"
+}
+
 parse_params "$@"
 setup_colors
 
@@ -67,9 +92,9 @@ SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
 # Search and replace values
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
-NEW_DOMAIN=$domain
+NEW_DOMAIN=$(sed_esc $domain)
 OLD_ABSPATH=$ABSPATH_PLACEHOLDER
-NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
+NEW_ABSPATH=$(sed_esc $(wp eval 'echo rtrim(ABSPATH, "/");'))
 OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
 NEW_TABLE_PREFIX=$(wp db prefix)
 
