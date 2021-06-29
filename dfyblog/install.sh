@@ -26,15 +26,15 @@ die() {
 parse_params() {
   while :; do
     case "${1-}" in
-    --domain)
+    --domain=*)
       domain="${2-}"
       shift
       ;;
-    --name)
+    --name=*)
       name="${2-}"
       shift
       ;;
-    --email)
+    --email=*)
       email="${2-}"
       shift
       ;;
