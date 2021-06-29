@@ -24,22 +24,22 @@ die() {
 }
 
 parse_params() {
-  while :; do
-    case "${1-}" in
-    --domain=*)
-      domain="${1#*=}"
-      shift
-      ;;
-    --name=*)
-      name="${1#*=}"
-      shift
-      ;;
-    --email=*)
-      email="${1#*=}"
-      shift
-      ;;
-    -?*) die "Unknown option: $1" ;;
-    *) break ;;
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --domain=*)
+        domain="${1#*=}"
+        ;;
+      --name=*)
+        name="${1#*=}"
+        ;;
+      --email=*)
+        email="${1#*=}"
+        ;;
+      *)
+        printf "***************************\n"
+        printf "* Error: Invalid argument.*\n"
+        printf "***************************\n"
+        exit 1
     esac
     shift
   done
@@ -50,8 +50,6 @@ parse_params() {
   [[ -z "${domain-}" ]] && die "Missing required parameter: domain"
   [[ -z "${name-}" ]] && die "Missing required parameter: name"
   [[ -z "${email-}" ]] && die "Missing required parameter: email"
-  [[ ${#args[@]} -eq 0 ]] && die "Missing script arguments"
-
   return 0
 }
 
