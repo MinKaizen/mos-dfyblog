@@ -1,29 +1,8 @@
 #!/usr/bin/env bash
 
 set -Eeuo pipefail
-trap cleanup SIGINT SIGTERM ERR EXIT
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-
-SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-source "$SRC_DIR/header.sh"
-DEST_DIR=$(wp eval 'echo ABSPATH;')
-SRC_WP_CONTENT="$SRC_DIR/../wp-content"
-DEST_WP_CONTENT="$DEST_DIR/wp-content"
-SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
-
-# Search and replace values
-OLD_DOMAIN=$DOMAIN_PLACEHOLDER
-NEW_DOMAIN=$domain
-OLD_ABSPATH=$ABSPATH_PLACEHOLDER
-NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
-OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
-NEW_TABLE_PREFIX=$(wp db prefix)
-
-cleanup() {
-  trap - SIGINT SIGTERM ERR EXIT
-  rm $SQL_ADJUSTED
-}
 
 setup_colors() {
   if [[ -t 2 ]] && [[ -z "${NO_COLOR-}" ]] && [[ "${TERM-}" != "dumb" ]]; then
@@ -81,6 +60,21 @@ setup_colors
 
 # START MAIN SCRIPT
 
+SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "$SRC_DIR/header.sh"
+DEST_DIR=$(wp eval 'echo ABSPATH;')
+SRC_WP_CONTENT="$SRC_DIR/../wp-content"
+DEST_WP_CONTENT="$DEST_DIR/wp-content"
+SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
+
+# Search and replace values
+OLD_DOMAIN=$DOMAIN_PLACEHOLDER
+NEW_DOMAIN=$domain
+OLD_ABSPATH=$ABSPATH_PLACEHOLDER
+NEW_ABSPATH=$(wp eval 'echo str_replace(".", "\.", rtrim(str_replace("/", "\\/", ABSPATH), "\/"));')
+OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
+NEW_TABLE_PREFIX=$(wp db prefix)
+
 if ! command -v wp &> /dev/null; then
   echo "ERROR: wp-cli is not installed"
   exit
@@ -101,6 +95,9 @@ wp db import $SQL_ADJUSTED
 
 # Update admin user
 wp db user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
+
+# Clean up
+rm $SQL_ADJUSTED
 
 # END MAIN SCRIPT
 
