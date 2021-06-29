@@ -98,8 +98,3 @@ wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --
 rm $SQL_ADJUSTED
 
 # END MAIN SCRIPT
-
-msg "${RED}Read parameters:${NOFORMAT}"
-msg "- flag: ${flag}"
-msg "- param: ${param}"
-msg "- arguments: ${args[*]-}"
