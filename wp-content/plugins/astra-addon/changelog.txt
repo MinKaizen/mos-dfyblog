@@ -1,3 +1,9 @@
+v3.5.3
+- Fix: WooCommerce & Blog - Infinite Posts showing different taxonomy's products on category or tag archive pages.
+
+v3.5.2
+- Security Fix: Sanitized AJAX query_vars for Infinite Scroll actions.
+
 v3.5.1
 - Improvement: Added headings font-weight support to widget-title headings. (https://wpastra.com/docs/font-weight-for-widget-titles/)
 - Improvement: Removed jQuery dependency in Scroll To Top addon.

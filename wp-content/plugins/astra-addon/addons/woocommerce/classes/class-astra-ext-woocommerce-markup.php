@@ -216,10 +216,16 @@ if ( ! class_exists( 'ASTRA_Ext_WooCommerce_Markup' ) ) {
 				}
 			}
 
+			$localize['is_product_taxonomy'] = is_product_taxonomy();
+
+			if ( is_product_taxonomy() ) {
+				$localize['taxonomy']      = $wp_query->get_queried_object()->taxonomy;
+				$localize['taxonomy_name'] = $wp_query->get_queried_object()->slug;
+			}
+
 			$shop_pagination            = astra_get_option( 'shop-pagination' );
 			$shop_infinite_scroll_event = astra_get_option( 'shop-infinite-scroll-event' );
 
-			$localize['query_vars']                 = wp_json_encode( $wp_query->query_vars );
 			$localize['edit_post_url']              = admin_url( 'post.php?post={{id}}&action=edit' );
 			$localize['ajax_url']                   = admin_url( 'admin-ajax.php' );
 			$localize['shop_infinite_count']        = 2;
@@ -256,11 +262,27 @@ if ( ! class_exists( 'ASTRA_Ext_WooCommerce_Markup' ) ) {
 
 			do_action( 'astra_shop_pagination_infinite' );
 
-			$query_vars                   = json_decode( stripslashes( $_POST['query_vars'] ), true );
-			$query_vars['paged']          = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : 1;
-			$query_vars['post_status']    = 'publish';
+			global $wp_query;
+
+			$query_vars                = $wp_query->query;
+			$query_vars['paged']       = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : 1;
+			$query_vars['post_status'] = 'publish';
+			$query_vars['orderby']     = 'menu_order title';
+			$query_vars['order']       = 'ASC';
+			$query_vars['post_type']   = 'product';
+
+			$is_archive_page = isset( $_POST['product_taxonomy'] ) ? absint( wp_unslash( $_POST['product_taxonomy'] ) ) : false;
+
+			if ( $is_archive_page ) {
+				$taxonomy_type = ! empty( $_POST['taxonomy_type'] ) ? sanitize_text_field( wp_unslash( $_POST['taxonomy_type'] ) ) : '';
+				$taxonomy_slug = ! empty( $_POST['taxonomy_name'] ) ? sanitize_text_field( wp_unslash( $_POST['taxonomy_name'] ) ) : '';
+
+				$query_vars[ $taxonomy_type ] = $taxonomy_slug;
+			}
+
 			$query_vars['posts_per_page'] = astra_get_option( 'shop-no-of-products' );  // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			$query_vars                   = wp_parse_args( $query_vars, wc()->query->get_catalog_ordering_args( $query_vars['orderby'], $query_vars['order'] ) );
+			$query_vars                   = array_map( 'esc_sql', $query_vars );
 
 			$posts = new WP_Query( $query_vars );
 

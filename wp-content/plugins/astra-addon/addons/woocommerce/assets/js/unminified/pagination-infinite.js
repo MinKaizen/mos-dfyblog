@@ -4,6 +4,9 @@
 		count               = parseInt( astra.shop_infinite_count ) || '',
 		ajax_url            = astra.ajax_url || '',
 		shop_infinite_nonce = astra.shop_infinite_nonce || '',
+		is_product_taxonomy = astra.is_product_taxonomy || '',
+		taxonomy = astra.taxonomy || '',
+		taxonomy_name = astra.taxonomy_name || '',
 		pagination          = astra.shop_pagination || '',
 		masonryEnabled      = false,
 		loadStatus          = true,
@@ -38,9 +41,9 @@
 							count++;
 						}
 					});
-				
+
 					break;
-				
+
 				case 'scroll':
 					$('.ast-shop-load-more').hide();
 
@@ -63,7 +66,7 @@
 							}
 						});
 					}
-					
+
 					break;
 			}
 		}
@@ -82,7 +85,9 @@
 				action : 'astra_shop_pagination_infinite',
 				page_no	: pageNumber,
 				nonce: shop_infinite_nonce,
-				query_vars: astra.query_vars,
+				product_taxonomy: is_product_taxonomy,
+				taxonomy_type: taxonomy,
+				taxonomy_name: taxonomy_name,
 				astra_infinite: 'astra_pagination_ajax',
 			}
 
@@ -119,7 +124,7 @@
 
 				//	Add grid classes
 				var msg = astra.shop_no_more_post_message || '';
-				
+
 				//	Show no more post message
 				if( count > total ) {
 					$('.ast-shop-pagination-infinite').html( '<span class="ast-shop-load-more no-more active" style="display: inline-block;">' + msg + "</span>" );

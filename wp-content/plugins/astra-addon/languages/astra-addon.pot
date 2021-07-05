@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Astra Pro package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Astra Pro 3.5.1\n"
+"Project-Id-Version: Astra Pro 3.5.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-addon\n"
-"POT-Creation-Date: 2021-06-16 09:05:14+00:00\n"
+"POT-Creation-Date: 2021-07-01 10:26:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2763,30 +2763,30 @@ msgid "Read More »"
 msgstr ""
 
 #: addons/blog-pro/classes/class-astra-ext-blog-pro-loader.php:75
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:128
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:134
 #: addons/woocommerce/classes/class-astra-ext-woocommerce-loader.php:126
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:331
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:353
 msgid "Load More"
 msgstr ""
 
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:95
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:101
 msgid "No more posts to show."
 msgstr ""
 
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:99
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:235
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:105
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:241
 msgid "Show Comments"
 msgstr ""
 
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:652
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:671
 msgid "minute of reading"
 msgstr ""
 
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:653
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:672
 msgid "minutes of reading"
 msgstr ""
 
-#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:658
+#: addons/blog-pro/classes/class-astra-ext-blog-pro-markup.php:677
 #. translators: %1$s: $read_time the time to read the article, %2%s:
 #. $singular_min_reading_text the singular minute reading time text, %3%s:
 #. $plural_mins_reading_text the plural minutes reading time text
@@ -4821,37 +4821,37 @@ msgid ""
 "this on Shop page."
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:230
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:236
 msgid "No more products to show."
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:232
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:238
 msgid "Back to my details"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:233
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:239
 msgid "Proceed to payment"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:243
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:249
 msgid "View cart"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:700
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:722
 msgid "Sale!"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1229
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1249
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1251
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1271
 #: addons/woocommerce/classes/sections/class-astra-woocommerce-shop-configs.php:464
 msgid "Quick View"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1392
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1414
 msgid "Plus Quantity"
 msgstr ""
 
-#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1393
+#: addons/woocommerce/classes/class-astra-ext-woocommerce-markup.php:1415
 msgid "Minus Quantity"
 msgstr ""
 

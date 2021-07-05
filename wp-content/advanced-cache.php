@@ -8,9 +8,9 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'WP_ROCKET_ADVANCED_CACHE', true );
 
-$rocket_path        = '/home/mosahost/listbuildingauthority/wp-content/plugins/wp-rocket/';
-$rocket_config_path = '/home/mosahost/listbuildingauthority/wp-content/wp-rocket-config/';
-$rocket_cache_path  = '/home/mosahost/listbuildingauthority/wp-content/cache/wp-rocket/';
+$rocket_path        = '/home/martin/local-sites/dfyblog/app/public/wp-content/plugins/wp-rocket/';
+$rocket_config_path = '/home/martin/local-sites/dfyblog/app/public/wp-content/wp-rocket-config/';
+$rocket_cache_path  = '/home/martin/local-sites/dfyblog/app/public/wp-content/cache/wp-rocket/';
 
 if (
 	version_compare( phpversion(), '7.0', '<' )

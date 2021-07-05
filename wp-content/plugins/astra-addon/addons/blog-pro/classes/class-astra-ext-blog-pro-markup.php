@@ -83,7 +83,13 @@ if ( ! class_exists( 'Astra_Ext_Blog_Pro_Markup' ) ) {
 			$blog_layout                = astra_get_option( 'blog-layout' );
 			$grid_layout                = ( 'blog-layout-1' == $blog_layout ) ? $blog_grid : $blog_grid_layout;
 
-			$localize['query_vars']            = wp_json_encode( $wp_query->query );
+			$localize['is_archive'] = is_category() || is_tag();
+
+			if ( $localize['is_archive'] ) {
+				$localize['taxonomy']      = is_category() ? 'category_name' : 'tag';
+				$localize['taxonomy_name'] = $wp_query->get_queried_object()->slug;
+			}
+
 			$localize['edit_post_url']         = admin_url( 'post.php?post={{id}}&action=edit' );
 			$localize['ajax_url']              = admin_url( 'admin-ajax.php' );
 			$localize['infinite_count']        = 2;
@@ -160,13 +166,26 @@ if ( ! class_exists( 'Astra_Ext_Blog_Pro_Markup' ) ) {
 
 			do_action( 'astra_pagination_infinite' );
 
+			global $wp_query;
+
 			// get post type and fetch the posts for the same posttype.
+			$query_vars                = $wp_query->query;
 			$ast_post_type             = isset( $_POST['post_type'] ) && ! empty( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : 'any';
-			$query_vars                = json_decode( stripslashes( $_POST['query_vars'] ), true );
 			$query_vars['post_type']   = apply_filters( 'astra_infinite_pagination_post_type', $ast_post_type );
-			$query_vars['paged']       = ( isset( $_POST['page_no'] ) ) ? stripslashes( $_POST['page_no'] ) : 1;
 			$query_vars['post_status'] = 'publish';
-			$posts                     = new WP_Query( $query_vars );
+			$query_vars['paged']       = ( isset( $_POST['page_no'] ) ) ? absint( wp_unslash( $_POST['page_no'] ) ) : 1;
+
+			$is_archive_page = isset( $_POST['is_archive'] ) ? absint( wp_unslash( $_POST['is_archive'] ) ) : false;
+
+			if ( $is_archive_page ) {
+				$taxonomy_type = ! empty( $_POST['taxonomy_type'] ) ? sanitize_text_field( wp_unslash( $_POST['taxonomy_type'] ) ) : '';
+				$taxonomy_slug = ! empty( $_POST['taxonomy_name'] ) ? sanitize_text_field( wp_unslash( $_POST['taxonomy_name'] ) ) : '';
+
+				$query_vars[ $taxonomy_type ] = $taxonomy_slug;
+			}
+
+			$query_vars = array_map( 'esc_sql', $query_vars );
+			$posts      = new WP_Query( $query_vars );
 
 			if ( $posts->have_posts() ) {
 				while ( $posts->have_posts() ) {
