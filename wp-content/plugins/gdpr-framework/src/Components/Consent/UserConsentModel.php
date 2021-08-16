@@ -30,10 +30,6 @@ class UserConsentModel
 	{ 
 		$this->setTableName();
 		$this->setUserLogTableName();
-		$this->setClassiDocsCallback();
-		// todo: cleanup
-		// global $wpdb;
-		//$wpdb->query('TRUNCATE TABLE wp_gdpr_consent');
 	}
 
 	/**
@@ -52,15 +48,6 @@ class UserConsentModel
 	{
 		global $wpdb;
 		$this->logtableName = $wpdb->prefix . 'gdpr_userlogs';
-	}
-	
-	/**
-	 * Set the table name with wpdb-s prefix
-	 */
-	protected function setClassiDocsCallback()
-	{
-		global $wpdb;
-		$this->ClassiDocsCallback = $wpdb->prefix . 'gdpr_ClassiDocsCallback';
 	}
 
 	/**
@@ -460,22 +447,5 @@ class UserConsentModel
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
 		dbDelta($sql);
 		update_option($this->logtableName . '_db_version', $this->version);
-	}
-
-	/**
-	 * create table for store request from classidocs
-	 */
-	public function createClassiDocsCallback()
-	{ 
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		$sql = "CREATE TABLE " . $this->ClassiDocsCallback . " (
-			id bigint(20) NOT NULL AUTO_INCREMENT,
-			request_number int NOT NULL,
-			consent_id int NOT NULL,
-			updated_at TIMESTAMP NULL,
-			PRIMARY KEY  (id)
-			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
-		dbDelta($sql);
-		update_option($this->ClassiDocsCallback . '_db_version', $this->version);
 	}
 }

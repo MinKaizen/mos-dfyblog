@@ -379,13 +379,13 @@ if ( ! class_exists( 'Astra_Builder_Base_Dynamic_CSS' ) ) {
 
 		/**
 		 * Different logo for mobile static CSS.
-		 * 
+		 *
 		 * @param string $dynamic_css Appended dynamic CSS.
 		 * @since 3.5.0
 		 * @return string
 		 */
 		public static function mobile_header_logo_css( $dynamic_css ) {
-			
+
 			$mobile_header_logo            = astra_get_option( 'mobile-header-logo' );
 			$different_mobile_header_order = astra_get_option( 'different-mobile-logo' );
 

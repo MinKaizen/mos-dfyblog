@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin/class-shortcodes-ultimate-admin-addons.php:26, admin/class-shortcodes-ultimate-admin-addons.php:29, admin/class-shortcodes-ultimate-admin-addons.php:54, inc/core/generator.php:182, admin/partials/help/sidebar.php:6
+#: admin/class-shortcodes-ultimate-admin-addons.php:26, admin/class-shortcodes-ultimate-admin-addons.php:29, admin/class-shortcodes-ultimate-admin-addons.php:54, inc/core/generator.php:215, admin/partials/help/sidebar.php:6
 msgid "Add-ons"
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Shadow"
 msgstr ""
 
-#: admin/class-shortcodes-ultimate-admin-settings.php:70, admin/class-shortcodes-ultimate-admin-settings.php:71, admin/class-shortcodes-ultimate-admin-settings.php:186, inc/core/generator.php:176
+#: admin/class-shortcodes-ultimate-admin-settings.php:70, admin/class-shortcodes-ultimate-admin-settings.php:71, admin/class-shortcodes-ultimate-admin-settings.php:186, inc/core/generator.php:209
 msgid "Settings"
 msgstr ""
 
@@ -174,11 +174,11 @@ msgstr ""
 msgid "Available shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-ultimate-admin-shortcodes.php:88, admin/class-shortcodes-ultimate-admin-top-level.php:39, admin/class-shortcodes-ultimate-admin.php:267, includes/functions-galleries.php:297, inc/core/widget.php:14, inc/core/widget.php:40, admin/partials/help/sidebar.php:3
+#: admin/class-shortcodes-ultimate-admin-shortcodes.php:88, admin/class-shortcodes-ultimate-admin-top-level.php:39, admin/class-shortcodes-ultimate-admin.php:267, admin/class-shortcodes-ultimate-widget.php:26, admin/class-shortcodes-ultimate-widget.php:77, includes/functions-galleries.php:297, admin/partials/help/sidebar.php:3
 msgid "Shortcodes Ultimate"
 msgstr ""
 
-#: admin/class-shortcodes-ultimate-admin-shortcodes.php:305, inc/core/generator.php:251, admin/partials/extra/generator.php:2
+#: admin/class-shortcodes-ultimate-admin-shortcodes.php:305, inc/core/generator.php:284, admin/partials/extra/generator.php:2
 msgid "All shortcodes"
 msgstr ""
 
@@ -260,6 +260,10 @@ msgstr ""
 
 #: admin/class-shortcodes-ultimate-admin-shortcodes.php:506, admin/class-shortcodes-ultimate-admin-top-level.php:40
 msgid "Shortcodes"
+msgstr ""
+
+#: admin/class-shortcodes-ultimate-widget.php:15
+msgid "Shortcodes Ultimate widget"
 msgstr ""
 
 #. translators: %1$s - required version number, %2$s - current version number
@@ -422,92 +426,84 @@ msgstr ""
 msgid "Select taxonomy and it's terms.<br>You can select multiple terms with Ctrl (Cmd) key"
 msgstr ""
 
-#: inc/core/generator.php:54, inc/core/generator.php:119, inc/core/generator.php:246
+#: inc/core/generator.php:56, inc/core/generator.php:124, inc/core/generator.php:152, inc/core/generator.php:279
 msgid "Insert shortcode"
 msgstr ""
 
-#: inc/core/generator.php:176
+#: inc/core/generator.php:209
 msgid "Plugin settings"
 msgstr ""
 
-#: inc/core/generator.php:177, inc/core/generator.php:177
+#: inc/core/generator.php:210, inc/core/generator.php:210
 msgid "Plugin homepage"
 msgstr ""
 
-#: inc/core/generator.php:182, admin/partials/pages/addons.php:14
+#: inc/core/generator.php:215, admin/partials/pages/addons.php:14
 msgid "Premium Add-ons"
 msgstr ""
 
-#: inc/core/generator.php:189
+#: inc/core/generator.php:222
 msgid "Search for shortcodes"
 msgstr ""
 
-#: inc/core/generator.php:190
+#: inc/core/generator.php:223
 msgid "Pro Tip"
 msgstr ""
 
-#: inc/core/generator.php:192
+#: inc/core/generator.php:225
 msgid "Filter by type"
 msgstr ""
 
-#: inc/core/generator.php:231
+#: inc/core/generator.php:264
 msgid "Shortcode not specified"
 msgstr ""
 
-#: inc/core/generator.php:247
+#: inc/core/generator.php:280
 msgid "Live preview"
 msgstr ""
 
-#: inc/core/generator.php:251, admin/partials/extra/generator.php:2
+#: inc/core/generator.php:284, admin/partials/extra/generator.php:2
 msgid "Click to return to the shortcodes list"
 msgstr ""
 
-#: inc/core/generator.php:272
+#: inc/core/generator.php:305
 msgid "Click to set this value"
 msgstr ""
 
-#: inc/core/generator.php:290, includes/config/groups.php:7
+#: inc/core/generator.php:323, includes/config/groups.php:7
 msgid "Content"
 msgstr ""
 
-#: inc/core/generator.php:307, admin/partials/pages/shortcodes-single-content.php:20
+#: inc/core/generator.php:340, admin/partials/pages/shortcodes-single-content.php:20
 msgid "Preview"
 msgstr ""
 
-#: inc/core/generator.php:315
+#: inc/core/generator.php:348
 msgid "Access denied"
 msgstr ""
 
-#: inc/core/generator.php:360
+#: inc/core/generator.php:393
 msgid "Presets"
 msgstr ""
 
-#: inc/core/generator.php:363
+#: inc/core/generator.php:396
 msgid "Save current settings as preset"
 msgstr ""
 
-#: inc/core/generator.php:395, inc/core/generator.php:392
+#: inc/core/generator.php:428, inc/core/generator.php:425
 msgid "Presets not found"
 msgstr ""
 
-#: inc/core/generator.php:611
+#: inc/core/generator.php:644
 msgid "Get more styles"
 msgstr ""
 
-#: inc/core/generator.php:602
+#: inc/core/generator.php:635
 msgid "Additional skins successfully installed"
 msgstr ""
 
-#: inc/core/generator.php:603
+#: inc/core/generator.php:636
 msgid "Open dropdown to choose one of new styles"
-msgstr ""
-
-#: inc/core/widget.php:7
-msgid "Shortcodes Ultimate widget"
-msgstr ""
-
-#: inc/core/widget.php:46
-msgid "Title:"
 msgstr ""
 
 #: includes/config/addons.php:9
@@ -542,7 +538,7 @@ msgstr ""
 msgid "Add more style to your shortcodes"
 msgstr ""
 
-#: includes/config/borders.php:6, includes/shortcodes/carousel.php:36, includes/shortcodes/custom-gallery.php:30, includes/shortcodes/display-posts.php:114, includes/shortcodes/image-carousel.php:87, includes/shortcodes/image-carousel.php:130, includes/shortcodes/posts.php:139, includes/shortcodes/qrcode.php:43, includes/shortcodes/slider.php:36
+#: includes/config/borders.php:6, includes/shortcodes/carousel.php:36, includes/shortcodes/custom-gallery.php:30, includes/shortcodes/display-posts.php:114, includes/shortcodes/image-carousel.php:87, includes/shortcodes/image-carousel.php:130, includes/shortcodes/posts.php:139, includes/shortcodes/qrcode.php:48, includes/shortcodes/slider.php:36
 msgid "None"
 msgstr ""
 
@@ -622,11 +618,11 @@ msgstr ""
 msgid "Accordion"
 msgstr ""
 
-#: includes/shortcodes/accordion.php:14, includes/shortcodes/animate.php:44, includes/shortcodes/audio.php:37, includes/shortcodes/box.php:56, includes/shortcodes/button.php:144, includes/shortcodes/carousel.php:143, includes/shortcodes/column.php:40, includes/shortcodes/csv-table.php:52, includes/shortcodes/custom-gallery.php:82, includes/shortcodes/dailymotion.php:103, includes/shortcodes/display-posts.php:223, includes/shortcodes/divider.php:74, includes/shortcodes/document.php:50, includes/shortcodes/dropcap.php:33, includes/shortcodes/dummy-image.php:53, includes/shortcodes/dummy-text.php:46, includes/shortcodes/expand.php:88, includes/shortcodes/feed.php:39, includes/shortcodes/frame.php:25, includes/shortcodes/gmap.php:58, includes/shortcodes/guests.php:13, includes/shortcodes/heading.php:56, includes/shortcodes/highlight.php:26, includes/shortcodes/image-carousel.php:193, includes/shortcodes/label.php:27, includes/shortcodes/lightbox-content.php:109, includes/shortcodes/lightbox.php:38, includes/shortcodes/list.php:35, includes/shortcodes/members.php:35, includes/shortcodes/menu.php:18, includes/shortcodes/note.php:37, includes/shortcodes/permalink.php:38, includes/shortcodes/private.php:13, includes/shortcodes/pullquote.php:22, includes/shortcodes/qrcode.php:81, includes/shortcodes/quote.php:34, includes/shortcodes/row.php:15, includes/shortcodes/service.php:41, includes/shortcodes/siblings.php:19, includes/shortcodes/slider.php:124, includes/shortcodes/spacer.php:22, includes/shortcodes/spoiler.php:67, includes/shortcodes/subpages.php:25, includes/shortcodes/table.php:34, includes/shortcodes/tabs.php:58, includes/shortcodes/tabs.php:117, includes/shortcodes/tooltip.php:103, includes/shortcodes/video.php:67, includes/shortcodes/vimeo.php:71, includes/shortcodes/youtube-advanced.php:134, includes/shortcodes/youtube.php:60
+#: includes/shortcodes/accordion.php:14, includes/shortcodes/animate.php:44, includes/shortcodes/audio.php:37, includes/shortcodes/box.php:56, includes/shortcodes/button.php:144, includes/shortcodes/carousel.php:143, includes/shortcodes/column.php:40, includes/shortcodes/csv-table.php:52, includes/shortcodes/custom-gallery.php:82, includes/shortcodes/dailymotion.php:103, includes/shortcodes/display-posts.php:223, includes/shortcodes/divider.php:74, includes/shortcodes/document.php:50, includes/shortcodes/dropcap.php:33, includes/shortcodes/dummy-image.php:53, includes/shortcodes/dummy-text.php:46, includes/shortcodes/expand.php:88, includes/shortcodes/feed.php:39, includes/shortcodes/frame.php:25, includes/shortcodes/gmap.php:58, includes/shortcodes/guests.php:13, includes/shortcodes/heading.php:56, includes/shortcodes/highlight.php:26, includes/shortcodes/image-carousel.php:193, includes/shortcodes/label.php:27, includes/shortcodes/lightbox-content.php:109, includes/shortcodes/lightbox.php:38, includes/shortcodes/list.php:35, includes/shortcodes/members.php:35, includes/shortcodes/menu.php:18, includes/shortcodes/note.php:37, includes/shortcodes/permalink.php:38, includes/shortcodes/private.php:13, includes/shortcodes/pullquote.php:22, includes/shortcodes/qrcode.php:86, includes/shortcodes/quote.php:34, includes/shortcodes/row.php:15, includes/shortcodes/service.php:41, includes/shortcodes/siblings.php:19, includes/shortcodes/slider.php:124, includes/shortcodes/spacer.php:22, includes/shortcodes/spoiler.php:67, includes/shortcodes/subpages.php:25, includes/shortcodes/table.php:34, includes/shortcodes/tabs.php:58, includes/shortcodes/tabs.php:117, includes/shortcodes/tooltip.php:103, includes/shortcodes/video.php:67, includes/shortcodes/vimeo.php:71, includes/shortcodes/youtube-advanced.php:134, includes/shortcodes/youtube.php:60
 msgid "Extra CSS class"
 msgstr ""
 
-#: includes/shortcodes/accordion.php:15, includes/shortcodes/animate.php:45, includes/shortcodes/audio.php:38, includes/shortcodes/box.php:57, includes/shortcodes/button.php:145, includes/shortcodes/carousel.php:144, includes/shortcodes/column.php:41, includes/shortcodes/csv-table.php:53, includes/shortcodes/custom-gallery.php:83, includes/shortcodes/dailymotion.php:104, includes/shortcodes/display-posts.php:224, includes/shortcodes/divider.php:75, includes/shortcodes/document.php:51, includes/shortcodes/dropcap.php:34, includes/shortcodes/dummy-image.php:54, includes/shortcodes/dummy-text.php:47, includes/shortcodes/expand.php:89, includes/shortcodes/feed.php:40, includes/shortcodes/gmap.php:59, includes/shortcodes/guests.php:14, includes/shortcodes/heading.php:57, includes/shortcodes/highlight.php:27, includes/shortcodes/image-carousel.php:194, includes/shortcodes/label.php:28, includes/shortcodes/lightbox-content.php:110, includes/shortcodes/lightbox.php:39, includes/shortcodes/list.php:36, includes/shortcodes/members.php:36, includes/shortcodes/menu.php:19, includes/shortcodes/note.php:38, includes/shortcodes/permalink.php:39, includes/shortcodes/private.php:14, includes/shortcodes/pullquote.php:23, includes/shortcodes/qrcode.php:82, includes/shortcodes/quote.php:35, includes/shortcodes/row.php:16, includes/shortcodes/service.php:42, includes/shortcodes/siblings.php:20, includes/shortcodes/slider.php:125, includes/shortcodes/spacer.php:23, includes/shortcodes/spoiler.php:68, includes/shortcodes/subpages.php:26, includes/shortcodes/table.php:35, includes/shortcodes/tabs.php:59, includes/shortcodes/tabs.php:118, includes/shortcodes/tooltip.php:104, includes/shortcodes/video.php:68, includes/shortcodes/vimeo.php:72, includes/shortcodes/youtube-advanced.php:135, includes/shortcodes/youtube.php:61
+#: includes/shortcodes/accordion.php:15, includes/shortcodes/animate.php:45, includes/shortcodes/audio.php:38, includes/shortcodes/box.php:57, includes/shortcodes/button.php:145, includes/shortcodes/carousel.php:144, includes/shortcodes/column.php:41, includes/shortcodes/csv-table.php:53, includes/shortcodes/custom-gallery.php:83, includes/shortcodes/dailymotion.php:104, includes/shortcodes/display-posts.php:224, includes/shortcodes/divider.php:75, includes/shortcodes/document.php:51, includes/shortcodes/dropcap.php:34, includes/shortcodes/dummy-image.php:54, includes/shortcodes/dummy-text.php:47, includes/shortcodes/expand.php:89, includes/shortcodes/feed.php:40, includes/shortcodes/gmap.php:59, includes/shortcodes/guests.php:14, includes/shortcodes/heading.php:57, includes/shortcodes/highlight.php:27, includes/shortcodes/image-carousel.php:194, includes/shortcodes/label.php:28, includes/shortcodes/lightbox-content.php:110, includes/shortcodes/lightbox.php:39, includes/shortcodes/list.php:36, includes/shortcodes/members.php:36, includes/shortcodes/menu.php:19, includes/shortcodes/note.php:38, includes/shortcodes/permalink.php:39, includes/shortcodes/private.php:14, includes/shortcodes/pullquote.php:23, includes/shortcodes/qrcode.php:87, includes/shortcodes/quote.php:35, includes/shortcodes/row.php:16, includes/shortcodes/service.php:42, includes/shortcodes/siblings.php:20, includes/shortcodes/slider.php:125, includes/shortcodes/spacer.php:23, includes/shortcodes/spoiler.php:68, includes/shortcodes/subpages.php:26, includes/shortcodes/table.php:35, includes/shortcodes/tabs.php:59, includes/shortcodes/tabs.php:118, includes/shortcodes/tooltip.php:104, includes/shortcodes/video.php:68, includes/shortcodes/vimeo.php:72, includes/shortcodes/youtube-advanced.php:135, includes/shortcodes/youtube.php:61
 msgid "Additional CSS class name(s) separated by space(s)"
 msgstr ""
 
@@ -726,7 +722,7 @@ msgstr ""
 msgid "Box title"
 msgstr ""
 
-#: includes/shortcodes/box.php:15, includes/shortcodes/dailymotion.php:97, includes/shortcodes/document.php:44, includes/shortcodes/gmap.php:52, includes/shortcodes/permalink.php:28, includes/shortcodes/qrcode.php:19, includes/shortcodes/service.php:15, includes/shortcodes/spoiler.php:13, includes/shortcodes/tabs.php:86, includes/shortcodes/video.php:26, includes/shortcodes/vimeo.php:60, includes/shortcodes/youtube-advanced.php:128, includes/shortcodes/youtube.php:54
+#: includes/shortcodes/box.php:15, includes/shortcodes/dailymotion.php:97, includes/shortcodes/document.php:44, includes/shortcodes/gmap.php:52, includes/shortcodes/permalink.php:28, includes/shortcodes/qrcode.php:24, includes/shortcodes/service.php:15, includes/shortcodes/spoiler.php:13, includes/shortcodes/tabs.php:86, includes/shortcodes/video.php:26, includes/shortcodes/vimeo.php:60, includes/shortcodes/youtube-advanced.php:128, includes/shortcodes/youtube.php:54
 msgid "Title"
 msgstr ""
 
@@ -806,7 +802,7 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-#: includes/shortcodes/button.php:15, includes/shortcodes/qrcode.php:54
+#: includes/shortcodes/button.php:15, includes/shortcodes/qrcode.php:59
 msgid "Link"
 msgstr ""
 
@@ -814,11 +810,11 @@ msgstr ""
 msgid "Button link"
 msgstr ""
 
-#: includes/shortcodes/button.php:21, includes/shortcodes/carousel.php:50, includes/shortcodes/custom-gallery.php:44, includes/shortcodes/feed.php:30, includes/shortcodes/image-carousel.php:144, includes/shortcodes/permalink.php:19, includes/shortcodes/qrcode.php:60, includes/shortcodes/slider.php:50, includes/shortcodes/tabs.php:108
+#: includes/shortcodes/button.php:21, includes/shortcodes/carousel.php:50, includes/shortcodes/custom-gallery.php:44, includes/shortcodes/feed.php:30, includes/shortcodes/image-carousel.php:144, includes/shortcodes/permalink.php:19, includes/shortcodes/qrcode.php:65, includes/shortcodes/slider.php:50, includes/shortcodes/tabs.php:108
 msgid "Open in same tab"
 msgstr ""
 
-#: includes/shortcodes/button.php:22, includes/shortcodes/carousel.php:51, includes/shortcodes/custom-gallery.php:45, includes/shortcodes/feed.php:31, includes/shortcodes/image-carousel.php:145, includes/shortcodes/permalink.php:20, includes/shortcodes/qrcode.php:61, includes/shortcodes/slider.php:51, includes/shortcodes/tabs.php:109
+#: includes/shortcodes/button.php:22, includes/shortcodes/carousel.php:51, includes/shortcodes/custom-gallery.php:45, includes/shortcodes/feed.php:31, includes/shortcodes/image-carousel.php:145, includes/shortcodes/permalink.php:20, includes/shortcodes/qrcode.php:66, includes/shortcodes/slider.php:51, includes/shortcodes/tabs.php:109
 msgid "Open in new tab"
 msgstr ""
 
@@ -866,7 +862,7 @@ msgstr ""
 msgid "Button text color"
 msgstr ""
 
-#: includes/shortcodes/button.php:65, includes/shortcodes/column.php:29, includes/shortcodes/divider.php:60, includes/shortcodes/dropcap.php:28, includes/shortcodes/heading.php:26, includes/shortcodes/qrcode.php:28
+#: includes/shortcodes/button.php:65, includes/shortcodes/column.php:29, includes/shortcodes/divider.php:60, includes/shortcodes/dropcap.php:28, includes/shortcodes/heading.php:26, includes/shortcodes/qrcode.php:33
 msgid "Size"
 msgstr ""
 
@@ -1087,7 +1083,7 @@ msgstr ""
 msgid "Display titles for each item"
 msgstr ""
 
-#: includes/shortcodes/carousel.php:106, includes/shortcodes/expand.php:67, includes/shortcodes/frame.php:15, includes/shortcodes/heading.php:33, includes/shortcodes/image-carousel.php:90, includes/shortcodes/lightbox-content.php:76, includes/shortcodes/qrcode.php:45, includes/shortcodes/slider.php:87, includes/shortcodes/tooltip.php:59
+#: includes/shortcodes/carousel.php:106, includes/shortcodes/expand.php:67, includes/shortcodes/frame.php:15, includes/shortcodes/heading.php:33, includes/shortcodes/image-carousel.php:90, includes/shortcodes/lightbox-content.php:76, includes/shortcodes/qrcode.php:50, includes/shortcodes/slider.php:87, includes/shortcodes/tooltip.php:59
 msgid "Center"
 msgstr ""
 
@@ -1327,7 +1323,7 @@ msgstr ""
 msgid "Start the playback of the video automatically after the player load. May not work on some mobile OS versions"
 msgstr ""
 
-#: includes/shortcodes/dailymotion.php:50, includes/shortcodes/lightbox-content.php:86, includes/shortcodes/qrcode.php:76, includes/shortcodes/tooltip.php:37
+#: includes/shortcodes/dailymotion.php:50, includes/shortcodes/lightbox-content.php:86, includes/shortcodes/qrcode.php:81, includes/shortcodes/tooltip.php:37
 msgid "Background color"
 msgstr ""
 
@@ -1769,7 +1765,7 @@ msgstr ""
 msgid "Height of the divider (in pixels)"
 msgstr ""
 
-#: includes/shortcodes/divider.php:69, includes/shortcodes/heading.php:46, includes/shortcodes/lightbox-content.php:60, includes/shortcodes/qrcode.php:37
+#: includes/shortcodes/divider.php:69, includes/shortcodes/heading.php:46, includes/shortcodes/lightbox-content.php:60, includes/shortcodes/qrcode.php:42
 msgid "Margin"
 msgstr ""
 
@@ -2017,11 +2013,11 @@ msgstr ""
 msgid "Select the style for more/less link"
 msgstr ""
 
-#: includes/shortcodes/expand.php:66, includes/shortcodes/frame.php:14, includes/shortcodes/heading.php:32, includes/shortcodes/image-carousel.php:88, includes/shortcodes/lightbox-content.php:75, includes/shortcodes/pullquote.php:14, includes/shortcodes/qrcode.php:44, includes/shortcodes/tooltip.php:27, includes/shortcodes/tooltip.php:58
+#: includes/shortcodes/expand.php:66, includes/shortcodes/frame.php:14, includes/shortcodes/heading.php:32, includes/shortcodes/image-carousel.php:88, includes/shortcodes/lightbox-content.php:75, includes/shortcodes/pullquote.php:14, includes/shortcodes/qrcode.php:49, includes/shortcodes/tooltip.php:27, includes/shortcodes/tooltip.php:58
 msgid "Left"
 msgstr ""
 
-#: includes/shortcodes/expand.php:68, includes/shortcodes/frame.php:16, includes/shortcodes/heading.php:34, includes/shortcodes/image-carousel.php:89, includes/shortcodes/lightbox-content.php:77, includes/shortcodes/pullquote.php:15, includes/shortcodes/qrcode.php:46, includes/shortcodes/tooltip.php:28, includes/shortcodes/tooltip.php:60
+#: includes/shortcodes/expand.php:68, includes/shortcodes/frame.php:16, includes/shortcodes/heading.php:34, includes/shortcodes/image-carousel.php:89, includes/shortcodes/lightbox-content.php:77, includes/shortcodes/pullquote.php:15, includes/shortcodes/qrcode.php:51, includes/shortcodes/tooltip.php:28, includes/shortcodes/tooltip.php:60
 msgid "Right"
 msgstr ""
 
@@ -2093,7 +2089,7 @@ msgstr ""
 msgid "Frame"
 msgstr ""
 
-#: includes/shortcodes/frame.php:19, includes/shortcodes/heading.php:37, includes/shortcodes/pullquote.php:18, includes/shortcodes/qrcode.php:49
+#: includes/shortcodes/frame.php:19, includes/shortcodes/heading.php:37, includes/shortcodes/pullquote.php:18, includes/shortcodes/qrcode.php:54
 msgid "Align"
 msgstr ""
 
@@ -2505,7 +2501,7 @@ msgstr ""
 msgid "Select the text alignment"
 msgstr ""
 
-#: includes/shortcodes/lightbox-content.php:87, includes/shortcodes/qrcode.php:77
+#: includes/shortcodes/lightbox-content.php:87, includes/shortcodes/qrcode.php:82
 msgid "Pick a background color"
 msgstr ""
 
@@ -2762,7 +2758,7 @@ msgstr ""
 msgid "Post or page ID"
 msgstr ""
 
-#: includes/shortcodes/permalink.php:24, includes/shortcodes/qrcode.php:64, includes/shortcodes/tabs.php:112
+#: includes/shortcodes/permalink.php:24, includes/shortcodes/qrcode.php:69, includes/shortcodes/tabs.php:112
 msgid "Link target"
 msgstr ""
 
@@ -2958,47 +2954,48 @@ msgstr ""
 msgid "QR code"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:15
-msgid "The text to store within the QR code. You can use here any text or even URL"
+#. translators: %1$s and %2$s will be replaced with %CURRENT_URL% and %PERMALINK% tokens respectively
+#: includes/shortcodes/qrcode.php:17
+msgid "The content to store in the QR code. You can use here any text or even URL.<br>Use %1$s to display the URL of the current page or %2$s to display the permalink of the current post."
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:20
+#: includes/shortcodes/qrcode.php:25
 msgid "Enter here short description. This text will be used in alt attribute of QR code"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:29
+#: includes/shortcodes/qrcode.php:34
 msgid "Image width and height (in pixels)"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:38
+#: includes/shortcodes/qrcode.php:43
 msgid "Thickness of a margin (in pixels)"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:50
+#: includes/shortcodes/qrcode.php:55
 msgid "Choose image alignment"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:55
+#: includes/shortcodes/qrcode.php:60
 msgid "You can make this QR code clickable. Enter here the URL"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:65
+#: includes/shortcodes/qrcode.php:70
 msgid "Select link target"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:70
+#: includes/shortcodes/qrcode.php:75
 msgid "Primary color"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:71
+#: includes/shortcodes/qrcode.php:76
 msgid "Pick a primary color"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:86
+#: includes/shortcodes/qrcode.php:91
 msgid "Advanced QR code generator"
 msgstr ""
 
-#: includes/shortcodes/qrcode.php:110
+#: includes/shortcodes/qrcode.php:116
 msgid "please specify the data"
 msgstr ""
 
@@ -3965,6 +3962,10 @@ msgstr ""
 
 #: admin/partials/pages/shortcodes-single.php:13, admin/partials/pages/shortcodes-single.php:24
 msgid "Back to shortcodes list"
+msgstr ""
+
+#: admin/partials/widget/form.php:3
+msgid "Title:"
 msgstr ""
 
 #: admin/partials/settings/fields/checkbox.php:3

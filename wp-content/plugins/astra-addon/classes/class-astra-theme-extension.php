@@ -75,7 +75,7 @@ if ( ! class_exists( 'Astra_Theme_Extension' ) ) {
 
 			if ( is_admin() ) {
 
-				add_action( 'admin_notices', array( $this, 'min_theme_version__error' ) );
+				add_action( 'admin_init', array( $this, 'min_theme_version__error' ) );
 
 				add_filter( 'astra_menu_options', array( $this, 'extension_menu_options' ), 9, 1 );
 
@@ -561,7 +561,18 @@ if ( ! class_exists( 'Astra_Theme_Extension' ) ) {
 
 			require_once ASTRA_EXT_DIR . 'classes/class-astra-addon-builder-loader.php';
 
+			/**
+			 * Load deprecated filters.
+			 */
+			require_once ASTRA_EXT_DIR . 'classes/deprecated/deprecated-filters.php';
+
+			/**
+			 * Load deprecated actions.
+			 */
+			require_once ASTRA_EXT_DIR . 'classes/deprecated/deprecated-actions.php';
+
 			require_once ASTRA_EXT_DIR . 'classes/astra-common-functions.php';
+			require_once ASTRA_EXT_DIR . 'classes/class-astra-addon-update-filter-function.php';
 
 			require_once ASTRA_EXT_DIR . 'classes/astra-common-dynamic-css.php';
 

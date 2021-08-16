@@ -67,11 +67,6 @@ function astra_above_header_row_setting( $dynamic_css, $dynamic_css_filtered = '
 		'.ast-header-break-point .ast-mobile-header-wrap .ast-above-header-wrap .main-header-bar-navigation .ast-submenu-expanded > .ast-menu-toggle::before' => array(
 			'transform' => 'rotateX(180deg)',
 		),
-		'.ast-above-header-bar'                         => array(
-			'border-bottom-width' => astra_get_css_value( $hba_header_divider, 'px' ),
-			'border-bottom-color' => esc_attr( $hba_border_color ),
-			'border-bottom-style' => 'solid',
-		),
 		'.ast-mobile-header-wrap .ast-above-header-bar , .ast-above-header-bar .site-above-header-wrap' => array(
 			'min-height' => astra_get_css_value( $hba_header_height_desktop, 'px' ),
 		),
@@ -82,8 +77,22 @@ function astra_above_header_row_setting( $dynamic_css, $dynamic_css_filtered = '
 			'line-height' => astra_get_css_value( $hba_header_height_desktop, 'px' ),
 		),
 	);
+
+	// Apply border only when it has positive value.
+	if ( '' !== $hba_header_divider && 'inherit' !== $hba_header_divider ) {
+		$common_css_output['.ast-above-header-bar'] = array(
+			'border-bottom-width' => astra_get_css_value( $hba_header_divider, 'px' ),
+			'border-bottom-color' => esc_attr( $hba_border_color ),
+			'border-bottom-style' => 'solid',
+		);
+	} else {
+		$common_css_output['.ast-above-header-bar'] = array(
+			'border-bottom-style' => 'none',
+		);
+	}
+
 	if ( is_astra_addon_3_5_0_version() ) {
-		$common_css_output['ast-above-header-bar.ast-header-sticked'] = array(
+		$common_css_output['.ast-above-header-bar.ast-header-sticked'] = array(
 			'z-index' => 9,
 		);
 	}

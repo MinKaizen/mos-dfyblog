@@ -79,15 +79,6 @@ class AdminTabPrivacySafe extends AdminTab {
 
 	}
 
-	public function renderWhmcsLicensing() {
-		// $value = gdpr('options')->get('classidocs_url') ? esc_attr(gdpr('options')->get('classidocs_url')) : '';
-		// $placeholder = _x('ClassiDocs URL', '(Admin)', 'gdpr-framework');
-		$licensingCheck = gdpr()->make( WHMCS::class );
-		$licencekey     = get_option( 'gdpr_whmcs_license' );
-		echo $licensingCheck->CheckLicensing( $licencekey );
-		echo "<input type='text' name='gdpr_whmcs_license' placeholder='' value='" . get_option( 'gdpr_whmcs_license' ) . "'>";
-	}
-
 	public function renderAboutHeader() {
 		echo '<img src="' . esc_url( plugins_url( 'PrivacySafe/Privacy-Safe-Brand.png', dirname(__FILE__) ) ) . '" style="float:right;margin:15px;"/><p>Strengthen your reputation. The privacy safe seal assures your customers that your business is in compliance with privacy laws and regulations. The privacy safe seal will verify that the GDPR Framework plugin is installed.</p>';
 	}

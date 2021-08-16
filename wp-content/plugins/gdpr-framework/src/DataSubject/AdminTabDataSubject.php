@@ -47,36 +47,7 @@ class AdminTabDataSubject extends AdminTab
     {
         if (isset($_GET['search']) && $_GET['search']) {
             $searched_email = sanitize_email($_GET['search']);
-            if(gdpr('options')->get('classidocs_integration')){
-                if(gdpr('options')->get('sar_request_details')){
 
-                    $getclassidocs_url = gdpr('options')->get('classidocs_url');
-
-                    $classidocs_Data = array();
-                    
-                    $classidocs_Data['email']=$searched_email;
-                    if(gdpr('options')->get('response_related_queries')){
-                        $user = get_user_by( 'email', $searched_email);
-                        if($user){
-                            if(!ctype_space($this->gdpr_get_formatted_billing_name_and_address($user->ID))){
-                                if($this->gdpr_get_formatted_billing_name_and_address($user->ID)){
-                                    $classidocs_Data['address']= $this->gdpr_get_formatted_billing_name_and_address($user->ID);
-                                }  
-                            }                 
-                            if(get_user_meta( $user->ID, 'billing_phone', true )){
-                                $classidocs_Data['phone']= get_user_meta( $user->ID, 'billing_phone', true );
-                            }                            
-                        }
-                        $classidocs_Data =  apply_filters('gdpr/admin/action/classidocs_Data',$classidocs_Data);
-                    }
-                    if($classidocs_Data){
-                        foreach($classidocs_Data as $data){
-                        wp_remote_post($getclassidocs_url."/gdpr/query?terms=".$data."&ruleType=TextPattern"); 
-                        }
-                    }
-
-                }
-            }
             $results = $this->getRenderedResults($searched_email, $this->dataSubjectManager->getByEmail($searched_email));
         } else {
             $results = '';
@@ -96,6 +67,8 @@ class AdminTabDataSubject extends AdminTab
     {
         $hasData = $dataSubject->hasData();
         $links = [];
+        $userName = false;
+        $adminCap = false;
         if(isset($_GET['search'])){
             $searched_email= sanitize_email($_GET['search']);
         }
@@ -104,10 +77,6 @@ class AdminTabDataSubject extends AdminTab
                 $userName = get_userdata($dataSubject->getUserId())->user_login;
                 $links['profile'] = get_edit_user_link($dataSubject->getUserId());
                 $adminCap = user_can($dataSubject->getUserId(), 'manage_options');
-
-            } else {
-                $userName = false;
-                $adminCap = false;
             }
 
             /**
@@ -145,14 +114,8 @@ class AdminTabDataSubject extends AdminTab
         }
 
         $consentData = $dataSubject->getConsentData();
-        // Fram-136 - define variables before access
-        $ClassiDocsdata = '';
-        if(gdpr('options')->get('classidocs_integration')){
-            $ClassiDocsdata = $dataSubject->getClassiDocsdata($searched_email);
-        }
-        return gdpr('view')->render('admin/data-subjects/search-results', compact('email', 'hasData', 'links', 'userName', 'adminCap', 'consentData', 'ClassiDocsdata'));
-        
 
+        return gdpr('view')->render('admin/data-subjects/search-results', compact('email', 'hasData', 'links', 'userName', 'adminCap', 'consentData'));
     }
 
     public function renderSubmitButton()

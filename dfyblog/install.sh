@@ -119,6 +119,9 @@ wp db import $SQL_ADJUSTED
 # Update admin user
 wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
 
+# Change admin email
+wp option update admin_email $email
+
 # Clean up
 # rm $SQL_ADJUSTED
 

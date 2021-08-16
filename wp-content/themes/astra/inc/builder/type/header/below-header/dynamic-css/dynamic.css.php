@@ -69,11 +69,6 @@ function astra_below_header_row_setting( $dynamic_css, $dynamic_css_filtered = '
 			'padding-left'  => '20px',
 			'padding-right' => '20px',
 		),
-		'.ast-below-header-bar'                         => array(
-			'border-bottom-width' => astra_get_css_value( $hbb_header_divider, 'px' ),
-			'border-bottom-color' => esc_attr( $hbb_border_color ),
-			'border-bottom-style' => 'solid',
-		),
 		'.ast-mobile-header-wrap .ast-below-header-bar , .ast-below-header-bar .site-below-header-wrap' => array(
 			'min-height' => astra_get_css_value( $hbb_header_height_desktop, 'px' ),
 		),
@@ -84,6 +79,19 @@ function astra_below_header_row_setting( $dynamic_css, $dynamic_css_filtered = '
 			'line-height' => astra_get_css_value( $hbb_header_height_desktop, 'px' ),
 		),
 	);
+
+	// Apply border only when it has positive value.
+	if ( '' !== $hbb_header_divider && 'inherit' !== $hbb_header_divider ) {
+		$common_css_output['.ast-below-header-bar'] = array(
+			'border-bottom-width' => astra_get_css_value( $hbb_header_divider, 'px' ),
+			'border-bottom-color' => esc_attr( $hbb_border_color ),
+			'border-bottom-style' => 'solid',
+		);
+	} else {
+		$common_css_output['.ast-below-header-bar'] = array(
+			'border-bottom-style' => 'none',
+		);
+	}
 
 	$parse_css .= astra_parse_css( $common_css_output );
 

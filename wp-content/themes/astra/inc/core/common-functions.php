@@ -1180,7 +1180,7 @@ if ( ! function_exists( 'astra_get_search_form' ) ) :
 				'data_attributes'   => apply_filters( 'astra_search_field_toggle_data_attrs', '' ),
 				'input_value'       => get_search_query(),
 				'show_input_submit' => false,
-			) 
+			)
 		);
 
 		/**

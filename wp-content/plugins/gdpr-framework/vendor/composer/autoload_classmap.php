@@ -160,7 +160,6 @@ return array(
     'Codelight\\GDPR\\SetupAdmin' => $baseDir . '/src/SetupAdmin.php',
     'Codelight\\GDPR\\Updater\\Updater' => $baseDir . '/src/Updater/Updater.php',
     'Codelight\\GDPR\\View' => $baseDir . '/src/View.php',
-    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Doctrine\\Inflector\\CachedWordInflector' => $vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
     'Doctrine\\Inflector\\GenericLanguageInflectorFactory' => $vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector/GenericLanguageInflectorFactory.php',
     'Doctrine\\Inflector\\Inflector' => $vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector/Inflector.php',

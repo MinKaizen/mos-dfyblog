@@ -85,28 +85,9 @@ if (!class_exists('\Codelight\GDPR\Container'))
 	}
 	require_once $composer;
 }
-/**
- * Install the database table and custom role
- */
-register_activation_hook(__FILE__, function () {
-	$model = new \Codelight\GDPR\Components\Consent\UserConsentModel();
-	$model->createTable();
-	$model->createUserTable();
-	if (apply_filters('gdpr/data-subject/anonymize/change_role', true) && ! get_role('anonymous')) {
 
-		add_role(
-			'anonymous',
-			_x('Anonymous', '(Admin)', 'gdpr-framework'),
-			array()
-		);
-	}
-
-	update_option('gdpr_enable_stylesheet', true);
-	update_option('gdpr_enable', true);
-});
-
-function popup_gdpr(){
-
+function popup_gdpr()
+{
 	wp_enqueue_script( 'gdpr-framework-cookieconsent-min-js', gdpr('config')->get('plugin.url') .'assets/cookieconsent.min.js' );
 	
 	wp_enqueue_style( 'gdpr-framework-cookieconsent-css',gdpr('config')->get('plugin.url') .'assets/cookieconsent.min.css');
@@ -261,14 +242,5 @@ if($enabled_gdpf_cookie_popup)
 		}else{
 			popup_gdpr();        
 		}
-		if(gdpr('options')->get('classidocs_integration')){
-			//wp_enqueue_script( 'gdprdataTables-js', gdpr('config')->get('plugin.url') .'assets/jquery.dataTables.min.js' );
-			wp_enqueue_script( 'lgpddataTables-js', '//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js' );
-			wp_enqueue_script( 'lgpddataTables-js-init', gdpr( 'config' )->get( 'plugin.url' ) . 'assets/js/initdatatable.js', true );
-			//wp_enqueue_style( 'datatables-css',gdpr('config')->get('plugin.url') .'assets/jquery.dataTables.min.css');
-			wp_enqueue_style( 'datatables-css', '//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css' );
-		}
 	}
 }
-
-?>

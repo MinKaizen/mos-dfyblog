@@ -30,6 +30,19 @@ $lp_pro_installed = get_option( '_lp_pro_installed' );
 	<div style="clear:both;"></div>
 		<?php
 	endif;
+	$disable_settings_warning = get_option( 'wplegalpages_disable_settings_warning' );
+	if ( ! $disable_settings_warning ) {
+		?>
+		<div id="wplegalpages_settings_warning" class="notice notice-warning is-dismissible wplegalpages_settings_warning">
+			<div>
+				<p>Please make sure the website information is correct at the <a href="<?php echo esc_url_raw( admin_url() . "admin.php?page=legal-pages" ); ?>">Settings page</a> before you create a legal page.</p>
+			</div> 
+			<div>
+				<button id="wplegal_pages_settings_warning_disable" class="button-primary">Do not show again</button>
+			</div>
+		</div>
+		<?php
+	}
 	if ( ! empty( $_POST ) && isset( $_POST['lp-submit'] ) && 'Publish' === $_POST['lp-submit'] ) :
 		check_admin_referer( 'lp-submit-create-page' );
 		$page_title    = isset( $_POST['lp-title'] ) ? sanitize_text_field( wp_unslash( $_POST['lp-title'] ) ) : '';
@@ -101,6 +114,11 @@ if ( $countof_pages[0]->cntPages < $max_limit ) {
 				$lp_find    = array( '[Domain]', '[Business Name]', '[Phone]', '[Street]', '[City, State, Zip code]', '[Country]', '[Email]', '[Address]', '[Niche]' );
 				$lp_general = get_option( 'lp_general' );
 				$content    = str_replace( $lp_find, $lp_general, stripslashes( $content ) );
+
+				// Last updated date shown in editor.
+				$date    = gmdate( get_option( 'date_format' ) );
+				$content = str_replace( '[Last Updated]', $date, stripslashes( $content ) );
+
 				if ( ! shortcode_exists( 'wpl_cookie_details' ) ) {
 					$content = str_replace( '[wpl_cookie_details]', '', stripslashes( $content ) );
 				}
@@ -200,7 +218,7 @@ if ( $countof_pages[0]->cntPages < $max_limit ) {
 		</div>
 
 		<div id="lp_generalid_right" class="postbox ">
-			<h3 class="hndle"  style="padding:0px 10px 12px 10px; font-size:20px;"> <?php esc_attr_e( 'WP LegalPages Pro Templates', 'wplegalpages' ); ?> </h3><br/>
+			<h3 class="hndle"  style="padding:0px 10px 12px 10px; font-size:20px;"> <?php esc_attr_e( 'WPLegalPages Pro Templates', 'wplegalpages' ); ?> </h3><br/>
 			<ul>
 				<li>Terms of use <strong>(forced agreement - don't allow your users to proceed without agreeing to your terms)</strong></li>
 				<li>Linking policy template</li>

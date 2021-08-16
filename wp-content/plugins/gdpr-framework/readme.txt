@@ -2,7 +2,7 @@
 Contributors: Data443
 Tags: gdpr, compliance, security, privacy, wordpress gdpr, eu privacy directive, eu cookie law, california privacy law, privacy law, general data protection, ccpa, gdpr law
 Requires at least: 4.7
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.3
 Stable tag: trunk
 License: GPLv3
@@ -117,16 +117,19 @@ We are also planning to add other important privacy-related features missing fro
 5. GDPR FRAMEWORK PRIVACY TOOL
 
 == Change log ==
+= 1.0.43 (8/2/2021) =
+* FRAM-196 Change ClassiDocs Tab
+* FRAM-202 Add Missing Tables
+
 = 1.0.42 (4/29/2021) =
-FRAM-109: change [gdpr_privacy_safe] shortcode to [data443_privacy_safe] but
-            preserve backward compatibility for now
-FRAM-135: 'Undefined key' seen when Consent tab is saved
-FRAM-136: Fix all references of undefined variables in the Data Subjects tab
-FRAM-137: Remove the Unnecessary save button in the 'Do Not Sell' admin tab
-FRAM-140: Fix read property "consent" on string at UserConsentModel line 80
-FRAM-144: Undefined Variable 'notices' accessed in PrivacyToolsPageController.php
-FRAM-149: Remove all uses of PHP Short Tags from the code
-FRAM-150: Update PHP minimum required in readme.txt of all three plugins
+* FRAM-109: change [gdpr_privacy_safe] shortcode to [data443_privacy_safe] but preserve backward compatibility for now
+* FRAM-135: 'Undefined key' seen when Consent tab is saved
+* FRAM-136: Fix all references of undefined variables in the Data Subjects tab
+* FRAM-137: Remove the Unnecessary save button in the 'Do Not Sell' admin tab
+* FRAM-140: Fix read property "consent" on string at UserConsentModel line 80
+* FRAM-144: Undefined Variable 'notices' accessed in PrivacyToolsPageController.php
+* FRAM-149: Remove all uses of PHP Short Tags from the code
+* FRAM-150: Update PHP minimum required in readme.txt of all three plugins
 
 = 1.0.41 (4/14/2021) =
 * FRAM-95: Fix the Privacy Seal to not display a broken link when the seal code is wrong.

@@ -468,7 +468,8 @@ if ( ! class_exists( 'Astra_Header_Builder_Typo_Configs' ) ) {
 			 * Header - HTML - Typography
 			 */
 
-			$html_config = array();
+			$html_config                    = array();
+			$astra_has_widgets_block_editor = astra_addon_has_widgets_block_editor();
 
 			$component_limit = astra_addon_builder_helper()->component_limit;
 			for ( $index = 1; $index <= $component_limit; $index++ ) {
@@ -479,11 +480,12 @@ if ( ! class_exists( 'Astra_Header_Builder_Typo_Configs' ) ) {
 				$html_config[] = $this->get_typo_configs( 'section-hb-social-icons-' . $index, ASTRA_THEME_SETTINGS . '[section-hb-social-icons-' . $index . '-typography]' );
 				$html_config[] = $this->get_typo_configs( 'section-fb-social-icons-' . $index, ASTRA_THEME_SETTINGS . '[section-fb-social-icons-' . $index . '-typography]' );
 
-				$html_config[] = $this->get_typo_configs_by_builder_type( 'section-hb-button-' . $index, 'header-button' . $index );
-				$html_config[] = $this->get_typo_configs_by_builder_type( 'section-fb-button-' . $index, 'footer-button' . $index );
-
-				$html_config[] = $this->get_widget_typo_configs_by_builder_type( 'sidebar-widgets-header-widget-' . $index, 'header-widget-' . $index );
-				$html_config[] = $this->get_widget_typo_configs_by_builder_type( 'sidebar-widgets-footer-widget-' . $index, 'footer-widget-' . $index );
+				$html_config[]  = $this->get_typo_configs_by_builder_type( 'section-hb-button-' . $index, 'header-button' . $index );
+				$html_config[]  = $this->get_typo_configs_by_builder_type( 'section-fb-button-' . $index, 'footer-button' . $index );
+				$header_section = ( ! $astra_has_widgets_block_editor ) ? 'sidebar-widgets-header-widget-' . $index : 'astra-sidebar-widgets-header-widget-' . $index;
+				$footer_section = ( ! $astra_has_widgets_block_editor ) ? 'sidebar-widgets-footer-widget-' . $index : 'astra-sidebar-widgets-footer-widget-' . $index;
+				$html_config[]  = $this->get_widget_typo_configs_by_builder_type( $header_section, 'header-widget-' . $index );
+				$html_config[]  = $this->get_widget_typo_configs_by_builder_type( $footer_section, 'footer-widget-' . $index );
 
 			}
 

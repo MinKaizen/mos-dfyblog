@@ -65,9 +65,6 @@ class PrivacyToolsPageController {
 
 		add_action( 'gdpr/frontend/privacy-tools-page/content', array( $this, 'renderConsentForm' ), 10, 2 );
 		add_action( 'gdpr/frontend/privacy-tools-page/content', array( $this, 'renderExportForm' ), 20, 2 );
-		if ( gdpr( 'options' )->get( 'classidocs_integration' ) ) {
-			add_action( 'gdpr/frontend/privacy-tools-page/content', array( $this, 'ClassiDocsResults' ), 25, 2 );
-		}
 		add_action( 'gdpr/frontend/privacy-tools-page/content', array( $this, 'renderDeleteForm' ), 30, 2 );
 
 		add_action( 'gdpr/frontend/privacy-tools-page/action/withdraw_consent', array( $this, 'withdrawConsent' ), 10, 2 );
@@ -121,33 +118,6 @@ class PrivacyToolsPageController {
 			$this->redirect( array( 'gdpr_notice' => 'invalid_email' ) );
 		} else {
 			$requested_email = sanitize_email( $_REQUEST['email'] );
-		}
-		if ( gdpr( 'options' )->get( 'classidocs_integration' ) ) {
-			if ( gdpr( 'options' )->get( 'sar_request_details' ) ) {
-				$getclassidocs_url = gdpr( 'options' )->get( 'classidocs_url' );
-				$classidocs_Data   = array();
-
-				$classidocs_Data['email'] = $requested_email;
-				if ( gdpr( 'options' )->get( 'response_related_queries' ) ) {
-					$user = get_user_by( 'email', $requested_email );
-					if ( $user ) {
-						if ( ! ctype_space( $this->gdpr_get_formatted_billing_name_and_address( $user->ID ) ) ) {
-							if ( $this->gdpr_get_formatted_billing_name_and_address( $user->ID ) ) {
-								$classidocs_Data['address'] = $this->gdpr_get_formatted_billing_name_and_address( $user->ID );
-							}
-						}
-						if ( get_user_meta( $user->ID, 'billing_phone', true ) ) {
-							$classidocs_Data['phone'] = get_user_meta( $user->ID, 'billing_phone', true );
-						}
-					}
-					$classidocs_Data = apply_filters( 'gdpr/admin/action/classidocs_Data', $classidocs_Data );
-				}
-				if ( $classidocs_Data ) {
-					foreach ( $classidocs_Data as $data ) {
-						wp_remote_post( $getclassidocs_url . '/gdpr/query?terms=' . $data . '&ruleType=TextPattern' );
-					}
-				}
-			}
 		}
 
 		if ( $this->dataSubjectIdentificator->isDataSubject( $requested_email ) ) {
@@ -251,52 +221,6 @@ class PrivacyToolsPageController {
 		);
 	}
 
-	/**
-	 * Render the form that allows the data subject to export their data
-	 *
-	 * @param DataSubject $dataSubject
-	 */
-	public function ClassiDocsResults( DataSubject $dataSubject ) {
-		 $email = $dataSubject->getEmail();
-
-		$old_responce       = array();
-		$getclassidocs_url  = gdpr( 'options' )->get( 'classidocs_url' );
-		$classidoc_API_URL1 = esc_url_raw( $getclassidocs_url . '/gdpr/query/' );
-		$response           = wp_remote_get( $classidoc_API_URL1 );
-		if ( is_array( $response ) && ! is_wp_error( $response ) ) {
-			if ( json_Decode( $response['body'] ) ) {
-				foreach ( json_Decode( $response['body'] ) as $data ) {
-					if ( $email == $data->query ) {
-						$old_responce[] = $data->id;
-					}
-				}
-			}
-		}
-		$body           = array();
-		$ClassiDocsdata = '';
-		if ( gdpr( 'options' )->get( 'classidocs_integration' ) ) {
-			if ( $old_responce ) {
-				foreach ( $old_responce as $response ) {
-					$query              = $response;           // static for testing
-					$getclassidocs_url  = gdpr( 'options' )->get( 'classidocs_url' );
-					$classidoc_API_URL2 = esc_url_raw( $getclassidocs_url . '/gdpr/query/' . $query . '?pageSize=200' );
-					$response           = wp_remote_get( $classidoc_API_URL2 );
-					if ( is_array( $response ) && ! is_wp_error( $response ) ) {
-						$headers = $response['headers']; // array of http header lines
-						$body[]  = $response['body']; // use the content
-					}
-				}
-			}
-		}
-		if ( isset( $body[0] ) ) {
-			$ClassiDocsdata = $body[0];
-		}
-		$nonce = wp_create_nonce( 'gdpr/frontend/privacy-tools-page/action/export' );
-		echo gdpr( 'view' )->render(
-			'privacy-tools/ClassiDocs-results',
-			compact( 'email', 'nonce', 'ClassiDocsdata' )
-		);
-	}
 	/**
 	 * Render the form that allows the data subject to delete their data
 	 *

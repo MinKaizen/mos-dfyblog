@@ -100,12 +100,6 @@ class DataSubject {
 	public function getConsentData() {
 		return $this->consentManager->getConsentData( $this->consents );
 	}
-	/**
-	 * Get a list of all consents intersected with the data subjects consents
-	 */
-	public function getClassiDocsdata( $email ) {
-		return $this->consentManager->getClassiDocsdata( $email );
-	}
 
 	/**
 	 * Get a list of user logs

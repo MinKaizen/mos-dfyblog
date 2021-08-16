@@ -520,3 +520,29 @@ function astra_add_addon_specific_stats( $default_stats ) {
 }
 
 add_filter( 'bsf_core_stats', 'astra_add_addon_specific_stats' );
+
+/**
+ * Check is WordPress version is greater than or equal to 5.8 version.
+ *
+ * @since 3.5.5
+ * @return boolean
+ */
+function astra_addon_has_widgets_block_editor() {
+	if ( function_exists( 'astra_has_widgets_block_editor' ) ) {
+		return astra_has_widgets_block_editor();
+	}
+	return false;
+}
+
+/**
+ * Check whther to display or hide sticky header widget design options.
+ *
+ * @since 3.5.8
+ * @return boolean
+ */
+function astra_addon_remove_widget_design_options() {
+	if ( function_exists( 'astra_remove_widget_design_options' ) ) {
+		return astra_remove_widget_design_options();
+	}
+	return false;
+}

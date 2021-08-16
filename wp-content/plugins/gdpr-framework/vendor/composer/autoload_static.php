@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit685660b63662e7b4526beec066cc0ce1
+class ComposerStaticInit7949ac80ea27feddce963fa54e83d314
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -275,7 +275,6 @@ class ComposerStaticInit685660b63662e7b4526beec066cc0ce1
         'Codelight\\GDPR\\SetupAdmin' => __DIR__ . '/../..' . '/src/SetupAdmin.php',
         'Codelight\\GDPR\\Updater\\Updater' => __DIR__ . '/../..' . '/src/Updater/Updater.php',
         'Codelight\\GDPR\\View' => __DIR__ . '/../..' . '/src/View.php',
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Doctrine\\Inflector\\CachedWordInflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
         'Doctrine\\Inflector\\GenericLanguageInflectorFactory' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/GenericLanguageInflectorFactory.php',
         'Doctrine\\Inflector\\Inflector' => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector/Inflector.php',
@@ -633,9 +632,9 @@ class ComposerStaticInit685660b63662e7b4526beec066cc0ce1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit685660b63662e7b4526beec066cc0ce1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit685660b63662e7b4526beec066cc0ce1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit685660b63662e7b4526beec066cc0ce1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7949ac80ea27feddce963fa54e83d314::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7949ac80ea27feddce963fa54e83d314::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7949ac80ea27feddce963fa54e83d314::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -341,3 +341,15 @@ function su_maybe_add_css_units( $value = '', $units = '' ) {
 	return $value;
 
 }
+
+/**
+ * Helper to get the current page URL
+ * @return string Current page URL
+ */
+function su_get_current_url() {
+
+	$protocol = is_ssl() ? 'https' : 'http';
+
+	return esc_url( "{$protocol}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+
+}

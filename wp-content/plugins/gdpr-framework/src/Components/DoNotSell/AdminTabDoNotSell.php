@@ -12,13 +12,11 @@ class AdminTabDoNotSell extends AdminTab {
 	/* @var PolicyGenerator */
 	protected $policyGenerator;
 
-	public function __construct() {
-		 $this->title = _x( 'Do Not Sell My Data', '(Admin)', 'ccpa-framework' );
-		//$this->registerSetting( 'ccpa_privacy_safe_params' );
-		//$this->registerSetting( 'ccpa_privacy_safe_imagecode' );
+	public function __construct()
+	{
+		$this->title = _x( 'Do Not Sell My Data', '(Admin)', 'ccpa-framework' );
 
 		add_action( 'ccpa/admin/action/PrivacyManager/generate', array( $this, 'generateDoNotSell' ) );
-
 	}
 
 	public function init() {
@@ -43,6 +41,12 @@ class AdminTabDoNotSell extends AdminTab {
 			array( $this, 'shortcodephp' ),
 			'ccpa_about_privacy_safe_section'
 		);
+		$this->registerSettingField(
+			'ccpa_privacy_safe_posts',
+			_x( 'View Requests', '(Admin)', 'ccpa-framework' ),
+			array( $this, 'postlink' ),
+			'ccpa_about_privacy_safe_section'
+		);
 
 	}
 
@@ -64,6 +68,7 @@ class AdminTabDoNotSell extends AdminTab {
 	public function shortcodephp() {
 		echo "<code>echo do_shortcode('[gdpr_do_not_sell_form]');</code>";
 	}
-
-
+	public function postlink() {
+		echo "<a href='/wp-admin/edit.php?post_type=donotsellrequests'>View Requests</a>";
+	}
 }

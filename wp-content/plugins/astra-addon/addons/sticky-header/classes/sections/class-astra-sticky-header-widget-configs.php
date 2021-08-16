@@ -36,12 +36,13 @@ if ( ! class_exists( 'Astra_Sticky_Header_Widget_Configs' ) ) {
 		 */
 		public function register_configuration( $configurations, $wp_customize ) {
 
-			$html_config = array();
+			$html_config                    = array();
+			$astra_has_widgets_block_editor = astra_addon_has_widgets_block_editor();
 
 			$num_of_header_widgets = astra_addon_builder_helper()->num_of_header_widgets;
 			for ( $index = 1; $index <= $num_of_header_widgets; $index++ ) {
 
-				$_section = 'sidebar-widgets-header-widget-' . $index;
+				$_section = ( ! $astra_has_widgets_block_editor ) ? 'sidebar-widgets-header-widget-' . $index : 'astra-sidebar-widgets-header-widget-' . $index;
 
 				$_configs = array(
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * The Admin-specific functionality of the WP Legal Pages.
+ * The Admin-specific functionality of the WPLegalPages.
  *
  * @link       http://wplegalpages.com/
  * @since      1.5.2
@@ -10,9 +10,9 @@
  */
 
 /**
- * The admin-specific functionality of the WP Legal Pages.
+ * The admin-specific functionality of the WPLegalPages.
  *
- * Defines the WP Legal Pages name, version, and two examples hooks for how to
+ * Defines the WPLegalPages name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @package    WP_Legal_Pages
@@ -21,9 +21,9 @@
  */
 if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 	/**
-	 * The admin-specific functionality of the WP Legal Pages.
+	 * The admin-specific functionality of the WPLegalPages.
 	 *
-	 * Defines the WP Legal Pages name, version, and two examples hooks for how to
+	 * Defines the WPLegalPages name, version, and two examples hooks for how to
 	 * enqueue the admin-specific stylesheet and JavaScript.
 	 *
 	 * @package    WP_Legal_Pages
@@ -32,20 +32,20 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 	 */
 	class WP_Legal_Pages_Admin {
 		/**
-		 * The ID of this WP Legal Pages.
+		 * The ID of this WPLegalPages.
 		 *
 		 * @since    1.0.0
 		 * @access   private
-		 * @var      string    $WP Legal Pages_name    The ID of this WP Legal Pages.
+		 * @var      string    $WP Legal Pages_name    The ID of this WPLegalPages.
 		 */
 		private $plugin_name;
 
 		/**
-		 * The version of this WP Legal Pages.
+		 * The version of this WPLegalPages.
 		 *
 		 * @since    1.0.0
 		 * @access   private
-		 * @var      string    $version    The current version of this WP Legal Pages.
+		 * @var      string    $version    The current version of this WPLegalPages.
 		 */
 		private $version;
 
@@ -53,8 +53,8 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		 * Initialize the class and set its properties.
 		 *
 		 * @since    1.0.0
-		 * @param      string $plugin_name The name of this WP Legal Pages.
-		 * @param      string $version    The version of this WP Legal Pages.
+		 * @param      string $plugin_name The name of this WPLegalPages.
+		 * @param      string $version    The version of this WPLegalPages.
 		 */
 		public function __construct( $plugin_name, $version ) {
 			$this->plugin_name = $plugin_name;
@@ -108,14 +108,14 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		public function admin_menu() {
 			$terms = get_option( 'lp_accept_terms' );
 			if ( '1' === $terms ) {
-				add_menu_page( __( 'Legal Pages', 'wplegalpages' ), __('Legal Pages', 'wplegalpages'), 'manage_options', 'legal-pages', array( $this, 'admin_setting' ), 'dashicons-media-default', 66 );
+				add_menu_page( __( 'WPLegalPages', 'wplegalpages' ), __( 'WPLegalPages', 'wplegalpages' ), 'manage_options', 'legal-pages', array( $this, 'admin_setting' ), 'dashicons-media-default', 66 );
 			} else {
-				add_menu_page( __( 'Legal Pages', 'wplegalpages' ), __('Legal Pages', 'wplegalpages'), 'manage_options', 'getting-started', array( $this, 'vue_getting_started' ), 'dashicons-media-default', 66 );
+				add_menu_page( __( 'WPLegalPages', 'wplegalpages' ), __( 'WPLegalPages', 'wplegalpages' ), 'manage_options', 'getting-started', array( $this, 'vue_getting_started' ), 'dashicons-media-default', 66 );
 			}
 			if ( '1' === $terms ) {
 				add_submenu_page( 'legal-pages', __( 'Settings', 'wplegalpages' ), __( 'Settings', 'wplegalpages' ), 'manage_options', 'legal-pages', array( $this, 'admin_setting' ) );
-				add_submenu_page( 'legal-pages', __( 'Legal Pages', 'wplegalpages' ), __( 'Legal Pages', 'wplegalpages' ), 'manage_options', 'lp-show-pages', array( $this, 'show_pages' ) );
-				add_submenu_page( 'legal-pages', __( 'Create Page', 'wplegalpages' ), __( 'Create Page', 'wplegalpages' ), 'manage_options', 'lp-create-page', array( $this, 'create_page' ) );
+				add_submenu_page( 'legal-pages', __( 'All Legal Pages', 'wplegalpages' ), __( 'All Legal Pages', 'wplegalpages' ), 'manage_options', 'lp-show-pages', array( $this, 'show_pages' ) );
+				add_submenu_page( 'legal-pages', __( 'Create Legal Page', 'wplegalpages' ), __( 'Create Legal Page', 'wplegalpages' ), 'manage_options', 'lp-create-page', array( $this, 'create_page' ) );
 				add_submenu_page( 'legal-pages', __( 'Cookie Bar', 'wplegalpages' ), __( 'Cookie Bar', 'wplegalpages' ), 'manage_options', 'lp-eu-cookies', array( $this, 'update_eu_cookies' ) );
 				do_action( 'wplegalpages_admin_menu' );
 				add_submenu_page( 'legal-pages', __( 'Getting Started', 'wplegalpages' ), __( 'Getting Started', 'wplegalpages' ), 'manage_options', 'getting-started', array( $this, 'vue_getting_started' ) );
@@ -129,8 +129,9 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		 * @since 2.3.5
 		 */
 		public function wplegal_admin_init() {
-			$lp_templates_updated = get_option( '_lp_templates_updated' );
-			if ( '1' !== $lp_templates_updated ) {
+			$lp_templates_updated               = get_option( '_lp_templates_updated' );
+			$lp_effective_date_template_updated = get_option( '_lp_effective_date_templates_updated' );
+			if ( '1' !== $lp_templates_updated || '1' !== $lp_effective_date_template_updated ) {
 				global $wpdb;
 				require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 				if ( is_multisite() ) {
@@ -335,6 +336,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 				); // db call ok; no-cache ok.
 			}
 			update_option( '_lp_templates_updated', true );
+			update_option( '_lp_effective_date_templates_updated', true );
 		}
 
 		/**
@@ -347,7 +349,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		}
 
 		/**
-		 * This Callback function for Admin Setting menu for WP Legal pages.
+		 * This Callback function for Admin Setting menu for WPLegalpages.
 		 */
 		public function admin_setting() {
 			$this->enqueue_common_style_scripts();
@@ -356,7 +358,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 
 
 		/**
-		 * This Callback function for Create Page menu for WP Legal pages.
+		 * This Callback function for Create Page menu for WPLegalpages.
 		 */
 		public function create_page() {
 			$activated = apply_filters( 'wplegal_check_license_status', true );
@@ -367,7 +369,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		}
 
 		/**
-		 * This Callback function for Show Page menu for WP Legal pages.
+		 * This Callback function for Show Page menu for WPLegalpages.
 		 */
 		public function show_pages() {
 			$activated = apply_filters( 'wplegal_check_license_status', true );
@@ -378,7 +380,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		}
 
 		/**
-		 * This Callback function for Getting Started menu for WP Legal pages.
+		 * This Callback function for Getting Started menu for WPLegalpages.
 		 */
 		public function getting_started() {
 			wp_enqueue_style( $this->plugin_name . '-admin' );
@@ -387,7 +389,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		}
 
 		/**
-		 * This Callback function for Getting Started menu for WP Legal pages.
+		 * This Callback function for Getting Started menu for WPLegalpages.
 		 */
 		public function vue_getting_started() {
 			$is_pro = get_option( '_lp_pro_active' );
@@ -419,13 +421,13 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 					'is_pro'              => $is_pro,
 					'video_url'           => 'https://www.youtube-nocookie.com/embed/iqdLl9qsBHc',
 					'image_url'           => WPL_LITE_PLUGIN_URL . 'admin/js/vue/images/',
-					'welcome_text'        => __( 'Welcome to WP Legal Pages!', 'wplegalpages' ),
+					'welcome_text'        => __( 'Welcome to WPLegalPages!', 'wplegalpages' ),
 					'welcome_subtext'     => __( 'Simple one-click legal page management plugin.', 'wplegalpages' ),
-					'welcome_description' => __( 'Thank you for choosing WP Legal Pages plugin - the most powerful legal page management plugin.', 'wplegalpages' ),
+					'welcome_description' => __( 'Thank you for choosing WPLegalPages plugin - the most powerful legal page management plugin.', 'wplegalpages' ),
 					'quick_links_text'    => __( 'See Quick Links', 'wplegalpages' ),
 					'features'            => array(
-						'heading'           => __( 'WP Legal Pages Features', 'wplegalpages' ),
-						'subheading'        => __( 'Why choose WP Legal Pages?', 'wplegalpages' ),
+						'heading'           => __( 'WPLegalPages Features', 'wplegalpages' ),
+						'subheading'        => __( 'Why choose WPLegalPages?', 'wplegalpages' ),
 						'powerful_text'     => __( 'Powerful yet simple', 'wplegalpages' ),
 						'powerful_desc'     => __( 'Add 25+ legal policy pages to your WordPress website in less than 5 minutes.', 'wplegalpages' ),
 						'prebuilt_text'     => __( 'Pre-built templates', 'wplegalpages' ),
@@ -439,14 +441,14 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 						'easy_text'         => __( 'Easy shortcodes', 'wplegalpages' ),
 						'easy_desc'         => __( 'Easy to use shortcodes to display business information in legal policy pages.', 'wplegalpages' ),
 						'install_text'      => __( 'Easy to install', 'wplegalpages' ),
-						'install_desc'      => __( 'WP Legal Pages is super-easy to install. Download & install takes less than 2 minutes.', 'wplegalpages' ),
+						'install_desc'      => __( 'WPLegalPages is super-easy to install. Download & install takes less than 2 minutes.', 'wplegalpages' ),
 						'helpful_text'      => __( 'Helpful docs & guides', 'wplegalpages' ),
-						'helpful_desc'      => __( 'Even if you get stuck using WP Legal Pages, you can use our easy to follow docs & guides.', 'wplegalpages' ),
+						'helpful_desc'      => __( 'Even if you get stuck using WPLegalPages, you can use our easy to follow docs & guides.', 'wplegalpages' ),
 						'multilingual_text' => __( 'Multilingual support', 'wplegalpages' ),
 						'multilingual_desc' => __( 'Supports multi-language translations for English, French, Spanish, German, Italian, Portuguese.', 'wplegalpages' ),
 					),
 					'configure'           => array(
-						'text'        => __( 'WP Legal Pages generates personalized legal pages for your website. To do this it needs to know a few details about your website. Please take a couple of minutes to set up your business details before you can generate a policy page for this website.', 'wplegalpages' ),
+						'text'        => __( 'WPLegalPages generates personalized legal pages for your website. To do this it needs to know a few details about your website. Please take a couple of minutes to set up your business details before you can generate a policy page for this website.', 'wplegalpages' ),
 						'button_text' => __( 'Configure Details', 'wplegalpages' ),
 						'url'         => menu_page_url( 'legal-pages', false ),
 					),
@@ -464,7 +466,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 					'terms'               => array(
 						'text'        => sprintf(
 							/* translators: %s: Terms of use link */
-							esc_html__( 'WP Legal Pages is a privacy policy and terms & conditions generator for WordPress. With just a few clicks you can generate %s for your WordPress website.', 'wplegalpages' ),
+							esc_html__( 'WPLegalPages is a privacy policy and terms & conditions generator for WordPress. With just a few clicks you can generate %s for your WordPress website.', 'wplegalpages' ),
 							sprintf(
 								/* translators: %s: Terms of use link, %s Text */
 								'<a href="%s" target="_blank">%s</a>',
@@ -476,7 +478,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 						'button_text' => __( 'Accept', 'wplegalpages' ),
 						'input_text'  => sprintf(
 							/* translators: %s: Terms of use link, %s Text */
-							esc_html__( 'By using WP Legal Pages, you accept the %s.', 'wplegalpages' ),
+							esc_html__( 'By using WPLegalPages, you accept the %s.', 'wplegalpages' ),
 							sprintf(
 								/* translators: %s: Terms of use link */
 								'<a href="%s" target="_blank">%s</a>',
@@ -484,6 +486,32 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 								__( 'terms of use', 'wplegalpages' )
 							)
 						),
+					),
+					'help_section'        => array(
+						'help_center'  => array(
+							'title'       => __( 'Help Center', 'wplegalpages' ),
+							'image_src'   => WPL_LITE_PLUGIN_URL . 'admin/js/vue/images/',
+							'description' => __( 'Read the documentation to find answers to your questions.', 'wplegalpages' ),
+							'link'        => 'https://docs.wpeka.com/wp-legal-pages/',
+							'link_title'  => 'Learn more >>',
+						),
+						'video_guides' => array(
+							'title'       => __( 'Video Guides', 'wplegalpages' ),
+							'image_src'   => WPL_LITE_PLUGIN_URL . 'admin/js/vue/images/',
+							'description' => __( 'Browse through these video tutorials to learn more about how WPLegalPages function.', 'wplegalpages' ),
+							'link'        => 'https://youtube.com/playlist?list=PLb2uZyVYHgAXGnKHTr2EouG8ZWba60URR',
+							'link_title'  => 'Watch now >>',
+
+						),
+						'faq'          => array(
+							'title'       => __( 'FAQ with answers', 'wplegalpages' ),
+							'image_src'   => WPL_LITE_PLUGIN_URL . 'admin/js/vue/images/',
+							'description' => __( 'Find answers to some of the most commonly asked questions.', 'wplegalpages' ),
+							'link'        => 'https://docs.wpeka.com/wp-legal-pages/faq',
+							'link_title'  => 'Find out >>',
+
+						),
+
 					),
 				)
 			);
@@ -494,7 +522,7 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		}
 
 		/**
-		 * This Callback function for EU_Cookies Page menu for WP Legal pages.
+		 * This Callback function for EU_Cookies Page menu for WPLegalpages.
 		 */
 		public function update_eu_cookies() {
 			$activated = apply_filters( 'wplegal_check_license_status', true );
@@ -563,12 +591,12 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 		 * @return mixed
 		 */
 		public function wplegalpages_add_menu_meta_box( $object ) {
-			add_meta_box( 'wplegalpages-menu-metabox', __( 'WP Legal Pages', 'wplegalpages' ), array( $this, 'wplegalpages_menu_meta_box' ), 'nav-menus', 'side', 'low' );
+			add_meta_box( 'wplegalpages-menu-metabox', __( 'WPLegalPages', 'wplegalpages' ), array( $this, 'wplegalpages_menu_meta_box' ), 'nav-menus', 'side', 'low' );
 			return $object;
 		}
 
 		/**
-		 * WP Legal Pages Menu items on theme menu screen.
+		 * WPLegalPages Menu items on theme menu screen.
 		 */
 		public function wplegalpages_menu_meta_box() {
 
@@ -887,6 +915,14 @@ if ( ! class_exists( 'WP_Legal_Pages_Admin' ) ) {
 
 			</div><!-- /.posttypediv -->
 			<?php
+		}
+
+		/**
+		 * Set option for do not show again settings warning on create legal page submenu.
+		 */
+		public function wplegalpages_disable_settings_warning() {
+			update_option( 'wplegalpages_disable_settings_warning', '1' );
+			return true;
 		}
 	}
 }

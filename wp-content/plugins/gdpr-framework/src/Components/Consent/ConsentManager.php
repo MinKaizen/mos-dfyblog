@@ -80,14 +80,6 @@ class ConsentManager
             );
         }
         /****
-         * ClassiDocsCallback default consent
-         */
-        gdpr('consent')->register(
-            'ClassiDocsCallback','ClassiDocsCallback',
-            _x('This consent is not visible by default. If someone wishes to withdraw it, they should simply request to delete all their data.', '(Admin)', 'gdpr-framework'),
-            true
-        );
-        /****
          * Woocommerce Policy consent
          */
         if ( class_exists( 'WooCommerce' ) ) {
@@ -356,59 +348,6 @@ class ConsentManager
 		}
         return $consents;
     }
-     /**
-     * Get the registered consent types and add 'given' field depending
-     * on whether or not the user has given this particular consent
-     *
-     * @param $dataSubjectConsents
-     * @return array
-     */
-    public function getClassiDocsdata($dataSubjectConsents)
-    {   
-        $old_responce=array();
-        $getclassidocs_url = gdpr('options')->get('classidocs_url');
-        $classidoc_API_URL1 = esc_url_raw($getclassidocs_url."/gdpr/query/");
-        $response = wp_remote_get($classidoc_API_URL1); 
-        if ( is_array( $response ) && ! is_wp_error( $response ) ) 
-        {   
-            if(json_Decode($response['body'])){
-                foreach(json_Decode($response['body']) as $data)
-                {
-                    if($dataSubjectConsents == $data->query)
-                    {
-                        $old_responce[]=$data->id;
-                    }
-                }
-            }
-        }
-
-        $body=array();
-        $ClassiDocsdata ="";
-        if(gdpr('options')->get('classidocs_integration'))
-        {
-            if($old_responce)
-            {
-                foreach($old_responce as $response)
-                {
-                    $query=$response;       //static for testing
-                    $getclassidocs_url = gdpr('options')->get('classidocs_url');
-                    $classidoc_API_URL2 = esc_url_raw($getclassidocs_url."/gdpr/query/".$query."?pageSize=200");
-                    $response = wp_remote_get($classidoc_API_URL2); 
-                    if ( is_array( $response ) && ! is_wp_error( $response ) ) 
-                    {
-                        $headers = $response['headers']; // array of http header lines
-                        $body[]    = $response['body']; // use the content
-                    }
-                }
-            }
-                        
-        }
-        if(isset($body[0]))
-        {
-            $ClassiDocsdata = $body[0];
-        }
-        return $ClassiDocsdata;
-	}
 	
 	public function getbySlugConsent($dataSubjectConsents)
     {   

@@ -150,17 +150,6 @@ class WordpressAdmin
              */
             wp_enqueue_script( 'iris',gdpr('config')->get('plugin.url') .'assets/iris.min.js' );
             wp_enqueue_script( 'iris-init',gdpr('config')->get('plugin.url') .'assets/iris-init.js' );
-        
-            if(gdpr('options')->get('classidocs_integration')){
-            /**
-             * datatable in plugin
-             */
-                //wp_enqueue_script( 'gdprdataTables-js', gdpr('config')->get('plugin.url') .'assets/jquery.dataTables.min.js' );
-				//wp_enqueue_style( 'datatables-css',gdpr('config')->get('plugin.url') .'assets/jquery.dataTables.min.css');
-				wp_enqueue_script( 'lgpddataTables-js', '//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js' );
-				wp_enqueue_script( 'lgpddataTables-js-init', gdpr( 'config' )->get( 'plugin.url' ) . 'assets/js/initdatatable.js', true );
-				wp_enqueue_style( 'datatables-css', '//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css' );
-            }
         }
     }
 

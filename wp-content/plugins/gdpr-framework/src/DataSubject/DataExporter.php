@@ -101,7 +101,11 @@ class DataExporter
 
                 // Account for arrays with just one item, such as usermeta
                 if (is_array($value) && 1 === count($value)) {
-                    $value = $value[0];
+                    $tmp = '';
+                    foreach ($value as $key => $value2) {
+                        $tmp = $value2;
+                    }
+                    $value = $tmp;
                 }
 
                 // In case of arrays, recurse

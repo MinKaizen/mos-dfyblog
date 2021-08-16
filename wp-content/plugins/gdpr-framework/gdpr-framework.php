@@ -4,7 +4,7 @@
  * Plugin Name:       The GDPR Framework
  * Plugin URI:        https://www.data443.com/gdpr-framework/
  * Description:       Tools to help make your website GDPR-compliant. Fully documented, extendable and developer-friendly.
- * Version:           1.0.42
+ * Version:           1.0.43
  * Author:            Data443
  * Author URI:        https://www.data443.com/
  * Text Domain:       gdpr-framework
@@ -18,7 +18,7 @@ if (!defined('WPINC'))
     die;
 }
 
-define('GDPR_FRAMEWORK_VERSION', '1.0.42');
+define('GDPR_FRAMEWORK_VERSION', '1.0.43');
 
 add_shortcode( 'gdpr_privacy_safe', 'render_privacy_safe' ); // preserve backward compatibility
 add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );
@@ -62,13 +62,16 @@ function gdpr_framework_load_textdomain()
 /**
  * Our custom post type function
  */
-function create_custom_post_type() {
+function create_custom_post_type()
+{
 	$args = array(
 		'label'               => 'Do Not Sell Info',
 		'public'              => true,
 		'has_archive'         => false,
 		'exclude_from_search' => true,
 		'publicly_queryable'  => false,
+		'show_in_menu'        => false,
+		'menu_position'       => 20,
 		'show_ui'             => true,
 		'hierarchical'        => false,
 		'rewrite'             => array( 'slug' => 'donotsellrequests' ),
@@ -77,6 +80,7 @@ function create_custom_post_type() {
 	);
 	register_post_type( 'donotsellrequests', $args );
 }
+
 /**
  * Hooking up our function to theme setup
  */
@@ -173,6 +177,23 @@ function my_profile_update( $user_id, $old_user_data )
     $model = new \Codelight\GDPR\Components\Consent\UserConsentModel();
     $model->savelog($user_id,$userdata);
 }
+
+register_activation_hook(__FILE__, function () {
+	$model = new \Codelight\GDPR\Components\Consent\UserConsentModel();
+	$model->createTable();
+	$model->createUserTable();
+	if (apply_filters('gdpr/data-subject/anonymize/change_role', true) && ! get_role('anonymous')) {
+
+		add_role(
+			'anonymous',
+			_x('Anonymous', '(Admin)', 'gdpr-framework'),
+			array()
+		);
+	}
+
+	update_option('gdpr_enable_stylesheet', true);
+	update_option('gdpr_enable', true);
+});
 
 require_once('gdpr-helper-functions.php');
 require_once('bootstrap.php');

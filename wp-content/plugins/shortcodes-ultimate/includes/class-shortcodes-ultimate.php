@@ -155,6 +155,11 @@ class Shortcodes_Ultimate {
 		require_once $this->plugin_path . 'admin/class-shortcodes-ultimate-notice-rate.php';
 
 		/**
+		 * Register custom widget
+		 */
+		require_once $this->plugin_path . 'admin/class-shortcodes-ultimate-widget.php';
+
+		/**
 		 * Add Extra Shortcodes
 		 */
 		require_once $this->plugin_path . 'admin/class-shortcodes-ultimate-admin-extra-shortcodes.php';
@@ -293,6 +298,13 @@ class Shortcodes_Ultimate {
 		 */
 		add_filter( 'attachment_fields_to_edit', 'su_slide_link_input', 10, 2 );
 		add_filter( 'attachment_fields_to_save', 'su_slide_link_save', 10, 2 );
+
+		/**
+		 * Register custom widget
+		 */
+		$this->widget = new Shortcodes_Ultimate_Widget( $this->plugin_prefix );
+
+		add_action( 'widgets_init', array( $this->widget, 'register' ) );
 
 		/**
 		 * Add Extra Shortcodes
