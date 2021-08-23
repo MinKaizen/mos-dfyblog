@@ -95,6 +95,11 @@ SRC_WP_CONTENT="$SRC_DIR/../wp-content"
 DEST_WP_CONTENT="$DEST_DIR/wp-content"
 SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
+# Change table prefix to wp_
+git clone https://github.com/iandunn/wp-cli-rename-db-prefix.git "$SRC_WP_CONTENT/plugins/wp-cli-rename-db-prefix"
+wp plugin activate wp-cli-rename-db-prefix
+yes y | wp rename-db-prefix wp_
+
 # Search and replace values
 echo "Setting up search/replace values..."
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
