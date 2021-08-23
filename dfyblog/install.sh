@@ -83,6 +83,11 @@ setup_colors
 
 # START MAIN SCRIPT
 
+if ! command -v wp &> /dev/null; then
+  echo "ERROR: wp-cli is not installed"
+  exit
+fi
+
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source "$SRC_DIR/header.sh"
 DEST_DIR=$(wp eval 'echo ABSPATH;')
@@ -91,6 +96,7 @@ DEST_WP_CONTENT="$DEST_DIR/wp-content"
 SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
 # Search and replace values
+echo "Setting up search/replace values..."
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
 NEW_DOMAIN=$(esc_sed $domain)
 OLD_ABSPATH=$ABSPATH_PLACEHOLDER
@@ -100,16 +106,13 @@ NEW_TABLE_PREFIX=$(wp db prefix)
 OLD_EMAIL=$EMAIL_PLACEHOLDER
 NEW_EMAIL=$email
 
-if ! command -v wp &> /dev/null; then
-  echo "ERROR: wp-cli is not installed"
-  exit
-fi
-
 # Replace the wp-content folder
+echo "Replacing wp-content folder..."
 rm -rf $DEST_WP_CONTENT
 cp -r $SRC_WP_CONTENT $DEST_WP_CONTENT
 
 # Perform search replace on sql file
+echo "Creating sql file..."
 cp "$SRC_DIR/dfyblog.sql" $SQL_ADJUSTED
 sed -i "s/\/\/$OLD_DOMAIN/\/\/$NEW_DOMAIN/g" $SQL_ADJUSTED
 sed -i "s/$OLD_ABSPATH/$NEW_ABSPATH/g" $SQL_ADJUSTED
@@ -117,22 +120,28 @@ sed -i "s/$OLD_TABLE_PREFIX/$NEW_TABLE_PREFIX/g" $SQL_ADJUSTED
 sed -i "s/$OLD_EMAIL/$NEW_EMAIL/g" $SQL_ADJUSTED
 
 # Import database
+echo "Importing adjusted sql file..."
 wp db import $SQL_ADJUSTED
 
+# Remove sql file
+echo "Removing sql file..."
+rm $SQL_ADJUSTED
+
 # Reactivate all plugins to regenerate missing tables
+echo "Deactivating all plugins..."
 wp plugin deactivate --all
+echo "Activating all plugins..."
 wp plugin activate --all
 
 # Replace chucksateam@gmail.com with customer email
+echo "Performing search/replace on chucksateam@gmail.com..."
 wp search-replace "chucksateam@gmail.com" "$email"
 
 # Update admin user
+echo "Updating admin user..."
 wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
 
 # Change admin email
 wp option update admin_email $email
-
-# Clean up
-# rm $SQL_ADJUSTED
 
 # END MAIN SCRIPT
