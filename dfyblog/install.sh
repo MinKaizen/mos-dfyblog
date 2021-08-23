@@ -96,7 +96,7 @@ DEST_WP_CONTENT="$DEST_DIR/wp-content"
 SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
 
 # Change table prefix to wp_
-git clone https://github.com/iandunn/wp-cli-rename-db-prefix.git "$SRC_WP_CONTENT/plugins/wp-cli-rename-db-prefix"
+git clone https://github.com/iandunn/wp-cli-rename-db-prefix.git "$DEST_WP_CONTENT/plugins/wp-cli-rename-db-prefix"
 wp plugin activate wp-cli-rename-db-prefix
 yes y | wp rename-db-prefix wp_
 
