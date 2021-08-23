@@ -97,6 +97,8 @@ OLD_ABSPATH=$ABSPATH_PLACEHOLDER
 NEW_ABSPATH=$(esc_sed $(wp eval 'echo rtrim(ABSPATH, "/");'))
 OLD_TABLE_PREFIX=$TABLE_PREFIX_PLACEHOLDER
 NEW_TABLE_PREFIX=$(wp db prefix)
+OLD_EMAIL=$EMAIL_PLACEHOLDER
+NEW_EMAIL=$email
 
 if ! command -v wp &> /dev/null; then
   echo "ERROR: wp-cli is not installed"
@@ -112,9 +114,17 @@ cp "$SRC_DIR/dfyblog.sql" $SQL_ADJUSTED
 sed -i "s/\/\/$OLD_DOMAIN/\/\/$NEW_DOMAIN/g" $SQL_ADJUSTED
 sed -i "s/$OLD_ABSPATH/$NEW_ABSPATH/g" $SQL_ADJUSTED
 sed -i "s/$OLD_TABLE_PREFIX/$NEW_TABLE_PREFIX/g" $SQL_ADJUSTED
+sed -i "s/$OLD_EMAIL/$NEW_EMAIL/g" $SQL_ADJUSTED
 
 # Import database
 wp db import $SQL_ADJUSTED
+
+# Reactivate all plugins to regenerate missing tables
+wp plugin deactivate --all
+wp plugin activate --all
+
+# Replace chucksateam@gmail.com with customer email
+wp search-replace "chucksateam@gmail.com" "$email"
 
 # Update admin user
 wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
