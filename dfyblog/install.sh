@@ -103,10 +103,6 @@ wp plugin activate wp-cli-rename-db-prefix
 echo "Changing db prefix..."
 echo "$(yes y | wp rename-db-prefix wp_)"
 
-echo "Sleeping for 5 seconds..."
-sleep 5
-echo "Waking up..."
-
 # Search and replace values
 echo "Setting up search/replace values..."
 OLD_DOMAIN=$DOMAIN_PLACEHOLDER
