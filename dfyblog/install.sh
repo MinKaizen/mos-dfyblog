@@ -101,7 +101,7 @@ git clone https://github.com/iandunn/wp-cli-rename-db-prefix.git "$DEST_WP_CONTE
 echo "Activating wp-cli-rename-db-prefix pligin..."
 wp plugin activate wp-cli-rename-db-prefix
 echo "Changing db prefix..."
-yes y | wp rename-db-prefix wp_
+echo "$(yes y | wp rename-db-prefix wp_)"
 
 # Search and replace values
 echo "Setting up search/replace values..."
