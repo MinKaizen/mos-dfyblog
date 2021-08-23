@@ -94,7 +94,6 @@ DEST_DIR=$(wp eval 'echo ABSPATH;')
 SRC_WP_CONTENT="$SRC_DIR/../wp-content"
 DEST_WP_CONTENT="$DEST_DIR/wp-content"
 SQL_ADJUSTED="$DEST_DIR/dfyblog-adjusted.sql"
-TARGET_PREFIX="$(wp db prefix)"
 
 # Change table prefix to wp_
 echo "Installing wp-cli-rename-db-prefix plugin..."
@@ -102,7 +101,7 @@ git clone https://github.com/iandunn/wp-cli-rename-db-prefix.git "$DEST_WP_CONTE
 echo "Activating wp-cli-rename-db-prefix plugin..."
 wp plugin activate wp-cli-rename-db-prefix
 echo "Changing db prefix..."
-echo "$(yes y | wp rename-db-prefix $TARGET_PREFIX)"
+echo "$(yes y | wp rename-db-prefix wp_)"
 
 echo "Sleeping for 5 seconds..."
 sleep 5
