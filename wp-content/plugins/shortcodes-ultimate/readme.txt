@@ -5,8 +5,8 @@ Donate link: https://paypal.me/anovladimir
 Tags: shortcode, toggle, columns, button, slider
 Requires PHP: 5.3
 Requires at least: 4.6
-Tested up to: 5.7
-Stable tag: 5.10.1
+Tested up to: 5.8
+Stable tag: 5.10.2
 
 A comprehensive collection of visual components for your site
 
@@ -146,20 +146,20 @@ First, visit the [Help Center](https://getshortcodes.com/support/). If you get s
 ## Changelog
 
 
-### 5.10.1
+### 5.10.2
 
 **What's new**
 
-- `su_qrcode`'s data attribute now understands the following variables: `%CURRENT_URL%` for the current page URL, and `%PERMALINK%` for post permalink
+- Plugin security have been improved. You may see a new notification in the admin area. [Learn more](https://getshortcodes.com/docs/unsafe-features/)
+- Added new setting `Unsafe features` under `Shortcodes → Settings → Advanced settings`. [Learn more](https://getshortcodes.com/docs/unsafe-features/)
+- Improved accessibility of the plugin settings page
 
 **Fixed**
 
-- Fixed `tax_relation` attribute of the `su_posts` shortcode. Thanks to [janeri2021](https://wordpress.org/support/topic/error-in-shortcode-posts/)
-- Fixed compatibility with Page Builder by SiteOrigin. [Details](https://github.com/siteorigin/so-widgets-bundle/issues/1247)
-- Fixed `BlockControls` console warning in the Block Editor
-- Added missing file `popper.min.js.map`
-- Fixed issue with invalid z-index value in the Tooltip shortcode
-- Fixed issue with the shortcode generator presets for the Tooltip shortcode
+- Fixed *This video is unavailable* in `su_youtube_advanced` shortcode
+- Fixed compatibility issue with SiteOrigin Page Builder. You can now turn on or off the old widget under `Shortcodes -> Settings Advanced settings`
+- Fixed issue in `[su_note]` when it was displaying empty id attribute
+- Fixed PHP warning at the new Widgets screen
 
 ---
 [Version history →](https://plugins.trac.wordpress.org/browser/shortcodes-ultimate/trunk/changelog.txt)

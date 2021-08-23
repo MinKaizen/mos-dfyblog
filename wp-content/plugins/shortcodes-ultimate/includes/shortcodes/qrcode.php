@@ -129,7 +129,7 @@ function su_shortcode_qrcode( $atts = null, $content = null ) {
 
 		$atts['link'] = sprintf(
 			' href="%s"',
-			esc_url( su_do_attribute( $atts['link'] ) )
+			esc_attr( su_do_attribute( $atts['link'] ) )
 		);
 
 		$atts['class'] .= ' su-qrcode-clickable';
@@ -154,11 +154,11 @@ function su_shortcode_qrcode( $atts = null, $content = null ) {
 
 	return sprintf(
 		'<span class="su-qrcode su-qrcode-align-%1$s%2$s"><a%3$s target="_%4$s" title="%5$s"><img src="%6$s" alt="%5$s" /></a></span>',
-		/* %1$s */ $atts['align'],
+		/* %1$s */ esc_attr( $atts['align'] ),
 		/* %2$s */ su_get_css_class( $atts ),
 		/* %3$s */ $atts['link'],
-		/* %4$s */ $atts['target'],
-		/* %5$s */ $atts['title'],
+		/* %4$s */ esc_attr( $atts['target'] ),
+		/* %5$s */ esc_attr( $atts['title'] ),
 		/* %6$s */ esc_url( $url )
 	);
 

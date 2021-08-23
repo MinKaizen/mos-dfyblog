@@ -31,7 +31,7 @@ class Shortcodes_Ultimate_Widget extends WP_Widget {
 	}
 
 	public function register() {
-		register_widget( get_class() );
+		register_widget( 'Shortcodes_Ultimate_Widget' );
 	}
 
 	public function widget( $args, $instance ) {
