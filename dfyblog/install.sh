@@ -144,4 +144,8 @@ wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --
 # Change admin email
 wp option update admin_email $email
 
+# Clear WP Rocket cache
+echo "Clearing WP Rocket cache..."
+wp rocket clean --confirm
+
 # END MAIN SCRIPT
