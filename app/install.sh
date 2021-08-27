@@ -26,8 +26,8 @@ die() {
 parse_params() {
   while [ $# -gt 0 ]; do
     case "$1" in
-      --wmdb_license=*)
-        wmdb_license="${1#*=}"
+      --domain=*)
+        domain="${1#*=}"
         ;;
       --name=*)
         name="${1#*=}"
@@ -47,7 +47,7 @@ parse_params() {
   args=("$@")
 
   # check required params and arguments
-  [[ -z "${wmdb_license-}" ]] && die "Missing required parameter: wmdb_license"
+  [[ -z "${domain-}" ]] && die "Missing required parameter: domain"
   [[ -z "${name-}" ]] && die "Missing required parameter: name"
   [[ -z "${email-}" ]] && die "Missing required parameter: email"
   return 0
