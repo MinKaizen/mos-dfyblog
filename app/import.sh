@@ -82,7 +82,6 @@ function main() {
   local IMPORT_FILE="$BUILD_DIR/dfyblog.sql"
 
   local SITEURL="$(wp option get siteurl)"
-  local ABSPATH="$(wp eval 'echo ABSPATH;')"
 
   source "$SCRIPT_DIR/header.sh"
 
@@ -107,7 +106,7 @@ function main() {
 
   # Import database
   msg "Migrating database..."
-  wp migratedb import "$IMPORT_FILE" --find=__SITEURL__,__ABSPATH__,__EMAIL__ --replace="$SITEURL,$ABSPATH,$email"
+  wp migratedb import "$IMPORT_FILE" --find=__SITEURL__,__ABSPATH__,__EMAIL__ --replace="$SITEURL,$WP_DIR,$email"
 
   # Update admin user
   msg "Updating admin user..."
