@@ -4,7 +4,7 @@
  * Plugin Name:       The GDPR Framework
  * Plugin URI:        https://www.data443.com/gdpr-framework/
  * Description:       Tools to help make your website GDPR-compliant. Fully documented, extendable and developer-friendly.
- * Version:           1.0.43
+ * Version:           1.0.44
  * Author:            Data443
  * Author URI:        https://www.data443.com/
  * Text Domain:       gdpr-framework
@@ -18,7 +18,7 @@ if (!defined('WPINC'))
     die;
 }
 
-define('GDPR_FRAMEWORK_VERSION', '1.0.43');
+define('GDPR_FRAMEWORK_VERSION', '1.0.44');
 
 add_shortcode( 'gdpr_privacy_safe', 'render_privacy_safe' ); // preserve backward compatibility
 add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );

@@ -129,7 +129,7 @@ class UserConsentModel
 	 */
 	public function withdraw($email, $consent)
 	{
-		$this->set($email, $consent, 0);
+		$this->set($email, $consent, 0, null);
 	}
 
 	/**

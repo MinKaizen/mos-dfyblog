@@ -117,6 +117,9 @@ We are also planning to add other important privacy-related features missing fro
 5. GDPR FRAMEWORK PRIVACY TOOL
 
 == Change log ==
+= 1.0.44 (8/26/2021) =
+* FRAM-206 Fix Fatal Error triggered when withdrawing a custom consent
+
 = 1.0.43 (8/2/2021) =
 * FRAM-196 Change ClassiDocs Tab
 * FRAM-202 Add Missing Tables
