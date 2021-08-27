@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.3.7 - 15-08-2021 */
+/*! elementor-pro - v3.3.8 - 23-08-2021 */
 @charset "UTF-8";
 .elementor-bg-transform .elementor-bg {
   will-change: transform; }
@@ -504,23 +504,23 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 .elementor-product-rating--align-justify .woocommerce-product-rating .woocommerce-review-link {
   margin-left: auto; }
 
-.elementor-products-grid ul.products {
+.elementor-products-grid ul.products.elementor-grid {
   display: grid;
   margin: 0;
   grid-column-gap: 20px;
   grid-row-gap: 40px; }
-  .elementor-products-grid ul.products:before, .elementor-products-grid ul.products:after {
+  .elementor-products-grid ul.products.elementor-grid:before, .elementor-products-grid ul.products.elementor-grid:after {
     content: none;
     display: none; }
-  .elementor-products-grid ul.products li.product {
+  .elementor-products-grid ul.products.elementor-grid li.product {
     width: auto;
     padding: 0;
     margin: 0;
     float: none; }
-    .elementor-products-grid ul.products li.product .onsale {
+    .elementor-products-grid ul.products.elementor-grid li.product .onsale {
       padding: 0;
       display: none; }
-    .elementor-products-grid ul.products li.product a.woocommerce-loop-product__link {
+    .elementor-products-grid ul.products.elementor-grid li.product a.woocommerce-loop-product__link {
       display: block;
       position: relative; }
 
@@ -1941,6 +1941,9 @@ the source property is coming from element/dev/scss...
 .elementor-field-type-recaptcha_v3 .elementor-field-label {
   display: none; }
 
+.elementor-field-type-recaptcha_v3 .grecaptcha-badge {
+  z-index: 1; }
+
 .elementor-button .elementor-form-spinner {
   -webkit-box-ordinal-group: 4;
       -ms-flex-order: 3;
@@ -2121,7 +2124,8 @@ the source property is coming from element/dev/scss...
     list-style-type: none;
     margin: 0;
     padding: 0;
-    line-height: 1; }
+    line-height: 1;
+    color: var(--e-price-table-features-list-color); }
     .elementor-price-table .elementor-price-table__features-list li {
       font-size: 14px;
       line-height: 1;
@@ -2140,7 +2144,11 @@ the source property is coming from element/dev/scss...
       font-size: 1.3em; }
     .elementor-price-table .elementor-price-table__features-list svg {
       margin-right: 10px;
+      fill: var(--e-price-table-features-list-color);
+      height: 1.3em;
       width: 1.3em; }
+    .elementor-price-table .elementor-price-table__features-list svg ~ * {
+      vertical-align: text-top; }
   .elementor-price-table .elementor-price-table__footer {
     padding: 30px 0; }
   .elementor-price-table .elementor-price-table__additional_info {

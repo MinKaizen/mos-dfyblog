@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.3.7 - 15-08-2021 */
+/*! elementor-pro - v3.3.8 - 23-08-2021 */
 (self["webpackChunkelementor_pro"] = self["webpackChunkelementor_pro"] || []).push([["modules_carousel_assets_js_frontend_handlers_base_js"],{
 
 /***/ "../modules/carousel/assets/js/frontend/handlers/base.js":
@@ -57,8 +57,12 @@ var CarouselBase = /*#__PURE__*/function (_elementorModules$fro) {
           swiperSlide: '.swiper-slide'
         },
         slidesPerView: {
+          widescreen: 3,
           desktop: 3,
+          laptop: 3,
+          tablet_extra: 3,
           tablet: 2,
+          mobile_extra: 2,
           mobile: 1
         }
       };
@@ -371,4 +375,4 @@ exports.default = CarouselBase;
 /***/ })
 
 }]);
-//# sourceMappingURL=2674f26f7a61a076ae44.bundle.js.map
+//# sourceMappingURL=66e1effc33a6138a1bb9.bundle.js.map

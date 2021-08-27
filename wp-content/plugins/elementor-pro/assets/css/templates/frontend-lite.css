@@ -367,23 +367,23 @@ body.rtl.woocommerce-page div.product .elementor-widget-woocommerce-product-imag
 .elementor-product-rating--align-justify .woocommerce-product-rating .woocommerce-review-link {
   margin-left: auto; }
 
-.elementor-products-grid ul.products {
+.elementor-products-grid ul.products.elementor-grid {
   display: grid;
   margin: 0;
   grid-column-gap: 20px;
   grid-row-gap: 40px; }
-  .elementor-products-grid ul.products:before, .elementor-products-grid ul.products:after {
+  .elementor-products-grid ul.products.elementor-grid:before, .elementor-products-grid ul.products.elementor-grid:after {
     content: none;
     display: none; }
-  .elementor-products-grid ul.products li.product {
+  .elementor-products-grid ul.products.elementor-grid li.product {
     width: auto;
     padding: 0;
     margin: 0;
     float: none; }
-    .elementor-products-grid ul.products li.product .onsale {
+    .elementor-products-grid ul.products.elementor-grid li.product .onsale {
       padding: 0;
       display: none; }
-    .elementor-products-grid ul.products li.product a.woocommerce-loop-product__link {
+    .elementor-products-grid ul.products.elementor-grid li.product a.woocommerce-loop-product__link {
       display: block;
       position: relative; }
 

@@ -1,4 +1,4 @@
-/*! elementor-pro - v3.3.7 - 15-08-2021 */
+/*! elementor-pro - v3.3.8 - 23-08-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({});
@@ -126,8 +126,8 @@
 /******/ 			if (chunkId === "video-playlist") return "" + chunkId + ".5e558c60b53f53a24687.bundle.js";
 /******/ 			if (chunkId === "paypal-button") return "" + chunkId + ".e7bc00be6d37a75afa94.bundle.js";
 /******/ 			if (chunkId === "animated-headline") return "" + chunkId + ".c48ffcc42cf8e1937b79.bundle.js";
-/******/ 			if (chunkId === "modules_carousel_assets_js_frontend_handlers_base_js") return "2674f26f7a61a076ae44.bundle.js";
-/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".195b60e9d52641de17ef.bundle.js";
+/******/ 			if (chunkId === "modules_carousel_assets_js_frontend_handlers_base_js") return "66e1effc33a6138a1bb9.bundle.js";
+/******/ 			if (chunkId === "media-carousel") return "" + chunkId + ".d877c2cf1d33fedbe8cd.bundle.js";
 /******/ 			if (chunkId === "carousel") return "" + chunkId + ".b9b72c3f8c26e7336341.bundle.js";
 /******/ 			if (chunkId === "countdown") return "" + chunkId + ".e8b325f6654ba38a5606.bundle.js";
 /******/ 			if (chunkId === "hotspot") return "" + chunkId + ".6e5f8367844f92a2df4d.bundle.js";
