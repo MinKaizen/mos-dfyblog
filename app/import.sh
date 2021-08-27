@@ -33,6 +33,9 @@ parse_params() {
       --wmdb_license=*)
         wmdb_license="${1#*=}"
         ;;
+      --astra_license=*)
+        astra_license="${1#*=}"
+        ;;
       --name=*)
         name="${1#*=}"
         ;;
@@ -52,6 +55,7 @@ parse_params() {
 
   # check required params and arguments
   [[ -z "${wmdb_license-}" ]] && die "Missing required parameter: wmdb_license"
+  [[ -z "${astra_license-}" ]] && die "Missing required parameter: astra_license"
   [[ -z "${name-}" ]] && die "Missing required parameter: name"
   [[ -z "${email-}" ]] && die "Missing required parameter: email"
   return 0
@@ -108,6 +112,10 @@ function main() {
   # Update admin user
   msg "Updating admin user..."
   wp user update 1 --user_pass=$email --user_nicename=$name --user_email=$email --display_name=$name --nickname=$name --first_name=$name --role=administrator --skip-email
+
+  # Activate Astra license
+  msg "Activating Astra license..."
+  wp brainstormforce license activate astra-addon "$astra_license"
 
   # Clear cache
   msg "Clearing cache..."
