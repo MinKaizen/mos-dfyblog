@@ -116,6 +116,11 @@ function main() {
   msg "Activating Astra license..."
   wp brainstormforce license activate astra-addon "$astra_license"
 
+  # Remove wmdb
+  msg "Removing wmdb"
+  wp plugin deactivate --uninstall wp-migrate-db-pro
+  wp plugin deactivate --uninstall wp-migrate-db-pro-cli
+
   # Clear cache
   msg "Clearing cache..."
   wp cache flush
