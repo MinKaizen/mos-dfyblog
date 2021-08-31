@@ -27,7 +27,7 @@ class Plugin_Constants {
     // Plugin configuration constants
     const TOKEN               = 'ta';
     const INSTALLED_VERSION   = 'ta_installed_version';
-    const VERSION             = '3.10.2';
+    const VERSION             = '3.10.3';
     const TEXT_DOMAIN         = 'thirstyaffiliates';
     const THEME_TEMPLATE_PATH = 'thirstyaffiliates';
     const META_DATA_PREFIX    = '_ta_';
@@ -84,12 +84,6 @@ class Plugin_Constants {
         $this->_VIEWS_ROOT_PATH       = $this->_PLUGIN_DIR_PATH . 'views/';
         $this->_TEMPLATES_ROOT_PATH   = $this->_PLUGIN_DIR_PATH . 'templates/';
         $this->_LOGS_ROOT_PATH        = $this->_PLUGIN_DIR_PATH . 'logs/';
-
-        $this->_REDIRECT_TYPES        = apply_filters( 'ta_redirect_types' , array(
-            '301' => __( '301 Permanent' , 'thirstyaffiliates' ),
-            '302' => __( '302 Temporary' , 'thirstyaffiliates' ),
-            '307' => __( '307 Temporary (alternative)' , 'thirstyaffiliates' )
-        ) );
 
         $main_plugin->add_to_public_helpers( $this );
 
@@ -153,7 +147,11 @@ class Plugin_Constants {
     }
 
     public function REDIRECT_TYPES() {
-        return $this->_REDIRECT_TYPES;
+        return apply_filters( 'ta_redirect_types' , array(
+            '301' => __( '301 Permanent' , 'thirstyaffiliates' ),
+            '302' => __( '302 Temporary' , 'thirstyaffiliates' ),
+            '307' => __( '307 Temporary (alternative)' , 'thirstyaffiliates' )
+        ) );
     }
 
     // HTAccess Module
