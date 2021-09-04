@@ -151,8 +151,8 @@ if ( ! function_exists( 'astra_get_font_css_value' ) ) {
 	 */
 	function astra_get_font_css_value( $value, $unit = 'px', $device = 'desktop' ) {
 
-		// If value is empty or 0 then return blank.
-		if ( '' == $value || 0 == $value ) {
+		// If value is empty then return blank.
+		if ( '' == $value || ( 0 == $value && ! astra_zero_font_size_case() ) ) {
 			return '';
 		}
 
@@ -1524,3 +1524,16 @@ function is_astra_pagination_enabled() {
 function is_current_post_comment_enabled() {
 	return ( is_singular() && comments_open() );
 }
+
+/**
+ * Dont apply zero size to existing user.
+ *
+ * @since 3.6.9
+ * @return boolean false if it is an existing user , true if not.
+ */
+function astra_zero_font_size_case() {
+	$astra_settings                                  = get_option( ASTRA_THEME_SETTINGS );
+	$astra_settings['astra-zero-font-size-case-css'] = isset( $astra_settings['astra-zero-font-size-case-css'] ) ? false : true;
+	return apply_filters( 'astra_zero_font_size_case', $astra_settings['astra-zero-font-size-case-css'] );
+}
+

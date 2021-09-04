@@ -135,10 +135,58 @@ if ( ! class_exists( 'Astra_Customizer' ) ) {
 
 			add_action( 'customize_register', array( $this, 'customize_register_panel' ), 2 );
 			add_action( 'customize_register', array( $this, 'customize_register' ) );
+			add_action( 'customize_register', array( $this, 'customize_register_site_icon' ), 20 );
 			add_action( 'customize_save_after', array( $this, 'customize_save' ) );
 			add_action( 'customize_save_after', array( $this, 'delete_cached_partials' ) );
 			add_action( 'wp_head', array( $this, 'preview_styles' ) );
 			add_action( 'wp_ajax_astra_regenerate_fonts_folder', array( $this, 'regenerate_astra_fonts_folder' ) );
+		}
+
+		/**
+		 * Add site icon control in the site identity panel.
+		 *
+		 * @access public
+		 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+		 * @return void
+		 *
+		 * @since 3.6.9
+		 */
+		public function customize_register_site_icon( $wp_customize ) {
+
+			/** @psalm-suppress RedundantConditionGivenDocblockType */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+			if ( true !== Astra_Builder_Helper::$is_header_footer_builder_active ) {
+				/** @psalm-suppress RedundantConditionGivenDocblockType */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				return;
+			}
+
+			$panel_arr = array(
+				'priority'       => 80,
+				'capability'     => 'edit_theme_options',
+				'theme_supports' => '',
+				'title'          => 'Site Identity',
+				'description'    => '',
+			);
+			// Register panel.
+			$wp_customize->add_panel( 'astra-site-identity', $panel_arr );
+
+			$section_arr = array(
+				'priority'       => 80,
+				'capability'     => 'edit_theme_options',
+				'theme_supports' => '',
+				'title'          => 'Site Identity',
+				'description'    => '',
+			);
+
+			// Register Section.
+			$wp_customize->add_section( 'astra-site-identity', $section_arr );
+
+			/** @psalm-suppress PossiblyNullPropertyAssignment */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+			$wp_customize->get_control( 'site_icon' )->section = 'astra-site-identity';
+			/** @psalm-suppress PossiblyNullPropertyAssignment */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+
+			/** @psalm-suppress PossiblyNullPropertyAssignment */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+			$wp_customize->get_control( 'site_icon' )->description = __( 'Site Icons are what you see in browser tabs, bookmark bars, and within the WordPress mobile apps. Upload one here! Site Icons should be square and at least 512 × 512 pixels.', 'astra' );
+			/** @psalm-suppress PossiblyNullPropertyAssignment */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 		}
 
 		/**

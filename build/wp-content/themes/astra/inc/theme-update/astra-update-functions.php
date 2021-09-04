@@ -3074,15 +3074,17 @@ function astra_transparent_header_default_value() {
  * @return void.
  */
 function astra_clear_all_assets_cache() {
-	if ( class_exists( 'Astra_Cache_Base' ) ) {
-		// Clear Astra theme cache.
-		$astra_cache_base_instance = new Astra_Cache_Base( 'astra' );
-		$astra_cache_base_instance->refresh_assets( 'astra' );
-
-		// Clear Astra Addon's cache.
-		$astra_addon_cache_base_instance = new Astra_Cache_Base( 'astra-addon' );
-		$astra_addon_cache_base_instance->refresh_assets( 'astra-addon' );
+	if ( ! class_exists( 'Astra_Cache_Base' ) ) {
+		return;
 	}
+	// Clear Astra theme asset cache.
+	$astra_cache_base_instance = new Astra_Cache_Base( 'astra' );
+	$astra_cache_base_instance->refresh_assets( 'astra' );
+
+	// Clear Astra Addon's static and dynamic CSS asset cache.
+	astra_clear_assets_cache();
+	$astra_addon_cache_base_instance = new Astra_Cache_Base( 'astra-addon' );
+	$astra_addon_cache_base_instance->refresh_assets( 'astra-addon' );
 }
 
 /**
@@ -3176,4 +3178,63 @@ function astra_set_removal_widget_design_options_flag() {
 		$theme_options['remove-widget-design-options'] = false;
 		update_option( 'astra-settings', $theme_options );
 	}
+}
+
+/**
+ * Apply zero font size for new users.
+ *
+ * @since 3.6.9
+ * @return void
+ */
+function astra_zero_font_size_comp() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['astra-zero-font-size-case-css'] ) ) {
+		$theme_options['astra-zero-font-size-case-css'] = false;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/** Set flag to avoid direct reflections on live site & to maintain backward compatibility for existing users.
+ *
+ * @since 3.6.9
+ * @return void
+ */
+function astra_unset_builder_elements_underline() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['unset-builder-elements-underline'] ) ) {
+		$theme_options['unset-builder-elements-underline'] = false;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/**
+ * Migrating Builder > Account > transparent resonsive menu color options to single color options.
+ * Because we do not show menu on resonsive devices, whereas we trigger login link on responsive devices instead of showing menu.
+ *
+ * @since 3.6.9
+ *
+ * @return void
+ */
+function astra_remove_responsive_account_menu_colors_support() {
+
+	$theme_options = get_option( 'astra-settings', array() );
+
+	$account_menu_colors = array(
+		'transparent-account-menu-color',                // Menu color.
+		'transparent-account-menu-bg-obj',               // Menu background color.
+		'transparent-account-menu-h-color',              // Menu hover color.
+		'transparent-account-menu-h-bg-color',           // Menu background hover color.
+		'transparent-account-menu-a-color',              // Menu active color.
+		'transparent-account-menu-a-bg-color',           // Menu background active color.
+	);
+
+	foreach ( $account_menu_colors as $color_option ) {
+		if ( ! isset( $theme_options[ $color_option ] ) && isset( $theme_options[ $color_option . '-responsive' ]['desktop'] ) ) {
+			$theme_options[ $color_option ] = $theme_options[ $color_option . '-responsive' ]['desktop'];
+		}
+	}
+
+	update_option( 'astra-settings', $theme_options );
 }

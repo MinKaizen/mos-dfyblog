@@ -156,7 +156,7 @@ if ( ! class_exists( 'Astra_Enqueue_Scripts' ) ) {
 					),
 				);
 
-				if ( defined( 'ASTRA_EXT_VER' ) ) {
+				if ( defined( 'ASTRA_EXT_VER' ) && version_compare( ASTRA_EXT_VER, '3.5.9', '<' ) ) {
 					$default_assets['js']['astra-theme-js-pro'] = 'frontend-pro';
 				}
 

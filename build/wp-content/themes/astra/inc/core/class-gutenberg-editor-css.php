@@ -312,15 +312,13 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 				),
 			);
 
+			$background_style_data = astra_get_responsive_background_obj( $box_bg_obj, 'desktop' );
+			if ( empty( $background_style_data ) ) {
+				$background_style_data = array(
+					'background-color' => '#ffffff',
+				);
+			}
 			if ( astra_wp_version_compare( '5.7', '>=' ) ) {
-				$base_background_color = astra_get_responsive_background_obj( $box_bg_obj, 'desktop' );
-				if ( empty( $base_background_color ) ) {
-					$background_style_data = array(
-						'background-color' => '#ffffff',
-					);
-				} else {
-					$background_style_data = $base_background_color;
-				}
 
 				$desktop_css['.edit-post-visual-editor']                            = array(
 					'padding'     => '20px',
@@ -353,6 +351,10 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 				$desktop_css['.ast-page-builder-template .editor-styles-wrapper .block-editor-writing-flow, .ast-plain-container .editor-styles-wrapper .block-editor-writing-flow, #editor .edit-post-visual-editor'] = $background_style_data;
 			}
 
+			if ( astra_wp_version_compare( '5.8', '>=' ) ) {
+				$desktop_css['.ast-page-builder-template .editor-styles-wrapper, .ast-plain-container .editor-styles-wrapper'] = $background_style_data;
+			}
+
 			if ( ( ( ! in_array( 'single-title-meta', $single_post_title ) ) && ( 'post' === get_post_type() ) ) || ( 'disabled' === $title_enabled_from_meta ) ) {
 				$destop_title_css = array(
 					'.editor-post-title__block' => array(
@@ -367,6 +369,14 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 			if ( $content_links_underline ) {
 				$desktop_css['.edit-post-visual-editor a'] = array(
 					'text-decoration' => 'underline',
+				);
+
+				$reset_underline_from_anchors = Astra_Dynamic_CSS::unset_builder_elements_underline();
+
+				$excluding_anchor_selectors = $reset_underline_from_anchors ? '.edit-post-visual-editor a.uagb-tabs-list, .edit-post-visual-editor .uagb-ifb-cta a, .edit-post-visual-editor a.uagb-marketing-btn__link, .edit-post-visual-editor .uagb-post-grid a, .edit-post-visual-editor .uagb-toc__wrap a, .edit-post-visual-editor .uagb-taxomony-box a, .edit-post-visual-editor .uagb_review_block a' : '';
+
+				$desktop_css[ $excluding_anchor_selectors ] = array(
+					'text-decoration' => 'none',
 				);
 			}
 
