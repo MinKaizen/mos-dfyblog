@@ -1,4 +1,4 @@
-/*! elementor - v3.4.3 - 30-08-2021 */
+/*! elementor - v3.4.4 - 13-09-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -13698,6 +13698,8 @@ var EditorBase = /*#__PURE__*/function (_Marionette$Applicati) {
         }
 
         devices.forEach(function (device, index) {
+          var _controlArgs$popover;
+
           var controlArgs = elementorCommon.helpers.cloneObject(controlConfig);
 
           if (controlArgs.device_args) {
@@ -13748,8 +13750,15 @@ var EditorBase = /*#__PURE__*/function (_Marionette$Applicati) {
           } else if (deleteControlDefault) {
             // In the Editor, controls without default values should have an empty string as the default value.
             controlArgs.default = '';
-          } // If the control belongs to a group control with a popover, and this control is the last one, add the
-          // popover.end = true value to it to make sure it closes the popover.
+          } // If the control is the first inside a popover, only the first device starts the popover,
+          // so the 'start' property has to be deleted from all other devices.
+
+
+          if (0 !== index && (_controlArgs$popover = controlArgs.popover) !== null && _controlArgs$popover !== void 0 && _controlArgs$popover.start) {
+            delete controlArgs.popover.start;
+          } // If the control is inside a popover, AND this control is the last one in the popover, AND this is the
+          // last device in the devices array - add the 'popover.end = true' value to it to make sure it closes
+          // the popover.
 
 
           if (index === devices.length - 1 && popoverEndProperty) {

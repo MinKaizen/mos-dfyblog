@@ -1,4 +1,4 @@
-/*! elementor - v3.4.3 - 30-08-2021 */
+/*! elementor - v3.4.4 - 13-09-2021 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["frontend"],{
 
 /***/ "../assets/dev/js/frontend/documents-manager.js":

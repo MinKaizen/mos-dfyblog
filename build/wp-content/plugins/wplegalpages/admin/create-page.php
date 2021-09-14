@@ -183,27 +183,128 @@ if ( $countof_pages[0]->cntPages < $max_limit ) {
 		<?php
 
 		$result = $wpdb->get_results( $wpdb->prepare( 'select * from ' . $lp_obj->tablename . ' where `is_active`=%d ORDER BY `id`', array( 1 ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		$tooltip_texts = array(
+			'kCjTeYOZxB'    => 'If you collect any personal data from users',
+			'1r4X6y8tssz0j' => 'To limit your liability to copyright infringement claims',
+			'n1bmPjZ6Xj'    => 'If you want to protect your business',
+			'JRevVk8nkP'    => 'If you are collecting personal data and have California based users',
+			'B8wltvJ4cB'    => "Use when you don't want your users to proceed without agreeing to website terms",
+			'wOHnKlLcmo'    => 'If you have California based users and want to give them clarity on disclosure of personal information.',
+			'J5GdjXkOYs'    => 'To limit your legal liability if your website is promoting strategies and programs to help users make money',
+			'Xq8I33kdBD'    => 'To limit your legal liability and keep your users informed',
+			'ICdlpogo8O'    => 'Use this if your website displays user reviews or endorsements',
+			'HCdw9KSLn8'    => 'Use this policy to inform the users about the terms and conditions for linking to your website and disclaimers for external linking.',
+			'R4CiGI3sJ4'    => 'Suitable for most eCommerce businesses which need a standard policy',
+			'SVwyhB4wbf'    => 'For downloadable, licensed, or subscription based services. Eg- Software, Music, e-Books',
+			'sfjX0CxRCV'    => 'For physical items which needs shipping like apparels, shoes, books etc',
+			'hFrxQomrZM'    => 'For easily perishable items like food, that have a short lifespan',
+			'NCknfH8jrd'    => 'If your store doesn’t give any refunds',
+			'uxygs19AsJ'    => 'For a legal contract between you and your affiliates who promote your products/services',
+			'9nEm1Jy29P'    => 'If you are an individual/business that uses email for advertising or promoting something',
+			'dbLy6a8FAx'    => 'If you have a website and have affiliate partners, you should declare your website’s compliance with the Federal Trade Commission policies',
+			'3ILrb9ARfX'    => 'To comply with Amazon’s affiliate program requirements (if you promote products listed on amazon)',
+			'EdNSxwT2eB'    => 'To notify users if your website or blog is using any Double Click Dart Cookie',
+			'GsnkrA9R91'    => 'If your website links to other external websites, you can use this to ensure that the external links are in compliance with the applicable laws.',
+			'TwiV64Z4y1'    => 'To inform your audience about your affiliate relationships with brands, products, or companies that you publicly recommend',
+			'Q9ytZuRIgJ'    => 'If you are collecting any personal data from your page through a call to action (such as email addresses for your mailing list),',
+			'J2tfsnhta5'    => 'To display your contact and mailing information',
+			'3PjAe6pJUc'    => 'Use when you have comments enabled on your blog',
+			'Kp726GRpYC'    => 'To inform users about the cookies active on your website that track user data',
+			'EfjpLEnTzv'    => 'Use when you have visitors from the EU & are using cookies on your website',
+			'LuXcsW5oIn'    => 'To protect confidential and proprietary information displayed on your website',
+			'EfjpLEnTzv'    => 'Use when you have visitors from the EU & are using cookies on your website',
+			'RLlofiRSgd'    => 'To imply that the information on your website is not intended to be a substitute for professional medical advice, diagnosis, or treatment',
+			'5o3hglUfDr'    => 'If you are collecting personal information on your website from children below 13 years in age',
+			'52ahHjKsVH'    => 'If you are using an email newsletter service and collect personal information like email id from your subscribers',
+			'6x5434Xdu7'    => 'Use when your website collects personal information and has visitors from the EU.',
+		);
+
+		$refund_start  = false;
+		$refund_end   = false;
+
 		foreach ( $result as $ras ) {
-			if ( strpos( $ras->title, 'FR' ) !== false ) {
-				if ( 'fr' === $template_lang ) :
+
+			if ( get_option( 'wplegalpages_pro_version' ) && version_compare( get_option( 'wplegalpages_pro_version' ), '8.1.8' ) >= 0 ) {
+				if ( ! $refund_start && strpos( $ras->title, 'Refund' ) !== false ) {
+					$_GET['page'] = 'returns_refunds_policy';
 					?>
-					<li class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php else : ?>
-					<li style="display:none;" class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php endif; ?>
-			<?php } elseif ( strpos( $ras->title, 'DE' ) !== false ) { ?>
-				<?php if ( 'de' === $template_lang ) : ?>
-					<li class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php else : ?>
-					<li style="display:none;" class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php endif; ?>
-			<?php } else { ?>
-				<?php if ( 'eng' === $template_lang ) : ?>
-					<li class="wplegal-template-eng"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php else : ?>
-					<li style="display:none;" class="wplegal-template-eng"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
-				<?php endif; ?>
-				<?php
+					<li class="wplegal-template-eng wplegal-accordian" id="wplegal_accordian"><span><a class="myLink" > Returns and Refunds Policy </a></span></li>
+	
+					<div class="wplegal-refund-list" id="wplegal_refund_list" style="display : none">
+	
+						<li class="wplegal-template-fr"><span><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>index.php?page=wplegal-wizard#/">Use Guided Wizard
+									<span class="wplegal-tooltip"><span class="dashicons dashicons-info"></span>
+										<span class="wplegal-tooltiptext">Easy Q&A wizard to help you customize your policy as per your business</span>
+									</span>
+								</a></span></li>
+					<?php
+					$refund_start = true;
+				}
+	
+				if ( $refund_start && ! $refund_end && strpos( $ras->title, 'Refund' ) === false ) {
+					?>
+					</div>
+					<?php
+					$refund_end = true;
+				}
+	
+				if ( strpos( $ras->title, 'Returns and Refunds Policy' ) !== false ) {
+					$ras->title = str_replace( 'Returns and Refunds Policy:', '', $ras->title );
+				}
+	
+				if ( strpos( $ras->title, 'FR' ) !== false ) {
+					if ( 'fr' === $template_lang ) :
+						?>
+						<li class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+				<?php } elseif ( strpos( $ras->title, 'DE' ) !== false ) { ?>
+					<?php if ( 'de' === $template_lang ) : ?>
+						<li class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+				<?php } else { ?>
+					<?php if ( 'eng' === $template_lang ) : ?>
+						<li class="wplegal-template-eng "><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink " href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?>
+							<?php
+							if ( array_key_exists( $ras->contentfor, $tooltip_texts ) ) {
+								?>
+								<span class="wplegal-tooltip"><span class="dashicons dashicons-info"></span>
+									<span class="wplegal-tooltiptext"><?php echo esc_attr( $tooltip_texts[ $ras->contentfor ] ); ?></span>
+								</span>
+							</a></span></li>
+								<?php
+							}
+							?>	
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-eng"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+					<?php
+				}
+			} else {
+				if ( strpos( $ras->title, 'FR' ) !== false ) {
+					if ( 'fr' === $template_lang ) :
+						?>
+						<li class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-fr"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=fr&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+				<?php } elseif ( strpos( $ras->title, 'DE' ) !== false ) { ?>
+					<?php if ( 'de' === $template_lang ) : ?>
+						<li class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-de"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=de&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+				<?php } else { ?>
+					<?php if ( 'eng' === $template_lang ) : ?>
+						<li class="wplegal-template-eng "><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink " href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?></a></span></li>
+					<?php else : ?>
+						<li style="display:none;" class="wplegal-template-eng"><span id="legalpages<?php echo esc_attr( $ras->id ); ?>"><a class="myLink" href="<?php echo esc_url( admin_url() ); ?>admin.php?page=<?php echo esc_attr( $current_page ); ?>&lp-template-lang=eng&lp-type=<?php echo esc_attr( $lptype ); ?>&lp-template=<?php echo esc_attr( $ras->id ); ?>"><?php echo esc_attr( $ras->title ); ?> &raquo;</a></span></li>
+					<?php endif; ?>
+					<?php
+				}
 			}
 		}
 		?>
