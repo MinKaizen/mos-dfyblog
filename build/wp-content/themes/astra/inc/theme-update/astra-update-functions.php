@@ -55,7 +55,7 @@ function astra_vertical_horizontal_padding_migration() {
 
 	$btn_vertical_padding   = isset( $theme_options['button-v-padding'] ) ? $theme_options['button-v-padding'] : 10;
 	$btn_horizontal_padding = isset( $theme_options['button-h-padding'] ) ? $theme_options['button-h-padding'] : 40;
-
+	/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	if ( false === astra_get_db_option( 'theme-button-padding', false ) ) {
 
 		// Migrate button vertical padding to the new padding param for button.
@@ -3162,6 +3162,27 @@ function astra_remove_elementor_toc_margin() {
 		$theme_options['remove-elementor-toc-margin-css'] = false;
 		update_option( 'astra-settings', $theme_options );
 	}
+}
+
+/**
+ * Link default color compatibility.
+ *
+ * @since 3.7.0
+ * @return void
+ */
+function astra_global_color_compatibility() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['support-global-color-format'] ) ) {
+		$theme_options['support-global-color-format'] = false;
+	}
+
+	// Set Footer copyright text color for existing users to #3a3a3a.
+	if ( ! isset( $theme_options['footer-copyright-color'] ) ) {
+		$theme_options['footer-copyright-color'] = '#3a3a3a';
+	}
+
+	update_option( 'astra-settings', $theme_options );
 }
 
 /**

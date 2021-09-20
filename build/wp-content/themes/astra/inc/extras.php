@@ -316,19 +316,6 @@ function astra_attr( $context, $attributes = array(), $args = array() ) {
 }
 
 /**
- * Check the WordPress version.
- *
- * @since  2.5.4
- * @param string $version   WordPress version to compare with the current version.
- * @param string $compare   Comparison value i.e > or < etc.
- * @return bool            True/False based on the  $version and $compare value.
- */
-function astra_wp_version_compare( $version, $compare ) {
-
-	return version_compare( get_bloginfo( 'version' ), $version, $compare );
-}
-
-/**
  * Get the theme author details
  *
  * @since  3.1.0
@@ -577,6 +564,16 @@ function astra_target_rules_for_related_posts() {
 }
 
 /**
+ * Check if elementor plugin is active on the site.
+ *
+ * @since 3.7.0
+ * @return bool
+ */
+function astra_is_elemetor_active() {
+	return class_exists( '\Elementor\Plugin' );
+}
+
+/**
  * Check the Astra addon 3.5.0 version is using or not.
  * As this is major update and frequently we used version_compare, added a function for this for easy maintenance.
  *
@@ -599,6 +596,7 @@ function is_astra_addon_3_5_0_version() {
 function ast_get_webfont_url( $url, $format = 'woff2' ) {
 
 	// Check if already Google font URL present or not. Basically avoiding 'Astra_WebFont_Loader' class rendering.
+	/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	$astra_font_url = astra_get_option( 'astra_font_url', false );
 	if ( $astra_font_url ) {
 		return json_decode( $astra_font_url );
@@ -649,6 +647,18 @@ function astra_get_transparent_header_default_value() {
 }
 
 /**
+ * Check compatibility for content background and typography options. 
+ *
+ * @since 3.7.0
+ */
+function astra_has_gcp_typo_preset_compatibility() {
+	if ( defined( 'ASTRA_EXT_VER' ) && version_compare( ASTRA_EXT_VER, '3.6.0', '<' ) ) {
+		return false;
+	}
+	return true;
+}
+
+/**
  * Check whether user is exising or new to apply the updated default values for button padding & support GB button paddings with global button padding options.
  *
  * @since 3.6.3
@@ -687,6 +697,18 @@ function astra_can_remove_elementor_toc_margin_space() {
 }
 
 /**
+ * This will check if user is new and apply global color format. This is to manage backward compatibility for colors.
+ *
+ * @since 3.7.0
+ * @return boolean false if it is an existing user, true for new user.
+ */
+function astra_has_global_color_format_support() {
+	$astra_settings                                = get_option( ASTRA_THEME_SETTINGS );
+	$astra_settings['support-global-color-format'] = isset( $astra_settings['support-global-color-format'] ) ? false : true;
+	return apply_filters( 'astra_apply_global_color_format_support', $astra_settings['support-global-color-format'] );
+}
+
+/**
  * Check whether widget specific config, dynamic CSS, preview JS needs to remove or not. Following cases considered while implementing this.
  *
  * 1. Is user is from old Astra setup.
@@ -721,6 +743,26 @@ function astra_remove_widget_design_options() {
 	}
 
 	return apply_filters( 'astra_remove_widget_design_options', $is_widget_design_sections_hidden );
+}
+
+/**
+ * Get Global Color Palettes
+ *
+ * @return array color palettes array.
+ * @since 3.7.0
+ */
+function astra_get_palette_colors() {
+	return get_option( 'astra-color-palettes', Astra_Global_Palette::get_default_color_palette() );
+}
+
+/**
+ * Get typography presets data.
+ *
+ * @return array Typography Presets data array.
+ * @since 3.7.0
+ */
+function astra_get_typography_presets() {
+	return get_option( 'astra-typography-presets', '' );
 }
 
 /**

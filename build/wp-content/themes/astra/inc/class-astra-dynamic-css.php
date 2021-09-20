@@ -80,10 +80,11 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 			$box_bg_obj = astra_get_option( 'site-layout-outside-bg-obj-responsive' );
 
 			// Color Options.
-			$text_color       = astra_get_option( 'text-color' );
-			$theme_color      = astra_get_option( 'theme-color' );
-			$link_color       = astra_get_option( 'link-color', $theme_color );
-			$link_hover_color = astra_get_option( 'link-h-color' );
+			$text_color         = astra_get_option( 'text-color' );
+			$theme_color        = astra_get_option( 'theme-color' );
+			$link_color         = astra_get_option( 'link-color', $theme_color );
+			$link_hover_color   = astra_get_option( 'link-h-color' );
+			$heading_base_color = astra_get_option( 'heading-base-color' );
 
 			// Typography.
 			$body_font_size          = astra_get_option( 'font-size-body' );
@@ -126,6 +127,21 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 			$h3_font_weight    = astra_get_option( 'font-weight-h3' );
 			$h3_line_height    = astra_get_option( 'line-height-h3' );
 			$h3_text_transform = astra_get_option( 'text-transform-h3' );
+
+			$h4_font_family    = '';
+			$h4_font_weight    = '';
+			$h4_line_height    = '';
+			$h4_text_transform = '';
+
+			$h5_font_family    = '';
+			$h5_font_weight    = '';
+			$h5_line_height    = '';
+			$h5_text_transform = '';
+
+			$h6_font_family    = '';
+			$h6_font_weight    = '';
+			$h6_line_height    = '';
+			$h6_text_transform = '';
 
 			$is_widget_title_support_font_weight = self::support_font_css_to_widget_and_in_editor();
 			$font_weight_prop                    = ( $is_widget_title_support_font_weight ) ? 'inherit' : 'normal';
@@ -180,6 +196,57 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 
 			// Fallback for H6 - headings typography.
 			$h6_line_height = $headings_line_height;
+
+			if ( astra_has_gcp_typo_preset_compatibility() ) {
+
+				$h4_font_family    = astra_get_option( 'font-family-h4' );
+				$h4_font_weight    = astra_get_option( 'font-weight-h4' );
+				$h4_line_height    = astra_get_option( 'line-height-h4' );
+				$h4_text_transform = astra_get_option( 'text-transform-h4' );
+
+				$h5_font_family    = astra_get_option( 'font-family-h5' );
+				$h5_font_weight    = astra_get_option( 'font-weight-h5' );
+				$h5_line_height    = astra_get_option( 'line-height-h5' );
+				$h5_text_transform = astra_get_option( 'text-transform-h5' );
+
+				$h6_font_family    = astra_get_option( 'font-family-h6' );
+				$h6_font_weight    = astra_get_option( 'font-weight-h6' );
+				$h6_line_height    = astra_get_option( 'line-height-h6' );
+				$h6_text_transform = astra_get_option( 'text-transform-h6' );
+
+				// Fallback for H4 - headings typography.
+				if ( 'inherit' == $h4_font_family ) {
+					$h4_font_family = $headings_font_family;
+				}
+				if ( $font_weight_prop === $h4_font_weight ) {
+					$h4_font_weight = $headings_font_weight;
+				}
+				if ( '' == $h4_text_transform ) {
+					$h4_text_transform = $headings_font_transform;
+				}
+
+				// Fallback for H5 - headings typography.
+				if ( 'inherit' == $h5_font_family ) {
+						$h5_font_family = $headings_font_family;
+				}
+				if ( $font_weight_prop === $h5_font_weight ) {
+					$h5_font_weight = $headings_font_weight;
+				}
+				if ( '' == $h5_text_transform ) {
+					$h5_text_transform = $headings_font_transform;
+				}
+
+				// Fallback for H6 - headings typography.
+				if ( 'inherit' == $h6_font_family ) {
+						$h6_font_family = $headings_font_family;
+				}
+				if ( $font_weight_prop === $h6_font_weight ) {
+					$h6_font_weight = $headings_font_weight;
+				}
+				if ( '' == $h6_text_transform ) {
+					$h6_text_transform = $headings_font_transform;
+				}
+			}
 
 			// Button Styling.
 			$btn_border_radius     = astra_get_option( 'button-radius' );
@@ -280,7 +347,24 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 			if ( empty( $btn_text_hover_color ) ) {
 				$btn_text_hover_color = astra_get_foreground_color( $link_hover_color );
 			}
-			$btn_bg_color       = astra_get_option( 'button-bg-color', $theme_color );
+			$btn_bg_color     = astra_get_option( 'button-bg-color', $theme_color );
+			$btn_preset_style = astra_get_option( 'button-preset-style' );
+
+			if ( 'button_04' === $btn_preset_style || 'button_05' === $btn_preset_style || 'button_06' === $btn_preset_style ) {
+
+				if ( empty( $btn_border_color ) ) {
+					$btn_border_color = $btn_bg_color;
+				}
+
+				if ( '' === astra_get_option( 'button-bg-color' ) && '' === astra_get_option( 'button-color' ) ) {
+					$btn_text_color = $theme_color;
+				} elseif ( '' === astra_get_option( 'button-color' ) ) {
+						$btn_text_color = $btn_bg_color;
+				}
+
+				$btn_bg_color = 'transparent';
+			}
+
 			$btn_bg_hover_color = astra_get_option( 'button-bg-h-color', $link_hover_color );
 
 			if ( false === Astra_Builder_Helper::$is_header_footer_builder_active ) {
@@ -302,7 +386,7 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 			$blog_max_width                         = astra_get_option( 'blog-max-width' );
 			$mobile_header_toggle_btn_style_color   = astra_get_option( 'mobile-header-toggle-btn-style-color', $btn_bg_color );
 			$mobile_header_toggle_btn_border_radius = astra_get_option( 'mobile-header-toggle-btn-border-radius' );
-
+			/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 			$btn_style_color = astra_get_option( 'mobile-header-toggle-btn-style-color', false );
 
 			if ( ! $btn_style_color ) {
@@ -325,6 +409,50 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 			}
 			// check the selection color incase of empty/no theme color.
 			$selection_text_color = ( 'transparent' === $highlight_theme_color ) ? '' : $highlight_theme_color;
+
+			$h4_properties = array(
+				'font-size'   => astra_responsive_font( $heading_h4_font_size, 'desktop' ),
+				'line-height' => esc_attr( $headings_line_height ),
+			);
+
+			$h5_properties = array(
+				'font-size'   => astra_responsive_font( $heading_h5_font_size, 'desktop' ),
+				'line-height' => esc_attr( $headings_line_height ),
+			);
+
+			$h6_properties = array(
+				'font-size'   => astra_responsive_font( $heading_h6_font_size, 'desktop' ),
+				'line-height' => esc_attr( $headings_line_height ),
+			);
+
+			if ( astra_has_gcp_typo_preset_compatibility() ) {
+				$h4_font_properties = array(
+					'font-weight'    => astra_get_css_value( $h4_font_weight, 'font' ),
+					'font-family'    => astra_get_css_value( $h4_font_family, 'font' ),
+					'text-transform' => esc_attr( $h4_text_transform ),
+					'line-height'    => esc_attr( $h4_line_height ),
+				);
+
+				$h4_properties = array_merge( $h4_properties, $h4_font_properties );
+
+				$h5_font_properties = array(
+					'font-weight'    => astra_get_css_value( $h5_font_weight, 'font' ),
+					'font-family'    => astra_get_css_value( $h5_font_family, 'font' ),
+					'text-transform' => esc_attr( $h5_text_transform ),
+					'line-height'    => esc_attr( $h5_line_height ),
+				);
+
+				$h5_properties = array_merge( $h5_properties, $h5_font_properties );
+
+				$h6_font_properties = array(
+					'font-weight'    => astra_get_css_value( $h6_font_weight, 'font' ),
+					'font-family'    => astra_get_css_value( $h6_font_family, 'font' ),
+					'text-transform' => esc_attr( $h6_text_transform ),
+					'line-height'    => esc_attr( $h6_line_height ),
+				);
+
+				$h6_properties = array_merge( $h6_properties, $h6_font_properties );
+			}
 
 			$css_output = array(
 
@@ -434,28 +562,19 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 				self::conditional_headings_css_selectors(
 					'h4, .entry-content h4, .entry-content h4 a',
 					'h4, .entry-content h4'
-				)                                        => array(
-					'font-size'   => astra_responsive_font( $heading_h4_font_size, 'desktop' ),
-					'line-height' => esc_attr( $h4_line_height ),
-				),
+				)                                        => $h4_properties,
 
 				// Conditionally select the css selectors with or without achors.
 				self::conditional_headings_css_selectors(
 					'h5, .entry-content h5, .entry-content h5 a',
 					'h5, .entry-content h5'
-				)                                        => array(
-					'font-size'   => astra_responsive_font( $heading_h5_font_size, 'desktop' ),
-					'line-height' => esc_attr( $h5_line_height ),
-				),
+				)                                        => $h5_properties,
 
 				// Conditionally select the css selectors with or without achors.
 				self::conditional_headings_css_selectors(
 					'h6, .entry-content h6, .entry-content h6 a',
 					'h6, .entry-content h6'
-				)                                        => array(
-					'font-size'   => astra_responsive_font( $heading_h6_font_size, 'desktop' ),
-					'line-height' => esc_attr( $h6_line_height ),
-				),
+				)                                        => $h6_properties,
 
 				'.ast-single-post .entry-title, .page-title' => array(
 					'font-size' => astra_responsive_font( $single_post_title_font_size, 'desktop' ),
@@ -515,11 +634,6 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 					'color' => astra_adjust_brightness( $text_color, 75, 'darken' ),
 				),
 
-				// Widget Title.
-				'.widget-title'                          => array(
-					'font-size' => astra_get_font_css_value( (int) $body_font_size_desktop * 1.428571429 ),
-					'color'     => esc_attr( $text_color ),
-				),
 				'#cat option, .secondary .calendar_wrap thead a, .secondary .calendar_wrap thead a:visited' => array(
 					'color' => esc_attr( $link_color ),
 				),
@@ -544,6 +658,18 @@ if ( ! class_exists( 'Astra_Dynamic_CSS' ) ) {
 					'border-radius' => ( '' !== $mobile_header_toggle_btn_border_radius ) ? esc_attr( $mobile_header_toggle_btn_border_radius ) . 'px' : '',
 				),
 
+			);
+
+			if ( astra_has_global_color_format_support() ) {
+				$css_output['.ast-archive-title'] = array(
+					'color' => esc_attr( $heading_base_color ),
+				);
+			}
+
+			// Default widget title color.
+			$css_output['.widget-title'] = array(
+				'font-size' => astra_get_font_css_value( (int) $body_font_size_desktop * 1.428571429 ),
+				'color'     => astra_has_global_color_format_support() ? esc_attr( $heading_base_color ) : esc_attr( $text_color ),
 			);
 
 			// Remove this condition after 2-3 updates of add-on.

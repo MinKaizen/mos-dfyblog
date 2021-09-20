@@ -184,6 +184,7 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 				'html'                                    => array(
 					'font-size' => astra_get_font_css_value( (int) $body_font_size_desktop * 6.25, '%' ),
 				),
+				':root'                                   => Astra_Global_Palette::generate_global_palette_style(),
 				'a'                                       => array(
 					'color' => esc_attr( $link_color ),
 				),
@@ -949,6 +950,27 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 				),
 			);
 
+			$boxed_container_tablet = array();
+			$boxed_container_mobile = array();
+
+			if ( astra_has_gcp_typo_preset_compatibility() ) {
+
+				$content_bg_obj         = astra_get_option( 'content-bg-obj-responsive' );
+				$boxed_container_mobile = array();
+				$boxed_container_tablet = array();
+
+				$boxed_container['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'desktop' );
+
+				$boxed_container_tablet['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'tablet' );
+
+				$boxed_container_mobile['.ast-separate-container .block-editor-writing-flow, .ast-max-width-layout.ast-plain-container .edit-post-visual-editor .block-editor-writing-flow'] = astra_get_responsive_background_obj( $content_bg_obj, 'mobile' );
+
+				/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				$css .= astra_parse_css( $boxed_container_tablet, '', astra_get_tablet_breakpoint() );
+				/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				$css .= astra_parse_css( $boxed_container_mobile, '', astra_get_mobile_breakpoint() );
+			}
+
 			$css .= astra_parse_css( $boxed_container );
 
 			// Manage the extra padding applied in the block inster preview of blocks.
@@ -1025,6 +1047,7 @@ if ( ! class_exists( 'Gutenberg_Editor_CSS' ) ) :
 				),
 			);
 
+			/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 			$css .= astra_parse_css( $ast_gtn_mobile_css, '', astra_get_mobile_breakpoint() );
 
 			if ( astra_wp_version_compare( '5.4.99', '>=' ) ) {
