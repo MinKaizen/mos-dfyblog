@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col">
       <div class="col_image" style="background-image:url('<?= gdpr('config')->get('plugin.url'); ?>/assets/1.png');"></div>
-      <a class="button button-primary" href="<?= gdpr('helpers')->docs('wordpress-site-owners-guide-to-gdpr/'); ?>" target="_blank">
+      <a class="button button-primary" href="<?= gdpr('helpers')->siteOwnersGuide(); ?>" target="_blank">
           <?= esc_html_x('Site Owner\'s guide to GDPR', '(Admin)', 'gdpr-framework'); ?>
       </a>
       <p>
@@ -21,7 +21,7 @@
     </div>
     <div class="col">
       <div class="col_image" style="background-image:url('<?= gdpr('config')->get('plugin.url'); ?>/assets/2.png');"></div>
-      <a class="button button-primary" href="<?= gdpr('helpers')->docs('wordpress-gdpr-framework-knowledge-base/'); ?>" target="_blank">
+      <a class="button button-primary" href="<?= gdpr('helpers')->knowledgeBase(); ?>" target="_blank">
           <?= esc_html_x('Knowledge base', '(Admin)', 'gdpr-framework'); ?>
       </a>
       <p>
@@ -30,7 +30,7 @@
     </div>
     <div class="col">
       <div class="col_image" style="background-image:url('<?= gdpr('config')->get('plugin.url'); ?>/assets/3.png');"></div>
-      <a class="button button-primary" href="<?= gdpr('helpers')->docs('wordpress-gdpr-framework-developer-docs/'); ?>" target="_blank">
+      <a class="button button-primary" href="<?= gdpr('helpers')->developerDocs(); ?>" target="_blank">
           <?= esc_html_x('Developer\'s guide to GDPR', '(Admin)', 'gdpr-framework'); ?>
       </a>
       <p>
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col">
           <div class="col_image" style="background-image:url('<?= gdpr('config')->get('plugin.url'); ?>/assets/4.png');"></div>
-            <a class="button button-primary" href="https://data443.atlassian.net/servicedesk/customer/portal/2/group/6" target="_blank">
+            <a class="button button-primary" href="<?=gdpr('helpers')->supportRequest()?>" target="_blank">
                 <?= esc_html_x('Submit a support request', '(Admin)', 'gdpr-framework'); ?>
             </a>
             <p>

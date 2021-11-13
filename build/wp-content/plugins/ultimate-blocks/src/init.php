@@ -114,22 +114,62 @@ function ub_advanced_heading_add_assets (){
 	wp_enqueue_style('ultimate_blocks-advanced-heading-fonts',  'https://pagecdn.io/lib/easyfonts/fonts.css');
 }
 
+function ub_generate_widget_block_list($output = false){
+    static $blockList = array();
+    require_once plugin_dir_path(__FILE__) . 'common.php';
+        
+    if(!$output){
+        $widget_elements = get_option('widget_block');
+        foreach( (array) $widget_elements as $key => $widget_element ) {
+            if ( ! empty( $widget_element['content'] ) ) {
+                
+                $widget_blocks = ub_getPresentBlocks($widget_element['content']);
+
+                foreach( $widget_blocks as $block ){
+                    $blockList[] = $block;
+                }
+            }
+        }
+    }
+    return $blockList;
+}
+
 function ultimate_blocks_cgb_block_assets() {
 	// Styles.
 	if ( is_singular() and has_blocks() ){
         require_once plugin_dir_path(__FILE__) . 'common.php';
-        
-        $presentBlocks = ub_getPresentBlocks();
 
-        foreach( $presentBlocks as $block ){
+        $main_assets_loaded = false;
+
+        $advanced_heading_assets_loaded = false;
+
+        $widget_blocks = ub_generate_widget_block_list();
+        foreach( $widget_blocks as $block ){
             if( strpos($block['blockName'], 'ub/' ) === 0){
                 ub_load_assets();
+                $main_assets_loaded = true;
                 if( strpos($block['blockName'], 'ub/advanced-heading' ) === 0){
                     ub_advanced_heading_add_assets();
+                    $advanced_heading_assets_loaded = true;
                     break;
                 }
             }
         }
+
+        if(!($main_assets_loaded && $advanced_heading_assets_loaded)){
+            $presentBlocks = ub_getPresentBlocks();
+
+            foreach( $presentBlocks as $block ){
+                if( strpos($block['blockName'], 'ub/' ) === 0){
+                    ub_load_assets();
+                    if( strpos($block['blockName'], 'ub/advanced-heading' ) === 0){
+                        ub_advanced_heading_add_assets();
+                        break;
+                    }
+                }
+            }
+        }
+        
     }
     elseif ( ub_check_is_gutenberg_page() ){
         ub_load_assets();
@@ -144,7 +184,7 @@ function ub_include_block_attribute_css() {
     require plugin_dir_path(__FILE__) . 'defaults.php';
     require_once plugin_dir_path(__FILE__) . 'common.php';
 
-    $presentBlocks = array_unique(ub_getPresentBlocks(), SORT_REGULAR);
+    $presentBlocks = array_unique(array_merge( ub_getPresentBlocks(), ub_generate_widget_block_list(true) ), SORT_REGULAR);
     $blockStylesheets = "";
 
     $hasNoSmoothScroll = true;
@@ -161,8 +201,64 @@ function ub_include_block_attribute_css() {
                 default:
                     //nothing could be done
                     break;
+                case 'ub/advanced-video':
+                    $prefix = '#ub-advanced-video-' . $attributes['blockID'];
+
+                    if(json_encode(array_unique(array($attributes['topBorderSize'], $attributes['leftBorderSize'],
+                        $attributes['rightBorderSize'], $attributes['bottomBorderSize']))) !== '[0]' ){
+                        
+                        $blockStylesheets .= $prefix . '{' .
+                            ($attributes['topBorderSize'] > 0 ? 'border-top: ' . $attributes['topBorderSize'] . 'px ' . $attributes['topBorderStyle'] . ' ' . $attributes['topBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['leftBorderSize'] > 0 ? 'border-left: ' . $attributes['leftBorderSize'] . 'px ' . $attributes['leftBorderStyle'] . ' ' . $attributes['leftBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['rightBorderSize'] > 0 ? 'border-right: ' . $attributes['rightBorderSize'] . 'px ' . $attributes['rightBorderStyle'] . ' ' . $attributes['rightBorderColor'] . ';' . PHP_EOL : '') .
+                            ($attributes['bottomBorderSize'] > 0 ? 'border-bottom: ' . $attributes['bottomBorderSize'] . 'px ' . $attributes['bottomBorderStyle'] . ' ' . $attributes['bottomBorderColor'] . ';' . PHP_EOL : '') .
+
+                            ($attributes['topLeftRadius'] > 0 ? 'border-top-left-radius: ' . $attributes['topLeftRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['topRightRadius'] > 0 ? 'border-top-right-radius: ' . $attributes['topRightRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['bottomLeftRadius'] > 0 ? 'border-bottom-left-radius: ' . $attributes['bottomLeftRadius'] . 'px;' . PHP_EOL : '') .
+                            ($attributes['bottomRightRadius'] > 0 ? 'border-bottom-right-radius: ' . $attributes['bottomRightRadius'] . 'px;' . PHP_EOL : '') .
+                        '}';
+                    }
+                    //if one of showInDesktop, showInTablet, showInMobile
+                    if(in_array(false, [$attributes['showInDesktop'], $attributes['showInTablet'], $attributes['showInMobile']])){
+                        if(!$attributes['showInDesktop']){
+                            $blockStylesheets .= '@media (min-width: 1024px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                        if(!$attributes['showInTablet']){
+                            $blockStylesheets .= '@media (min-width: 800px) and (max-width: 1023px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                        if(!$attributes['showInMobile']){
+                            $blockStylesheets .= '@media (max-width: 799px){' . PHP_EOL .
+                                $prefix . '{' . PHP_EOL .
+                                    'display: none;' . PHP_EOL .
+                                '}' . PHP_EOL .
+                            '}' . PHP_EOL;
+                        }
+                    }
+
+                    if(array_key_exists('shadow', $attributes) && $attributes['shadow'][0]['radius'] > 0){
+                        $blockStylesheets .= $prefix = '#ub-advanced-video-' . $attributes['blockID'] . ' .ub-advanced-video-embed{' . PHP_EOL .
+                            'box-shadow: ' . ( $attributes['shadow'][0]['radius'] * cos( deg2rad(450 - $attributes['shadow'][0]['angle']) % 360) ) . 'px ' .
+                                            ( -$attributes['shadow'][0]['radius'] * sin( deg2rad(450 - $attributes['shadow'][0]['angle']) % 360) ) . 'px ' .
+                                            $attributes['shadow'][0]['blur'] . 'px ' . $attributes['shadow'][0]['spread'] . 'px ' .
+                            'rgba('. ( hexdec(substr($attributes['shadow'][0]['color'], 1, 2)) ) .
+                                    ', ' . hexdec(substr($attributes['shadow'][0]['color'], 3, 2)) .
+                                    ', ' . hexdec(substr($attributes['shadow'][0]['color'], 5, 2)) .
+                                    ', ' . ( (100-$attributes['shadow'][0]['transparency']) /100) . ')' . ';' .  PHP_EOL .
+                        '}';
+                    }
+
+                    break;
                 case 'ub/advanced-heading':
-                    $prefix = '#ub-advanced-heading-' . $attributes['blockID'];
+                    $prefix = '.ub_advanced_heading[data-blockid="' . $attributes['blockID'] . '"]';
                     $blockStylesheets .= $prefix . ' {'. PHP_EOL .
                         ($attributes['alignment'] === 'none' ? '' : 'text-align: ' . $attributes['alignment'] . ';' . PHP_EOL) .
                         ($attributes['textColor'] ? 'color: ' . $attributes['textColor'] . ';' . PHP_EOL : '' ) .
@@ -338,6 +434,10 @@ function ub_include_block_attribute_css() {
                                 'grid-template-columns: ' . implode(' ',
                                     array_fill(0, array_search($attributes['smallestUnit'], $timeUnits) - array_search($attributes['largestUnit'], $timeUnits) +1 , '1fr')) . ';' . PHP_EOL .
                             '}';
+                            $blockStylesheets .= $prefix . ' .ub_countdown_circular_container > div{' . PHP_EOL .
+                                'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+                                'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
+                            '}';
                         break;
                         default:
                             $blockStylesheets .='';
@@ -426,7 +526,8 @@ function ub_include_block_attribute_css() {
                         }, $sectionPicArray, array_keys($sectionPicArray), array_fill(0, count($sectionPicArray), $prefix ) ));
                     }
                     else {
-                        $stepPicArray = array_map('ub_howto_getStepPic', $attributes['section'][0]['steps']);
+                        $stepPicArray = array_map('ub_howto_getStepPic',
+                            array_key_exists('section', $attributes) ? $attributes['section'][0]['steps'] : array());
                         $blockStylesheets .= implode(array_map(function($stepPic, $index, $prefix){
                                                         if(array_key_exists('width', $stepPic) && $stepPic['width'] > 0){
                                                             return $prefix . ' .ub_howto-step:nth-child(' . ($index+1) .') figure,' .
@@ -584,10 +685,67 @@ function ub_include_block_attribute_css() {
                         'width:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                         'height:' . ( $icon_size * 1.5 ) . 'px;' . PHP_EOL .
                     '}' . PHP_EOL;
-                    if($attributes['buttonColor'] != ''){
-                        $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
-                            'background-color: ' . $attributes['buttonColor'] . ';' .
-                        '}' ;
+                    if($attributes['buttonColor'] !== ''){
+                        if($attributes['useCaptions']){
+                            $blockStylesheets .= $prefix . ' .social-share-icon{' . PHP_EOL .
+                                'background-color: ' . ($attributes['iconShape'] === 'none' ? 'transparent' : $attributes['buttonColor']) . ';' .
+                            '}' ;
+                            $blockStylesheets .= $prefix . ' span > a{' . PHP_EOL .
+                                'color: ' . $attributes['buttonColor'] . ';' .
+                            '}' ;
+                        }
+                        else{
+                            $blockStylesheets .= $prefix . ' a{' . PHP_EOL .
+                                'background-color: ' . ($attributes['iconShape'] === 'none' ? 'transparent' : $attributes['buttonColor']) . ';' .
+                            '}' ;
+                            $blockStylesheets .= $prefix . ' a + span{' . PHP_EOL .
+                                'color: ' . $attributes['buttonColor'] . ';' .
+                            '}' ;
+                        }
+
+                    }
+                    else{
+                        $siteColors = array(
+                            'facebook' => '#1877f2',
+                            'twitter' => '#1d9bf0',
+                            'linkedin' => '#2867b2',
+                            'pinterest' => '#e60023',
+                            'reddit' => '#ff4500',
+                            'tumblr' => '#001935'
+                        );
+
+                        foreach($siteColors as $siteName => $color){
+                            $blockStylesheets .= $prefix . ' .ub-social-share-' . $siteName . '-container{' . PHP_EOL .
+                                'border-color: ' . $color . ';' . PHP_EOL .
+                            '}';
+                        }
+                    }
+                    if($attributes['useCaptions']){
+                        $sites = array('facebook', 'twitter', 'linkedin', 'pinterest', 'reddit', 'tumblr');
+                        foreach($sites as $site){
+                            $blockStylesheets .= $prefix . ' .ub-social-share-' . $site . '-container{' . PHP_EOL .
+                                'margin: 5px;' . PHP_EOL .
+                                'padding-right: 5px;' . PHP_EOL .
+                                'display: flex;' . PHP_EOL.
+                                'align-items: center;';
+                            if($attributes['addOutline'] && $attributes['buttonColor'] !== ''){
+                                $blockStylesheets .= 'border: 1px solid ' . $attributes['buttonColor'] .';' . PHP_EOL;
+                            }
+                            $blockStylesheets .= '}';
+                        }
+                    }
+
+                    if($attributes['useCaptions'] && !$attributes['addOutline']){
+                        $blockStylesheets .= $prefix . ' .social-share-icons.no-outline > div{' . PHP_EOL .
+                            'border: none;' . PHP_EOL .
+                        '}';
+                    }
+                    
+                    if($attributes['iconShape'] === 'none'){
+                        $blockStylesheets .= $prefix . ' .social-share-icons a{
+                            background-color: transparent;
+                            box-shadow: none;
+                        }';
                     }
 
                     break;
@@ -716,7 +874,8 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/tabbed-content-block':
                     $prefix = '#ub-tabbed-content-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap{' . PHP_EOL .
+                    $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap, ' .
+                                $prefix . ' .wp-block-ub-tabbed-content-tab-title-vertical-wrap{' . PHP_EOL .
                         ($attributes['tabStyle'] === 'underline' ? '' : 'background-color: ' . ($attributes['normalColor'] ? : 'inherit') . ';' . PHP_EOL) .
                         'border-color: lightgrey;' . PHP_EOL .
                         'color: ' . ($attributes['normalTitleColor'] ?: 'inherit') . ';' . PHP_EOL .
@@ -732,6 +891,10 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
                         'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
                             'flex-' . ($attributes['tabsAlignment'] === 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
+                    '}' . PHP_EOL . 
+                    $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle{' . PHP_EOL .
+                        'background-color: ' . $attributes['normalColor'] . ';' . PHP_EOL .
+                        'color: ' . ($attributes['normalTitleColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     foreach($attributes['tabsTitleAlignment'] as $key => $titleAlign){
                         $blockStylesheets .= $prefix . ' .wp-block-ub-tabbed-content-tab-title-wrap:nth-child('.($key+1).'){' . PHP_EOL .
@@ -762,9 +925,24 @@ function ub_include_block_attribute_css() {
                         '}' . PHP_EOL;
                     }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
-                        'justify-self: ' . ($attributes['titleAlignment'] === 'center' ? 'center' :
-                            'flex-' . ($attributes['titleAlignment'] === 'left' ? 'start' : 'end')) . ';' . PHP_EOL .
-                    '}' . PHP_EOL;
+                        'text-align: ' . $attributes['titleAlignment'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-header-container{' . PHP_EOL .
+                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
+                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
+                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
+                        'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
+                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
+                    $prefix . ' .ub_table-of-contents-container a{' . PHP_EOL .
+                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL ;
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
@@ -954,3 +1132,6 @@ require_once plugin_dir_path( __FILE__ ) . 'blocks/how-to/block.php';
 
 // Advanced Heading
 require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-heading/block.php';
+
+// Advanced Video
+require_once plugin_dir_path( __FILE__ ) . 'blocks/advanced-video/block.php';

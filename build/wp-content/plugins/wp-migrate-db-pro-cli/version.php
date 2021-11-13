@@ -1,2 +1,2 @@
 <?php
-$GLOBALS['wpmdb_meta']['wp-migrate-db-pro-cli']['version'] = '1.5';
+$GLOBALS['wpmdb_meta']['wp-migrate-db-pro-cli']['version'] = '1.6.0';

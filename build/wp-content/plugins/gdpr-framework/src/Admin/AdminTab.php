@@ -95,7 +95,39 @@ abstract class AdminTab implements AdminTabInterface
      */
     public function renderContents()
     {
+        $tabs = array("general", "cookie-popup", "consent", "privacy-policy", "do-not-sell", "support");
         ob_start();
+
+        if (in_array($this->slug, $tabs)) {
+            ?>
+            <style>
+                .column {
+                    float: left;
+                }
+                .left {
+                    width: 75%;
+                }
+
+                .right {
+                    width: 25%;
+                }
+
+                /* Clear floats after the columns */
+                .row:after {
+                    content: "";
+                    display: table;
+                    clear: both;
+                }
+                @media screen and (max-width: 600px) {
+                    .column {
+                        width: 100%;
+                    }
+                }
+            </style>
+            <div class="row">
+                <div class="column left">
+            <?php
+        }
 
         do_action("gdpr/tabs/{$this->getSlug()}/before", $this);
         settings_fields($this->getOptionsGroupName());
@@ -104,6 +136,54 @@ abstract class AdminTab implements AdminTabInterface
 
         $this->renderSubmitButton();
 
+        if (in_array($this->slug, $tabs)) {
+            ?>
+                </div>
+                <div class="column right">
+                    <div style="float:left;max-width:250px;margin:9px;margin-left:20px;margin-top:50px;">
+                        <b>How to contact us?</b>
+                        <ul style="list-style:circle;margin-left:20px;">
+                            <li>
+                                <a href="<?=gdpr('helpers')->data443()?>" target="_blank">Data443 (homepage)</a>
+                            </li>
+                            <li>
+                                <a href="<?=gdpr('helpers')->supportRequest()?>" target="_blank">Contact Support</a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/data443/" target="_blank">Like us on Facebook</a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/data443risk" target="_blank">Follow us on Twitter</a>
+                            </li>
+                            <li>
+                                <a href="<?=gdpr('helpers')->wordpressReview()?>" target="_blank">Rate us on WordPress</a>
+                            </li>
+                        </ul>
+                        <div style="border: solid 1px black;border-radius: 5px;background: #f2efe6;padding:10px;padding-bottom:30px;">
+                            <p style="margin-top:0px;">Do you like this plugin?</p>
+                            <p>With the <b>PREMIUM</b> version you can have other awesome features:</p>
+
+                            <div style="clear:both; margin-top: 2px;"></div>
+                            <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-5px;">
+                                <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                            </div>
+                            <div style="float:left; vertical-align:middle; height:24px;">Custom Consent Text</div>
+
+                            <div style="clear:both; margin-top: 2px;"></div>
+                            <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-5px;">
+                                <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                            </div>
+                            <div style="float:left; vertical-align:middle; height:24px;">Data Rectification</div>
+
+                            <div style="clear:both;"></div>
+                            <div style="height:10px;"></div>
+                            <div style="float:right;"><a href="<?=gdpr('helpers')->premiumStore()?>" target="_blank">Get PREMIUM now >></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
         return ob_get_clean();
     }
 

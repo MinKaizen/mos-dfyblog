@@ -191,9 +191,6 @@ class Cli extends Export
         add_action('wpmdb_media_files_cli_before_migrate_media', [$this, 'do_delay_between_requests'], 10, 0);
         add_action('wpmdb_theme_plugin_files_cli_before_migrate_files', [$this, 'do_delay_between_requests'], 10, 0);
 
-        // Compare table prefixes and display error if mismatch
-        add_action('wpmdb_cli_before_migration', [$this, 'handle_prefix_mismatch'], 10, 2);
-
         // add import stage
         add_action('wpmdb_cli_during_cli_migration', [$this, 'cli_import'], 10, 2);
     }
@@ -507,7 +504,7 @@ class Cli extends Export
      */
     public function get_standard_search_replace_pairs($action = 'push')
     {
-        $local_url   = preg_replace('#^https?:#', '', home_url());
+        $local_url   = preg_replace('#^https?:#', '', Util::home_url());
         $local_path  = $this->util->get_absolute_root_file_path();
         $remote_url  = preg_replace('#^https?:#', '', $this->remote['url']);
         $remote_path = $this->remote['path'];
@@ -1002,108 +999,6 @@ class Cli extends Export
         if (0 < $this->delay_between_requests) {
             sleep($this->delay_between_requests);
         }
-    }
-
-    /**
-     * Detects a database prefix mismatch and displays a CLI message about it. Does not interrupt the migration.
-     *
-     * @param $post_data
-     *
-     * @return bool
-     */
-    public function handle_prefix_mismatch($post_data, $profile)
-    {
-        global $wpdb;
-
-        $local_prefix  = $wpdb->base_prefix;
-        $remote_prefix = $this->get_remote_prefix($post_data);
-        $mismatch      = null;
-        $message       = '';
-
-        if (!empty($local_prefix) && !empty($remote_prefix)) {
-            $mismatch = false;
-
-            if ($local_prefix !== $remote_prefix) {
-                $mismatch = true;
-            }
-        }
-
-        $subsite_prefix_mismatch = $this->is_multisite_prefix_mismatch($post_data, $profile, $mismatch);
-
-        if (true === $mismatch) {
-            if (isset($post_data['intent'])) {
-                $message = '%Y' . __('Database table prefix differs between installations.', 'wp-migrate-db-cli');
-                $message .= "%n \n%R";
-
-                if (true === $subsite_prefix_mismatch) {
-                    $message .= sprintf(__('We have detected you have table prefix "%s" at %s but have "%s" here. Multisite Tools currently only supports migrating subsites between sites with the same base table prefix.', 'wp-migrate-db-cli'), $remote_prefix, $post_data['site_details']['remote']['site_url'], $wpdb->base_prefix);
-                } else {
-                    if ('push' == $post_data['intent']) {
-                        $message .= sprintf(__("The remote database uses a prefix of \"%s\". This migration will create new tables in the remote database with a prefix of \"%s\".  \nTo use these new tables, AFTER the migration is complete, you will need to edit the wp-config.php file on the remote server and change the \$table_prefix variable to \"%s\"", 'wp-migrate-db-cli'), $remote_prefix, $wpdb->base_prefix, $wpdb->base_prefix);
-                    } elseif ('pull' == $post_data['intent']) {
-                        $message .= sprintf(__("The local database uses a prefix of \"%s\". This migration will create new tables in the local database with a prefix of \"%s\".  \nTo use these new tables, AFTER the migration is complete, you will need to edit your wp-config.php file in your local environment and change the \$table_prefix variable to \"%s\"", 'wp-migrate-db-cli'), $wpdb->base_prefix, $remote_prefix, $remote_prefix);
-                    }
-                }
-
-                $message .= '%n';
-            }
-
-            // Only display the CLI warning if invoked manually.
-            if (!defined('DOING_WPMDB_TESTS')) {
-                if (false === $subsite_prefix_mismatch) {
-                    \WP_CLI::warning(\WP_CLI::colorize($message));
-                } else {
-                    \WP_CLI::error(\WP_CLI::colorize($message));
-                }
-            }
-        }
-
-        return $mismatch;
-    }
-
-    /**
-     * Returns the remote database prefix, based on global $_POST data
-     *
-     * @param $post_data
-     *
-     * @return string
-     */
-    public function get_remote_prefix($post_data)
-    {
-        $remote_prefix = '';
-
-        if (isset($post_data['site_details']['remote']['prefix'])) {
-            $remote_prefix = $post_data['site_details']['remote']['prefix'];
-        }
-
-        return $remote_prefix;
-    }
-
-    /**
-     * Detects if a CLI migration is attempted from a multisite, with the --subsite option, and where the table prefixes do no match
-     *
-     * @param $post_data
-     * @param $profile
-     * @param $is_mismatch
-     *
-     * @return bool
-     */
-    public function is_multisite_prefix_mismatch($post_data, $profile, $is_mismatch)
-    {
-        $subsite_prefix_mismatch = false;
-        $migration_details       = $post_data['site_details'];
-
-        if (true === $is_mismatch) {
-            if (isset($migration_details['local']['is_multisite']) && 'true' === $migration_details['local']['is_multisite']) {
-                $mst_select_subsite = $profile['mst_select_subsite'] ? $profile['mst_select_subsite'] : 0;
-
-                if ('1' == $mst_select_subsite) {
-                    $subsite_prefix_mismatch = true; //If there is a selected subsite, and it's multisite, and there's a prefix mistmatch
-                }
-            }
-        }
-
-        return $subsite_prefix_mismatch;
     }
 
     /**

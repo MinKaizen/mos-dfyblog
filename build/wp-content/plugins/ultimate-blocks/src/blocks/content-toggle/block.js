@@ -32,6 +32,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	individualCollapse: {
+		type: "boolean",
+		default: false,
+	},
 	titleColor: {
 		type: "string",
 		default: "",
@@ -218,6 +222,21 @@ registerBlockType("ub/content-toggle-block", {
 	],
 
 	attributes,
+
+	transforms: {
+		to: [
+			{
+				type: "block",
+				blocks: "core/group",
+				transform: (_, innerBlocks) =>
+					createBlock(
+						"core/group",
+						{},
+						innerBlocks.map((i) => createBlock("core/group", {}, i.innerBlocks))
+					),
+			},
+		],
+	},
 
 	edit: compose([
 		withSelect((select, ownProps) => {

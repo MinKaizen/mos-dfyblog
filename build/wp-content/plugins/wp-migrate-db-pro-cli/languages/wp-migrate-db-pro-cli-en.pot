@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro-cli\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2021-08-03 18:22+0200\n"
+"POT-Creation-Date: 2021-10-19 08:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,63 +18,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:230
+#: src/wp-migrate-db-pro-cli/class/Cli.php:227
 msgid "Profile ID not found."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:252
+#: src/wp-migrate-db-pro-cli/class/Cli.php:249
 msgid ""
 "There is more than one profile with that name, please use the profile ID "
 "instead. See wp migratedb profiles for help."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:263
+#: src/wp-migrate-db-pro-cli/class/Cli.php:260
 msgid "Profile not found."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:275
+#: src/wp-migrate-db-pro-cli/class/Cli.php:272
 msgid "Verifying connection..."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:362
+#: src/wp-migrate-db-pro-cli/class/Cli.php:359
 msgid "URL and secret-key are required"
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:437
+#: src/wp-migrate-db-pro-cli/class/Cli.php:434
 msgid "Invalid backup option or non-existent table selected for backup."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:619
+#: src/wp-migrate-db-pro-cli/class/Cli.php:616
 msgid "Please update WP Migrate DB Pro."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:640
+#: src/wp-migrate-db-pro-cli/class/Cli.php:637
 msgid "Profile ID missing."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:694
+#: src/wp-migrate-db-pro-cli/class/Cli.php:691
 msgid ""
 "This profile is from an older version of WP Migrate DB Pro and some settings "
 "have changed."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:697
+#: src/wp-migrate-db-pro-cli/class/Cli.php:694
 #, php-format
 msgid "Please visit %s to update the profile."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:726
+#: src/wp-migrate-db-pro-cli/class/Cli.php:723
 msgid ""
 "The profile is set to migrate media files, however WP Migrate DB Pro Media "
 "Files does not seem to be installed/active on the local website."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:749
+#: src/wp-migrate-db-pro-cli/class/Cli.php:746
 msgid ""
 "The profile is set to migrate media files, however WP Migrate DB Pro Media "
 "Files does not seem to be installed/active on the remote website."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:782
+#: src/wp-migrate-db-pro-cli/class/Cli.php:779
 msgid ""
 "The profile is set to migrate between a single site and a multisite, however "
 "WP Migrate DB Pro Multisite Tools does not seem to be installed/active on "
@@ -82,6 +95,7 @@ msgid ""
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:818
+#: src/wp-migrate-db-pro-cli/class/Cli.php:815
 msgid ""
 "The profile is set to migrate a subsite, however WP Migrate DB Pro Multisite "
 "Tools does not currently support migrating a subsite between multisite "
@@ -89,18 +103,21 @@ msgid ""
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:827
+#: src/wp-migrate-db-pro-cli/class/Cli.php:824
 msgid ""
 "The profile is set to migrate a subsite, however WP Migrate DB Pro Multisite "
 "tools does not seem to be installed/active on the remote website."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:836
+#: src/wp-migrate-db-pro-cli/class/Cli.php:833
 msgid ""
 "A valid Blog ID or Subsite URL must be supplied to make use of the subsite "
 "option"
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:884
+#: src/wp-migrate-db-pro-cli/class/Cli.php:881
 msgid ""
 "The profile is set to migrate theme/plugin files, however WP Migrate DB Pro "
 "Theme & Plugin Files does not seem to be installed/active on the remote "
@@ -108,19 +125,23 @@ msgid ""
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:907
+#: src/wp-migrate-db-pro-cli/class/Cli.php:904
 msgctxt "The caches and rewrite rules for the target are being flushed"
 msgid "Flushing caches and rewrite rules..."
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:962
+#: src/wp-migrate-db-pro-cli/class/Cli.php:959
 msgid "Performing backup"
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:964
+#: src/wp-migrate-db-pro-cli/class/Cli.php:961
 msgid "Migrating tables"
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:967
+#: src/wp-migrate-db-pro-cli/class/Cli.php:964
 msgid "Running find & replace"
 msgstr ""
 
@@ -157,6 +178,7 @@ msgid ""
 msgstr ""
 
 #: src/wp-migrate-db-pro-cli/class/Cli.php:1142
+#: src/wp-migrate-db-pro-cli/class/Cli.php:1037
 msgid "Importing file"
 msgstr ""
 

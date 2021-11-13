@@ -3,7 +3,7 @@ Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1,
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.8
+Stable tag: 2.4.10
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,44 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.4.10 =
+
+* Button - Remove minimum width from flex buttons.
+* Content Toggle - Prevent event listeners from being applied to elements not part of the block itself.
+* Expand - Add buttons for adding child blocks.
+* HowTo - Prevent apostrophes from being escaped in JSON-LD code.
+* Social Share - Fix link rendering when icon captions are enabled.
+* Tabbed Content - Fix behavior when pressing Tab key.
+* Tabbed Content - Fix display of tab background color in vertical mode.
+* Tabbed Content - Fix display of tab borders when shifting from horizontal to vertical mode and vice versa.
+* Tabbed Content - Fix display of tabs when in accordion mode.
+* Table of Contents - Simplify inspector option texts.
+* Table of Contents - Add color settings.
+* Table of Contents - Fix list style selection display.
+* Other - Enable styling for blocks present in widgets.
+
+= 2.4.9 =
+
+* NEW BLOCK: Advanced Video.
+* Content Filter - Fix display of active button text color.
+* Content Toggle - Revise FAQ schema generation function.
+* Content Toggle - Add option to convert Content Toggle into core blocks.
+* Content Toggle - Allow setting toggle status for each panel separately.
+* Countdown - Allow customizing circular countdown size.
+* Expand - Fix pointer display for expand toggle button.
+* HowTo - Fix initial video start time and end time values for each step.
+* HowTo - Add unit names to start time and end time inputs.
+* HowTo - Fix generation of duration code in ISO 8601 format.
+* Post Grid - Allow togging post title visibility.
+* Review - Prevent apostrophes from being escaped in review block JSON LD.
+* Social Share - Change Reddit icon color.
+* Social Share - Update Twitter and LinkedIn share URLs.
+* Social Share - Allow adding captions to icons.
+* Tabbed Content - Fix tab alignment display in editor.
+* Table of Contents - Fix incompatibility with Headline from GenerateBlocks.
+* Other - Update Font Awesome to 5.15.4.
+* Other - Update Swiper to 6.8.4.
 
 = 2.4.8 =
 

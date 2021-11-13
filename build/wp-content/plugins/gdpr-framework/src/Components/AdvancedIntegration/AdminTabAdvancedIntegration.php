@@ -14,7 +14,7 @@ class AdminTabAdvancedIntegration extends AdminTab
 
     public function __construct()
     {
-        $this->title = _x('FileFacets', '(Admin)', 'gdpr-framework');
+        $this->title = _x('Data Hound', '(Admin)', 'gdpr-framework');
 
         add_action('gdpr/admin/action/AdvancedIntegration/generate', [$this, 'generateAdvancedIntegration']);
     }
@@ -23,7 +23,7 @@ class AdminTabAdvancedIntegration extends AdminTab
     {
         $this->registerSettingSection(
             'gdpr_section_privacy_policy',
-            _x('FileFacets', '(Admin)', 'gdpr-framework'),
+            _x('Data Hound', '(Admin)', 'gdpr-framework'),
             [$this, 'renderHeader']
         );
     }

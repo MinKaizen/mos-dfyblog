@@ -24,10 +24,35 @@ const {
 	RangeControl,
 	TextControl,
 } = wp.components;
-const { InspectorControls, BlockControls, RichText, AlignmentToolbar } =
-	wp.blockEditor || wp.editor;
+const {
+	InspectorControls,
+	BlockControls,
+	RichText,
+	AlignmentToolbar,
+	PanelColorSettings,
+} = wp.blockEditor || wp.editor;
 const { select, dispatch, subscribe } = wp.data;
 const { __ } = wp.i18n;
+
+class OptionalParent extends Component {
+	constructor(props) {
+		super(props);
+	}
+	componentDidUpdate(prevProps) {
+		console.log("conditon change detected");
+	}
+	render() {
+		if (this.props.enabled) {
+			return (
+				<div className={this.props.className} style={this.props.style}>
+					{this.props.children}
+				</div>
+			);
+		} else {
+			return <>{this.props.children}</>;
+		}
+	}
+}
 
 class TableOfContents extends Component {
 	constructor(props) {
@@ -67,7 +92,6 @@ class TableOfContents extends Component {
 					if (block.name === "ub/advanced-heading") {
 						newBlock.attributes = Object.assign({}, blockAttributes, {
 							level: Number(blockAttributes.level.charAt(1)),
-							anchor: `ub-advanced-heading-${blockAttributes.blockID}`,
 						});
 						headings.push(newBlock);
 						pageBreaks.push(pageNum);
@@ -137,7 +161,6 @@ class TableOfContents extends Component {
 										if (typeof h.attributes.level !== "number") {
 											h.attributes.level = Number(h.attributes.level.charAt(1));
 										}
-										h.attributes.anchor = `ub-advanced-heading-${h.attributes.blockID}`;
 										break;
 									case "kadence/advancedheading":
 										if (!("content" in h.attributes)) {
@@ -203,8 +226,7 @@ class TableOfContents extends Component {
 			headers.forEach((heading, key) => {
 				if (
 					!heading.anchor ||
-					(heading.anchor.indexOf("themeisle-otter ") === -1 &&
-						heading.anchor.indexOf("ub-advanced-heading") === -1)
+					heading.anchor.indexOf("themeisle-otter ") === -1
 				) {
 					heading.anchor = `${key}-${
 						typeof heading.content === "undefined"
@@ -232,10 +254,19 @@ class TableOfContents extends Component {
 
 					if (
 						heading.blockName === "generateblocks/headline" &&
-						heading.anchor !== getBlock(heading.clientId).attributes.elementId
+						heading.anchor !== getBlock(heading.clientId).attributes.anchor
 					) {
 						updateBlockAttributes(heading.clientId, {
-							elementId: heading.anchor,
+							anchor: heading.anchor,
+						});
+					}
+
+					if (
+						heading.blockName === "ub/advanced-heading" &&
+						heading.anchor !== getBlock(heading.clientId).attributes.anchor
+					) {
+						updateBlockAttributes(heading.clientId, {
+							anchor: heading.anchor,
 						});
 					}
 				}
@@ -339,12 +370,8 @@ class TableOfContents extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		// call header manipulation to trigger latin alphabet conversion of links
 		const { setAttributes, attributes } = this.props.blockProp;
-		const {
-			headers,
-			replacementHeaders,
-			breaks,
-			currentlyEditedItem,
-		} = this.state;
+		const { headers, replacementHeaders, breaks, currentlyEditedItem } =
+			this.state;
 
 		if (
 			this.props.allowToLatin !== prevProps.allowToLatin ||
@@ -375,10 +402,9 @@ class TableOfContents extends Component {
 						mismatchLocs.push(i);
 					}
 				}
-				let replacements = JSON.parse(
-					JSON.stringify(replacementHeaders)
-				).sort((a, b) =>
-					newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
+				let replacements = JSON.parse(JSON.stringify(replacementHeaders)).sort(
+					(a, b) =>
+						newIDs.indexOf(a.clientId) > newIDs.indexOf(b.clientId) ? 1 : -1
 				);
 
 				if (mismatchLocs.length < 1) {
@@ -446,15 +472,12 @@ class TableOfContents extends Component {
 	}
 
 	render() {
-		const {
-			allowedHeaders,
-			blockProp,
-			style,
-			numColumns,
-			listStyle,
-		} = this.props;
+		const { allowedHeaders, blockProp, style, numColumns, listStyle } =
+			this.props;
 
 		const { isSelected } = blockProp;
+
+		const { listColor, listBackgroundColor } = blockProp.attributes;
 
 		const { headers, currentlyEditedItem } = this.state;
 
@@ -499,7 +522,13 @@ class TableOfContents extends Component {
 		const parseList = (list) =>
 			list.map((item) => (
 				<li>
-					<div style={{ display: isSelected ? "flex" : "block" }}>
+					<OptionalParent
+						enabled={["plain", "bulleted"].includes(listStyle)}
+						style={{
+							display: "flex",
+							justifyItems: "space-between",
+						}}
+					>
 						{isSelected && currentlyEditedItem === item.clientId ? (
 							<input
 								type="text"
@@ -550,9 +579,8 @@ class TableOfContents extends Component {
 										const revisedHeaders = JSON.parse(
 											JSON.stringify(this.state.headers)
 										);
-										revisedHeaders[item.index].disabled = !revisedHeaders[
-											item.index
-										].disabled;
+										revisedHeaders[item.index].disabled =
+											!revisedHeaders[item.index].disabled;
 										this.setState({ headers: revisedHeaders });
 									}}
 								>
@@ -560,7 +588,7 @@ class TableOfContents extends Component {
 								</button>
 							</div>
 						)}
-					</div>
+					</OptionalParent>
 					{item.children &&
 						(listStyle === "numbered" ? (
 							<ol>{parseList(item.children)}</ol>
@@ -581,6 +609,9 @@ class TableOfContents extends Component {
 				readCustomHeadingInput();
 			}
 		}
+
+		console.log("current list style");
+		console.log(listStyle);
 
 		if (
 			headers.length > 0 &&
@@ -630,6 +661,10 @@ export const inspectorControls = (props) => {
 		scrollOffset,
 		scrollTarget,
 		scrollTargetType,
+		titleColor,
+		titleBackgroundColor,
+		listColor,
+		listBackgroundColor,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -638,7 +673,7 @@ export const inspectorControls = (props) => {
 
 	return (
 		<InspectorControls>
-			<PanelBody title={__("Allowed Headers")} initialOpen={true}>
+			<PanelBody title={__("Allowed Headings")} initialOpen={true}>
 				{allowedHeaders.map((a, i) => (
 					<PanelRow>
 						<label htmlFor={`ub_toggle_h${i + 1}`}>{`H${i + 1}`}</label>
@@ -660,21 +695,19 @@ export const inspectorControls = (props) => {
 			</PanelBody>
 			<PanelBody title={__("Scroll Settings")} initialOpen={true}>
 				<SelectControl
-					label={__("Scroll offset adjustment options")}
+					label={__("Scroll offset adjustment")}
 					value={scrollOption}
 					options={[
 						{
-							label: __(
-								"Adjust according to first available fixed/sticky element"
-							),
+							label: __("Relative to first available fixed/sticky element"),
 							value: "auto",
 						},
 						{
-							label: __("Adjust with respect to a specific element"),
+							label: __("Relative to a specific element"),
 							value: "namedelement",
 						},
-						{ label: __("Adjust by fixed amount"), value: "fixedamount" },
-						{ label: __("Make no adjustments"), value: "off" },
+						{ label: __("Fixed height"), value: "fixedamount" },
+						{ label: __("No adjustments"), value: "off" },
 					]}
 					onChange={(scrollOption) => setAttributes({ scrollOption })}
 				/>
@@ -726,13 +759,36 @@ export const inspectorControls = (props) => {
 					/>
 				</PanelRow>
 			</PanelBody>
+			<PanelColorSettings
+				title={__("Color Settings")}
+				colorSettings={[
+					{
+						value: titleColor,
+						onChange: (titleColor) => setAttributes({ titleColor }),
+						label: __("Title Color"),
+					},
+					{
+						value: titleBackgroundColor,
+						onChange: (titleBackgroundColor) =>
+							setAttributes({ titleBackgroundColor }),
+						label: __("Title Background Color"),
+					},
+					{
+						value: listColor,
+						onChange: (listColor) => setAttributes({ listColor }),
+						label: __("List Color"),
+					},
+					{
+						value: listBackgroundColor,
+						onChange: (listBackgroundColor) =>
+							setAttributes({ listBackgroundColor }),
+						label: __("List Background Color"),
+					},
+				]}
+			/>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
 				<PanelRow>
-					<label htmlFor="ub_toc_toggle_display">
-						{__(
-							"Allow users to toggle the visibility of the table of contents"
-						)}
-					</label>
+					<label htmlFor="ub_toc_toggle_display">{__("Collapsible")}</label>
 					<ToggleControl
 						id="ub_toc_toggle_display"
 						checked={allowToCHiding}
@@ -748,9 +804,7 @@ export const inspectorControls = (props) => {
 				{allowToCHiding && (
 					<>
 						<PanelRow>
-							<label htmlFor="ub_show_toc">
-								{__("Initially Show Table of Contents")}
-							</label>
+							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
 							<ToggleControl
 								id="ub_show_toc"
 								checked={showList}
@@ -759,7 +813,7 @@ export const inspectorControls = (props) => {
 						</PanelRow>
 						<PanelRow>
 							<label htmlFor="ub_hide_on_mobile">
-								{__("Initially Hide Table of Contents on Mobile")}
+								{__("Initial Hide on Mobile")}
 							</label>
 							<ToggleControl
 								id="ub_hide_on_mobile"
@@ -771,7 +825,7 @@ export const inspectorControls = (props) => {
 				)}
 				<PanelRow>
 					<label htmlFor="ub_toc_enable_latin_conversion">
-						{__("Enable conversion of links to latin alphabet")}
+						{__("Romanize anchor links")}
 					</label>
 					<ToggleControl
 						id="ub_toc_enable_latin_conversion"
@@ -781,7 +835,7 @@ export const inspectorControls = (props) => {
 				</PanelRow>
 				<PanelRow>
 					<label htmlFor="ub_toc_toggle_diacritics">
-						{__("Remove diacritics from generated anchor links")}
+						{__("Remove diacritics from anchor links")}
 					</label>
 					<ToggleControl
 						id="ub_toc_toggle_diacritics"
@@ -796,7 +850,7 @@ export const inspectorControls = (props) => {
 
 export const blockControls = (props) => {
 	const { setAttributes } = props;
-	const { numColumns, titleAlignment } = props.attributes;
+	const { numColumns, titleAlignment, listStyle } = props.attributes;
 	return (
 		<BlockControls>
 			<ToolbarGroup>
@@ -826,16 +880,19 @@ export const blockControls = (props) => {
 				<ToolbarButton
 					icon="editor-ul"
 					label={__("Bulleted list")}
+					isPrimary={listStyle === "bulleted"}
 					onClick={() => setAttributes({ listStyle: "bulleted" })}
 				/>
 				<ToolbarButton
 					icon="editor-ol"
 					label={__("Numbered list")}
+					isPrimary={listStyle === "numbered"}
 					onClick={() => setAttributes({ listStyle: "numbered" })}
 				/>
 				<ToolbarButton
 					icon={plainList}
 					label={__("Plain list")}
+					isPrimary={listStyle === "plain"}
 					onClick={() => setAttributes({ listStyle: "plain" })}
 				/>
 			</ToolbarGroup>
@@ -860,6 +917,11 @@ export const editorDisplay = (props) => {
 		titleAlignment,
 		allowToLatin,
 		removeDiacritics,
+		titleColor,
+		titleBackgroundColor,
+		listColor,
+		listBackgroundColor,
+		blockID,
 	} = props.attributes;
 
 	return (
@@ -867,13 +929,14 @@ export const editorDisplay = (props) => {
 			<div
 				className="ub_table-of-contents-header"
 				style={{
-					justifySelf:
-						titleAlignment === "center"
-							? "center"
-							: `flex-${titleAlignment === "left" ? "start" : "end"}`,
+					textAlign: titleAlignment,
+					backgroundColor: titleBackgroundColor,
 				}}
 			>
-				<div className="ub_table-of-contents-title">
+				<div
+					className="ub_table-of-contents-title"
+					style={{ color: titleColor }}
+				>
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
@@ -910,8 +973,18 @@ export const editorDisplay = (props) => {
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
 					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
+					style={{ color: listColor, backgroundColor: listBackgroundColor }}
 				/>
 			)}
+			{
+				<style
+					dangerouslySetInnerHTML={{
+						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
+							color: ${listColor};
+						}`,
+					}}
+				/>
+			}
 		</>
 	);
 };

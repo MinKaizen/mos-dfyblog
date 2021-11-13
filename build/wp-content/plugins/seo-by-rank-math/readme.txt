@@ -5,7 +5,7 @@ Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
 Tested up to: 5.8
 Requires at least: 5.6
 Requires PHP: 7.2
-Stable tag: 1.0.72
+Stable tag: 1.0.76.1
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -13,11 +13,12 @@ Rank Math SEO is the Best WordPress SEO plugin combines the features of many SEO
 
 == Description ==
 
-**Rank Math SEO - Best SEO Plugin for WordPress**
+### Rank Math SEO - Best SEO Plugin for WordPress ###
+**1st WordPress SEO Plugin to use AI (Artificial Intelligence)** 🦾
 ★★★★★<br>
 
 **SEO is the most consistent source of traffic for any website.** We created <a href="https://rankmath.com/wordpress/plugin/seo-suite/?utm_source=LP&utm_campaign=WP" target="_blank">**Rank Math SEO, a WordPress SEO plugin**</a>, to help every website owner get access to the SEO tools they need to improve their SEO and attract more traffic to their website.
-## <a href="https://demo.rankmath.com/wp-admin/admin.php?page=rank-math-wizard" target="_blank">Try The Demo</a> ##
+## <a href="https://demo.rankmath.com/wp-admin/admin.php?page=rank-math-wizard" target="_blank">Try The FREE Demo of Rank Math SEO</a> ##
 
 [youtube https://www.youtube.com/watch?v=NgeaqIy2OB0]
 
@@ -26,6 +27,20 @@ Rank Math SEO is the Best WordPress SEO plugin combines the features of many SEO
 SEO might be the best and most **consistent source of traffic** for one's website, but it's not without its quirks. The constant process of optimizing your posts can sometimes take more time than actually writing the content. **If you always feel that you can do more on the SEO** front for your website but don't have the time, **then Rank Math SEO is what you're looking for.**
 
 Its host of **intelligent features** brings top SEO capabilities in your hands that were previously out of reach. The **smart automation** features give you the **power of an entire SEO team** with just a few clicks. A **well thought out design, powerful features, and years of development** by the MyThemeShop squad make Rank Math SEO a game-changing SEO plugin that will level the SEO playing field in your favor to help increase traffic.
+
+### Exclusive Content AI. Write Highly Optimized SEO Content ###
+
+[youtube https://www.youtube.com/watch?v=tm_dhgbIWow]
+
+➜ Use Artificial Intelligence to write SEO optimized content
+➜ Dynamic Suggestions
+➜ Intelligent Recommendations
+➜ Dynamic Keywords
+➜ Intelligent Questions (With Schema Markup)
+➜ Smart Link Suggestions
+➜ Extra Keyword Info
+➜ Related Keywords
+➜ Full Control via Role Manager
 
 ### Rank Math SEO beats all of its competitors, hands down. ###
 
@@ -39,6 +54,9 @@ Configuring Google Schema Markup, aka Rich Snippets, is now easy, thanks to Rank
 
 * **Optimize Unlimited Keywords**
 Unlike other plugins, Rank Math SEO lets you optimize your posts for **unlimited focus keywords** per post. 5 by default. Increase by adding this [filter](https://rankmath.com/kb/filters-hooks-api-developer/#unlimited-keywords).
+
+* **Content AI**
+Rank Math is the FIRST & ONLY SEO plugin that uses AI to help you write content. Your personal AI Assistant for creating SEO friendly content. Our Content AI takes all the hassle out of writing. It ensures that the content you write is not only great for your visitors, but for search engines (SEO) as well. [Learn how to use Content AI for writing SEO optimized content that ranks](https://rankmath.com/kb/how-to-use-content-ai/).
 
 * **Google Search Console Integration**
 Rank Math SEO saves you a ton of time by integrating with Google Search Console and displaying important information about your website right inside WordPress.
@@ -120,9 +138,9 @@ Even with significantly more features than other plugins, Rank Math SEO loads am
 
 * **Google AMP SEO** - Accelerated Mobile Pages need to be prepared for search engines. What better way to do that than letting Rank Math SEO use your regular SEO details and optimizing AMPs based on that data?
 
-* **bbPress SEO** - User-generated content in bbPress is properly optimized with Rank Math handling all the important SEO aspects. Q&A Schema is added to bbPress topics along with other essential meta tags.
+* **bbPress SEO** - User-generated content in bbPress is properly optimized with Rank Math SEO handling all the important SEO aspects. Q&A Schema is added to bbPress topics along with other essential meta tags.
 
-* **BuddyPress SEO** - As with bbPress, SEO for BuddyPress content is done automatically done using Rank Math. You get all the options you need to get higher rankings with your user-generated content.
+* **BuddyPress SEO** - As with bbPress, SEO for BuddyPress content is done automatically done using Rank Math SEO. You get all the options you need to get higher rankings with your user-generated content.
 
 * **Quick Edit SEO Details** - Go through a lot of posts/pages quickly by ensuring they are optimized for search engines. Quickly edit multiple SEO fields at once using Rank Math SEO.
 
@@ -316,9 +334,9 @@ and many more
 ## Check RANK MATH PRO WHICH MAKES SEO EASIER & FASTER  ##
 [youtube https://www.youtube.com/watch?v=fq8Dnl09W5g]
 
-## <a href="https://rankmath.com/free-vs-pro/" target="_blank">FREE VS PRO COMPARISON</a> ##
+## <a href="https://rankmath.com/free-vs-pro/" target="_blank">Rank Math SEO FREE VS PRO COMPARISON</a> ##
 
-## UNIQUE FEATURES OF RANK MATH PRO ##
+## UNIQUE FEATURES OF RANK MATH SEO PRO ##
 
 **Google Analytics & Search Console Integration (The only SEO plugin that provides it)**
 ✔ Integrated Google Analytics, AdSense & Search Console Data
@@ -350,7 +368,7 @@ and many more
 ✔ Open External Links in New Tabs
 ✔ Nofollow External Links
 ✔ `Noindex` Paginated, Archive, Search Result Pages
-✔ Instant Indexing for Bing [Also Google using our <a href="https://wordpress.org/plugins/fast-indexing-api/" target="_blank">Instant Indexing Plugin</a>]
+✔ Instant Indexing for Bing [Also Google using our <a href="https://rankmath.com/blog/google-indexing-api/" target="_blank">Instant Indexing Plugin</a>]
 
 **WooCommerce SEO**
 ✔ Automatic Schema for WooCommerce Products
@@ -371,7 +389,7 @@ and many more
 ✔ Easy and Advanced Mode
 
 **Miscellaneous**
-✔ Supports bbPress and BuddyPress SEO
+✔ Supports bbPress SEO and BuddyPress SEO
 ✔ Version Control - Rollback or Try Beta Versions
 
 **MANY MORE FEATURES**
@@ -547,30 +565,31 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Screenshots ==
 
-1. Fully integrated with the Gutenberg aka Block Editor.
-2. Optimize Content without any hassle and works with the Classic Editor.
-3. Analyze your website's SEO with one click and fix the issues.
-4. Simple Setup Wizard with 1-Click Importer.
-5. Support for 15+ Rich Snippet types.
-6. No need to pay for any service when you can track keyword ranking change from our own Search Console.
-7. Comes with in-built options for social media optimization.
-8. Rank Math SEO Comes with a 404 monitor and easy-to-use Redirection Manager.
-9. Ground Breaking Integration with Elementor Page Builder.
-10. Powerful XML Sitemap.
-11. Role Manager gives you full control. Useful for multi-author sites.
-12. Rank Math SEO Comes with 15+ FREE modules.
+1. Exclusive AI Assistant for creating content that ranks.
+2. Fully integrated with the Gutenberg aka Block Editor.
+3. Optimize Content without any hassle and works with the Classic Editor.
+4. Analyze your website's SEO with one click and fix the issues.
+5. Simple Setup Wizard with 1-Click Importer.
+6. Support for 15+ Rich Snippet types.
+7. No need to pay for any service when you can track keyword ranking change from our own Search Console.
+8. Comes with in-built options for social media optimization.
+9. Rank Math SEO Comes with a 404 monitor and easy-to-use Redirection Manager.
+10. Ground Breaking Integration with Elementor Page Builder.
+11. Powerful XML Sitemap.
+12. Role Manager gives you full control. Useful for multi-author sites.
+13. Rank Math SEO Comes with 15+ FREE modules.
 
 == Changelog ==
 
-= 1.0.72 [Sep 17, 2021] =
-* Added: Loading effect to the [Analytics](https://rankmath.com/kb/analytics/) tables when data is being loaded
-* Improved: Default date will be added in `priceValidUntil` field of [Product schema](https://rankmath.com/kb/woocommerce-product-schema/)
-* Fixed: Elementor editor was showing an error when [Remove Product Base](https://rankmath.com/kb/general-settings/#remove-base) option was enabled and WPML plugin was active
-* Fixed: Browser console was showing errors in Elementor editor when SEO Tab was disabled using the [Filter](https://rankmath.com/kb/filters-hooks-api-developer/#remove-seo-panel-elementor)
-* Fixed: On RTL sites of [Divi frontend builder](https://rankmath.com/blog/divi-seo/), the SEO popup was going out of the screen
-* Fixed: Compilation failed warning when special characters were used in the Focus Keyword
-* Fixed: WooCommerce Product paginated reviews page were redirecting to the main page when [Remove Product base](https://rankmath.com/kb/general-settings/#remove-base) option was enabled
-* Fixed: The [Quick edit](https://rankmath.com/kb/bulk-editing-in-rank-math/#quick-editing) was breaking the Posts list table when [bulk edit option](https://rankmath.com/kb/bulk-editing-in-rank-math/#what-is-bulk-editing) was disabled
-* Fixed: Fatal error when deactivating the conflicting plugin from the notice
+= 1.0.76.1 [Nov 11, 2021] =
+* Fixed: [Content AI](https://rankmath.com/kb/how-to-use-content-ai/#credits-usage) was not showing any Credits after updating the plugin
+* Fixed: [Keyword Tooltip](https://rankmath.com/kb/how-to-use-content-ai/#num-7-1-use-keyword-in) was not showing any data when Post content was empty
+* Fixed: Dark mode styling of [Content AI](https://rankmath.com/kb/how-to-use-content-ai/) in the Elementor editor
+
+= 1.0.76 [Nov 08, 2021] =
+* Added: [HUGE!] Introducing [Content AI](https://rankmath.com/content-ai/) - Your personal AI assistant for writing SEO Optimized Content!I assistant
+* Fixed: PHP warning after enabling the [Web Stories](https://rankmath.com/kb/google-web-stories/) moduleies/) module
+* Fixed: [Homepage SEO](https://rankmath.com/kb/homepage-meta-title-and-description/) settings were not displaying when no static page was selected as the homepage
+* Fixed: Content Analysis was wrongly counting the links without href as internal links
 
 Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('UPDRAFTPLUS_DIR')) die('No access.');
+if (!defined('UPDRAFTCENTRAL_CLIENT_DIR')) die('No access.');
 
 /**
  * Handles UpdraftCentral Theme Commands which basically handles
@@ -19,7 +19,7 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 	 *
 	 * link to udrpc_action main function in class UpdraftCentral_Listener
 	 */
-	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- This function is called from listner.php and $extra_info is being sent.
+	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- This function is called from listener.php and $extra_info is being sent.
 		// Here we assign the current blog_id to a variable $blog_id
 		$blog_id = get_current_blog_id();
 		if (!empty($data['site_id'])) $blog_id = $data['site_id'];
@@ -98,13 +98,15 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 						$result = $this->_generic_error_response('theme_not_activated', array(
 							'theme' => $query['theme'],
 							'error_code' => 'theme_not_activated',
-							'info' => $info
+							'error_message' => __('There appears to be a problem activating or switching to the intended theme. Please kindly check your permission and try again.', 'updraftplus'),
+							'info' => $this->_get_theme_info($query['theme'])
 						));
 					}
 				} else {
 					$result = $this->_generic_error_response('theme_not_installed', array(
 						'theme' => $query['theme'],
 						'error_code' => 'theme_not_installed',
+						'error_message' => __('The theme you wish to activate is either not installed or has been removed recently.', 'updraftplus'),
 						'info' => $info
 					));
 				}
@@ -130,13 +132,15 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 						$result = $this->_generic_error_response('theme_not_enabled', array(
 							'theme' => $query['theme'],
 							'error_code' => 'theme_not_enabled',
-							'info' => $info
+							'error_message' => __('There appears to be a problem enabling the intended theme on your network. Please kindly check your permission and try again.', 'updraftplus'),
+							'info' => $this->_get_theme_info($query['theme'])
 						));
 					}
 				} else {
 					$result = $this->_generic_error_response('theme_not_installed', array(
 						'theme' => $query['theme'],
 						'error_code' => 'theme_not_installed',
+						'error_message' => __('The theme you wish to enable on your network is either not installed or has been removed recently.', 'updraftplus'),
 						'info' => $info
 					));
 				}
@@ -164,13 +168,15 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 						$result = $this->_generic_error_response('theme_not_disabled', array(
 							'theme' => $query['theme'],
 							'error_code' => 'theme_not_disabled',
-							'info' => $info
+							'error_message' => __('There appears to be a problem disabling the intended theme from your network. Please kindly check your permission and try again.', 'updraftplus'),
+							'info' => $this->_get_theme_info($query['theme'])
 						));
 					}
 				} else {
 					$result = $this->_generic_error_response('theme_not_installed', array(
 						'theme' => $query['theme'],
 						'error_code' => 'theme_not_installed',
+						'error_message' => __('The theme you wish to disable from your network is either not installed or has been removed recently.', 'updraftplus'),
 						'info' => $info
 					));
 				}
@@ -191,6 +197,7 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 					)
 				));
 
+				$info = $this->_get_theme_info($query['theme']);
 				if (is_wp_error($api)) {
 					$result = $this->_generic_error_response('generic_response_error', array(
 						'theme' => $query['theme'],
@@ -199,13 +206,12 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 						'info' => $info
 					));
 				} else {
-					$info = $this->_get_theme_info($query['theme']);
 					$installed = $info['installed'];
 
 					$error_code = $error_message = '';
 					if (!$installed) {
 						// WP < 3.7
-						if (!class_exists('Automatic_Upgrader_Skin')) include_once(UPDRAFTPLUS_DIR.'/central/classes/class-automatic-upgrader-skin.php');
+						if (!class_exists('Automatic_Upgrader_Skin')) include_once(dirname(dirname(__FILE__)).'/classes/class-automatic-upgrader-skin.php');
 
 						$skin = new Automatic_Upgrader_Skin();
 						$upgrader = new Theme_Upgrader($skin);
@@ -253,7 +259,7 @@ class UpdraftCentral_Theme_Commands extends UpdraftCentral_Commands {
 							'theme' => $query['theme'],
 							'error_code' => $error_code,
 							'error_message' => $error_message,
-							'info' => $info
+							'info' => $this->_get_theme_info($query['theme'])
 						));
 					} else {
 						$result = array('installed' => true, 'info' => $this->_get_theme_info($query['theme']));

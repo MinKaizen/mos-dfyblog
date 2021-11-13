@@ -244,3 +244,22 @@ if($enabled_gdpf_cookie_popup)
 		}
 	}
 }
+
+// Add link to settings page from the Plugin List
+//
+
+add_filter('plugin_action_links_gdpr-framework/gdpr-framework.php', 'gdpr_plugin_links');
+
+function gdpr_plugin_links($links)
+{	
+	$url = gdpr('helpers')->getAdminUrl();
+	$premium = gdpr('helpers')->premiumStore();
+	$settings = array();
+	$settings[] = "<a href='$url'>" . __('Settings', 'gdpr-framework' ) . '</a>';
+	$settings[] = "<a href='$premium' target='_blank'>" . __('PREMIUM', 'gdpr-framework' ) . '</a>';
+	$links = array_merge(
+		$settings,
+		$links
+	);
+	return $links;
+}

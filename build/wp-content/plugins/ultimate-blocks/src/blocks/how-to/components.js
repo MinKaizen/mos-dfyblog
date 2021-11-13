@@ -1,8 +1,9 @@
 import { Component } from "react";
+import { convertFromSeconds } from "../../common";
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
 
-const { RichText, MediaUpload, InspectorControls, URLInput } =
+const { RichText, MediaUpload, InspectorControls } =
 	wp.blockEditor || wp.editor;
 
 const {
@@ -66,9 +67,8 @@ class InspectorPanel extends Component {
 
 					if (!isNaN(stepNum)) {
 						//exclude review image
-						const { width, float, id } = section[sectionNum].steps[
-							stepNum
-						].stepPic;
+						const { width, float, id } =
+							section[sectionNum].steps[stepNum].stepPic;
 						if (id > -1) {
 							activeImage = { width, float };
 						}
@@ -151,15 +151,19 @@ class InspectorPanel extends Component {
 							/>
 						</>
 					)}
-					<RadioControl
-						label={__("Section list style")}
-						selected={sectionListStyle}
-						options={["none", "ordered", "unordered"].map((a) => ({
-							label: __(a),
-							value: a,
-						}))}
-						onChange={(sectionListStyle) => setAttributes({ sectionListStyle })}
-					/>
+					{useSections && (
+						<RadioControl
+							label={__("Section list style")}
+							selected={sectionListStyle}
+							options={["none", "ordered", "unordered"].map((a) => ({
+								label: __(a),
+								value: a,
+							}))}
+							onChange={(sectionListStyle) =>
+								setAttributes({ sectionListStyle })
+							}
+						/>
+					)}
 				</PanelBody>
 				{activeImage.width > 0 && (
 					<PanelBody title={__("Desktop image display settings")}>
@@ -321,13 +325,6 @@ class HowToStep extends Component {
 			stepNum,
 		} = this.props;
 
-		const convertFromSeconds = (sec) => ({
-			s: sec % 60,
-			m: ~~(sec / 60) % 60,
-			h: ~~(sec / 3600) % 24,
-			d: ~~(sec / 86400),
-		});
-
 		if (hasVideoClip) {
 			const start = convertFromSeconds(videoClipStart);
 			const end = convertFromSeconds(videoClipEnd);
@@ -380,8 +377,8 @@ class HowToStep extends Component {
 
 		if (prevProps.videoURL !== videoURL) {
 			this.setState({
-				startTime: defaultTimeDisplay,
-				endTime: defaultTimeDisplay,
+				startTime: Object.assign({}, defaultTimeDisplay),
+				endTime: Object.assign({}, defaultTimeDisplay),
 			});
 		}
 	}
@@ -545,6 +542,7 @@ class HowToStep extends Component {
 											value={startTime.d}
 											min={0}
 											step={1}
+											title={__("Days")}
 											onChange={(e) => {
 												const { h, m, s } = this.state.startTime;
 												const d = Number(e.target.value);
@@ -570,6 +568,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
+											title={__("Hours")}
 											onChange={(e) => {
 												const { d, m, s } = this.state.startTime;
 												const h = Number(e.target.value);
@@ -596,6 +595,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
+											title={__("Minutes")}
 											onChange={(e) => {
 												const { d, h, s } = this.state.startTime;
 												const m = Number(e.target.value);
@@ -621,6 +621,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
+										title={__("Seconds")}
 										onChange={(e) => {
 											const { d, h, m } = this.state.startTime;
 											const s = Number(e.target.value);
@@ -649,6 +650,7 @@ class HowToStep extends Component {
 											value={endTime.d}
 											min={0}
 											step={1}
+											title={__("Days")}
 											onChange={(e) => {
 												const { h, m, s } = this.state.endTime;
 												const d = Number(e.target.value);
@@ -674,6 +676,7 @@ class HowToStep extends Component {
 											min={0}
 											max={23}
 											step={1}
+											title={__("Hours")}
 											onChange={(e) => {
 												const { d, m, s } = this.state.endTime;
 												const h = Number(e.target.value);
@@ -700,6 +703,7 @@ class HowToStep extends Component {
 											min={0}
 											max={59}
 											step={1}
+											title={__("Minutes")}
 											onChange={(e) => {
 												const { d, h, s } = this.state.endTime;
 												const m = Number(e.target.value);
@@ -725,6 +729,7 @@ class HowToStep extends Component {
 										min={0}
 										max={59}
 										step={1}
+										title={__("Seconds")}
 										onChange={(e) => {
 											const { d, h, m } = this.state.endTime;
 											const s = Number(e.target.value);
@@ -842,10 +847,7 @@ class HowToSection extends Component {
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
-									editSection({
-										sectionName,
-										steps: newSteps,
-									});
+									editSection({ sectionName, steps: newSteps });
 									//set value of currentStep to recently-moved step
 									updateState({
 										currentStep: `section-${sectionNum}-step-${i - 1}`,
@@ -863,10 +865,7 @@ class HowToSection extends Component {
 									newSteps.forEach(
 										(step, j) => (step.anchor = `section${sectionNum}step${j}`)
 									);
-									editSection({
-										sectionName,
-										steps: newSteps,
-									});
+									editSection({ sectionName, steps: newSteps });
 									updateState({
 										currentStep: `section-${sectionNum}-step-${i + 1}`,
 									});
@@ -1051,6 +1050,183 @@ export class EditorComponent extends Component {
 			setAttributes({ blockID: block.clientId });
 		}
 
+		const checkVideoURLInput = () => {
+			if (/^http(s)?:\/\//g.test(videoURLInput)) {
+				const youtubeMatch =
+					/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
+						videoURLInput
+					);
+				const vimeoMatch =
+					/^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
+						videoURLInput
+					);
+				const dailyMotionMatch =
+					/^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
+						videoURLInput
+					);
+				const videoPressMatch =
+					/^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
+						videoURLInput
+					);
+				if (youtubeMatch) {
+					fetch(
+						`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
+					)
+						.then((response) => {
+							response.json().then((data) => {
+								if (data.items.length) {
+									let timePeriods = data.items[0].contentDetails.duration.match(
+										/(\d{1,2}(?:W|D|H|M|S))/g
+									);
+									setAttributes({
+										videoURL: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
+										videoName: data.items[0].snippet.title,
+										videoDescription: data.items[0].snippet.description,
+										videoUploadDate:
+											Date.parse(data.items[0].snippet.publishedAt) / 1000,
+										videoThumbnailURL: `https://i.ytimg.com/vi/${youtubeMatch[1]}/default.jpg`,
+										videoEmbedCode: decodeURIComponent(
+											data.items[0].player.embedHtml
+										),
+										videoDuration: timePeriods.reduce((sum, part) => {
+											let multiplier = {
+												W: 604800,
+												D: 86400,
+												H: 3600,
+												M: 60,
+												S: 1,
+											};
+											return (
+												sum +
+												Number(part.slice(0, -1)) * multiplier[part.slice(-1)]
+											);
+										}, 0),
+									});
+								} else {
+									resetVideoAttributes();
+									setAttributes({
+										videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+									});
+								}
+							});
+						})
+						.catch((err) => {
+							console.log("youtube fetch error");
+							console.log(err);
+						});
+				} else if (vimeoMatch) {
+					fetch(`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`)
+						.then((response) => {
+							if (response.ok) {
+								response
+									.json()
+									.then((data) => {
+										setAttributes({
+											videoURL: data[0].url,
+											videoName: data[0].title,
+											videoDescription: data[0].description,
+											videoUploadDate: Date.parse(data[0].upload_date) / 1000,
+											videoThumbnailURL: data[0].thumbnail_large,
+											videoDuration: data[0].duration,
+										});
+										fetch(
+											`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
+												data[0].url
+											)}`
+										)
+											.then((response) => {
+												response.json().then((data) => {
+													setAttributes({
+														videoEmbedCode: data.html,
+													});
+												});
+											})
+											.catch((err) => {
+												console.log("vimeo oembed error");
+												console.log(err);
+											});
+									})
+									.catch((err) => {
+										console.log(err);
+									});
+							} else {
+								resetVideoAttributes();
+								setAttributes({
+									videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+								});
+							}
+						})
+						.catch((err) => {
+							console.log("vimeo fetch error");
+							console.log(err);
+						});
+				} else if (dailyMotionMatch) {
+					fetch(
+						`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
+					)
+						.then((response) => {
+							if (response.ok) {
+								response.json().then((data) => {
+									setAttributes({
+										videoURL: data.url,
+										videoName: data.title,
+										videoDescription: data.description,
+										videoUploadDate: data.created_time,
+										videoThumbnailURL: data.thumbnail_1080_url,
+										videoEmbedCode: decodeURIComponent(data.embed_html),
+										videoDuration: data.duration,
+									});
+								});
+							} else {
+								resetVideoAttributes();
+								setAttributes({
+									videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+								});
+							}
+						})
+						.catch((err) => {
+							console.log("dailymotion input error");
+							console.log(err);
+						});
+				} else if (videoPressMatch) {
+					fetch(
+						`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
+					)
+						.then((response) => {
+							if (response.ok) {
+								response.json().then((data) => {
+									setAttributes({
+										videoURL: `https://videopress.com/v/${data.guid}`,
+										videoName: data.title,
+										videoDescription: data.description,
+										videoUploadDate: Date.parse(data.upload_date) / 1000,
+										videoThumbnailURL: data.poster,
+										videoEmbedCode: `<iframe width="560" height="315" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
+					<script src="https://videopress.com/videopress-iframe.js"></script>`,
+										videoDuration: Math.floor(data.duration / 1000),
+									});
+								});
+							} else {
+								resetVideoAttributes();
+								setAttributes({
+									videoEmbedCode: `<p>${__("No video found at URL")}</p>`,
+								});
+							}
+						})
+						.catch((err) => {
+							console.log("videopress input error");
+							console.log(err);
+						});
+				} else {
+					resetVideoAttributes();
+					setAttributes({ videoEmbedCode: "<p>Video site not supported</p>" });
+				}
+			} else {
+				resetVideoAttributes();
+				console.log("input is not a url");
+			}
+		};
+
 		return (
 			<>
 				<InspectorPanel
@@ -1075,215 +1251,25 @@ export class EditorComponent extends Component {
 					{advancedMode && (
 						<>
 							<div className="ub_howto-video-input">
-								<URLInput
-									placeholder={"Insert video URL"}
-									autoFocus={false}
-									disableSuggestions={true}
+								<input
+									type="url"
+									placeholder={__("Insert video URL")}
 									className="button-url"
 									value={videoURLInput}
-									onChange={(videoURLInput) => this.setState({ videoURLInput })}
+									onChange={(e) =>
+										this.setState({ videoURLInput: e.target.value })
+									}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											checkVideoURLInput();
+										}
+									}}
 								/>
 								<Button
 									icon={"editor-break"}
 									label={__("Apply")}
 									type={"submit"}
-									onClick={() => {
-										if (/^http(s)?:\/\//g.test(videoURLInput)) {
-											const youtubeMatch = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/g.exec(
-												videoURLInput
-											);
-											const vimeoMatch = /^(?:https?\:\/\/)?(?:www\.|player\.)?(?:vimeo\.com\/)([0-9]+)/g.exec(
-												videoURLInput
-											);
-											const dailyMotionMatch = /^(?:https?\:\/\/)?(?:www\.)?(?:dailymotion\.com\/video|dai\.ly)\/([0-9a-z]+)(?:[\-_0-9a-zA-Z]+#video=([a-z0-9]+))?/g.exec(
-												videoURLInput
-											);
-											const videoPressMatch = /^https?:\/\/(?:www\.)?videopress\.com\/(?:embed|v)\/([a-zA-Z0-9]{8,})/g.exec(
-												videoURLInput
-											);
-											if (youtubeMatch) {
-												fetch(
-													`https://www.googleapis.com/youtube/v3/videos?id=${youtubeMatch[1]}&part=snippet,contentDetails,player&key=AIzaSyDgItjYofyXkIZ4OxF6gN92PIQkuvU319c`
-												)
-													.then((response) => {
-														response.json().then((data) => {
-															if (data.items.length) {
-																let timePeriods = data.items[0].contentDetails.duration.match(
-																	/(\d{1,2}(?:W|D|H|M|S))/g
-																);
-																setAttributes({
-																	videoURL: `https://www.youtube.com/watch?v=${youtubeMatch[1]}`,
-																	videoName: data.items[0].snippet.title,
-																	videoDescription:
-																		data.items[0].snippet.description,
-																	videoUploadDate:
-																		Date.parse(
-																			data.items[0].snippet.publishedAt
-																		) / 1000,
-																	videoThumbnailURL: `https://i.ytimg.com/vi/${youtubeMatch[1]}/default.jpg`,
-																	videoEmbedCode: decodeURIComponent(
-																		data.items[0].player.embedHtml
-																	),
-																	videoDuration: timePeriods.reduce(
-																		(sum, part) => {
-																			let multiplier = {
-																				W: 604800,
-																				D: 86400,
-																				H: 3600,
-																				M: 60,
-																				S: 1,
-																			};
-																			return (
-																				sum +
-																				Number(part.slice(0, -1)) *
-																					multiplier[part.slice(-1)]
-																			);
-																		},
-																		0
-																	),
-																});
-															} else {
-																resetVideoAttributes();
-																setAttributes({
-																	videoEmbedCode: `<p>${__(
-																		"No video found at URL"
-																	)}</p>`,
-																});
-															}
-														});
-													})
-													.catch((err) => {
-														console.log("youtube fetch error");
-														console.log(err);
-													});
-											} else if (vimeoMatch) {
-												fetch(
-													`https://vimeo.com/api/v2/video/${vimeoMatch[1]}.json`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response
-																.json()
-																.then((data) => {
-																	setAttributes({
-																		videoURL: data[0].url,
-																		videoName: data[0].title,
-																		videoDescription: data[0].description,
-																		videoUploadDate:
-																			Date.parse(data[0].upload_date) / 1000,
-																		videoThumbnailURL: data[0].thumbnail_large,
-																		videoDuration: data[0].duration,
-																	});
-																	fetch(
-																		`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
-																			data[0].url
-																		)}`
-																	)
-																		.then((response) => {
-																			response.json().then((data) => {
-																				setAttributes({
-																					videoEmbedCode: data.html,
-																				});
-																			});
-																		})
-																		.catch((err) => {
-																			console.log("vimeo oembed error");
-																			console.log(err);
-																		});
-																})
-																.catch((err) => {
-																	console.log(err);
-																});
-														} else {
-															resetVideoAttributes();
-															setAttributes({
-																videoEmbedCode: `<p>${__(
-																	"No video found at URL"
-																)}</p>`,
-															});
-														}
-													})
-													.catch((err) => {
-														console.log("vimeo fetch error");
-														console.log(err);
-													});
-											} else if (dailyMotionMatch) {
-												fetch(
-													`https://api.dailymotion.com/video/${dailyMotionMatch[1]}?fields=created_time%2Cthumbnail_1080_url%2Ctitle%2Cdescription%2Curl%2Cembed_html%2Cduration`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response.json().then((data) => {
-																setAttributes({
-																	videoURL: data.url,
-																	videoName: data.title,
-																	videoDescription: data.description,
-																	videoUploadDate: data.created_time,
-																	videoThumbnailURL: data.thumbnail_1080_url,
-																	videoEmbedCode: decodeURIComponent(
-																		data.embed_html
-																	),
-																	videoDuration: data.duration,
-																});
-															});
-														} else {
-															resetVideoAttributes();
-															setAttributes({
-																videoEmbedCode: `<p>${__(
-																	"No video found at URL"
-																)}</p>`,
-															});
-														}
-													})
-													.catch((err) => {
-														console.log("dailymotion input error");
-														console.log(err);
-													});
-											} else if (videoPressMatch) {
-												fetch(
-													`https://public-api.wordpress.com/rest/v1.1/videos/${videoPressMatch[1]}`
-												)
-													.then((response) => {
-														if (response.ok) {
-															response.json().then((data) => {
-																setAttributes({
-																	videoURL: `https://videopress.com/v/${data.guid}`,
-																	videoName: data.title,
-																	videoDescription: data.description,
-																	videoUploadDate:
-																		Date.parse(data.upload_date) / 1000,
-																	videoThumbnailURL: data.poster,
-																	videoEmbedCode: `<iframe width="560" height="315" src="https://videopress.com/embed/${data.guid}" frameborder="0" allowfullscreen></iframe>
-                                                <script src="https://videopress.com/videopress-iframe.js"></script>`,
-																	videoDuration: Math.floor(
-																		data.duration / 1000
-																	),
-																});
-															});
-														} else {
-															resetVideoAttributes();
-															setAttributes({
-																videoEmbedCode: `<p>${__(
-																	"No video found at URL"
-																)}</p>`,
-															});
-														}
-													})
-													.catch((err) => {
-														console.log("videopress input error");
-														console.log(err);
-													});
-											} else {
-												resetVideoAttributes();
-												setAttributes({
-													videoEmbedCode: "<p>Video site not supported</p>",
-												});
-											}
-										} else {
-											resetVideoAttributes();
-											console.log("input is not a url");
-										}
-									}}
+									onClick={checkVideoURLInput}
 								/>
 								<Button
 									icon="trash"

@@ -374,31 +374,11 @@ class AdminTabPrivacyPolicy extends AdminTab
      */
     public function renderContents()
     {
-        if (isset($_GET['generate']) && 'yes' == $_GET['generate']) {
+        if (isset($_GET['settings-updated']) && 'true' == $_GET['settings-updated']) {
             return $this->renderPolicy();
         } else {
-            return $this->renderSettings();
+            return parent::renderContents();
         }
-    }
-
-    /**
-     * Render the contents including settings fields, sections and submit button.
-     * Trigger hooks for rendering content before and after the settings fields.
-     *
-     * @return string
-     */
-    public function renderSettings()
-    {
-        ob_start();
-
-        do_action("gdpr/tabs/{$this->getSlug()}/before", $this);
-        $this->settingsFields($this->getOptionsGroupName());
-        do_settings_sections($this->getOptionsGroupName());
-        do_action("gdpr/tabs/{$this->getSlug()}/after", $this);
-
-        $this->renderSubmitButton();
-
-        return ob_get_clean();
     }
 
     public function renderPolicy()
@@ -440,19 +420,5 @@ class AdminTabPrivacyPolicy extends AdminTab
     public function renderSubmitButton()
     {
         submit_button(_x('Save & Generate Policy', '(Admin)', 'gdpr-framework'));
-    }
-
-    /**
-     * In order to set up a proper redirect to the generated policy
-     * after saving settings, we modify the way wp_nonce_field is called and insert our own referer input.
-     *
-     * @param $optionGroup
-     */
-    public function settingsFields($optionGroup)
-    {
-        echo "<input type='hidden' name='option_page' value='" . esc_attr($optionGroup) . "' />";
-        echo '<input type="hidden" name="action" value="update" />';
-        wp_nonce_field("$optionGroup-options", '_wpnonce', false);
-        echo '<input type="hidden" name="_wp_http_referer" value="'. esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) . '&generate=yes' ) . '" />';
     }
 }

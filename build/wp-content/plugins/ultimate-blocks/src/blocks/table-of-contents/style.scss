@@ -38,13 +38,10 @@
 	}
 	&-header {
 		text-align: center;
-		margin-bottom: 13px;
 		font-size: 20px;
 		font-weight: 500;
 		display: grid;
 		grid-template-columns: minmax(10px, 1fr) auto;
-		width: fit-content;
-		width: -moz-fit-content;
 		transition: all 0.5s ease-in-out;
 	}
 
@@ -71,6 +68,23 @@
 	.ub_table-of-contents-container ul > li:before {
 		content: none;
 	}
+	&-header-container,
+	&-extra-container {
+		padding: 15px 30px;
+		transition: all 0.5s ease-in-out;
+	}
+	&-header-container {
+		display: grid;
+	}
+}
+
+.ub_table-of-contents,
+.ub_table-of-contents-collapsed {
+	padding: 0;
+}
+
+.ub_table-of-contents-collapsed .ub_table-of-contents-extra-container {
+	padding: 0;
 }
 
 @media screen and (max-width: 600px) {

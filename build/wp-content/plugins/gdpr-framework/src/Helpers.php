@@ -340,6 +340,11 @@ class Helpers
         return admin_url('tools.php?page=privacy' . $suffix);
     }
 
+    public function premiumStore()
+    {
+        return 'https://orders.data443.com/index.php?rp=/store/gdpr-framework';
+    }
+
     public function getDashboardDataPageUrl($suffix = '')
     {
         return admin_url('users.php?page=gdpr-profile' . $suffix);
@@ -376,6 +381,56 @@ class Helpers
     public function docs($url = '')
     {
         return 'https://www.data443.com/' . $url;
+    }
+
+    public function data443()
+    {
+        return 'https://data443.com/';
+    }
+
+    public function wordpressReview()
+    {
+        return 'https://wordpress.org/plugins/gdpr-framework/#reviews';
+    }
+
+    public function supportRequest()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/group/6';
+    }
+
+    public function siteOwnersGuide()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/2078998660';
+    }
+
+    public function developerDocs()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/2082439194';
+    }
+
+    public function knowledgeBase()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/192708653';
+    }
+
+    public function controllingPersonalData()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/2082439201';
+    }
+
+    public function legalGrounds()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/2079293576';
+    }
+
+    public function personalData()
+    {
+        return ' https://data443.atlassian.net/servicedesk/customer/portal/2/article/2083029023';
+    }
+
+    public function privacyPolicy()
+    {
+        return 'https://data443.atlassian.net/servicedesk/customer/portal/2/article/2082897943';
     }
 
     /**

@@ -10,7 +10,7 @@
     If you don't have the time to do that, you can always <a href="https://data443.com/contact/" target="_blank">request a consultation</a>.
 </p>
 <p>
-    The <a href="<?= gdpr('helpers')->docs('wordpress-site-owners-guide-to-gdpr/'); ?>" target="_blank">WordPress Site Owner's Guide to GDPR</a> will help you with any questions you might have during the
+    The <a href="<?= gdpr('helpers')->siteOwnersGuide(); ?>" target="_blank">WordPress Site Owner's Guide to GDPR</a> will help you with any questions you might have during the
     setup process.
 </p>
 <hr>

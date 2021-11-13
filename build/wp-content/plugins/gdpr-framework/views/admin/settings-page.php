@@ -29,7 +29,7 @@
 			<em>
 				<?= sprintf(
 					esc_html_x('The GDPR Framework. Built with &#9829; by %sData443%s.', '(Admin)', 'gdpr-framework'),
-					'<a href="https://www.data443.com/" target="_blank">',
+					'<a href="' . gdpr('helpers')->data443() . '" target="_blank">',
 						'</a>'
 				); ?>
 				 &nbsp;
@@ -37,7 +37,7 @@
 				&nbsp;
 				<?= sprintf(
 					esc_html_x("Need help? Take a look at our %sdocumentation%s.", '(Admin)', 'gdpr-framework'),
-					'<a href="https://www.data443.com/wordpress-site-owners-guide-to-gdpr/" target="_blank">',
+					'<a href="' . gdpr('helpers')->siteOwnersGuide() . '" target="_blank">',
 					'</a>'
 				); ?>
 				&nbsp;
@@ -45,7 +45,7 @@
 				&nbsp;
 				<?= sprintf(
 					esc_html_x("Support our development efforts! leave a %s5-star rating%s.", '(Admin)', 'gdpr-framework'),
-					'<a href="https://wordpress.org/plugins/gdpr-framework/#reviews" target="_blank">',
+					'<a href="' . gdpr('helpers')->wordpressReview() . '" target="_blank">',
 					'</a>'
 				); ?>
 			</em>

@@ -7,6 +7,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'anchor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
             'content' => array(
                 'type' => 'string',
                 'default' => ''
@@ -55,6 +59,176 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'None',
             ),
+        )
+    ),
+    'ub/advanced-video' => array(
+        'attributes' => array(
+            'blockID' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'videoId' => array(
+                'type' => 'integer',
+                'default' => -1,
+            ),
+            'videoSource' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'url' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'playerStyle' => array(
+                //custom border styles placed outside embedded player
+                'type' => 'string',
+                'default' => '',
+            ),
+            'vimeoShowDetails' => array(
+                //vimeo only
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'vimeoShowLogo' => array(
+                //vimeo only
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'enableYoutubeCookies' => array(
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'autoplay' => array(
+                //applies to: videopress, vimeo, dailymotion, youtube
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'loop' => array(
+                //applies to youtube, vimeo, videopress
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'mute' => array(
+                //applies to youtube, dailymotion, vimeo
+                'type' => 'boolean',
+                'default' => false,
+            ),
+            'showPlayerControls' => array(
+                //applies to dailymotion, youtube
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'playInline' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
+            'thumbnail' => array(
+                //replaces embed code, click through thumbnail before seeing embedded player in youtube
+                'type' => 'string',
+                'default' => '',
+            ),
+            'videoEmbedCode' => array(
+                'type' => 'string',
+                'default' => '',
+            ),
+            'startTime' => array(
+                //applies to youtube, dailymotion, videopress, vimeo
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'height' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'width' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+
+            //begin border attributes for each side
+            'topBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'rightBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'leftBorderSize' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+
+            'topBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'rightBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'bottomBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'leftBorderStyle' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+
+            'topBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'rightBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'bottomBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'leftBorderColor' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+    		//end border attributes for each side
+
+            //begin corner attributes
+            'topLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'topRightRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomLeftRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'bottomRightRadius' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            //end corner attributes
+            
+            'showInDesktop' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'showInTablet' => array(
+                'type' => 'boolean',
+                'default' => true
+            ),
+            'showInMobile' => array(
+                'type' => 'boolean',
+                'default' => true
+            )
         )
     ),
     'ub/button' => array(
@@ -403,6 +577,10 @@ $defaultValues = array(
             'circleColor' => array(
                 'type' => 'string',
                 'default' => '#2DB7F5'
+            ),
+            'circleSize' => array(
+                'type' => 'number',
+                'default' => 70
             ),
             'largestUnit' => array(
                 'type' => 'string',
@@ -1418,21 +1596,41 @@ $defaultValues = array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'facebookCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
+            ),
             'showTwitterIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'twitterCaption' => array(
+                'type' => 'string',
+                'default' => 'tweet'
             ),
             'showLinkedInIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'linkedInCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
+            ),
             'showPinterestIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
             ),
+            'pinterestCaption' => array(
+                'type' => 'string',
+                'default' => 'pin'
+            ),
             'showRedditIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'redditCaption' => array(
+                'type' => 'string',
+                'default' => 'post'
             ),
             'showGooglePlusIcon' => array(
                 'type'    => 'boolean',
@@ -1441,6 +1639,10 @@ $defaultValues = array(
             'showTumblrIcon' => array(
                 'type'    => 'boolean',
                 'default' => true,
+            ),
+            'tumblrCaption' => array(
+                'type' => 'string',
+                'default' => 'share'
             ),
             'iconSize'    => array(
                 'type'    => 'string',
@@ -1464,7 +1666,15 @@ $defaultValues = array(
             'buttonColor' => array(
                 'type' => 'string',
                 'default' => ''
-            )  
+            ),
+            'useCaptions' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'addOutline' => array(
+                'type' => 'boolean',
+                'default' => false
+            )
         )
     ),
     'ub/star-rating-block' => array(
@@ -1819,7 +2029,23 @@ $defaultValues = array(
             'scrollTargetType' => array(
                 'type' => 'string',
                 'default' => 'id' //other types: class, element
-            )
+            ),
+            'titleColor' => array(
+                'type' => 'string',
+                'default' => '#000000',
+            ),
+            'titleBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
+            'listColor' => array(
+                'type' => 'string',
+                'default' => '#000000',
+            ),
+            'listBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#ffffff',
+            ),
         )
     ),
     'ub/testimonial' => array(

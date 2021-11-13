@@ -4,7 +4,7 @@
  * Plugin Name:       The GDPR Framework
  * Plugin URI:        https://www.data443.com/gdpr-framework/
  * Description:       Tools to help make your website GDPR-compliant. Fully documented, extendable and developer-friendly.
- * Version:           1.0.44
+ * Version:           1.0.46
  * Author:            Data443
  * Author URI:        https://www.data443.com/
  * Text Domain:       gdpr-framework
@@ -18,7 +18,7 @@ if (!defined('WPINC'))
     die;
 }
 
-define('GDPR_FRAMEWORK_VERSION', '1.0.44');
+define('GDPR_FRAMEWORK_VERSION', '1.0.46');
 
 add_shortcode( 'gdpr_privacy_safe', 'render_privacy_safe' ); // preserve backward compatibility
 add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );
@@ -179,6 +179,9 @@ function my_profile_update( $user_id, $old_user_data )
 }
 
 register_activation_hook(__FILE__, function () {
+	if (in_array('gdpr-framework-pro/gdpr-framework.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+		die('This plugin could not be activated because the PRO version of this plugin is active.');
+	}
 	$model = new \Codelight\GDPR\Components\Consent\UserConsentModel();
 	$model->createTable();
 	$model->createUserTable();

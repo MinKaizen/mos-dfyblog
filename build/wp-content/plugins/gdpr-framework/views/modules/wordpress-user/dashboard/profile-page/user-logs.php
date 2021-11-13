@@ -26,14 +26,16 @@
                     <?php echo $userid;?>
                 </td>
                 <td>
-                <ul>
-                    <?php
-                    if($userlog_data){
-                        foreach($userlog_data as $key => $detail){
-                            echo "<li><strong>".$key. ":</strong> $detail</li>";
+                    <ul>
+                        <?php
+                        if ($userlog_data) {
+                            foreach ($userlog_data as $key => $detail) {
+                                $key = print_r($key, true);
+                                $detail = print_r($detail, true);
+                                echo "<li><strong>" . $key . ":</strong>" . $detail . "</li>";
+                            }
                         }
-                    }
-                    echo "</br>";?>
+                        echo "</br>";?>
                     </ul>
                 </td>
                 <td>

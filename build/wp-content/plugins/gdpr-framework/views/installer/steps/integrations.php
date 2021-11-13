@@ -52,7 +52,7 @@
 <p>
     If you've had a developer build any custom features for your site, you should also make sure that everything is properly GDPR-compliant.
     <br>
-    <a href="<?= gdpr('helpers')->docs('wordpress-gdpr-framework-developer-docs/'); ?>" target="_blank">Read about making custom-built sites and features GDPR-compliant.</a>
+    <a href="<?= gdpr('helpers')->developerDocs(); ?>" target="_blank">Read about making custom-built sites and features GDPR-compliant.</a>
 </p>
 
 <hr>

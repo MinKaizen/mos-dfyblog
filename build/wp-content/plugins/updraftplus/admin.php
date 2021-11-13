@@ -203,6 +203,27 @@ class UpdraftPlus_Admin {
 							if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_onedrive'))) add_action('all_admin_notices', array($this, 'show_admin_warning_onedrive'));
 						}
 					}
+					
+					if (isset($storage_options['endpoint_tld']) && 'de' === $storage_options['endpoint_tld']) {
+						if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_onedrive_germany'))) add_action('all_admin_notices', array($this, 'show_admin_warning_onedrive_germany'));
+					}
+				}
+			}
+		}
+		
+		if ('azure' === $services || (is_array($services) && in_array('azure', $services))) {
+			$settings = UpdraftPlus_Storage_Methods_Interface::update_remote_storage_options_format('azure');
+			
+			if (is_wp_error($settings)) {
+				if (!isset($this->storage_module_option_errors)) $this->storage_module_option_errors = '';
+				$this->storage_module_option_errors .= "Azure (".$settings->get_error_code()."): ".$settings->get_error_message();
+				add_action('all_admin_notices', array($this, 'show_admin_warning_multiple_storage_options'));
+				$updraftplus->log_wp_error($settings, true, true);
+			} elseif (!empty($settings['settings'])) {
+				foreach ($settings['settings'] as $instance_id => $storage_options) {
+					if (isset($storage_options['endpoint']) && 'blob.core.cloudapi.de' === $storage_options['endpoint']) {
+						if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_azure_germany'))) add_action('all_admin_notices', array($this, 'show_admin_warning_azure_germany'));
+					}
 				}
 			}
 		}
@@ -1356,6 +1377,20 @@ class UpdraftPlus_Admin {
 	}
 	
 	/**
+	 * Output warning of Microsoft Azure Germany shutdown
+	 */
+	public function show_admin_warning_azure_germany() {
+		$this->show_admin_warning('<strong>'.__('UpdraftPlus notice', 'updraftplus').':</strong> '.sprintf(__('Due to the shutdown of the %1$s endpoint, support for %1$s will be ending soon. You will need to migrate to the Global endpoint in your UpdraftPlus settings. For more information, please see: %2$s', 'updraftplus'), 'Azure Germany', '<a href="https://www.microsoft.com/en-us/cloud-platform/germany-cloud-regions" target="_blank">https://www.microsoft.com/en-us/cloud-platform/germany-cloud-regions</a>'), 'updated');
+	}
+	
+	/**
+	 * Output warning of Microsoft OneDrive Germany shutdown
+	 */
+	public function show_admin_warning_onedrive_germany() {
+		$this->show_admin_warning('<strong>'.__('UpdraftPlus notice', 'updraftplus').':</strong> '.sprintf(__('Due to the shutdown of the %1$s endpoint, support for %1$s will be ending soon. You will need to migrate to the Global endpoint in your UpdraftPlus settings. For more information, please see: %2$s', 'updraftplus'), 'OneDrive Germany', '<a href="https://www.microsoft.com/en-us/cloud-platform/germany-cloud-regions" target="_blank">https://www.microsoft.com/en-us/cloud-platform/germany-cloud-regions</a>'), 'updated');
+	}
+	
+	/**
 	 * This method will setup the storage object and get the authentication link ready to be output with the notice
 	 *
 	 * @param  String $method - the remote storage method
@@ -2099,8 +2134,8 @@ class UpdraftPlus_Admin {
 	/**
 	 * Get the history status HTML and other information
 	 *
-	 * @param Boolean $rescan       - whether to rescan local storage first
-	 * @param Boolean $remotescan   - whether to rescan remote storage first
+	 * @param Boolean $rescan       - whether to rescan local storage
+	 * @param Boolean $remotescan   - whether to also rescan remote storage
 	 * @param Boolean $debug        - whether to return debugging information also
 	 * @param Integer $backup_count - a count of the total backups we want to display on the front end for use by UpdraftPlus_Backup_History::existing_backup_table()
 	 *
@@ -4360,7 +4395,7 @@ class UpdraftPlus_Admin {
 		$ret = '';
 		$backupable_entities = $updraftplus->get_backupable_file_entities(true, true);
 
-		$first_entity = true;
+		$first_entity = true;// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- template
 
 		foreach ($backupable_entities as $type => $info) {
 			if (!empty($backup['meta_foreign']) && 'wpcore' != $type) continue;
