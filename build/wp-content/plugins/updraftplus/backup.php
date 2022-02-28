@@ -92,6 +92,9 @@ class UpdraftPlus_Backup {
 	
 	private $expected_rows = false;
 	
+	// @var Boolean
+	private $try_split = false;
+	
 	/**
 	 * Class constructor
 	 *
@@ -201,7 +204,7 @@ class UpdraftPlus_Backup {
 	 * @param Integer		  $index                Index of zip in the sequence
 	 * @param Integer|Boolean $first_linked_index   First linked index in the sequence, or false
 	 *
-	 * @return Boolean
+	 * @return Boolean|Array - list of files, or false for failure
 	 */
 	public function create_zip($create_from_dir, $whichone, $backup_file_basename, $index, $first_linked_index = false) {
 		// Note: $create_from_dir can be an array or a string
@@ -428,7 +431,7 @@ class UpdraftPlus_Backup {
 		$do_prune = array();
 
 		// If there was no check-in last time, then attempt a different service first - in case a time-out on the attempted service leads to no activity and everything stopping
-		if (count($services) >1 && !empty($updraftplus->no_checkin_last_time)) {
+		if (count($services) >1 && $updraftplus->no_checkin_last_time) {
 			$updraftplus->log('No check-in last time: will try a different remote service first');
 			array_push($services, array_shift($services));
 			// Make sure that the 'no worthwhile activity' detector isn't flumoxed by the starting of a new upload at 0%
@@ -1237,7 +1240,7 @@ class UpdraftPlus_Backup {
 
 			// 03-Sep-2015 - came across a case (HS#2052) where there apparently was a check-in 'last time', but no resumption was scheduled because the 'useful_checkin' jobdata was *not* last time - which must indicate dying at a very unfortunate/unlikely point in the code. As a result, the split was not auto-reduced. Consequently, we've added !$updraftplus->newresumption_scheduled as a condition on the first check here (it was already on the second), as if no resumption is scheduled then whatever checkin there was last time was only partial. This was on GoDaddy, for which a number of curious I/O event combinations have been seen in recent months - their platform appears to have some odd behaviour when PHP is killed off.
 			// 04-Sep-2015 - move the '$updraftplus->current_resumption<=10' check to the inner loop (instead of applying to this whole section), as I see no reason for that restriction (case seen in HS#2064 where it was required on resumption 15)
-			if (!empty($updraftplus->no_checkin_last_time) || !$updraftplus->newresumption_scheduled) {
+			if ($updraftplus->no_checkin_last_time || !$updraftplus->newresumption_scheduled || $updraftplus->resumption_scheduled_for_cleanup) {
 				// Apr 2015: !$updraftplus->newresumption_scheduled added after seeing a log where there was no activity on resumption 9, and extra resumption 10 then tried the same operation.
 				if ($updraftplus->current_resumption - $updraftplus->last_successful_resumption > 2 || !$updraftplus->newresumption_scheduled) {
 					$this->try_split = true;
@@ -2015,9 +2018,11 @@ class UpdraftPlus_Backup {
 	 */
 	public function backup_exclude_jobdata($where, $table) {
 		// Don't include the job data for any backups - so that when the database is restored, it doesn't continue an apparently incomplete backup
-		if ('wp' == $this->whichdb && (!empty($this->table_prefix) && strtolower($this->table_prefix.'sitemeta') == strtolower($table))) {
+		global $updraftplus;
+		$table_prefix = $updraftplus->get_table_prefix(false); // or we can just use $this->table_prefix_raw ??
+		if ('wp' == $this->whichdb && (!empty($table_prefix) && strtolower($table_prefix.'sitemeta') == strtolower($table))) {
 			$where[] = 'meta_key NOT LIKE "updraft_jobdata_%"';
-		} elseif ('wp' == $this->whichdb && (!empty($this->table_prefix) && strtolower($this->table_prefix.'options') == strtolower($table))) {
+		} elseif ('wp' == $this->whichdb && (!empty($table_prefix) && strtolower($table_prefix.'options') == strtolower($table))) {
 			// These might look similar, but the quotes are different
 			if ('win' == strtolower(substr(PHP_OS, 0, 3))) {
 				$updraft_jobdata = "'updraft_jobdata_%'";
@@ -2055,6 +2060,10 @@ class UpdraftPlus_Backup {
 		file_put_contents($this->updraft_dir.'/'.$pfile, "[mysqldump]\npassword=\"".addslashes($this->dbinfo['pass'])."\"\n");
 
 		$where_array = apply_filters('updraftplus_backup_table_sql_where', array(), $table_name, $this);
+		if ('win' === strtolower(substr(PHP_OS, 0, 3))) {
+			// On Windows, the PHP escapeshellarg() replaces % char with white space, so we change the % char to [percent_sign] but change it back later after escapeshellarg finish processsing it
+			$where_array = str_replace('%', '[percent_sign]', $where_array);
+		}
 		$where = '';
 		
 		if (!empty($where_array) && is_array($where_array)) {
@@ -2069,6 +2078,10 @@ class UpdraftPlus_Backup {
 
 		// Note: escapeshellarg() adds quotes around the string
 		if ($where) $where = "--where=".escapeshellarg($where);
+		if ('' !== $where && 'win' === strtolower(substr(PHP_OS, 0, 3))) {
+			// change the [percent_sign] back to % char
+			$where = str_replace('[percent_sign]', '%', $where);
+		}
 
 		if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
 			$exec = "cd ".escapeshellarg(str_replace('/', '\\', $this->updraft_dir))." & ";
@@ -3279,13 +3292,14 @@ class UpdraftPlus_Backup {
 
 			// If the file exists, then we should grab its index of files inside, and sizes
 			// Then, when we come to write a file, we should check if it's already there, and only add if it is not
-			if (file_exists($examine_zip) && is_readable($examine_zip) && filesize($examine_zip)>0) {
+			if (file_exists($examine_zip) && is_readable($examine_zip) && filesize($examine_zip) > 0) {
 
-				$this->populate_existing_files_list($examine_zip, true);
-
-				// try_split is set if there have been no check-ins recently - or if it needs to be split anyway
+				// Do not use (which also means do not create) a manifest if the file is still a .tmp file, since this may not be complete. If we are in this place in the code from a resumption, creating a manifest here will mean the manifest becomes out-of-date if further files are added.
+				$this->populate_existing_files_list($examine_zip, substr($examine_zip, -4, 4) === '.zip');
+				
+				// try_split is true if there have been no check-ins recently - or if it needs to be split anyway
 				if ($j == $this->index) {
-					if (isset($this->try_split)) {
+					if ($this->try_split) {
 						if (filesize($examine_zip) > 50*1048576) {
 							// We could, as a future enhancement, save this back to the job data, if we see a case that needs it
 							$this->zip_split_every = max(
@@ -4263,7 +4277,7 @@ class UpdraftPlus_Backup {
 				$updraftplus->log("Zip manifest file found, but no files contents were found: ".basename($manifest));
 			}
 		} elseif ($read_from_manifest) {
-			$updraftplus->log("No zip manifest file found will create one");
+			$updraftplus->log("No zip manifest file found; will create one");
 		}
 
 		$zip = new $this->use_zip_object;

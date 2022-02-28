@@ -20,7 +20,7 @@
 		endif;
 		?>
     <label>
-        <input type="checkbox" required name="gdpr_terms" id="gdpr_terms" value="1" />
+        <input type="checkbox" required name="gdpr_terms" id="gdpr_terms" aria-label="GDPR Checkbox" value="1" />
         <?php $enabled = gdpr('options')->get('enable_tac');?>
         <?php if ($termsUrl && $enabled): 
             add_filter( 'gdpr-framework-consent-policy-with-terms', 'TermAndConditionWithPrivacyContent' );

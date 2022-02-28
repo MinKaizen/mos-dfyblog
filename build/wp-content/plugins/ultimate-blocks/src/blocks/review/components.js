@@ -198,11 +198,13 @@ export class ReviewBody extends Component {
 	componentDidUpdate(prevProps) {
 		if (this.props.measureCTAFontSize !== prevProps.measureCTAFontSize) {
 			if (this.props.measureCTAFontSize) {
-				this.props.setAttributes({
-					callToActionFontSize: parseInt(
-						getComputedStyle(this.ctaButton.current).fontSize.slice(0, -2)
-					),
-				});
+				if (this.ctaButton.current) {
+					this.props.setAttributes({
+						callToActionFontSize: parseInt(
+							getComputedStyle(this.ctaButton.current).fontSize.slice(0, -2)
+						),
+					});
+				}
 			}
 		}
 	}
@@ -217,6 +219,7 @@ export class ReviewBody extends Component {
 			imgID,
 			imgAlt,
 			imgURL,
+			imgPosition,
 			imageEnabled,
 			setImage,
 			description,
@@ -234,6 +237,7 @@ export class ReviewBody extends Component {
 			setSummaryTitle,
 			callToActionText,
 			callToActionURL,
+			callToActionAlignment,
 			setCallToActionText,
 			setCallToActionURL,
 			hasFocus,
@@ -301,7 +305,9 @@ export class ReviewBody extends Component {
 					unstableOnFocus={() => setEditable("reviewAuthor")}
 				/>
 				{(imageEnabled || descriptionEnabled) && (
-					<div className="ub_review_description_container">
+					<div
+						className={`ub_review_description_container ub_review_${imgPosition}_image`}
+					>
 						{imageEnabled &&
 							(imgID ? (
 								<div className="ub_review_image_container">
@@ -570,7 +576,10 @@ export class ReviewBody extends Component {
 						</div>
 					</div>
 					<div className="ub_review_cta_panel">
-						<div className="ub_review_cta_main">
+						<div
+							className="ub_review_cta_main"
+							style={{ justifyContent: callToActionAlignment }}
+						>
 							{enableCTA && (
 								<div //do not merge into RichText child
 									className="ub_review_cta_btn"

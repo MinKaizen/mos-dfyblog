@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Translation;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Translation;
 
 interface HasLocalePreference
 {

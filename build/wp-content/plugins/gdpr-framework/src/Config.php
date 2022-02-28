@@ -2,7 +2,7 @@
 
 namespace Codelight\GDPR;
 
-class Config extends \Illuminate\Config\Repository
+class Config extends \Data443\gdpr\framework\Illuminate\Config\Repository
 {
 
 }

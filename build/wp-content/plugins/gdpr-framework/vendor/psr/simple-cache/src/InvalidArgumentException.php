@@ -1,6 +1,6 @@
 <?php
 
-namespace Psr\SimpleCache;
+namespace Data443\gdpr\framework\Psr\SimpleCache;
 
 /**
  * Exception interface for invalid cache arguments.

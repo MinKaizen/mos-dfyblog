@@ -41,7 +41,7 @@
           if(r.error !=='' && r.error != undefined){
             jQuery('#donotsellmsg').removeClass('donotsell-msg');
             jQuery('#donotsellmsg').addClass('donotsell-error-msg');
-            jQuery('.donotsell-error-msg').text(r.error).delay(10000).fadeOut();
+            jQuery('#donotsell-error-msg').text(r.error).delay(10000).fadeOut();
           }
           el_form_submit.removeAttr('disabled');
       });

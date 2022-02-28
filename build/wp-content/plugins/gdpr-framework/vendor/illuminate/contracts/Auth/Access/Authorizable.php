@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Auth\Access;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Auth\Access;
 
 interface Authorizable
 {

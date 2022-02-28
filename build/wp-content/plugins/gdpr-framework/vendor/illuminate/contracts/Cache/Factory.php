@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Cache;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Cache;
 
 interface Factory
 {

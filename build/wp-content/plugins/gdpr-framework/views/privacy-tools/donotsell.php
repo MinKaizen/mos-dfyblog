@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <label for="donotsell_consent" class="form_p">
                         <input type="checkbox" name="donotsell_consent" id="donotsell_consent" class="js-gdpr-conditional form_check" data-show=".gdpr-terms-page" value="yes" required>
-                        <?= __('I agree to receive other communications from GDPR', 'gdpr-framework') ?>
+                        <?= esc_html__('I agree to receive other communications from ', 'gdpr-framework') . get_bloginfo('name') ?>
                     </label>
                 </div>
                 <div class="form-group"><p class="form_p"></p></div>
@@ -58,7 +58,7 @@
                         id="do-not-sell-submit"
                         data-is-updated="false"
                         data-is-update-text="UPDATE"
-                        >Send Request
+                        ><?= esc_html_x('Send Request', '(Admin)', 'gdpr-framework') ?>
                 </button>
         </fieldset>
     </form>

@@ -17,7 +17,7 @@ class UpdraftPlus_Admin {
 
 	private $auth_instance_ids = array('dropbox' => array(), 'onedrive' => array(), 'googledrive' => array(), 'googlecloud' => array());
 
-	private $php_versions = array('5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0');
+	private $clone_php_versions = array('5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1');
 
 	private $storage_service_without_settings;
 
@@ -150,12 +150,19 @@ class UpdraftPlus_Admin {
 				$updraftplus->log_wp_error($settings, true, true);
 			} elseif (!empty($settings['settings'])) {
 				foreach ($settings['settings'] as $instance_id => $storage_options) {
-					$clientid = $storage_options['clientid'];
-					$token = (empty($storage_options['token'])) ? '' : $storage_options['token'];
-					
-					if (!empty($clientid) && empty($token)) {
-						if (!in_array($instance_id, $this->auth_instance_ids['googlecloud'])) $this->auth_instance_ids['googlecloud'][] = $instance_id;
-						if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'))) add_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'));
+					if ((defined('UPDRAFTPLUS_CUSTOM_GOOGLECLOUD_APP') && UPDRAFTPLUS_CUSTOM_GOOGLECLOUD_APP) || !empty($storage_options['clientid'])) {
+						$clientid = $storage_options['clientid'];
+						$token = (empty($storage_options['token'])) ? '' : $storage_options['token'];
+
+						if (!empty($clientid) && empty($token)) {
+							if (!in_array($instance_id, $this->auth_instance_ids['googlecloud'])) $this->auth_instance_ids['googlecloud'][] = $instance_id;
+							if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'))) add_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'));
+						}
+					} else {
+						if (empty($storage_options['user_id'])) {
+							if (!in_array($instance_id, $this->auth_instance_ids['googlecloud'])) $this->auth_instance_ids['googlecloud'][] = $instance_id;
+							if (false === has_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'))) add_action('all_admin_notices', array($this, 'show_admin_warning_googlecloud'));
+						}
 					}
 				}
 			}
@@ -1601,10 +1608,11 @@ class UpdraftPlus_Admin {
 					$updraftplus->close_browser_connection(json_encode($msg));
 				}
 				UpdraftPlus_Storage_Methods_Interface::get_remote_file($services, $file, $timestamp);
+				$needs_downloading = false;
 			}
 
 			// Now, be ready to spool the thing to the browser
-			if (is_file($fullpath) && is_readable($fullpath) && $needs_downloading) {
+			if (is_file($fullpath) && is_readable($fullpath) && !$needs_downloading) {
 
 				// That message is then picked up by the AJAX listener
 				$updraftplus->jobdata_set('dlfile_'.$timestamp.'_'.$type.'_'.$findex, 'downloaded:'.filesize($fullpath).":$fullpath");
@@ -2763,6 +2771,20 @@ class UpdraftPlus_Admin {
 	}
 
 	/**
+	 * Show footer review message and link.
+	 *
+	 * @return string
+	 */
+	public function display_footer_review_message() {
+		$message = sprintf(
+			__('Enjoyed %s? Please leave us a %s rating. We really appreciate your support!', 'updraftplus'),
+			'<b>UpdraftPlus</b>',
+			'<a href="https://www.g2.com/products/updraftplus/reviews" target="_blank">&starf;&starf;&starf;&starf;&starf;</a>'
+		);
+		return $message;
+	}
+
+	/**
 	 * Include the settings header template
 	 */
 	public function settings_header() {
@@ -2837,6 +2859,13 @@ class UpdraftPlus_Admin {
 			}
 			echo '<b>'.__('Actions', 'updraftplus').':</b> <a href="'.UpdraftPlus_Options::admin_page_url().'?page=updraftplus">'.__('Return to UpdraftPlus configuration', 'updraftplus').'</a>';
 			return;
+		}
+
+		if (substr($updraftplus->version, 0, 1) === '2') {
+			/**
+			 * Add filter for display footer review message and link.
+			 */
+			add_filter('admin_footer_text', array($this, 'display_footer_review_message'));
 		}
 
 		echo '<div id="updraft_backup_started" class="updated updraft-hidden" style="display:none;"></div>';
@@ -3600,7 +3629,7 @@ class UpdraftPlus_Admin {
 				$p = min($jobdata['uploading_substatus']['p'], 1);
 				$pd = $i + $p/$t;
 				$stage = 4 + $pd;
-				$curstage .= ' '.sprintf(__('(%s%%, file %s of %s)', 'updraftplus'), floor(100*$pd), $jobdata['uploading_substatus']['i']+1, $t);
+				$curstage .= ' ('.floor(100*$pd).'%, '.sprintf(__('file %d of %d', 'updraftplus'), (int)$jobdata['uploading_substatus']['i']+1, $t).')';
 			}
 				break;
 			case 'pruning':
@@ -3680,7 +3709,7 @@ class UpdraftPlus_Admin {
 		}
 
 		$next_res_after = (int) $time-time();
-		$next_res_txt = ($is_oneshot) ? '' : sprintf(__("next resumption: %d (after %ss)", 'updraftplus'), $next_resumption, $next_res_after). ' ';
+		$next_res_txt = $is_oneshot ? '' : sprintf(__('next resumption: %d', 'updraftplus'), $next_resumption).($next_resumption ? ' '.sprintf(__('(after %ss)', 'updraftplus'), $next_res_after) : '').' ';
 		$last_activity_txt = ($last_checkin_ago >= 0) ? sprintf(__('last activity: %ss ago', 'updraftplus'), floor($last_checkin_ago)).' ' : '';
 
 		if (($last_checkin_ago < 50 && $next_res_after>30) || $is_oneshot) {
@@ -4748,7 +4777,9 @@ ENDHERE;
 		global $updraftplus;
 
 		// on restore start job_id is empty but if we needed file system permissions or this is a resumption then we have already started a job so reuse it
-		$restore_job_id = empty($_REQUEST['job_id']) ? false : $_REQUEST['job_id'];
+		$restore_job_id = empty($_REQUEST['job_id']) ? false : stripslashes($_REQUEST['job_id']);
+		
+		if (false !== $restore_job_id && !preg_match('/^[0-9a-f]+$/', $restore_job_id)) die('Invalid request (restore_job_id).');
 
 		// Set up nonces, log files etc.
 		$updraftplus->initiate_restore_job($restore_job_id);
@@ -4850,7 +4881,7 @@ ENDHERE;
 			$backup_timestamp = $updraftplus->jobdata_get('backup_timestamp');
 			$continuation_data = array('updraftplus_ajax_restore' => 'do_ajax_restore');
 		} else {
-			$backup_timestamp = $_REQUEST['backup_timestamp'];
+			$backup_timestamp = (int) $_REQUEST['backup_timestamp'];
 			$continuation_data = null;
 		}
 
@@ -4946,12 +4977,12 @@ ENDHERE;
 		echo '<div class="updraft_restore_main">';
 		
 		if ($debug) echo '<input type="hidden" id="updraftplus_ajax_restore_debug" name="updraftplus_ajax_restore_debug" value="1">';
-		echo '<input type="hidden" id="updraftplus_ajax_restore_job_id" name="updraftplus_restore_job_id" value="' . $updraftplus->nonce . '">';
-		echo '<input type="hidden" id="updraftplus_ajax_restore_action" name="updraftplus_restore_action" value="' . $ajax_action . '">';
+		echo '<input type="hidden" id="updraftplus_ajax_restore_job_id" name="updraftplus_restore_job_id" value="' . esc_attr($updraftplus->nonce) . '">';
+		echo '<input type="hidden" id="updraftplus_ajax_restore_action" name="updraftplus_restore_action" value="' . esc_attr($ajax_action) . '">';
 		echo '<div id="updraftplus_ajax_restore_progress" style="display: none;"></div>';
 
 		echo '<div class="updraft_restore_main--components">';
-		echo '	<p>'.sprintf(__('The restore operation has begun (%s). Do not close this page until it reports itself as having finished.', 'updraftplus'), $updraftplus->nonce).'</p>';
+		echo '	<p>'.sprintf(__('The restore operation has begun (%s). Do not close this page until it reports itself as having finished.', 'updraftplus'), htmlspecialchars($updraftplus->nonce)).'</p>';
 		echo '	<h2>'.__('Restoration progress:', 'updraftplus').'</h2>';
 		echo '	<div class="updraft_restore_result"><span class="dashicons"></span><pan class="updraft_restore_result--text"></span></div>';
 		echo '	<ul class="updraft_restore_components_list">';
@@ -4959,13 +4990,16 @@ ENDHERE;
 		foreach ($restore_components as $restore_component) {
 			// Set Database description
 			if ('db' == $restore_component && !isset($backupable_entities[$restore_component]['description'])) $backupable_entities[$restore_component]['description'] = __('Database', 'updraftplus');
-			echo '		<li data-component="'.esc_attr($restore_component).'"><span class="updraft_component--description">'.(isset($backupable_entities[$restore_component]['description']) ? $backupable_entities[$restore_component]['description'] : $restore_component).'</span><span class="updraft_component--progress"></span></li>';
+			if (!isset($backupable_entities[$restore_component])) {
+				die('Abort: invalid data');
+			}
+			echo '		<li data-component="'.esc_attr($restore_component).'"><span class="updraft_component--description">'.(isset($backupable_entities[$restore_component]['description']) ? htmlspecialchars($backupable_entities[$restore_component]['description']) : htmlspecialchars($restore_component)).'</span><span class="updraft_component--progress"></span></li>';
 		}
 		echo '		<li data-component="cleaning"><span class="updraft_component--description">'.__('Cleaning', 'updraftplus').'</span><span class="updraft_component--progress"></span></li>';
 		echo '		<li data-component="finished"><span class="updraft_component--description">'.__('Finished', 'updraftplus').'</span><span class="updraft_component--progress"></span></li>';
 		echo '	</ul>'; // end ul.updraft_restore_components_list
 		// Provide download link for the log file
-		echo '	<p><a target="_blank" href="?action=downloadlog&page=updraftplus&updraftplus_backup_nonce='.htmlspecialchars($updraftplus->nonce).'">'.__('Follow this link to download the log file for this restoration (needed for any support requests).', 'updraftplus').'</a></p>';
+		echo '	<p><a target="_blank" href="?action=downloadlog&page=updraftplus&updraftplus_backup_nonce='.esc_attr($updraftplus->nonce).'">'.__('Follow this link to download the log file for this restoration (needed for any support requests).', 'updraftplus').'</a></p>';
 		echo '</div>'; // end .updraft_restore_main--components
 		echo '<div class="updraft_restore_main--activity">';
 		echo '	<h2 class="updraft_restore_main--activity-title">'.__('Activity log', 'updraftplus').' <i id="activity-full-log" title="'.__('Full-screen', 'updraftplus').'" class="dashicons dashicons-fullscreen-alt" style="float: right; cursor: pointer; margin-left: 7px;"></i> <span id="updraftplus_ajax_restore_last_activity"></span></h2>';
@@ -5041,7 +5075,7 @@ ENDHERE;
 	/**
 	 * Carry out the restore process within the WP admin dashboard, using data from $_POST
 	 *
-	 * @param  Array	  $timestamp         Identifying the backup to be restored
+	 * @param  Integer	  $timestamp         Identifying the backup to be restored
 	 * @param  Array|null $continuation_data For continuing a multi-stage restore; this is the saved jobdata for the job; in this method the keys used are second_loop_entities, restore_options; but it is also passed on to Updraft_Restorer::perform_restore()
 	 * @return Boolean|WP_Error - a WP_Error indicates a terminal failure; false indicates not-yet complete (not necessarily terminal); true indicates complete.
 	 */
@@ -5057,7 +5091,7 @@ ENDHERE;
 		$backup_set = UpdraftPlus_Backup_History::get_history($timestamp);
 
 		if (empty($backup_set)) {
-			echo '<p>'.__('This backup does not exist in the backup history - restoration aborted. Timestamp:', 'updraftplus')." $timestamp</p><br>";
+			echo '<p>'.__('This backup does not exist in the backup history - restoration aborted. Timestamp:', 'updraftplus').' '.htmlspecialchars($timestamp).'</p><br>';
 			return new WP_Error('does_not_exist', __('Backup does not exist in the backup history', 'updraftplus')." ($timestamp)");
 		}
 
@@ -5592,6 +5626,7 @@ ENDHERE;
 
 		foreach ($settings as $s) UpdraftPlus_Options::delete_updraft_option($s);
 
+		if (is_multisite()) $updraftplus->wipe_state_data(true, 'sitemeta');
 		$updraftplus->wipe_state_data(true);
 
 		$site_options = array('updraft_oneshotnonce');
@@ -5918,7 +5953,7 @@ ENDHERE;
 
 		$output = '<p class="updraftplus-option updraftplus-option-inline php-version">';
 		$output .= '<span class="updraftplus-option-label">'.sprintf(__('%s version:', 'updraftplus'), 'PHP').'</span> ';
-		$output .= $this->output_select_data($this->php_versions, 'php');
+		$output .= $this->output_select_data($this->clone_php_versions, 'php');
 		$output .= '</p>';
 		$output .= '<p class="updraftplus-option updraftplus-option-inline wp-version">';
 		$output .= ' <span class="updraftplus-option-label">'.sprintf(__('%s version:', 'updraftplus'), 'WordPress').'</span> ';
@@ -6121,7 +6156,9 @@ ENDHERE;
 	 * @param array $data     - Data received from the front end (unslashed).
 	 */
 	public function process_status_in_heartbeat($response, $data) {
-		if (!is_array($response) || empty($data['updraftplus'])) return $response;
+		
+		if (!UpdraftPlus_Options::user_can_manage() || !is_array($response) || empty($data['updraftplus'])) return $response;
+		
 		try {
 			$response['updraftplus'] = $this->get_activejobs_list(UpdraftPlus_Manipulation_Functions::wp_unslash($data['updraftplus']));
 		} catch (Exception $e) {
@@ -6141,7 +6178,7 @@ ENDHERE;
 			);
 		}
 
-		if (UpdraftPlus_Options::user_can_manage() && isset($data['updraftplus']['updraft_credentialtest_nonce'])) {
+		if (isset($data['updraftplus']['updraft_credentialtest_nonce'])) {
 			if (!wp_verify_nonce($data['updraftplus']['updraft_credentialtest_nonce'], 'updraftplus-credentialtest-nonce')) {
 				$response['updraftplus']['updraft_credentialtest_nonce'] = wp_create_nonce('updraftplus-credentialtest-nonce');
 			}
@@ -6173,7 +6210,7 @@ ENDHERE;
 	 */
 	public function maybe_download_backup_from_email() {
 		global $pagenow;
-		if ((!defined('DOING_AJAX') || !DOING_AJAX) && UpdraftPlus_Options::admin_page() === $pagenow && isset($_REQUEST['page']) && 'updraftplus' === $_REQUEST['page'] && isset($_REQUEST['action']) && 'updraft_download_backup' === $_REQUEST['action']) {
+		if (UpdraftPlus_Options::user_can_manage() && (!defined('DOING_AJAX') || !DOING_AJAX) && UpdraftPlus_Options::admin_page() === $pagenow && isset($_REQUEST['page']) && 'updraftplus' === $_REQUEST['page'] && isset($_REQUEST['action']) && 'updraft_download_backup' === $_REQUEST['action']) {
 			$findexes = empty($_REQUEST['findex']) ? array(0) : $_REQUEST['findex'];
 			$timestamp = empty($_REQUEST['timestamp']) ? '' : $_REQUEST['timestamp'];
 			$nonce = empty($_REQUEST['nonce']) ? '' : $_REQUEST['nonce'];

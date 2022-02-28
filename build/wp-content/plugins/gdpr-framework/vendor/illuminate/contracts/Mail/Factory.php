@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Mail;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Mail;
 
 interface Factory
 {

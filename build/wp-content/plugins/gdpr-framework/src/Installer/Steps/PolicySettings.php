@@ -51,6 +51,7 @@ class PolicySettings extends InstallerStep implements InstallerStepInterface
             'echo'              => false,
             'class'             => 'gdpr-select js-gdpr-select2',
         ]);
+        $termsPageUrl = gdpr('options')->get('custom_terms_page');
 
         $companyName     = gdpr('options')->get('company_name');
         $companyLocation = gdpr('options')->get('company_location');
@@ -95,7 +96,8 @@ class PolicySettings extends InstallerStep implements InstallerStepInterface
                 'hasTermsPage',
                 'termsPage',
                 'termsPageSelector',
-                'termsPageNote'
+                'termsPageNote',
+                'termsPageUrl'
             )
         );
     }

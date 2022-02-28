@@ -38,9 +38,6 @@ class OptionalParent extends Component {
 	constructor(props) {
 		super(props);
 	}
-	componentDidUpdate(prevProps) {
-		console.log("conditon change detected");
-	}
 	render() {
 		if (this.props.enabled) {
 			return (
@@ -510,7 +507,8 @@ class TableOfContents extends Component {
 			)[0];
 
 			if (
-				currentlyEditedHeader.customContent === currentlyEditedHeader.content
+				currentlyEditedHeader.customContent ===
+				currentlyEditedHeader.content.replace(/<.+?>/g, "")
 			) {
 				//no changes detected
 				revisedHeaders[currentlyEditedHeader.index].customContent = "";
@@ -563,9 +561,13 @@ class TableOfContents extends Component {
 											const revisedHeaders = JSON.parse(
 												JSON.stringify(this.state.headers)
 											);
+
 											if (!revisedHeaders[item.index].customContent) {
 												revisedHeaders[item.index].customContent =
-													revisedHeaders[item.index].content;
+													revisedHeaders[item.index].content.replace(
+														/<.+?>/g,
+														""
+													);
 												this.setState({ headers: revisedHeaders });
 											}
 											this.setState({ currentlyEditedItem: item.clientId });
@@ -609,9 +611,6 @@ class TableOfContents extends Component {
 				readCustomHeadingInput();
 			}
 		}
-
-		console.log("current list style");
-		console.log(listStyle);
 
 		if (
 			headers.length > 0 &&
@@ -663,6 +662,8 @@ export const inspectorControls = (props) => {
 		scrollTargetType,
 		titleColor,
 		titleBackgroundColor,
+		listStyle,
+		listIconColor,
 		listColor,
 		listBackgroundColor,
 	} = attributes;
@@ -784,6 +785,18 @@ export const inspectorControls = (props) => {
 							setAttributes({ listBackgroundColor }),
 						label: __("List Background Color"),
 					},
+					...[
+						listStyle !== "plain"
+							? {
+									value: listIconColor,
+									onChange: (listIconColor) => setAttributes({ listIconColor }),
+									label:
+										listStyle === "numbered"
+											? __("Item number color")
+											: __("List icon color"),
+							  }
+							: [],
+					],
 				]}
 			/>
 			<PanelBody title={__("Additional Settings")} initialOpen={true}>
@@ -921,6 +934,7 @@ export const editorDisplay = (props) => {
 		titleBackgroundColor,
 		listColor,
 		listBackgroundColor,
+		listIconColor,
 		blockID,
 	} = props.attributes;
 
@@ -973,13 +987,16 @@ export const editorDisplay = (props) => {
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
 					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
-					style={{ color: listColor, backgroundColor: listBackgroundColor }}
+					style={{ backgroundColor: listBackgroundColor }}
 				/>
 			)}
 			{
 				<style
 					dangerouslySetInnerHTML={{
-						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
+						__html: `#ub_table-of-contents-${blockID} .ub_table-of-contents-container li{
+							color: ${listIconColor};
+						}
+						#ub_table-of-contents-${blockID} .ub_table-of-contents-container a{
 							color: ${listColor};
 						}`,
 					}}

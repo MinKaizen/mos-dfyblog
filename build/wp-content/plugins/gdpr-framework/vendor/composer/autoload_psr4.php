@@ -6,20 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'voku\\' => array($vendorDir . '/voku/portable-ascii/src/voku'),
-    'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
-    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
-    'Symfony\\Contracts\\Translation\\' => array($vendorDir . '/symfony/translation-contracts'),
-    'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
-    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
-    'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
-    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'Illuminate\\Support\\' => array($vendorDir . '/illuminate/macroable', $vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/support'),
-    'Illuminate\\Filesystem\\' => array($vendorDir . '/illuminate/filesystem'),
-    'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
-    'Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
-    'Illuminate\\Config\\' => array($vendorDir . '/illuminate/config'),
-    'Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
+    'Data443\\gdpr\\framework\\Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
+    'Data443\\gdpr\\framework\\Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Data443\\gdpr\\framework\\Illuminate\\Support\\' => array($vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/macroable'),
+    'Data443\\gdpr\\framework\\Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
+    'Data443\\gdpr\\framework\\Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
+    'Data443\\gdpr\\framework\\Illuminate\\Config\\' => array($vendorDir . '/illuminate/config'),
     'Codelight\\GDPR\\' => array($baseDir . '/src'),
-    'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

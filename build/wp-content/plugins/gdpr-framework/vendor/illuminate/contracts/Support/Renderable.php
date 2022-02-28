@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Support;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Support;
 
 interface Renderable
 {

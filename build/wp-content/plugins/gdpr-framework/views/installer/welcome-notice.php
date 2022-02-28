@@ -1,7 +1,9 @@
 <p>
-    The GDPR Framework has not been set up yet. Would you like to do that? <br>
-    Our setup wizard will guide you through the process. <br>
-    You can also configure the plugin manually by going to <a href="<?= gdpr('helpers')->getAdminUrl(); ?>">Tools > Data443 GDPR</a>.
+    <?= esc_html_x('The GDPR Framework has not been set up yet. Would you like to do that?', '(Admin)', 'gdpr-framework'); ?> <br>
+    <?= esc_html_x('Our setup wizard will guide you through the process.', '(Admin)', 'gdpr-framework'); ?> <br>
+    <?= esc_html_x('You can also configure the plugin manually by going to', '(Admin)', 'gdpr-framework'); ?> 
+            <a href="<?= gdpr('helpers')->getAdminUrl(); ?>"> <?= esc_html_x('Tools', '(Admin)', 'gdpr-framework'); ?> > 
+                                                                                <?= esc_html_x('Data443 GDPR', '(Admin)', 'gdpr-framework'); ?> </a>.
 </p>
 
 <a class="button button-primary" href="<?= $installerUrl; ?>">

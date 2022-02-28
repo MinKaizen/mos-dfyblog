@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Queue;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Queue;
 
 interface ClearableQueue
 {

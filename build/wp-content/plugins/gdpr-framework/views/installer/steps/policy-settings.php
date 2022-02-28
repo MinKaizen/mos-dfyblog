@@ -170,22 +170,30 @@
                 name="gdpr_has_terms_page"
                 id="gdpr_has_terms_page"
                 class="js-gdpr-conditional"
-                data-show=".gdpr-terms-page"
+                data-show=".gdpr-select-terms-page"
                 value="yes"
             <?= checked($hasTermsPage, 'yes'); ?>
-        >
+        />
         I have a Terms & Conditions page
     </label>
 </p>
-<p>
-    <span class="gdpr-terms-page hidden">
+
+<p class="gdpr-select-terms-page hidden">
     <label for="gdpr_terms_page">Select the page where your Terms & Conditions are displayed</label>
-        <?php if ($termsPageNote): ?>
-            <em><?= esc_html($termsPageNote); ?></em>
-        <?php endif; ?>
-        <?= $termsPageSelector; ?>
-        <br>
-    </span>
+    <?php if ($termsPageNote): ?>
+        <em><?= esc_html($termsPageNote); ?></em>
+    <?php endif; ?>
+    <?= $termsPageSelector; ?>
+    <strong>OR</strong>
+    <label for="gdpr_custom_terms_page">Enter the page URL where your Terms & Conditions page will be displayed</label>
+    <input 
+        type="url" 
+        name="gdpr_custom_terms_page" 
+        id="gdpr_custom_terms_page" 
+        value="<?= esc_attr($termsPageUrl); ?>"
+    />
+    <br/>
+    <span class="notice_gdpr">(Leave blank if the Terms & Conditions page is selected above or make it blank if the page exists in the page list.)</span>
 </p>
 
 <hr>

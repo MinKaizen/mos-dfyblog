@@ -4,8 +4,10 @@
  * Plugin Name:       The GDPR Framework
  * Plugin URI:        https://www.data443.com/gdpr-framework/
  * Description:       Tools to help make your website GDPR-compliant. Fully documented, extendable and developer-friendly.
- * Version:           1.0.46
  * Author:            Data443
+ * Requires at least: 4.7
+ * Requires PHP:      7.3
+ * Version:           1.0.49
  * Author URI:        https://www.data443.com/
  * Text Domain:       gdpr-framework
  * Domain Path:       /languages
@@ -18,7 +20,7 @@ if (!defined('WPINC'))
     die;
 }
 
-define('GDPR_FRAMEWORK_VERSION', '1.0.46');
+define('GDPR_FRAMEWORK_VERSION', '1.0.49');
 
 add_shortcode( 'gdpr_privacy_safe', 'render_privacy_safe' ); // preserve backward compatibility
 add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );
@@ -54,11 +56,12 @@ function render_privacy_safe() {
 	}
 }
 
-add_action( 'plugins_loaded', 'gdpr_framework_load_textdomain' );
 function gdpr_framework_load_textdomain() 
 {
-  load_plugin_textdomain( 'gdpr-framework', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
+	load_plugin_textdomain('gdpr-framework', false, basename( dirname( __FILE__ ) ) . '/languages/');
 }
+add_action('init', 'gdpr_framework_load_textdomain');
+
 /**
  * Our custom post type function
  */
@@ -85,6 +88,29 @@ function create_custom_post_type()
  * Hooking up our function to theme setup
  */
 add_action( 'init', 'create_custom_post_type' );
+
+// Add Columns to our custom posts
+
+add_filter('manage_donotsellrequests_posts_columns', function ($columns) {
+    $columns = array_merge($columns, ['donotsell_first_name' => __('First Name', 'textdomain')]);
+    $columns = array_merge($columns, ['donotsell_last_name' => __('Last Name', 'textdomain')]);
+    $columns = array_merge($columns, ['title' => __('Email', 'textdomain')]);
+    $taken_out = $columns['date'];
+    unset($columns['date']);
+    $columns['date'] = $taken_out;
+    return $columns;
+});
+
+add_action('manage_donotsellrequests_posts_custom_column', function ($column_key, $post_id) {
+    if ($column_key == 'donotsell_first_name') {
+        $data = get_post_meta($post_id, 'donotsell_first_name', true);
+        _e($data, 'textdomain');
+    } elseif ($column_key == 'donotsell_last_name') {
+        $data = get_post_meta($post_id, 'donotsell_last_name', true);
+        _e($data, 'textdomain');
+    }
+
+}, 10, 2);
 
 /**
  * Helper function for prettying up errors

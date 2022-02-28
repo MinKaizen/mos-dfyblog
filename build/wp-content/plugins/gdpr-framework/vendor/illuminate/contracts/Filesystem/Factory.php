@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Filesystem;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Filesystem;
 
 interface Factory
 {

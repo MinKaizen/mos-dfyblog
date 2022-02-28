@@ -470,6 +470,14 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => ''
             ),
+            'collapsed' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'collapsedOnMobile' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
             'titleColor' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1330,6 +1338,10 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => 'left'
             ),
+            'imgPosition' => array(
+                'type' => 'string',
+                'default' => 'right'
+            ),
             'imgURL' => array(
                 'type' => 'string',
                 'default' => ''
@@ -1434,6 +1446,10 @@ $defaultValues = array(
             'ctaIsSponsored' => array(
                 'type' => 'boolean',
                 'default' => false
+            ),
+            'ctaAlignment' => array(
+                'type' => 'string',
+                'default' => 'left'
             ),
             'enableReviewSchema' => array(
                 'type' => 'boolean',
@@ -2032,20 +2048,24 @@ $defaultValues = array(
             ),
             'titleColor' => array(
                 'type' => 'string',
-                'default' => '#000000',
+                'default' => '',
             ),
             'titleBackgroundColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '',
             ),
             'listColor' => array(
                 'type' => 'string',
-                'default' => '#000000',
+                'default' => '',
             ),
             'listBackgroundColor' => array(
                 'type' => 'string',
-                'default' => '#ffffff',
+                'default' => '',
             ),
+            'listIconColor' => array(
+                'type' => 'string',
+                'default' => ''
+            )
         )
     ),
     'ub/testimonial' => array(

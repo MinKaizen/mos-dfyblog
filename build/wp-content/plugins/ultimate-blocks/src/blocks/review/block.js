@@ -18,6 +18,7 @@ const {
 	ToolbarGroup,
 	ToolbarButton,
 	Button,
+	ButtonGroup,
 	FormToggle,
 	PanelBody,
 	PanelRow,
@@ -81,6 +82,10 @@ const attributes = {
 	descriptionAlign: {
 		type: "string",
 		default: "left",
+	},
+	imgPosition: {
+		type: "string",
+		default: "right",
 	},
 	imgURL: {
 		type: "string",
@@ -176,6 +181,10 @@ const attributes = {
 	ctaIsSponsored: {
 		type: "boolean",
 		default: false,
+	},
+	ctaAlignment: {
+		type: "string",
+		default: "left",
 	},
 	enableReviewSchema: {
 		type: "boolean",
@@ -387,6 +396,7 @@ registerBlockType("ub/review", {
 				itemSubtype,
 				itemSubsubtype,
 				description,
+				imgPosition,
 				imgID,
 				imgAlt,
 				imgURL,
@@ -415,6 +425,7 @@ registerBlockType("ub/review", {
 				ctaNoFollow,
 				ctaOpenInNewTab,
 				ctaIsSponsored,
+				ctaAlignment,
 				enableReviewSchema,
 				enableImage,
 				enableDescription,
@@ -1405,6 +1416,18 @@ registerBlockType("ub/review", {
 									/>
 								</PanelRow>
 								<PanelRow>
+									<label>{__("Alignment")}</label>
+									<ButtonGroup>
+										{["left", "center", "right"].map((a) => (
+											<Button
+												icon={`align-${a}`}
+												isPrimary={ctaAlignment === a}
+												onClick={() => setAttributes({ ctaAlignment: a })}
+											/>
+										))}
+									</ButtonGroup>
+								</PanelRow>
+								<PanelRow>
 									<label htmlFor="ub-review-cta-changefontsize">
 										{__("Change font size")}
 									</label>
@@ -1564,13 +1587,33 @@ registerBlockType("ub/review", {
 								</PanelRow>
 							)}
 							{enableImage && (
-								<RangeControl
-									label={__("Image size")}
-									value={imageSize}
-									onChange={(imageSize) => setAttributes({ imageSize })}
-									min={1}
-									max={200}
-								/>
+								<>
+									<PanelRow>
+										<label>{__("Image size")}</label>
+										<input
+											type="number"
+											value={imageSize}
+											onChange={(e) => {
+												setAttributes({ imageSize: e.target.value });
+											}}
+										/>
+									</PanelRow>
+									<PanelRow>
+										<label>{__("Image position")}</label>
+										<SelectControl
+											value={imgPosition}
+											onChange={(imgPosition) => setAttributes({ imgPosition })}
+											options={[
+												"left",
+												"right",
+												...(enableDescription ? ["top", "bottom"] : []),
+											].map((a) => ({
+												label: __(a),
+												value: a,
+											}))}
+										/>
+									</PanelRow>
+								</>
 							)}
 							{(!enableReviewSchema || itemType !== "Course") && (
 								<PanelRow>
@@ -1581,9 +1624,15 @@ registerBlockType("ub/review", {
 										id="ub-review-description-toggle"
 										label={__("Enable review description")}
 										checked={enableDescription}
-										onChange={() =>
-											setAttributes({ enableDescription: !enableDescription })
-										}
+										onChange={() => {
+											setAttributes({ enableDescription: !enableDescription });
+											if (
+												!enableDescription &&
+												["top", "bottom"].includes(imgPosition)
+											) {
+												setAttributes({ imgPosition: "right" });
+											}
+										}}
 									/>
 								</PanelRow>
 							)}
@@ -1758,6 +1807,7 @@ registerBlockType("ub/review", {
 				imgID={imgID}
 				imgAlt={imgAlt}
 				imgURL={imgURL}
+				imgPosition={imgPosition}
 				imageEnabled={enableImage}
 				valueType={valueType}
 				items={parts}
@@ -1770,6 +1820,7 @@ registerBlockType("ub/review", {
 				callToActionBackColor={callToActionBackColor}
 				callToActionBorderColor={callToActionBorderColor}
 				callToActionForeColor={callToActionForeColor}
+				callToActionAlignment={ctaAlignment}
 				inactiveStarColor={inactiveStarColor}
 				activeStarColor={activeStarColor}
 				activePercentBarColor={activePercentBarColor}

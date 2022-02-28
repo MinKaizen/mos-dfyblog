@@ -45,7 +45,15 @@ if ($hasFrm): ?>
     <h2>&#10004; Formidable Forms</h2>
     <p>
         We have detected that Formidable Forms is enabled on your site.
-        You can Use <a  target="_blank" href="https://wordpress.org/plugins/gdpr-for-formidable-forms/">GDPR for Formidable Forms</a> to make Formidable Forms compatibility to the GDPR Framework.
+        You can Use <a  target="_blank" href="https://wordpress.org/plugins/gdpr-for-formidable-forms/">GDPR for Formidable Forms</a> to make Formidable Forms compatible with the GDPR Framework.
+    </p>
+    <hr>
+<?php endif; 
+if ($hasNinjaForms): ?>
+    <h2>&#10004; Ninja Forms</h2>
+    <p>
+        We have detected that Ninja Forms is enabled on your site.
+        You can Use <a  target="_blank" href="https://wordpress.org/plugins/gdpr-for-ninja-forms/">GDPR for Ninja Forms</a> to make Ninja Forms compatible with the GDPR Framework.
     </p>
     <hr>
 <?php endif; 

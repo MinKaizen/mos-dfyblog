@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Auth\Middleware;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Auth\Middleware;
 
 interface AuthenticatesRequests
 {

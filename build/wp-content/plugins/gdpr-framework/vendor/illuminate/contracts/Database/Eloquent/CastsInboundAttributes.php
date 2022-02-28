@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Database\Eloquent;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Database\Eloquent;
 
 interface CastsInboundAttributes
 {

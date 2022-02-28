@@ -112,22 +112,27 @@ class PrivacyToolsPageController {
 	/**
 	 * If the given email address exists as a data subject, send an authentication email to that address
 	 */
-	public function sendIdentificationEmail() {
-		// Additional safety check
-		if ( ! is_email( $_REQUEST['email'] ) ) {
-			$this->redirect( array( 'gdpr_notice' => 'invalid_email' ) );
-		} else {
-			$requested_email = sanitize_email( $_REQUEST['email'] );
-		}
+    public function sendIdentificationEmail() {
+        // Additional safety check
+        if ( ! is_email( $_REQUEST['email'] ) ) {
+            $this->redirect( array( 'gdpr_notice' => 'invalid_email' ) );
+        } else {
+            $requested_email = sanitize_email( $_REQUEST['email'] );
+        }
 
-		if ( $this->dataSubjectIdentificator->isDataSubject( $requested_email ) ) {
-			$this->dataSubjectIdentificator->sendIdentificationEmail( $requested_email );
-		} else {
-			$this->dataSubjectIdentificator->sendNoDataFoundEmail( $requested_email );
-		}
+        $user = get_user_by( 'email', $requested_email );
+        if (empty($user)) {
+            $this->redirect( array( 'gdpr_notice' => 'unregistered_user' ) );
+        }
 
-		$this->redirect( array( 'gdpr_notice' => 'email_sent' ) );
-	}
+        if ( $this->dataSubjectIdentificator->isDataSubject( $requested_email ) ) {
+            $this->dataSubjectIdentificator->sendIdentificationEmail( $requested_email );
+        } else {
+            $this->dataSubjectIdentificator->sendNoDataFoundEmail( $requested_email );
+        }
+
+        $this->redirect( array( 'gdpr_notice' => 'email_sent' ) );
+    }
 
 	/**
 	 * Render the page contents.

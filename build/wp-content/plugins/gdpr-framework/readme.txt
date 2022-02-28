@@ -117,6 +117,21 @@ We are also planning to add other important privacy-related features missing fro
 
 == Change log ==
 
+= 1.0.49 (1/18/2022) =
+* Fram-303 Automatically push a new release from GitHub to WordPress
+* Fram-304 Add accessibility markup to the terms checkbox
+
+= 1.0.48 (11/30/2021) =
+* FRAM-294 Reduce PHP Requirement from 7.4 to 7.3
+
+= 1.0.47 (11/29/2021) =
+* FRAM-259 Add support for an Italian Translation
+* FRAM-273 Add support for the Polish Translation
+* FRAM-263 Fix broken link
+* FRAM-267 Add Ninja Form detection during setup
+* FRAM-254 autoload composer dependency conflicts fix
+* FRAM-289 Edit Privacy Tools Page to only send emails to users with data on site. Otherwise a message displays that no data is found for specified email. 
+
 = 1.0.46 (10/26/2021) =
 * FRAM-242 Add a PREMIUM hyperlink in the admin plugins screen
 * FRAM-244 Add information about the premium version in the admin settings tabs

@@ -164,16 +164,28 @@ abstract class AdminTab implements AdminTabInterface
                             <p>With the <b>PREMIUM</b> version you can have other awesome features:</p>
 
                             <div style="clear:both; margin-top: 2px;"></div>
-                            <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-5px;">
-                                <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                            <div>
+                                <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
+                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                </div>
+                                <p style="margin-top:0px;">Custom Consent Text</p>
                             </div>
-                            <div style="float:left; vertical-align:middle; height:24px;">Custom Consent Text</div>
 
                             <div style="clear:both; margin-top: 2px;"></div>
-                            <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-5px;">
-                                <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                            <div>
+                                <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
+                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                </div>
+                                <p style="margin-top:0px;">Data Rectification</p>
                             </div>
-                            <div style="float:left; vertical-align:middle; height:24px;">Data Rectification</div>
+
+                            <div style="clear:both; margin-top: 2px;"></div>
+                            <div>
+                                <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
+                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                </div>
+                                <p style="margin-top:0px;">Custom relative URLs for the Privacy Policy and other files</p>
+                            </div>
 
                             <div style="clear:both;"></div>
                             <div style="height:10px;"></div>

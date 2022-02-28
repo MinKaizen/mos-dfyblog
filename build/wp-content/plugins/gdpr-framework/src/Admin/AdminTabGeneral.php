@@ -114,7 +114,7 @@ class AdminTabGeneral extends AdminTab
 
         $this->registerSettingField(
             'gdpr_tools_page',
-            _x('Privacy Tools Page', '(Admin)', 'gdpr-framework') . '*',
+            _x('Privacy Tools Page', '(Admin)', 'gdpr-framework'),
             [$this, 'renderPrivacyToolsPageSelector'],
             'gdpr_section_pages'
 		);
@@ -128,7 +128,7 @@ class AdminTabGeneral extends AdminTab
 
         $this->registerSettingField(
             'gdpr_policy_page',
-            _x('Privacy Policy Page', '(Admin)', 'gdpr-framework') . '*',
+            _x('Privacy Policy Page', '(Admin)', 'gdpr-framework'),
             [$this, 'renderPolicyPageSelector'],
             'gdpr_section_pages'
         );

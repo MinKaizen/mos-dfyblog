@@ -23,9 +23,10 @@ class Consent extends InstallerStep implements InstallerStepInterface
         $hasGravityForms = class_exists('\GFForms');
         $hasCF7 = class_exists('\WPCF7');
         $hasFrm = class_exists('\FrmHooksController');
+        $hasNinjaForms = class_exists('\Ninja_Forms');
         echo gdpr('view')->render(
             $this->template,
-            compact('isRegistrationOpen', 'isCommentsEnabled', 'privacyToolsPageUrl', 'hasGravityForms', 'hasCF7', 'hasFrm')
+            compact('isRegistrationOpen', 'isCommentsEnabled', 'privacyToolsPageUrl', 'hasGravityForms', 'hasCF7', 'hasFrm', 'hasNinjaForms')
         );
     }
 }

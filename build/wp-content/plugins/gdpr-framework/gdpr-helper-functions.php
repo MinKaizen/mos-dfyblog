@@ -69,7 +69,7 @@ function add_consent_deny_cookies(){
  */
 if (!class_exists('\Codelight\GDPR\Container')) 
 {
-	if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+    if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
 		$gdpr_error(
 			_x(
 				'You appear to be running a development version of GDPR. You must run <code>composer install</code> from the plugin directory.',
@@ -84,6 +84,22 @@ if (!class_exists('\Codelight\GDPR\Container'))
 		);
 	}
 	require_once $composer;
+}
+
+if (!class_exists('\Data443\gdpr\framework\Illuminate\Container\Container')) 
+{
+    $gdpr_error(
+        _x(
+            'You appear to be running a development version of GDPR. You must run <code>"composer build-with-prefix"</code> from the plugin directory.',
+            '(Admin)',
+            'gdpr-framework'
+        ),
+        _x(
+            'Modified Vendor Namespace not found.',
+            '(Admin)',
+            'gdpr-framework'
+        )
+    );
 }
 
 function popup_gdpr()

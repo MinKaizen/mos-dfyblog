@@ -4,5 +4,5 @@
 <?php }?>
 </textarea>
 <p class="description">
-<?= esc_html_x("Leave blank if don't want header to get display.", 'gdpr-framework');?>
+<?= esc_html_x("Leave blank if you don't want a header to get displayed.", '(Admin)', 'gdpr-framework');?>
 </p>

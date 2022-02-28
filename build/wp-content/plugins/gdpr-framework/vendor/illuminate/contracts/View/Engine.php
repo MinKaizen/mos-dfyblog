@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\View;
+namespace Data443\gdpr\framework\Illuminate\Contracts\View;
 
 interface Engine
 {

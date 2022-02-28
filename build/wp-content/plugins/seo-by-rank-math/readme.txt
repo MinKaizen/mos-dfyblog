@@ -2,10 +2,10 @@
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
-Tested up to: 5.8
+Tested up to: 5.9
 Requires at least: 5.6
 Requires PHP: 7.2
-Stable tag: 1.0.76.1
+Stable tag: 1.0.83
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -144,7 +144,7 @@ Even with significantly more features than other plugins, Rank Math SEO loads am
 
 * **Quick Edit SEO Details** - Go through a lot of posts/pages quickly by ensuring they are optimized for search engines. Quickly edit multiple SEO fields at once using Rank Math SEO.
 
-* **[Instant Indexing for Bing](https://rankmath.com/blog/bing-indexing-api/)** - Get your content instantly indexed by Bing. Enter a few key details and you are all set and ready to go.
+* **[Instant Indexing for Bing & Yandex](https://rankmath.com/kb/how-to-use-indexnow/)** - Get your content instantly indexed by Bing & Yandex using their IndexNow API.
 
 * **[Instant Indexing for Google](https://rankmath.com/blog/google-indexing-api/)** - Instantly getting indexed by Google used to be reserved to huge brands and large websites. Not anymore. Just about anyone can take advantage of Google’s Instant Indexing feature using Rank Math SEO.
 
@@ -270,7 +270,6 @@ Even with significantly more features than other plugins, Rank Math SEO loads am
 * **Search Engine Verification Tools**
 	* Bing Site Verification
 	* Baidu Site Verification
-	* Alexa Site Verification
 	* Yandex Site Verification
 	* **Google Site Verification**
 	* Pinterest Site Verification
@@ -368,7 +367,7 @@ and many more
 ✔ Open External Links in New Tabs
 ✔ Nofollow External Links
 ✔ `Noindex` Paginated, Archive, Search Result Pages
-✔ Instant Indexing for Bing [Also Google using our <a href="https://rankmath.com/blog/google-indexing-api/" target="_blank">Instant Indexing Plugin</a>]
+✔ Instant Indexing for Bing & Yandex [Also Google using our <a href="https://rankmath.com/blog/google-indexing-api/" target="_blank">Instant Indexing Plugin</a>]
 
 **WooCommerce SEO**
 ✔ Automatic Schema for WooCommerce Products
@@ -581,15 +580,14 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.76.1 [Nov 11, 2021] =
-* Fixed: [Content AI](https://rankmath.com/kb/how-to-use-content-ai/#credits-usage) was not showing any Credits after updating the plugin
-* Fixed: [Keyword Tooltip](https://rankmath.com/kb/how-to-use-content-ai/#num-7-1-use-keyword-in) was not showing any data when Post content was empty
-* Fixed: Dark mode styling of [Content AI](https://rankmath.com/kb/how-to-use-content-ai/) in the Elementor editor
-
-= 1.0.76 [Nov 08, 2021] =
-* Added: [HUGE!] Introducing [Content AI](https://rankmath.com/content-ai/) - Your personal AI assistant for writing SEO Optimized Content!I assistant
-* Fixed: PHP warning after enabling the [Web Stories](https://rankmath.com/kb/google-web-stories/) moduleies/) module
-* Fixed: [Homepage SEO](https://rankmath.com/kb/homepage-meta-title-and-description/) settings were not displaying when no static page was selected as the homepage
-* Fixed: Content Analysis was wrongly counting the links without href as internal links
+= 1.0.83 [Feb 23, 2022] =
+* Added: [NEW!] Dedicated [Content Analysis tests](https://rankmath.com/blog/woocommerce-seo/?play-video=ba2u_siPqig&start-time=1311) for WooCommerce & EDD Products in the PRO version
+* Added: New test in the Content Analysis to check if the [Content AI](https://rankmath.com/kb/how-to-use-content-ai/) is used or not
+* Improved: Replaced tooltip toggle of each Content Analysis test with the respective [KB article](https://rankmath.com/kb/score-100-in-tests/) for better contextual help
+* Fixed: Some Content Analysis tests were getting hidden on posts with a Russian focus keyword
+* Fixed: [External and Internal link tests](https://rankmath.com/kb/score-100-in-tests/#linking-to-external-sources) were not working well on some sites with the Russian language
+* Fixed: [Image Overlay](https://rankmath.com/kb/meta-box-social-tab/#add-icon-overlay-to-thumbnails) feature was not working on some setups
+* Fixed: [Export Redirections to .htaccess/nginx](https://rankmath.com/kb/setting-up-redirections/#backing-up-your-redirects) was only exporting 1000 URLs
+* Fixed: Content AI's [media count test](https://rankmath.com/kb/how-to-use-content-ai/#num-6-5-media-count) was not updating instantly after adding a Featured Image in the Classic editor
 
 Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

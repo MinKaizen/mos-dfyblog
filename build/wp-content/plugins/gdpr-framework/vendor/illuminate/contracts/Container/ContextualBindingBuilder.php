@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Container;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Container;
 
 interface ContextualBindingBuilder
 {
@@ -11,15 +11,13 @@ interface ContextualBindingBuilder
      * @return $this
      */
     public function needs($abstract);
-
     /**
      * Define the implementation for the contextual binding.
      *
-     * @param  \Closure|string  $implementation
+     * @param  \Closure|string|array  $implementation
      * @return void
      */
     public function give($implementation);
-
     /**
      * Define tagged services to be used as the implementation for the contextual binding.
      *

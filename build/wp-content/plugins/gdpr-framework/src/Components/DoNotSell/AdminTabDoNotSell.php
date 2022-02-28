@@ -14,7 +14,7 @@ class AdminTabDoNotSell extends AdminTab {
 
 	public function __construct()
 	{
-		$this->title = _x( 'Do Not Sell My Data', '(Admin)', 'ccpa-framework' );
+		$this->title = _x( 'Do Not Sell My Data', '(Admin)', 'gdpr-framework' );
 
 		add_action( 'ccpa/admin/action/PrivacyManager/generate', array( $this, 'generateDoNotSell' ) );
 	}
@@ -25,25 +25,25 @@ class AdminTabDoNotSell extends AdminTab {
 		 */
 		$this->registerSettingSection(
 			'ccpa_about_privacy_safe_section',
-			_x( 'Do Not Sell My Data', '(Admin)', 'ccpa-framework' ),
+			_x( 'Do Not Sell My Data', '(Admin)', 'gdpr-framework' ),
 			array( $this, 'renderAboutHeader' )
 		);
 
 		$this->registerSettingField(
 			'ccpa_privacy_safe_shortcode',
-			_x( 'Shortcode', '(Admin)', 'ccpa-framework' ), 
+			_x( 'Shortcode', '(Admin)', 'gdpr-framework' ), 
 			array( $this, 'shortcode' ),
 			'ccpa_about_privacy_safe_section'
 		);
 		$this->registerSettingField(
 			'ccpa_privacy_safe_shortcodephp',
-			_x( 'Shortcode for PHP', '(Admin)', 'ccpa-framework' ),
+			_x( 'Shortcode for PHP', '(Admin)', 'gdpr-framework' ),
 			array( $this, 'shortcodephp' ),
 			'ccpa_about_privacy_safe_section'
 		);
 		$this->registerSettingField(
 			'ccpa_privacy_safe_posts',
-			_x( 'View Requests', '(Admin)', 'ccpa-framework' ),
+			_x( 'View Requests', '(Admin)', 'gdpr-framework' ),
 			array( $this, 'postlink' ),
 			'ccpa_about_privacy_safe_section'
 		);

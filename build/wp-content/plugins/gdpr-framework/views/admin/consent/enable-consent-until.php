@@ -8,5 +8,5 @@
 />
 
 <p class="description">
-    <?= _x('', '(Admin)', 'ccpa-framework'); ?>
+    <?= _x(' ', '(Admin)', 'gdpr-framework'); ?>
 </p>

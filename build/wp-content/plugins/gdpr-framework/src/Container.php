@@ -2,7 +2,7 @@
 
 namespace Codelight\GDPR;
 
-class Container extends \Illuminate\Container\Container
+class Container extends \Data443\gdpr\framework\Illuminate\Container\Container
 {
     protected static $instance;
 }

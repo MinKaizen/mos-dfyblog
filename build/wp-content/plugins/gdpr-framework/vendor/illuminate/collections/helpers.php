@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
+namespace Data443\gdpr\framework;
 
-if (! function_exists('collect')) {
+use Data443\gdpr\framework\Illuminate\Support\Arr;
+use Data443\gdpr\framework\Illuminate\Support\Collection;
+if (!\function_exists('Data443\\gdpr\\framework\\collect')) {
     /**
      * Create a collection from the given value.
      *
@@ -15,8 +16,7 @@ if (! function_exists('collect')) {
         return new Collection($value);
     }
 }
-
-if (! function_exists('data_fill')) {
+if (!\function_exists('Data443\\gdpr\\framework\\data_fill')) {
     /**
      * Fill in data where it's missing.
      *
@@ -27,11 +27,10 @@ if (! function_exists('data_fill')) {
      */
     function data_fill(&$target, $key, $value)
     {
-        return data_set($target, $key, $value, false);
+        return data_set($target, $key, $value, \false);
     }
 }
-
-if (! function_exists('data_get')) {
+if (!\function_exists('Data443\\gdpr\\framework\\data_get')) {
     /**
      * Get an item from an array or object using "dot" notation.
      *
@@ -42,49 +41,39 @@ if (! function_exists('data_get')) {
      */
     function data_get($target, $key, $default = null)
     {
-        if (is_null($key)) {
+        if (\is_null($key)) {
             return $target;
         }
-
-        $key = is_array($key) ? $key : explode('.', $key);
-
+        $key = \is_array($key) ? $key : \explode('.', $key);
         foreach ($key as $i => $segment) {
             unset($key[$i]);
-
-            if (is_null($segment)) {
+            if (\is_null($segment)) {
                 return $target;
             }
-
             if ($segment === '*') {
                 if ($target instanceof Collection) {
                     $target = $target->all();
-                } elseif (! is_array($target)) {
+                } elseif (!\is_array($target)) {
                     return value($default);
                 }
-
                 $result = [];
-
                 foreach ($target as $item) {
                     $result[] = data_get($item, $key);
                 }
-
-                return in_array('*', $key) ? Arr::collapse($result) : $result;
+                return \in_array('*', $key) ? Arr::collapse($result) : $result;
             }
-
             if (Arr::accessible($target) && Arr::exists($target, $segment)) {
                 $target = $target[$segment];
-            } elseif (is_object($target) && isset($target->{$segment})) {
+            } elseif (\is_object($target) && isset($target->{$segment})) {
                 $target = $target->{$segment};
             } else {
                 return value($default);
             }
         }
-
         return $target;
     }
 }
-
-if (! function_exists('data_set')) {
+if (!\function_exists('Data443\\gdpr\\framework\\data_set')) {
     /**
      * Set an item on an array or object using dot notation.
      *
@@ -94,15 +83,13 @@ if (! function_exists('data_set')) {
      * @param  bool  $overwrite
      * @return mixed
      */
-    function data_set(&$target, $key, $value, $overwrite = true)
+    function data_set(&$target, $key, $value, $overwrite = \true)
     {
-        $segments = is_array($key) ? $key : explode('.', $key);
-
-        if (($segment = array_shift($segments)) === '*') {
-            if (! Arr::accessible($target)) {
+        $segments = \is_array($key) ? $key : \explode('.', $key);
+        if (($segment = \array_shift($segments)) === '*') {
+            if (!Arr::accessible($target)) {
                 $target = [];
             }
-
             if ($segments) {
                 foreach ($target as &$inner) {
                     data_set($inner, $segments, $value, $overwrite);
@@ -114,39 +101,34 @@ if (! function_exists('data_set')) {
             }
         } elseif (Arr::accessible($target)) {
             if ($segments) {
-                if (! Arr::exists($target, $segment)) {
+                if (!Arr::exists($target, $segment)) {
                     $target[$segment] = [];
                 }
-
                 data_set($target[$segment], $segments, $value, $overwrite);
-            } elseif ($overwrite || ! Arr::exists($target, $segment)) {
+            } elseif ($overwrite || !Arr::exists($target, $segment)) {
                 $target[$segment] = $value;
             }
-        } elseif (is_object($target)) {
+        } elseif (\is_object($target)) {
             if ($segments) {
-                if (! isset($target->{$segment})) {
+                if (!isset($target->{$segment})) {
                     $target->{$segment} = [];
                 }
-
                 data_set($target->{$segment}, $segments, $value, $overwrite);
-            } elseif ($overwrite || ! isset($target->{$segment})) {
+            } elseif ($overwrite || !isset($target->{$segment})) {
                 $target->{$segment} = $value;
             }
         } else {
             $target = [];
-
             if ($segments) {
                 data_set($target[$segment], $segments, $value, $overwrite);
             } elseif ($overwrite) {
                 $target[$segment] = $value;
             }
         }
-
         return $target;
     }
 }
-
-if (! function_exists('head')) {
+if (!\function_exists('Data443\\gdpr\\framework\\head')) {
     /**
      * Get the first element of an array. Useful for method chaining.
      *
@@ -155,11 +137,10 @@ if (! function_exists('head')) {
      */
     function head($array)
     {
-        return reset($array);
+        return \reset($array);
     }
 }
-
-if (! function_exists('last')) {
+if (!\function_exists('Data443\\gdpr\\framework\\last')) {
     /**
      * Get the last element from an array.
      *
@@ -168,11 +149,10 @@ if (! function_exists('last')) {
      */
     function last($array)
     {
-        return end($array);
+        return \end($array);
     }
 }
-
-if (! function_exists('value')) {
+if (!\function_exists('Data443\\gdpr\\framework\\value')) {
     /**
      * Return the default value of the given value.
      *
@@ -181,6 +161,6 @@ if (! function_exists('value')) {
      */
     function value($value, ...$args)
     {
-        return $value instanceof Closure ? $value(...$args) : $value;
+        return $value instanceof \Closure ? $value(...$args) : $value;
     }
 }

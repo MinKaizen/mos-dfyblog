@@ -53,16 +53,6 @@ if ( ! class_exists( 'WP_Legal_Pages_Activator' ) ) {
 			} else {
 				self::install_db();
 			}
-
-			$hidden_meta_boxes = get_user_option( 'metaboxhidden_nav-menus' );
-			if ( is_array( $hidden_meta_boxes ) ) {
-				$key = array_search( 'wplegalpages-menu-metabox', $hidden_meta_boxes, true );
-				if ( false !== $key ) {
-					unset( $hidden_meta_boxes[ $key ] );
-				}
-			}
-			$user = wp_get_current_user();
-			update_user_option( $user->ID, 'metaboxhidden_nav-menus', $hidden_meta_boxes, true );
 		}
 
 		/**
@@ -75,7 +65,8 @@ if ( ! class_exists( 'WP_Legal_Pages_Activator' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			$search_query = "SHOW TABLES LIKE '%" . $legal_pages->tablename . "%'";
 			if ( ! $wpdb->get_results( $search_query, ARRAY_N ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-				$sql = 'CREATE TABLE IF NOT EXISTS ' . $legal_pages->tablename . ' (
+				$sql = 'CREATE TABLE IF NOT EXISTS ' . $legal_pages->tablename . // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
+							' (
                               `id` int(11) NOT NULL AUTO_INCREMENT,
                               `title` text NOT NULL,
                               `content` longtext NOT NULL,
@@ -93,7 +84,8 @@ if ( ! class_exists( 'WP_Legal_Pages_Activator' ) ) {
 			}
 			$search_query = "SHOW TABLES LIKE '%" . $legal_pages->popuptable . "%'";
 			if ( ! $wpdb->get_results( $search_query, ARRAY_N ) ) { // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
-				$popup_sql = 'CREATE TABLE IF NOT EXISTS ' . $legal_pages->popuptable . ' (
+				$popup_sql = 'CREATE TABLE IF NOT EXISTS ' . $legal_pages->popuptable . // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
+							' (
                               `id` int(11) NOT NULL AUTO_INCREMENT,
                               `popup_name` text NOT NULL,
                               `content` longtext NOT NULL,
@@ -278,7 +270,8 @@ if ( ! class_exists( 'WP_Legal_Pages_Activator' ) ) {
 			add_option( 'lp_eu_cookie_message', htmlentities( $message_body ) );
 			add_option( 'lp_eu_cookie_enable', 'OFF' );
 			add_option( 'lp_eu_box_color', '#000000' );
-
+			add_option( 'lp_eu_button_text', 'I agree' );
+			add_option( 'lp_eu_theme_css', '1' );
 			add_option( 'lp_eu_cookie_message', htmlentities( $message_body ) );
 			add_option( 'lp_eu_cookie_enable', 'OFF' );
 			add_option( 'lp_eu_box_color', '#000000' );

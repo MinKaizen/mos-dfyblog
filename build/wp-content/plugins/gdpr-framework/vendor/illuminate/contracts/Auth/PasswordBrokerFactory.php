@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Auth;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Auth;
 
 interface PasswordBrokerFactory
 {

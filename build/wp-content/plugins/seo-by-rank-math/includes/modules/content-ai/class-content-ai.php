@@ -13,6 +13,7 @@ namespace RankMath\ContentAI;
 use RankMath\Helper;
 use RankMath\CMB2;
 use RankMath\Traits\Hooker;
+use RankMath\Traits\Ajax;
 use MyThemeShop\Helpers\Arr;
 use MyThemeShop\Helpers\WordPress;
 
@@ -22,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  * Content_AI class.
  */
 class Content_AI {
-	use Hooker;
+	use Hooker, Ajax;
 
 	/**
 	 * Class constructor.
@@ -34,12 +35,11 @@ class Content_AI {
 
 		$this->filter( 'rank_math/settings/general', 'add_settings' );
 		$this->action( 'rest_api_init', 'init_rest_api' );
-		$this->action( 'rank_math/admin/enqueue_scripts', 'editor_scripts', 20 );
-		$this->action( 'wp_footer', 'editor_scripts', 11 );
-		$this->action( 'elementor/editor/before_enqueue_scripts', 'elementor_enqueue', 11 );
+		$this->action( 'rank_math/admin/editor_scripts', 'editor_scripts', 20 );
 		$this->filter( 'rank_math/metabox/post/values', 'add_metadata', 10, 2 );
 		$this->action( 'cmb2_admin_init', 'add_content_ai_metabox', 11 );
 		$this->action( 'rank_math/deregister_site', 'remove_credits_data' );
+		$this->ajax( 'get_content_ai_credits', 'update_content_ai_credits' );
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Content_AI {
 		CMB2::pre_init( $cmb );
 
 		// Move content AI metabox below the Publish box.
-		$this->reorder_content_ai_metabox( $id, $cmb->object_type() );
+		$this->reorder_content_ai_metabox( $id );
 	}
 
 
@@ -122,13 +122,6 @@ class Content_AI {
 			return;
 		}
 
-		$dep = [
-			'classic'   => 'rank-math-metabox',
-			'gutenberg' => 'rank-math-gutenberg',
-			'elementor' => 'rank-math-elementor',
-			'divi'      => 'rank-math-divi',
-		];
-
 		wp_register_style( 'rank-math-common', rank_math()->plugin_url() . 'assets/admin/css/common.css', null, rank_math()->version );
 		wp_enqueue_style(
 			'rank-math-content-ai',
@@ -140,27 +133,9 @@ class Content_AI {
 		wp_enqueue_script(
 			'rank-math-content-ai',
 			rank_math()->plugin_url() . 'includes/modules/content-ai/assets/js/content-ai.js',
-			[
-				$dep[ $editor ],
-			],
+			[ 'rank-math-editor' ],
 			rank_math()->version,
 			true
-		);
-	}
-
-	/**
-	 * Enqueue Elementor style.
-	 */
-	public function elementor_enqueue() {
-		if ( ! $this->can_add_tab() ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'rank-math-content-ai-dark',
-			rank_math()->plugin_url() . 'includes/modules/content-ai/assets/css/content-ai-dark.css',
-			[ 'rank-math-elementor-dark' ],
-			rank_math()->version
 		);
 	}
 
@@ -185,7 +160,13 @@ class Content_AI {
 		$values['countries']        = $countries;
 		$values['ca_credits']       = get_option( 'rank_math_ca_credits' );
 		$values['ca_keyword']       = '';
+		$values['ca_viewed']        = true;
 
+		$content_ai_viewed = get_option( 'rank_math_content_ai_viewed', false );
+		if ( ! $content_ai_viewed ) {
+			$values['ca_viewed'] = false;
+			update_option( 'rank_math_content_ai_viewed', true );
+		}
 		$keyword = $screen->get_meta( $screen->get_object_type(), $screen->get_object_id(), 'rank_math_ca_keyword' );
 		if ( empty( $keyword ) ) {
 			return $values;
@@ -206,19 +187,39 @@ class Content_AI {
 	}
 
 	/**
+	 * Ajax callback to update the Content AI Credits.
+	 */
+	public function update_content_ai_credits() {
+		check_ajax_referer( 'rank-math-ajax-nonce', 'security' );
+		$this->has_cap_ajax( 'content_ai' );
+		$this->success(
+			[
+				'credits' => Helper::get_content_ai_credits( true ),
+			]
+		);
+	}
+
+	/**
 	 * Reorder the Content AI metabox in Classic editor.
 	 *
-	 * @param string $id        Metabox ID.
-	 * @param string $post_type Current post type.
+	 * @param string $id Metabox ID.
 	 * @return void
 	 */
-	private function reorder_content_ai_metabox( $id, $post_type ) {
-		$user          = wp_get_current_user();
-		$order         = (array) get_user_option( 'meta-box-order_' . $post_type, $user->ID );
-		$order['side'] = ! isset( $order['side'] ) ? '' : $order['side'];
+	private function reorder_content_ai_metabox( $id ) {
+		$post_type = WordPress::get_post_type();
+		if ( ! $post_type ) {
+			return;
+		}
 
+		$user  = wp_get_current_user();
+		$order = (array) get_user_option( 'meta-box-order_' . $post_type, $user->ID );
+		if ( ! empty( $order['normal'] ) && false !== strpos( $order['normal'], $id ) ) {
+			return;
+		}
+
+		$order['side'] = ! isset( $order['side'] ) ? '' : $order['side'];
 		if ( false !== strpos( $order['side'], $id ) ) {
-			$order['side'] = str_replace( $id . ',', '', $order['side'] );
+			return;
 		}
 
 		if ( false === strpos( $order['side'], 'submitdiv' ) ) {

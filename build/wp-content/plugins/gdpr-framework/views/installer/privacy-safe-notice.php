@@ -1,5 +1,7 @@
 <p>
-		Strengthen your reputation. Privacy safe gives your customers total control of their private information. The privacy safe seal assures your new customers that your business is in compliance with new privacy laws and regulations. For the privacy safe seal will verify that GDPR Framework plugin is installed.
+    <?=
+		esc_html_x('Strengthen your reputation. Privacy safe gives your customers total control of their private information. The privacy safe seal assures your new customers that your business is in compliance with new privacy laws and regulations. For the privacy safe seal will verify that GDPR Framework plugin is installed.', '(Admin)', 'gdpr-framework');
+    ?>
 </p>
 
 

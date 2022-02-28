@@ -35,7 +35,7 @@ class AdminHelper
             return;
         }
 
-        $helpUrl = gdpr('helpers')->docs();
+        $helpUrl = gdpr('helpers')->PrivacyPolicy();
 
         gdpr('admin-notice')->add('admin/notices/helper-autoinstall', compact('helpUrl'));
     }

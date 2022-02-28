@@ -194,7 +194,7 @@ class AdminTabConsent extends AdminTab
         return __('To use this website, you accepted our Privacy Policy. If you wish to withdraw your acceptance, please use the "Delete my data" button below.', 'gdpr-framework');
 	}
 	public function renderConsentUntil() {
-		echo '<p>Enable this feature to allow users to submit a time limit on how many months their consent is given for their coments and registration.</p>';
+		echo '<p>' . __('Enable this feature to allow users to submit a time limit on how many months their consent is given for their coments and registration.', 'gdpr-framework') . '</p>';
 	}
 	
 	public function consent_until_display(){

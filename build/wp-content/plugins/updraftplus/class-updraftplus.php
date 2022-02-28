@@ -56,6 +56,8 @@ class UpdraftPlus {
 	public $current_resumption;
 
 	public $newresumption_scheduled = false;
+	
+	public $resumption_scheduled_for_cleanup = false;
 
 	public $cpanel_quota_readable = false;
 
@@ -68,6 +70,10 @@ class UpdraftPlus {
 
 	private $remotestorage_extrainfo = array();
 
+	public $no_checkin_last_time;
+	
+	private $removed_autoloaders = array();
+	
 	/**
 	 * Class constructor
 	 */
@@ -164,8 +170,8 @@ class UpdraftPlus {
 	 * @see __construct
 	 * @internal uses auto_update_plugin filter
 	 *
-	 * @param bool   $update Whether the item has automatic updates enabled
-	 * @param object $item   Object holding the asset to be updated
+	 * @param Bool   $update Whether the item has automatic updates enabled
+	 * @param Object $item   Object holding the asset to be updated
 	 * @return bool True of automatic updates enabled, false if not
 	 */
 	public function maybe_auto_update_plugin($update, $item) {
@@ -666,6 +672,11 @@ class UpdraftPlus {
 		return $allow_override ? apply_filters('updraftplus_get_table_prefix', $prefix) : $prefix;
 	}
 
+	/**
+	 * Get the site's identifier
+	 *
+	 * @return String
+	 */
 	public function siteid() {
 		$sid = get_site_option('updraftplus-addons_siteid');
 		if (!is_string($sid) || empty($sid)) {
@@ -798,8 +809,8 @@ class UpdraftPlus {
 	/**
 	 * This function allows you to manually set the nonce and timestamp for the current backup job. If none are provided then it will create new ones.
 	 *
-	 * @param boolean|string $nonce     - the nonce you want to set
-	 * @param boolean|string $timestamp - the timestamp you want to set
+	 * @param Boolean|string $nonce     - the nonce you want to set
+	 * @param Boolean|string $timestamp - the timestamp you want to set
 	 *
 	 * @return string                   - returns the backup nonce that has been set
 	 */
@@ -847,7 +858,7 @@ class UpdraftPlus {
 	/**
 	 * Opens the log file, writes a standardised header, and stores the resulting name and handle in the class variables logfile_name/logfile_handle/opened_log_time (and possibly backup_is_already_complete)
 	 *
-	 * @param string $nonce - Used in the log file name to distinguish it from other log files. Should be the job nonce.
+	 * @param String $nonce - Used in the log file name to distinguish it from other log files. Should be the job nonce.
 	 * @returns void
 	 */
 	public function logfile_open($nonce) {
@@ -867,8 +878,8 @@ class UpdraftPlus {
 	/**
 	 * Opens the log file, and finds if backup_is_already_complete
 	 *
-	 * @param string  $nonce               - Used in the log file name to distinguish it from other log files. Should be the job nonce.
-	 * @param boolean $use_existing_result - Whether to use any existing result or not
+	 * @param String  $nonce               - Used in the log file name to distinguish it from other log files. Should be the job nonce.
+	 * @param Boolean $use_existing_result - Whether to use any existing result or not
 	 *
 	 * @return boolean - returns true if the backup is complete otherwise returns false
 	 */
@@ -907,7 +918,7 @@ class UpdraftPlus {
 	/**
 	 * Returns the logfile name for a given job
 	 *
-	 * @param string $nonce - Used in the log file name to distinguish it from other log files. Should be the job nonce.
+	 * @param String $nonce - Used in the log file name to distinguish it from other log files. Should be the job nonce.
 	 * @return string
 	 */
 	public function get_logfile_name($nonce) {
@@ -992,7 +1003,7 @@ class UpdraftPlus {
 	/**
 	 * This function will read the next chunk from the log file and return it's contents and last read byte position
 	 *
-	 * @param string $nonce - the UpdraftPlus file nonce
+	 * @param String $nonce - the UpdraftPlus file nonce
 	 *
 	 * @return array - an empty array if there is no log file or an array with log file contents and last read byte position
 	 */
@@ -1196,7 +1207,7 @@ class UpdraftPlus {
 	 * Outputs data to the browser.
 	 * Will also fill the buffer on nginx systems after a specified amount of time.
 	 *
-	 * @param string $line The text to output
+	 * @param String $line The text to output
 	 * @return void
 	 */
 	public function output_to_browser($line) {
@@ -1307,14 +1318,14 @@ class UpdraftPlus {
 	/**
 	 * Method for helping remote storage methods to upload files in chunks without needing to duplicate all the overhead
 	 *
-	 * @param	object  $caller        the object to call back to do the actual network API calls; needs to have a chunked_upload() method.
-	 * @param	string  $file          the basename of the file
-	 * @param	string  $cloudpath     this is passed back to the callback function; within this function, it is used only for logging
-	 * @param	string  $logname       the prefix used on log lines. Also passed back to the callback function.
-	 * @param	integer $chunk_size    the size, in bytes, of each upload chunk
-	 * @param	integer $uploaded_size how many bytes have already been uploaded. This is passed back to the callback function; within this method, it is only used for logging.
-	 * @param	boolean $singletons    when the file, given the chunk size, would only have one chunk, should that be uploaded (true), or instead should 1 be returned (false) ?
-	 * @return  boolean
+	 * @param	Object  $caller        the object to call back to do the actual network API calls; needs to have a chunked_upload() method.
+	 * @param	String  $file          the basename of the file
+	 * @param	String  $cloudpath     this is passed back to the callback function; within this function, it is used only for logging
+	 * @param	String  $logname       the prefix used on log lines. Also passed back to the callback function.
+	 * @param	Integer $chunk_size    the size, in bytes, of each upload chunk
+	 * @param	Integer $uploaded_size how many bytes have already been uploaded. This is passed back to the callback function; within this method, it is only used for logging.
+	 * @param	Boolean $singletons    when the file, given the chunk size, would only have one chunk, should that be uploaded (true), or instead should 1 be returned (false) ?
+	 * @return  Boolean
 	 */
 	public function chunked_upload($caller, $file, $cloudpath, $logname, $chunk_size, $uploaded_size, $singletons = false) {
 
@@ -1475,12 +1486,12 @@ class UpdraftPlus {
 	/**
 	 * Provides a convenience function allowing remote storage methods to download a file in chunks, without duplicated overhead.
 	 *
-	 * @param string  $file              - The basename of the file being downloaded
-	 * @param object  $method            - This remote storage method object needs to have a chunked_download() method to call back
-	 * @param integer $remote_size       - The size, in bytes, of the object being downloaded
-	 * @param boolean $manually_break_up - Whether to break the download into multiple network operations (rather than just issuing a GET with a range beginning at the end of the already-downloaded data, and carrying on until it times out)
+	 * @param String  $file              - The basename of the file being downloaded
+	 * @param Object  $method            - This remote storage method object needs to have a chunked_download() method to call back
+	 * @param Integer $remote_size       - The size, in bytes, of the object being downloaded
+	 * @param Boolean $manually_break_up - Whether to break the download into multiple network operations (rather than just issuing a GET with a range beginning at the end of the already-downloaded data, and carrying on until it times out)
 	 * @param Mixed   $passback          - A value to pass back to the callback function
-	 * @param integer $chunk_size        - Break up the download into chunks of this number of bytes. Should be set if and only if $manually_break_up is true.
+	 * @param Integer $chunk_size        - Break up the download into chunks of this number of bytes. Should be set if and only if $manually_break_up is true.
 	 */
 	public function chunked_download($file, $method, $remote_size, $manually_break_up = false, $passback = null, $chunk_size = 1048576) {
 
@@ -1957,7 +1968,7 @@ class UpdraftPlus {
 	 * @param String  $entity    - the backup entity
 	 * @param Array   $checksums - checksums for the backup file
 	 * @param Array   $jobdata   - the jobdata for this backup
-	 * @param integer $ind       - the index of the file
+	 * @param Integer $ind       - the index of the file
 	 *
 	 * @return String            - returns the entity output string
 	 */
@@ -2207,7 +2218,7 @@ class UpdraftPlus {
 			
 			if (isset($time_passed[$prev_resumption])) {
 				// N.B. A check-in occurred; we haven't yet tested if it was useful
-				$resumption_extralog = ", previous check-in=".round($time_passed[$prev_resumption], 1)."s";
+				$resumption_extralog = ", previous check-in=".round($time_passed[$prev_resumption], 2)."s";
 			}
 			
 			// This is just a simple test to catch restorations of old backup sets where the backup includes a resumption of the backup job
@@ -2394,6 +2405,7 @@ class UpdraftPlus {
 			$schedule_for = time() + $resume_interval;
 			if (1 === $schedule_resumption) {
 				$this->log("Scheduling a resumption ($next_resumption) after $resume_interval seconds ($schedule_for); but the job will then be aborted unless something happens this time");
+				$this->resumption_scheduled_for_cleanup = true;
 			} else {
 				$this->log("Scheduling a resumption ($next_resumption) after $resume_interval seconds ($schedule_for) in case this run gets aborted");
 			}
@@ -2797,7 +2809,7 @@ class UpdraftPlus {
 	 *
 	 * @param array   $jobdata     - the initial job data that we want to change
 	 * @param array   $options     - options sent from the front end includes the clone id, secret token and maybe clone url and migration key
-	 * @param integer $split_every - the size we should split the zips at
+	 * @param Integer $split_every - the size we should split the zips at
 	 *
 	 * @return array               - the modified jobdata
 	 */
@@ -2997,8 +3009,8 @@ class UpdraftPlus {
 	/**
 	 * This function will try and get a lock for the backup, it will return false if it fails to get a lock.
 	 *
-	 * @param boolean $backup_files    - boolean to indicate if we want a lock for files
-	 * @param boolean $backup_database - boolean to indicate if we want a lock for the database
+	 * @param Boolean $backup_files    - boolean to indicate if we want a lock for files
+	 * @param Boolean $backup_database - boolean to indicate if we want a lock for the database
 	 *
 	 * @return boolean                 - boolean to indicate if we got a lock or not
 	 */
@@ -3048,8 +3060,8 @@ class UpdraftPlus {
 	/**
 	 * This function will try and get a lock for the backup job, it will return false if it fails to get a lock.
 	 *
-	 * @param string  $job_nonce     - the backup job nonce
-	 * @param integer $resumption_no - the current resumption
+	 * @param String  $job_nonce     - the backup job nonce
+	 * @param Integer $resumption_no - the current resumption
 	 *
 	 * @return boolean - boolean to indicate if we got a lock or not
 	 */
@@ -3115,7 +3127,7 @@ class UpdraftPlus {
 	/**
 	 * This function is a filter function which will return the nonce for the incremental backup set we want to add to
 	 *
-	 * @param string $nonce - the backup nonce we want to filter
+	 * @param String $nonce - the backup nonce we want to filter
 	 *
 	 * @return string       - the backup nonce
 	 */
@@ -3446,6 +3458,8 @@ class UpdraftPlus {
 		if (!empty($this->semaphore)) $this->semaphore->unlock();
 		if (!empty($this->backup_semaphore)) $this->backup_semaphore->release();
 
+		$this->restore_composer_autoloaders();
+		
 		$delete_jobdata = false;
 
 		$clone_job = $this->jobdata_get('clone_job');
@@ -3715,7 +3729,6 @@ class UpdraftPlus {
 
 		$this->attachments = apply_filters('updraft_report_attachments', $attachments);
 
-		if (count($this->attachments) > 0) add_action('phpmailer_init', array($this, 'phpmailer_init'));
 		add_action('phpmailer_init', array($this, 'set_sender_email_address'), 9);
 
 		$attach_size = 0;
@@ -3758,7 +3771,7 @@ class UpdraftPlus {
 					$this->log("Sending email ('$backup_contains') report (attachments: ".count($attachments).", size: ".round($attach_size/1024, 1)." KB) to: ".substr($sendmail_addr, 0, 5)."...");
 					try {
 						add_action('wp_mail_failed', array($this, 'log_email_delivery_failure'));
-						wp_mail(trim($sendmail_addr), $subject, $body, array("X-UpdraftPlus-Backup-ID: ".$this->nonce));
+						wp_mail(trim($sendmail_addr), $subject, $body, array("X-UpdraftPlus-Backup-ID: ".$this->nonce), is_array($this->attachments) ? $this->attachments : array());
 						remove_action('wp_mail_failed', array($this, 'log_email_delivery_failure'));
 					} catch (Exception $e) {
 						$this->log("Exception occurred when sending mail (".get_class($e)."): ".$e->getMessage());
@@ -3771,7 +3784,6 @@ class UpdraftPlus {
 
 		do_action('updraft_report_finished');
 		remove_action('phpmailer_init', array($this, 'set_sender_email_address'), 9);
-		if (count($this->attachments) > 0) remove_action('phpmailer_init', array($this, 'phpmailer_init'));
 
 	}
 
@@ -3782,23 +3794,6 @@ class UpdraftPlus {
 	 */
 	public function log_email_delivery_failure($error) {
 		$this->log("An error occurred when sending a backup report email and/or backup file(s) via email (".$error->get_error_code()."): ".$error->get_error_message());
-	}
-
-	/**
-	 * Called upon the WP action phpmailer_init
-	 *
-	 * @param Object $phpmailer
-	 */
-	public function phpmailer_init($phpmailer) {
-		if (empty($this->attachments) || !is_array($this->attachments)) return;
-		foreach ($this->attachments as $attach) {
-			$mime_type = preg_match('/\.gz$/i', $attach) ? 'application/x-gzip' : 'text/plain';
-			try {
-				$phpmailer->AddAttachment($attach, '', 'base64', $mime_type);
-			} catch (Exception $e) {
-				$this->log("Exception occurred when adding attachment (".get_class($e)."): ".$e->getMessage());
-			}
-		}
 	}
 
 	/**
@@ -4168,8 +4163,8 @@ class UpdraftPlus {
 	/**
 	 * This function will check if the passed-in file is this job's responsibility to upload. Potentially files can belong to a different job, when running an incremental backup run
 	 *
-	 * @param string $file - the name of the file
-	 * @param string $type - the file entity type (db, plugins, themes etc)
+	 * @param String $file - the name of the file
+	 * @param String $type - the file entity type (db, plugins, themes etc)
 	 *
 	 * @return boolean - whether this is a file this job should upload (at some point)
 	 */
@@ -4822,7 +4817,7 @@ class UpdraftPlus {
 	/**
 	 * Sets up the nonce, basic job data, opens a log file for a new restore job, and makes sure that the Updraft_Restorer class is available
 	 *
-	 * @param boolean|string $nonce - the job nonce we want to use or false for a new one
+	 * @param Boolean|string $nonce - the job nonce we want to use or false for a new one
 	 *
 	 * @return void
 	 */
@@ -5402,7 +5397,7 @@ class UpdraftPlus {
 	 *
 	 * @param array  $db_supported_collations       Supported collations. It should contain result of 'SHOW COLLATION' query
 	 * @param array  $db_unsupported_collate_unique Unsupported unique collates collection
-	 * @param string $similar_type_charset          Charset for which need to get default collate substitution
+	 * @param String $similar_type_charset          Charset for which need to get default collate substitution
 	 * @return string $similar_type_collate default substitute collate which is best suitable or blank string
 	 */
 	public function get_similar_collate_related_to_charset($db_supported_collations, $db_unsupported_collate_unique, $similar_type_charset) {
@@ -5728,9 +5723,9 @@ class UpdraftPlus {
 	/**
 	 * Get log message for permission failure
 	 *
-	 * @param string $path                            full path of file or folder
-	 * @param string $log_message_prefix              action which is performed to path
-	 * @param string $directory_prefix_in_log_message Directory Prefix. It should be either "Parent" or "Destination"
+	 * @param String $path                            full path of file or folder
+	 * @param String $log_message_prefix              action which is performed to path
+	 * @param String $directory_prefix_in_log_message Directory Prefix. It should be either "Parent" or "Destination"
 	 * @return string|boolean log message (HTML). If posix function doesn't exist, It returns false
 	 */
 	public function log_permission_failure_message($path, $log_message_prefix, $directory_prefix_in_log_message = 'Parent') {
@@ -5757,6 +5752,69 @@ class UpdraftPlus {
 	}
 	
 	/**
+	 * Restore any previously-removed autoloaders
+	 */
+	public function restore_composer_autoloaders() {
+		foreach ($this->removed_autoloaders as $callable) {
+			if (is_callable($callable, false, $callable_name)) {
+				$this->log("Clean-up: re-registering composer autoloader: $callable_name");
+				spl_autoload_register($callable, false);
+			}
+		}
+		$this->removed_autoloaders = array();
+	}
+	
+	/**
+	 * Remove any potentially clashing composer PSR4 autoloaders. Only to be used inside a backup when no other plugins' libraries should be needed
+	 *
+	 * @param Array $prefixes
+	 */
+	public function potentially_remove_composer_autoloaders($prefixes) {
+		
+		if (!defined('UPDRAFTPLUS_REMOVE_COMPOSER_AUTOLOADERS') || !UPDRAFTPLUS_REMOVE_COMPOSER_AUTOLOADERS) return;
+		
+		$functions = spl_autoload_functions();
+		foreach ($functions as $callable) {
+			if (!is_array($callable) || !isset($callable[0]) || !is_object($callable[0])) continue;
+			if (!is_a($callable[0], 'Composer\Autoload\ClassLoader') || !is_callable(array($callable[0], 'getPrefixesPsr4'))) continue;
+			$prefixes_psr4 = $callable[0]->getPrefixesPsr4();
+			if (!is_array($prefixes_psr4)) continue;
+			foreach ($prefixes as $prefix) {
+				if (!isset($prefixes_psr4[$prefix])) continue;
+				$is_ud = false;
+				if (is_array($prefixes_psr4[$prefix])) {
+					foreach ($prefixes_psr4[$prefix] as $path) {
+						if (false !== strpos(UpdraftPlus_Manipulation_Functions::wp_normalize_path($path), '/'.basename(UpdraftPlus_Manipulation_Functions::wp_normalize_path(UPDRAFTPLUS_DIR)).'/vendor/')) {
+							$is_ud = true;
+						}
+					}
+				}
+				if ($is_ud) continue;
+				if (is_callable($callable, false, $callable_name)) {
+					$this->log("Conflict prevention: de-registering composer autoloader: $callable_name");
+				}
+				$this->removed_autoloaders[] = $callable;
+				spl_autoload_unregister($callable);
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * Try to deal with other plugins with incompatible versions and bugs
+	 */
+	public function mitigate_guzzle_autoloader_conflicts() {
+		// Work round bug in the JetPack autoloader which loads a file in a different namespace
+		$potentially_include_in = array('guzzlehttp/guzzle', 'guzzlehttp/promises', 'guzzlehttp/psr7');
+		foreach ($potentially_include_in as $package) {
+			$file = UPDRAFTPLUS_DIR.'/vendor/'.$package.'/src/functions_include.php';
+			// Avoid conflicting with Google Ads and Listings which has already loaded this function
+			if ('guzzlehttp/guzzle' == $package && function_exists('\GuzzleHttp\choose_handler')) continue;
+			if (file_exists($file)) include_once($file);
+		}
+	}
+	
+	/**
 	 * Checks whether POSIX functions exists or not
 	 *
 	 * @return boolean true if POSIX functions exists or not
@@ -5768,16 +5826,33 @@ class UpdraftPlus {
 	/**
 	 * Wipe state-related data (e.g. on wiping settings, or on a restore). Note that there is some internal knowledge within the method below of how it is being used (if not including locks, then check for an active job)
 	 *
-	 * @param Boolean $include_locks
+	 * @param Boolean $include_locks Whether to also wipe out data other than just updraft_jobdata (e.g. updraft semaphore, lock, schedule, etc.)
+	 * @param String  $table         What table the data is in. It recognises only two tables ('options', 'sitemeta'), the default is 'options'
 	 */
-	public function wipe_state_data($include_locks = false) {
+	public function wipe_state_data($include_locks = false, $table = 'options') {
 		// These aren't in get_settings_keys() because they are always in the options table, regardless of context
 		global $wpdb;
+		switch ($table) {
+			case 'sitemeta':
+				$table = $wpdb->sitemeta;
+				$field = 'meta_key';
+				break;
+			default:
+				$table = $wpdb->options;
+				$field = 'option_name';
+				// if multisite do we need site_id column in the where clause?
+				break;
+		}
+		if (!class_exists('UpdraftPlus_Database_Utility')) include_once(UPDRAFTPLUS_DIR.'/includes/class-database-utility.php');
 		if ($include_locks) {
-			$wpdb->query("DELETE FROM $wpdb->options WHERE (option_name LIKE 'updraftplus_unlocked_%' OR option_name LIKE 'updraftplus_locked_%' OR option_name LIKE 'updraftplus_last_lock_time_%' OR option_name LIKE 'updraftplus_semaphore_%' OR option_name LIKE 'updraft_jobdata_%' OR option_name LIKE 'updraft_last_scheduled_%' )");
+			$wpdb->query($wpdb->prepare("DELETE FROM $table WHERE ($field LIKE %s OR $field LIKE %s OR $field LIKE %s OR $field LIKE %s OR $field LIKE %s OR $field LIKE %s)", UpdraftPlus_Database_Utility::esc_like('updraftplus_unlocked_').'%', UpdraftPlus_Database_Utility::esc_like('updraftplus_locked_').'%', UpdraftPlus_Database_Utility::esc_like('updraftplus_last_lock_time_').'%', UpdraftPlus_Database_Utility::esc_like('updraftplus_semaphore_').'%', UpdraftPlus_Database_Utility::esc_like('updraft_jobdata_').'%', UpdraftPlus_Database_Utility::esc_like('updraft_last_scheduled_').'%'));
 		} else {
-			$sql = "DELETE FROM $wpdb->options WHERE option_name LIKE 'updraft_jobdata_%'";
-			if (!empty($this->nonce)) $sql .= " AND option_name != 'updraft_jobdata_".$this->nonce."'";
+			$sql = '';
+			if (!empty($this->nonce)) {
+				$sql = $wpdb->prepare("DELETE FROM $table WHERE $field LIKE %s AND $field != %s", UpdraftPlus_Database_Utility::esc_like('updraft_jobdata_').'%', "updraft_jobdata_{$this->nonce}");
+			} else {
+				$sql = $wpdb->prepare("DELETE FROM $table WHERE $field LIKE %s", UpdraftPlus_Database_Utility::esc_like('updraft_jobdata_').'%');
+			}
 			$wpdb->query($sql);
 		}
 	}
@@ -5796,7 +5871,7 @@ class UpdraftPlus {
 	 * Currently used in this->block_updates_during_restore_progress and admin->print_restore_in_progress_box_if_needed
 	 *
 	 * @uses $_REQUEST['action']
-	 * @param int $job_time_greater_than Specify the time in seconds.  Default is 120 seconds but function like block_updates_during_restore_progress has a 1 second time set as we want to check as soon as a restore is kicked off
+	 * @param Int $job_time_greater_than Specify the time in seconds.  Default is 120 seconds but function like block_updates_during_restore_progress has a 1 second time set as we want to check as soon as a restore is kicked off
 	 * @return void|array There is a possibility if there is no restore in progress this can return a void.  However, in every other case, it will return an array.
 	 */
 	public function check_restore_progress($job_time_greater_than = 120) {

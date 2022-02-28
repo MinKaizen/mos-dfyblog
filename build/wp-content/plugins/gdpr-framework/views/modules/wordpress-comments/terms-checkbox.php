@@ -1,6 +1,6 @@
 <p class="gdpr-terms-container">
 	<span for="gdpr_terms">
-		<input type="checkbox" required name="gdpr_terms" id="gdpr_terms" value="1" />
+		<input type="checkbox" required name="gdpr_terms" id="gdpr_terms" aria-label="GDPR Checkbox" value="1" />
 		<?php $enabled = gdpr( 'options' )->get( 'enable_tac' ); ?>
 		<?php
 		wp_enqueue_script( 'jquery' );

@@ -1,10 +1,9 @@
 <?php
 
-namespace Illuminate\Container;
+namespace Data443\gdpr\framework\Illuminate\Container;
 
 use Exception;
-use Psr\Container\NotFoundExceptionInterface;
-
+use Data443\gdpr\framework\Psr\Container\NotFoundExceptionInterface;
 class EntryNotFoundException extends Exception implements NotFoundExceptionInterface
 {
     //

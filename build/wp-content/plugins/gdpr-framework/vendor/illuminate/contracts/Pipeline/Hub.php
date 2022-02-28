@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Contracts\Pipeline;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Pipeline;
 
 interface Hub
 {

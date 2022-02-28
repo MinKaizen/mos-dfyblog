@@ -1,9 +1,8 @@
 <?php
 
-namespace Illuminate\Contracts\Encryption;
+namespace Data443\gdpr\framework\Illuminate\Contracts\Encryption;
 
 use RuntimeException;
-
 class DecryptException extends RuntimeException
 {
     //

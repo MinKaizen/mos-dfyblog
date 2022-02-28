@@ -245,15 +245,29 @@
 }
 
 .gdpr-select-policy-page {
-	padding: 10px 5px 10px 5px;
-	border: 1px solid #a3a3a3;
+    padding: 10px 5px 10px 5px;
+    border: 1px solid #a3a3a3;
+    border-radius: 4px;
 }
 .gdpr-select-policy-page strong{
-  margin: 10px 0;
-  display: block;
+    margin: 10px 0;
+    display: block;
 }
 .gdpr-select-policy-page span{
-  font-size: 12px;
+    font-size: 12px;
+}
+
+.gdpr-select-terms-page {
+    padding: 10px 5px 10px 5px;
+    border: 1px solid #a3a3a3;
+    border-radius: 4px;
+}
+.gdpr-select-terms-page strong{
+    margin: 10px 0;
+    display: block;
+}
+.gdpr-select-terms-page span{
+    font-size: 12px;
 }
 
 .gdpr-installer input[type=text],

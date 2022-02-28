@@ -654,6 +654,9 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .ub_review_description{' . PHP_EOL . 
                         'text-align: ' . $attributes['descriptionAlign'] . ';' . PHP_EOL .
                     '}' . PHP_EOL .
+                    $prefix . ' .ub_review_cta_main{' . PHP_EOL . 
+                        'justify-content: ' . $attributes['ctaAlignment'] . ';' . PHP_EOL .
+                    '}' . PHP_EOL .
                     $prefix . ' .ub_review_cta_main>a{' . PHP_EOL . 
                         'color: ' . ($attributes['callToActionForeColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL .
@@ -672,6 +675,7 @@ function ub_include_block_attribute_css() {
                             'display: block;' . PHP_EOL .
                         '}' . PHP_EOL;
                     }
+
                     break;
                 case 'ub/social-share':
                     $icon_sizes = array(
@@ -885,15 +889,17 @@ function ub_include_block_attribute_css() {
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
                         ($attributes['tabStyle'] === 'underline' ? 'border-bottom: 5px solid ' . $attributes['titleColor'] . ';' . PHP_EOL :
                             'background-color: ' . $attributes['theme'] . ';' . PHP_EOL) .
-                        //'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                         'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
+                    '}' .
+                    $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle.active{' . PHP_EOL .
+                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
                     '}' .
                     $prefix . ' .wp-block-ub-tabbed-content-tabs-title{' . PHP_EOL .
                         'justify-content: ' . ($attributes['tabsAlignment'] === 'center' ? 'center' :
                             'flex-' . ($attributes['tabsAlignment'] === 'left' ? 'start' : 'end' )) . ';' . PHP_EOL .
                     '}' . PHP_EOL . 
                     $prefix . ' .wp-block-ub-tabbed-content-accordion-toggle{' . PHP_EOL .
-                        'background-color: ' . $attributes['normalColor'] . ';' . PHP_EOL .
+                        'background-color: ' . ($attributes['normalColor'] ?: 'transparent') . ';' . PHP_EOL .
                         'color: ' . ($attributes['normalTitleColor'] ?: 'inherit') . ';' . PHP_EOL .
                     '}' . PHP_EOL;
                     foreach($attributes['tabsTitleAlignment'] as $key => $titleAlign){
@@ -926,23 +932,32 @@ function ub_include_block_attribute_css() {
                     }
                     $blockStylesheets .= $prefix . ' .ub_table-of-contents-header{' . PHP_EOL .
                         'text-align: ' . $attributes['titleAlignment'] . ';' . PHP_EOL .
-                    '}' .
-                    $prefix . ' .ub_table-of-contents-header-container{' . PHP_EOL .
-                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
-                    '}' .
-                    $prefix . ' .ub_table-of-contents-toggle-link{' . PHP_EOL .
-                        'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
-                    '}' .
-                    $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
-                        'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
-                        'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
-                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    $prefix . ' .ub_table-of-contents-container a{' . PHP_EOL .
-                        'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL ;
+                    '}' . PHP_EOL;
+
+                    if($attributes['titleBackgroundColor']){
+                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-header-container,' . $prefix . ' .ub_table-of-contents-toggle-link {' . PHP_EOL .
+                            'background-color: ' . $attributes['titleBackgroundColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    if($attributes['titleColor']){
+                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-title{' . PHP_EOL .
+                            'color: ' . $attributes['titleColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    if($attributes['listColor']){
+                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-container a{' . PHP_EOL .
+                            'color: ' . $attributes['listColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    if($attributes['listBackgroundColor']){
+                        $blockStylesheets .= $prefix . ' .ub_table-of-contents-extra-container{' . PHP_EOL .
+                            'background-color: ' . $attributes['listBackgroundColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL;
+                    }
+                    if($attributes['listIconColor']){
+                        $blockStylesheets .= $prefix . ' li{' . PHP_EOL .
+                            'color: ' . $attributes['listIconColor'] . ';' . PHP_EOL . '}' . PHP_EOL;
+                    } 
                     break;
                 case 'ub/testimonial':
                     $prefix = '#ub_testimonial_' . $attributes['blockID'];
