@@ -95,7 +95,7 @@ function main() {
   msg "Activating wmdb..."
   wp plugin activate wp-migrate-db-pro
   wp plugin activate wp-migrate-db-pro-cli
-  wp migratedb setting update license "$wmdb_license" --user=1
+  wp migrate setting update license "$wmdb_license" --user=1
 
   # Change table prefix to wp_
   msg "Changing db prefix to $TARGET_TABLE_PREFIX..."
@@ -107,12 +107,12 @@ function main() {
   if [[ $pull -eq 1 ]]; then
     # Pull database
     msg "Migrating database (pull from live)..."
-    wp migratedb pull "$SOURCE_URL" "$SOURCE_KEY" --exclude-spam --find="$SOURCE_URL","$SOURCE_ABSPATH",chucksateam@gmail.com,martin.g.cao@gmail.com,itschuckhere@gmail.com --replace="$SITEURL","$WP_DIR","$email","$email","$email"
+    wp migrate pull "$SOURCE_URL" "$SOURCE_KEY" --exclude-spam --find="$SOURCE_URL","$SOURCE_ABSPATH",chucksateam@gmail.com,martin.g.cao@gmail.com,itschuckhere@gmail.com --replace="$SITEURL","$WP_DIR","$email","$email","$email"
   else
     # Import database
     msg "Migrating database (import from file)... "
     local IMPORT_FILE="$BUILD_DIR/dfyblog.sql"
-    wp migratedb import "$IMPORT_FILE" --find=__SITEURL__,__ABSPATH__,__EMAIL__ --replace="$SITEURL,$WP_DIR,$email"
+    wp migrate import "$IMPORT_FILE" --find=__SITEURL__,__ABSPATH__,__EMAIL__ --replace="$SITEURL,$WP_DIR,$email"
   fi
 
   # Update admin user

@@ -53,6 +53,6 @@ echo "Exporting database as dfyblog.sql..."
 OUTPUT="$BUILD_DIR/dfyblog.sql"
 THIS_SITEURL="$(wp option get siteurl)"
 THIS_ABSPATH="$(wp eval 'echo ABSPATH;')"
-wp migratedb export "$OUTPUT" --exclude-spam --find="$THIS_SITEURL","$THIS_ABSPATH",chucksateam@gmail.com,martin.g.cao@gmail.com,itschuckhere@gmail.com --replace="$SITEURL_PLACEHOLDER","$ABSPATH_PLACEHOLDER","$EMAIL_PLACEHOLDER","$EMAIL_PLACEHOLDER","$EMAIL_PLACEHOLDER"
+wp migrate export "$OUTPUT" --exclude-spam --find="$THIS_SITEURL","$THIS_ABSPATH",chucksateam@gmail.com,martin.g.cao@gmail.com,itschuckhere@gmail.com --replace="$SITEURL_PLACEHOLDER","$ABSPATH_PLACEHOLDER","$EMAIL_PLACEHOLDER","$EMAIL_PLACEHOLDER","$EMAIL_PLACEHOLDER"
 
 exit 0
