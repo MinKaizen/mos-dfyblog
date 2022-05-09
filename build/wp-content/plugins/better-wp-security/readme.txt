@@ -1,9 +1,9 @@
-=== iThemes Security (formerly Better WP Security) ===
+=== iThemes Security ===
 Contributors: ithemes, chrisjean, mattdanner, timothyblynjacobs
-Tags: security plugin, malware scanner, login security, malware prevention, hack prevention, brute force protection, anti-virus, secure, password protection, ban, bad bots, audit log
-Requires at least: 5.7
-Tested up to: 5.8
-Stable tag: 8.0.2
+Tags: security plugin, malware scanner, security, malware prevention, two-factor authentication, brute force protection, scanner, password protection, ban, bad bots, audit log
+Requires at least: 5.8
+Tested up to: 6.0
+Stable tag: 8.1.2
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,7 +74,8 @@ Local Brute Force Protection - Automatically identify and stop the most common m
 = Monitor Your Site's Security Health =
 
 - **File Change Detection** - iThemes Security logs changes made to your website that can help detect malicious activity on your website.
-- **Site Scanner** (Pro) - Enable twice-daily checks for known vulnerabilities and automatically apply a patch if one is available. Using the Google Safe Browsing API, the Site Scan also checks your Google's blocklist status and will alert you if Google has found any malware on your website.
+- **Site Scanner** - Enable twice-daily checks for known vulnerabilities of WordPress core file, plugins and themes. Using the Google Safe Browsing API, the Site Scan also checks your Google's blocklist status and will alert you if Google has found any malware on your website.
+- **Site Scanner** (Pro) - Unlock Version Management to automatically apply a patch to vulnerable software detected by the Site Scan when one is available.
 - **User Logging** (Pro) - Keep a record of user activity in your WordPress security logs, including login/logout, user registration, adding/removing plugins, switching themes, changes to posts and pages, and more.
 - **Version Management** (Pro) - The Version Management feature in iThemes Security Pro allows you to auto-update WordPress, plugins, and themes. Beyond that, Version Management also has options to harden your website when you are running outdated software and scan for old websites.
 
@@ -149,6 +150,27 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 7. Advanced Security Tools
 
 == Changelog ==
+
+= 8.1.2 =
+* Tweak: Require a Title when creating a new Dashboard.
+* Bug Fix: Don't attempt to send a Site Scan notification for Clean scans preventing a fatal error after scheduled site scans.
+
+= 8.1.1 =
+* Bug Fix: Error when visiting the Notifications page after activating a module with notifications for the first time.
+* Bug Fix: Update deprecated withState usages to useState.
+
+= 8.1.0 =
+* Important: iThemes Security now requires WordPress 5.8 or later.
+* New Feature: Include the full iThemes Security Site Scanner in iThemes Security Free. Scheduled scans are disabled by default.
+* Tweak: Add new "Go Pro" page that includes an overview of features in iThemes Security Pro.
+* Bug Fix: Scroll to top of window when navigating.
+* Bug Fix: Allow searching for Password Requirements.
+* Bug Fix: Don't load WordPress and System Tweaks modules when the `ITSEC_DISABLE_MODULES` constant is enabled.
+* Bug Fix: Prevent incidentally loading the Two-Factor module when it is unregistered.
+* Bug Fix: Conditionally display the NGINX File Path setting.
+* Bug Fix: Allow saving Notifications when "default recipients must contain at least 1 item" error is present.
+* Bug Fix: Help styling on WordPress 5.9.
+* Bug Fix: Compatibility with plugins that expected a logged-in user during lockouts.
 
 = 8.0.2 =
 * Enhancement: Reintroduce Feature Flags management UI.
@@ -639,5 +661,5 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 
 == Upgrade Notice ==
 
-= 8.0.2 =
-Version 8.0.0 is a major new release for iThemes Security with a brand new user interface and new features like Two-Factor.
+= 8.1.2 =
+Version 8.1.0 includes new features and important bug fixes.

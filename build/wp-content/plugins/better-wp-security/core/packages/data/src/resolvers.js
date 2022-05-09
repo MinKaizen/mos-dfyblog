@@ -15,6 +15,7 @@ import { apiFetch, select } from './controls';
 import {
 	receiveActors,
 	receiveActorTypes,
+	receiveBatchMaxItems,
 	receiveCurrentUserId,
 	receiveIndex,
 	receiveSiteInfo,
@@ -118,3 +119,13 @@ export const getSiteInfo = {
 		return !! state.siteInfo;
 	},
 };
+
+export function* getBatchMaxItems() {
+	const response = yield apiFetch( {
+		path: '/batch/v1',
+		method: 'OPTIONS',
+	} );
+	yield receiveBatchMaxItems(
+		response.endpoints[ 0 ].args.requests.maxItems
+	);
+}

@@ -11,12 +11,12 @@
     <?php do_action('admin_head'); ?>
 </head>
 
+<?php global $gdpr; ?>
 <body class="gdpr-installer wp-core-ui">
-
     <div class="container gdpr-installer-container">
         <div class="gdpr-header">
           <div class="gdpr-header_left">
-            <img class="gdpr-logo" src="<?= gdpr('config')->get('plugin.url'); ?>/assets/gdpr-framework-logo.svg" />
+            <img class="gdpr-logo" src="<?= $gdpr->PluginUrl; ?>/assets/gdpr-framework-logo.svg" />
           </div>
           <div class="gdpr-header_right">
             <h1>

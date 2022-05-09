@@ -16,8 +16,6 @@ class InstallerWizard
      */
     public function __construct()
     {
-        $this->configure();
-
         add_action('admin_menu', [$this, 'registerWizardPage']);
     }
 
@@ -27,14 +25,6 @@ class InstallerWizard
     public function registerWizardPage()
     {
         add_dashboard_page( '', '', 'manage_options', 'gdpr-setup', '' );
-    }
-
-    /**
-     * Set up the configuration object
-     */
-    protected function configure()
-    {
-        gdpr('config')->set('installer.wizardUrl', self_admin_url("index.php?page=gdpr-setup&gdpr-step="));
     }
 
     /**

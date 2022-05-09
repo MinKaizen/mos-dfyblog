@@ -24,7 +24,7 @@ const DEFAULT_STATE = {
 	lastError: {},
 };
 
-export default function ( state = DEFAULT_STATE, action ) {
+export default function( state = DEFAULT_STATE, action ) {
 	switch ( action.type ) {
 		case RECEIVE_TOOLS:
 			return {

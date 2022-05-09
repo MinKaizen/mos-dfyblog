@@ -11,6 +11,8 @@ if(file_exists(dirname( ES_PLUGIN_FILE ) . '/includes/db/class-es-db-contacts.ph
     include_once dirname( ES_PLUGIN_FILE ) . '/lite/includes/db/class-es-db-contacts.php';
 }
 
+// Support plugin name: Email Subscribers & Newsletters
+
 class NewsletterGdpr
 {   
     public function __construct(DataSubjectManager $dataSubjectManager, ConsentManager $consentManager)
@@ -32,8 +34,9 @@ class NewsletterGdpr
     }
 
     public function newsletter_checkbox_consent($data)
-    { 	
-        $policyPage = gdpr('options')->get('policy_page');
+    {
+        global $gdpr; 	
+        $policyPage = $gdpr->Options->get('policy_page');
 
         $policyPageUrl = get_permalink($policyPage);
         

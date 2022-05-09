@@ -46,17 +46,17 @@ export default function bans( state = DEFAULT_STATE, action ) {
 							action.mode === 'replace'
 								? map( action.items, getSelf )
 								: [
-										...get(
-											state,
-											[
-												'queries',
-												action.queryId,
-												'selves',
-											],
-											[]
-										),
-										...map( action.items, getSelf ),
-								  ],
+									...get(
+										state,
+										[
+											'queries',
+											action.queryId,
+											'selves',
+										],
+										[]
+									),
+									...map( action.items, getSelf ),
+								],
 						headers: fromPairs(
 							Array.from( action.response.headers.entries() )
 						),

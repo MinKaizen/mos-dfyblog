@@ -3,11 +3,11 @@
  * Plugin Name: ThirstyAffiliates
  * Plugin URI: http://thirstyaffiliates.com/
  * Description: ThirstyAffiliates is a revolution in affiliate link management. Collect, collate and store your affiliate links for use in your posts and pages.
- * Version: 3.10.3
+ * Version: 3.10.6
  * Author: Caseproof
  * Author URI: https://caseproof.com/
  * Requires at least: 5.0
- * Tested up to: 5.8
+ * Tested up to: 5.9
  *
  * Text Domain: thirstyaffiliates
  * Domain Path: /languages/
@@ -41,6 +41,7 @@ use ThirstyAffiliates\Models\Link_Picker;
 use ThirstyAffiliates\Models\Shortcodes;
 use ThirstyAffiliates\Models\Guided_Tour;
 use ThirstyAffiliates\Models\REST_API;
+use ThirstyAffiliates\Models\Notifications;
 
 /**
  * Register plugin autoloader.
@@ -231,8 +232,8 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
 
             <div class="error">
                 <p>
-                    <?php _e( '<b>ThirstyAffiliates</b> plugin missing dependency.<br/>' , 'thirstyaffiliates' ); ?>
-                    <?php echo $admin_notice_msg; ?>
+                    <?php esc_html_e( '<b>ThirstyAffiliates</b> plugin missing dependency.<br/>' , 'thirstyaffiliates' ); ?>
+                    <?php echo $admin_notice_msg; // phpcs:ignore WordPress.Security.EscapeOutput ?>
                 </p>
             </div>
 
@@ -322,6 +323,7 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
         $rest_api    = REST_API::get_instance( $this , $plugin_constants , $helper_functions );
         $rewrites    = Rewrites_Redirection::get_instance( $this , $plugin_constants , $helper_functions );
         $link_picker = Link_Picker::get_instance( $this , $plugin_constants , $helper_functions );
+        $notifications = Notifications::get_instance( $this , $plugin_constants , $helper_functions );
 
         $activatables   = array( $settings , $stats , $migration , $marketing , $guided_tour );
         $deactivatables = array( $rewrites );
@@ -336,7 +338,8 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
             $migration,
             $marketing,
             $guided_tour,
-            $rest_api
+            $rest_api,
+            $notifications
         );
 
         Bootstrap::get_instance( $this , $plugin_constants , $helper_functions , $activatables , $initiables , $deactivatables );

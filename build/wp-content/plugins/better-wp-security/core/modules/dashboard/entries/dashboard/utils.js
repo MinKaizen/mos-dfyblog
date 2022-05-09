@@ -67,7 +67,7 @@ export const BREAKPOINTS = Object.freeze(
 	BREAKPOINT_ORDER.reduce(
 		( acc, bp ) => ( {
 			...acc,
-			[ bp ]: 250 * GRID_COLUMNS[ bp ] + 20 * ( GRID_COLUMNS[ bp ] - 1 ),
+			[ bp ]: ( 250 * GRID_COLUMNS[ bp ] ) + ( 20 * ( GRID_COLUMNS[ bp ] - 1 ) ),
 		} ),
 		{}
 	)
@@ -190,11 +190,11 @@ export function transformApiLayoutToGrid(
 /**
  * Transform the layout information from the API to a format compatible for the react-grid-layout library.
  *
- * @param {number} dashboardId
- * @param {Object} card
- * @param {Object} config
- * @param {string} breakpoint
- * @param {Array<Object>} [layout] Layout being inserted into. Used to better determine a slot for a card without a position.
+ * @param {number}        dashboardId
+ * @param {Object}        card
+ * @param {Object}        config
+ * @param {string}        breakpoint
+ * @param {Array<Object>} [layout]    Layout being inserted into. Used to better determine a slot for a card without a position.
  * @return {{i: string, x: *, y: *, w: *, h: *}} RGL layout for a single card.
  */
 export function transformApiLayoutToGridForCard(
@@ -292,9 +292,9 @@ export function transformApiLayoutToGridForCard(
  * This is preferable to letting the react-grid-layout handle it because it only does vertical
  * packing.
  *
- * @param {number} numColumns Number of columns wide that are supported.
- * @param {Array<Object>} layout The full layout of other items.
- * @param {{w: number, h: number}} size The size of the item.
+ * @param {number}                 numColumns Number of columns wide that are supported.
+ * @param {Array<Object>}          layout     The full layout of other items.
+ * @param {{w: number, h: number}} size       The size of the item.
  * @return {{x: number, y: number}} Slot position if found, or null if none available.
  */
 export function findSlot( numColumns, layout, size ) {
@@ -440,9 +440,9 @@ export const areGridLayoutsEqual = memize( _areGridLayoutsEqual );
  *
  * This is so that the tab order can match the visual order.
  *
- * @param {Array<Object>} cards Card array.
- * @param {Object} layout Grid Layout
- * @param {string} breakpoint The breakpoint we are displaying.
+ * @param {Array<Object>} cards      Card array.
+ * @param {Object}        layout     Grid Layout
+ * @param {string}        breakpoint The breakpoint we are displaying.
  *
  * @return {Array<Object>} New array with card objects sorted by layout.
  */
@@ -451,7 +451,7 @@ function _sortCardsToMatchLayout( cards, layout, breakpoint ) {
 
 	const toSort = [ ...cards ];
 
-	toSort.sort( function ( a, b ) {
+	toSort.sort( function( a, b ) {
 		const aId = a.id.toString(),
 			bId = b.id.toString();
 
@@ -494,7 +494,7 @@ function _sortCardsToMatchApiLayout( cards, layout ) {
 	const keyedLayout = keyBy( layout.cards, 'id' );
 	const toSort = [ ...cards ];
 
-	toSort.sort( function ( a, b ) {
+	toSort.sort( function( a, b ) {
 		const aId = a.id,
 			bId = b.id;
 
@@ -552,7 +552,7 @@ export function getCardTitle( card, config ) {
 	 * Filter the card title for a particular config.
 	 *
 	 * @param {string} title The card title.
-	 * @param {Object} card The card instance object.
+	 * @param {Object} card  The card instance object.
 	 */
 	title = applyFilters(
 		`ithemes-security.dashboard.getCardTitle.${ config.slug }`,
@@ -563,8 +563,8 @@ export function getCardTitle( card, config ) {
 	/**
 	 * Filter the card title.
 	 *
-	 * @param {string} title The card title.
-	 * @param {Object} card The card instance object.
+	 * @param {string} title  The card title.
+	 * @param {Object} card   The card instance object.
 	 * @param {Object} config The card configuration object.
 	 */
 	return applyFilters(

@@ -71,11 +71,12 @@ class DataManager
 
     public function deleteUser(DataSubject $dataSubject, $reassign = null)
     {
+        global $gdpr;
         require_once(ABSPATH . 'wp-admin/includes/user.php');
 
-        $reassignOption = gdpr('options')->get('delete_action_reassign');
+        $reassignOption = $gdpr->Options->get('delete_action_reassign');
         if ('reassign' === $reassignOption) {
-            $reassignUserId = gdpr('options')->get('delete_action_reassign_user');
+            $reassignUserId = $gdpr->Options->get('delete_action_reassign_user');
         } else {
             $reassignUserId = false;
         }

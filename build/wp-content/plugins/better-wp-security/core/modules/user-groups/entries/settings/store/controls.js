@@ -33,9 +33,9 @@ export function apiFetch( request ) {
 /**
  * Calls a selector using the current state.
  *
- * @param {string} storeKey Store key.
+ * @param {string} storeKey     Store key.
  * @param {string} selectorName Selector name.
- * @param {Array} args         Selector arguments.
+ * @param {Array}  args         Selector arguments.
  *
  * @return {Object} control descriptor.
  */
@@ -51,9 +51,9 @@ export function select( storeKey, selectorName, ...args ) {
 /**
  * Dispatches a control action for triggering a registry dispatch.
  *
- * @param {string} storeKey    The key for the store the action belongs to
- * @param {string} actionName  The name of the action to dispatch
- * @param {Array}  args        Arguments for the dispatch action.
+ * @param {string} storeKey   The key for the store the action belongs to
+ * @param {string} actionName The name of the action to dispatch
+ * @param {Array}  args       Arguments for the dispatch action.
  *
  * @example
  * ```js
@@ -82,25 +82,25 @@ export function dispatch( storeKey, actionName, ...args ) {
  *
  * @see @wordpress/notices#createNotice()
  *
- * @param {?string}                status                Notice status.
- *                                                       Defaults to `info`.
- * @param {string}                 content               Notice message.
- * @param {?Object}                options               Notice options.
- * @param {?string}                options.context       Context under which to
- *                                                       group notice.
- * @param {?string}                options.id            Identifier for notice.
- *                                                       Automatically assigned
- *                                                       if not specified.
- * @param {?boolean}               options.isDismissible Whether the notice can
- *                                                       be dismissed by user.
- *                                                       Defaults to `true`.
- * @param {?number}                options.autoDismiss   Whether the notice should
- *                                                       by automatically dismissed
- *                                                       after x milliseconds.
- *                                                       Defaults to `false`.
- * @param {?string}                options.type          Notice type. Either 'default' or 'snackbar'.
- * @param {?Array<Object>} options.actions               User actions to be
- *                                                       presented with notice.
+ * @param {?string}        status                Notice status.
+ *                                               Defaults to `info`.
+ * @param {string}         content               Notice message.
+ * @param {?Object}        options               Notice options.
+ * @param {?string}        options.context       Context under which to
+ *                                               group notice.
+ * @param {?string}        options.id            Identifier for notice.
+ *                                               Automatically assigned
+ *                                               if not specified.
+ * @param {?boolean}       options.isDismissible Whether the notice can
+ *                                               be dismissed by user.
+ *                                               Defaults to `true`.
+ * @param {?number}        options.autoDismiss   Whether the notice should
+ *                                               by automatically dismissed
+ *                                               after x milliseconds.
+ *                                               Defaults to `false`.
+ * @param {?string}        options.type          Notice type. Either 'default' or 'snackbar'.
+ * @param {?Array<Object>} options.actions       User actions to be
+ *                                               presented with notice.
  *
  * @return {Object} control descriptor.
  */

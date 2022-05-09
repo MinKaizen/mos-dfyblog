@@ -1,10 +1,11 @@
-@mixin sticky-table($spacing: 1em) {
+@mixin table($spacing: 1em) {
+    --itsec-table-spacing: #{$spacing};
+
+    border-spacing: 0;
+
     & thead th {
-        position: sticky;
-        top: 0;
-        padding-top: $spacing;
-        padding-bottom: $spacing;
-        background: white;
+        padding-top: var(--itsec-table-spacing);
+        padding-bottom: var(--itsec-table-spacing);
         color: $dark-gray-500;
         text-transform: uppercase;
         font-weight: normal;
@@ -15,18 +16,21 @@
     & th,
     & td {
         text-align: left;
-        padding: $spacing;
-
-        &:first-child {
-        }
-
-        &:last-child {
-            text-align: right;
-        }
+        padding: var(--itsec-table-spacing);
     }
 
     & tbody th {
         font-weight: normal;
+    }
+}
+
+@mixin sticky-table($spacing: 1em) {
+    @include table($spacing);
+
+    & thead th {
+        position: sticky;
+        top: 0;
+        background: white;
     }
 }
 

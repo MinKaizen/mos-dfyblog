@@ -14,7 +14,7 @@ function ub_render_tab_block($attributes, $contents){
         . $contents . '</div>';
 }
 
-if ( !class_exists( 'simple_html_dom_node' ) ) {
+if ( !class_exists( 'ub_simple_html_dom_node' ) ) {
     require dirname( dirname( __DIR__ ) ) . '/simple_html_dom.php';
 }
 
@@ -33,7 +33,7 @@ function ub_render_tabbed_content_block($attributes, $contents){
 
     $tabs = '';
 
-    $contents = str_get_html('<div id="tabarray">' . $contents . '</div>', $lowercase=true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=false)
+    $contents = ub_str_get_html('<div id="tabarray">' . $contents . '</div>', $lowercase=true, $forceTagsClosed=true, $target_charset = UB_DEFAULT_TARGET_CHARSET, $stripRN=false)
                     ->find('#tabarray > .wp-block-ub-tabbed-content-tab-content-wrap');
 
     $tabContents = [];

@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import { sortBy } from 'lodash';
+import { sortBy, filter } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 /**
  * WordPress dependencies
@@ -20,7 +21,7 @@ import {
  */
 import { useSingletonEffect } from '@ithemes/security-hocs';
 import { Accordion, Spinner } from '@ithemes/security-components';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { useGlobalNavigationUrl } from '@ithemes/security-utils';
 import { PageHeader } from '../../components';
 import { ONBOARD_STORE_NAME } from '../../stores';
@@ -39,11 +40,15 @@ export default function SecureSite() {
 }
 
 function OverviewScreen( { goToEnd } ) {
+	const { root } = useParams();
 	const { completeOnboarding } = useDispatch( ONBOARD_STORE_NAME );
-	const { steps, currentStep } = useSelect( ( select ) => ( {
-		steps: select( ONBOARD_STORE_NAME ).getCompletionSteps(),
-		currentStep: select( ONBOARD_STORE_NAME ).getCompletionStep(),
-	} ) );
+	const { steps, currentStep } = useSelect(
+		( select ) => ( {
+			steps: select( ONBOARD_STORE_NAME ).getCompletionSteps(),
+			currentStep: select( ONBOARD_STORE_NAME ).getCompletionStep(),
+		} ),
+		[]
+	);
 
 	let subtitle;
 
@@ -78,7 +83,7 @@ function OverviewScreen( { goToEnd } ) {
 					) : (
 						<Button
 							isPrimary
-							onClick={ completeOnboarding }
+							onClick={ () => completeOnboarding( { root } ) }
 							disabled={ currentStep !== false }
 						>
 							{ __( 'Secure Site', 'better-wp-security' ) }
@@ -120,7 +125,9 @@ function EndScreen() {
 						'better-wp-security'
 					),
 					{
+						// eslint-disable-next-line jsx-a11y/anchor-has-content
 						dashboard: <a href={ dashboardLink } />,
+						// eslint-disable-next-line jsx-a11y/anchor-has-content
 						settings: <a href={ settingsLink } />,
 					}
 				) }
@@ -144,44 +151,48 @@ function EndScreen() {
 }
 
 function Steps( { steps, currentStep } ) {
+	const { root } = useParams();
 	const [ expanded, setExpanded ] = useState( false );
 	const panels = useMemo(
 		() =>
-			sortBy( steps, 'priority' ).map(
-				( { render: Component, ...step } ) => {
-					const isCurrent = step.id === currentStep?.id;
-					const isDone =
-						step.priority < ( currentStep?.priority || 0 );
-					const isPending =
-						step.priority > ( currentStep?.priority || 0 );
+			sortBy(
+				filter(
+					steps,
+					( { activeCallback } ) =>
+						! activeCallback || activeCallback( { root } )
+				),
+				'priority'
+			).map( ( { render: Component, ...step } ) => {
+				const isCurrent = step.id === currentStep?.id;
+				const isDone = step.priority < ( currentStep?.priority || 0 );
+				const isPending =
+					step.priority > ( currentStep?.priority || 0 );
 
-					return {
-						name: step.id,
-						title: step.label,
-						text: step.label,
-						icon: 'yes-alt',
-						render:
-							Component &&
-							( ( props ) => (
-								<div { ...props }>
-									<Component />
-								</div>
-							) ),
-						showSpinner:
-							currentStep !== true &&
-							( isCurrent || isPending ) ? (
-								<Spinner
-									size={ 30 }
-									color="--itsec-primary-theme-color"
-									paused={ isPending }
-								/>
-							) : (
-								false
-							),
-						className: isDone && 'itsec-secure-site-step--complete',
-					};
-				}
-			),
+				return {
+					name: step.id,
+					title: step.label,
+					text: step.label,
+					icon: 'yes-alt',
+					render:
+						Component &&
+						( ( props ) => (
+							<div { ...props }>
+								<Component />
+							</div>
+						) ),
+					showSpinner:
+						currentStep !== true && ( isCurrent || isPending ) ? (
+							<Spinner
+								size={ 30 }
+								color="--itsec-primary-theme-color"
+								paused={ isPending }
+							/>
+						) : (
+							false
+						),
+					className: isDone && 'itsec-secure-site-step--complete',
+				};
+			} ),
 		[ steps, currentStep ]
 	);
 

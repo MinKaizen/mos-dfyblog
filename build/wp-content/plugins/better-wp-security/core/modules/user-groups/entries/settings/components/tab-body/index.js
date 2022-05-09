@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 import './style.scss';
 
-TabBody.Row = function ( { name, children } ) {
+TabBody.Row = function( { name, children } ) {
 	return (
 		<div
 			className={ `itsec-user-groups-group-tab__row itsec-user-groups-group-tab__row--${ name }` }

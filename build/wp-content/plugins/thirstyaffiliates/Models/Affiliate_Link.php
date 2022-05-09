@@ -714,12 +714,23 @@ class Affiliate_Link {
         global $wpdb;
 
         $table_name = $wpdb->prefix . Plugin_Constants::LINK_CLICK_DB;
-        $link_id    = $this->get_id();
-        $query      = "SELECT count(*) from $table_name WHERE link_id = $link_id";
-        $query     .= ( $date_offset && \DateTime::createFromFormat('Y-m-d H:i:s', $date_offset ) !== false ) ? " AND date_clicked > '$date_offset'" : '';
-        $clicks     = $wpdb->get_var( $query );
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $query = $wpdb->prepare( "SELECT COUNT(*) FROM {$table_name} WHERE link_id = %d", $this->get_id() );
+
+        if ( $date_offset ) {
+            $date_offset = \DateTime::createFromFormat( 'Y-m-d H:i:s', $date_offset );
+
+            if ( $date_offset !== false ) {
+                $query .= $wpdb->prepare( " AND date_clicked > %s", $date_offset->format( 'Y-m-d H:i:s' ) );
+            }
+        }
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $clicks = $wpdb->get_var( $query );
 
         return (int) $clicks;
+
     }
 
     /**
@@ -736,9 +747,7 @@ class Affiliate_Link {
         global $wpdb;
 
         // prepare the query.
-        $post_ids      = array();
         $link_id       = $this->get_id();
-        $cpt_slug      = Plugin_Constants::AFFILIATE_LINKS_CPT;
         $types         = get_post_types( array( 'public' => true ) , 'names' , 'and' );
         $types_str     = implode( "','" , $types );
         $permalink     = $this->get_prop( 'permalink' );
@@ -753,7 +762,7 @@ class Affiliate_Link {
         $query          = "SELECT ID FROM $wpdb->posts WHERE ( $like_query_str OR post_content LIKE '%[thirstylink%ids=\"$link_id%' ) AND post_type IN ( '$types_str' ) AND post_status = 'publish'";
 
         // fetch WP_Post IDs where link is inserted to.
-        $raw_ids = $wpdb->get_col( $query );
+        $raw_ids = $wpdb->get_col( $query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
         // save last scanned
         update_post_meta( $this->get_id() , Plugin_Constants::META_DATA_PREFIX . 'scanned_inserted' , current_time( 'mysql' , true ) );

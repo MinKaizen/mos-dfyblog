@@ -17,7 +17,8 @@ class Finish extends InstallerStep implements InstallerStepInterface
 
     public function submit()
     {
-        gdpr('options')->set('is_installed', true);
+        global $gdpr;
+        $gdpr->Options->set('is_installed', true);
     }
 
     protected function renderFooter()

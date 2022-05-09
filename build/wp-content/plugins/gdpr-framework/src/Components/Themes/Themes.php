@@ -14,16 +14,17 @@ class Themes
     ];
 
     public function __construct()
-    {   
+    {
+        global $gdpr;
         $this->theme = get_option('stylesheet');
 
-        if (!$this->isCurrentThemeSupported() || !gdpr('options')->get('enable_theme_compatibility')) {
+        if (!$this->isCurrentThemeSupported() || !$gdpr->Options->get('enable_theme_compatibility')) {
             return;
         }
 
         // If both pages aren't defined, bail
-        $privacyPolicy = gdpr('options')->get('policy_page');
-        $privacyToolsPage = gdpr('options')->get('tools_page');
+        $privacyPolicy = $gdpr->Options->get('policy_page');
+        $privacyToolsPage = $gdpr->Options->get('tools_page');
 
         if (!$privacyPolicy || !$privacyToolsPage) {
             return;
@@ -61,12 +62,13 @@ class Themes
         // I feel slightly dirty, but also clever
         add_filter("storefront_credit_link", [$this, 'renderStorefrontFooterLinks']);
     }
-    public function rendertwentynineteenFooterLinks(){
-
-        $privacyPolicyUrl = get_permalink(gdpr('options')->get('policy_page'));
+    public function rendertwentynineteenFooterLinks()
+    {
+        global $gdpr;
+        $privacyPolicyUrl = get_permalink($gdpr->Options->get('policy_page'));
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
 
         echo gdpr('view')->render(
             'themes/twentyseventeen/footer',
@@ -75,14 +77,15 @@ class Themes
     }
     public function renderTwentyseventeenFooterLinks($slug, $name)
     {
+        global $gdpr;
         if ('info' !== $name) {
             return;
         }
 
-        $privacyPolicyUrl = get_permalink(gdpr('options')->get('policy_page'));
+        $privacyPolicyUrl = get_permalink($gdpr->Options->get('policy_page'));
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
 
         echo gdpr('view')->render(
             'themes/twentyseventeen/footer',
@@ -92,10 +95,11 @@ class Themes
 
     public function renderTwentysixteenFooterLinks()
     {
-        $privacyPolicyUrl = get_permalink(gdpr('options')->get('policy_page'));
+        global $gdpr;
+        $privacyPolicyUrl = get_permalink($gdpr->Options->get('policy_page'));
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
 
         echo gdpr('view')->render(
             'themes/twentysixteen/footer',
@@ -105,10 +109,11 @@ class Themes
 
     public function renderStorefrontFooterLinks($value)
     {
-        $privacyPolicyUrl = get_permalink(gdpr('options')->get('policy_page'));
+        global $gdpr;
+        $privacyPolicyUrl = get_permalink($gdpr->Options->get('policy_page'));
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
 
         echo gdpr('view')->render(
             'themes/storefront/footer',

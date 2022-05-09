@@ -65,9 +65,25 @@ export function receiveSiteInfo( siteInfo ) {
 	};
 }
 
+export function __unstableLoadInitialFeatureFlags( flags ) {
+	return {
+		type: LOAD_INITIAL_FEATURE_FLAGS,
+		flags,
+	};
+}
+
+export function receiveBatchMaxItems( maxItems ) {
+	return {
+		type: RECEIVE_BATCH_MAX_ITEMS,
+		maxItems,
+	};
+}
+
 export const RECEIVE_INDEX = 'RECEIVE_INDEX';
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const RECEIVE_CURRENT_USER_ID = 'RECEIVE_CURRENT_USER_ID';
 export const RECEIVE_ACTOR_TYPES = 'RECEIVE_ACTOR_TYPES';
 export const RECEIVE_ACTORS = 'RECEIVE_ACTORS';
 export const RECEIVE_SITE_INFO = 'RECEIVE_SITE_INFO';
+export const LOAD_INITIAL_FEATURE_FLAGS = 'LOAD_INITIAL_FEATURE_FLAGS';
+export const RECEIVE_BATCH_MAX_ITEMS = 'RECEIVE_BATCH_MAX_ITEMS';

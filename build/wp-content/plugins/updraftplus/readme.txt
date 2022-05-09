@@ -3,7 +3,7 @@ Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snigh
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
 Tested up to: 5.9
-Stable tag: 1.22.6
+Stable tag: 1.22.12
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -170,6 +170,54 @@ N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which i
 
 
 
+= 1.22.12 - 29/Apr/2022 =
+
+* FEATURE: Added the ability to select which themes and plugins to Restore
+* FEATURE: Allow existing local backups to be sent to a remote site when migrating
+* TWEAK: Tweak to allow the Amazon S3 setup wizard to run if the internal S3 library is active
+* TWEAK: The WordPress sidebar menu overlaps the popover tour box
+* TWEAK: Attempt to upload a zip file after it's been created to save on storage space
+* TWEAK: Add MySQL maximum packet size to Advanced Tools -> Site Information
+* TWEAK: Only output the expected table rows when starting to process the table
+* TWEAK: Fix get_users parameter that has been deprecated on WP 5.9 in UpdraftCentral posts controller.
+* TWEAK: Do not call escapeshellarg() for SCP if we know it is unnecessary (prevents problems on hosts lacking the function for trivial use cases)
+* TWEAK: Detect change of run-time environment on first resumption and re-set previously detected resumption interval if likely to be helpful
+* TWEAK: Improve the FTP Handlebars template by taking PHP code out of it
+* TWEAK: Convert HTTP error codes to their meanings
+* TWEAK: Some plugins are loading their own incomplete mcrypt_* functions try and detect this and recover
+* TWEAK: Ensure the local backup file is cleaned up if an earlier failed remote storage upload later succeeds
+* TWEAK: Include plugin version when getting details from UpdraftPlus Vault to allow features that depend upon a sufficiently up-to-date version
+
+= 1.22.11 - 15/Mar/2022 =
+
+* FIX: Internal S3 library did not correctly construct canonical query string with v4 signatures if there were multiple parameters, leading to wrong signatures and failed authorisation
+* FIX: Fix a recent regression that caused DNS hostnames to not be preferred when using Amazon S3
+* TWEAK: Prevent deprecation notice on PHP 8.1 if opening a zero-size zip file
+* TWEAK: Introduce filter updraftplus_dropbox_fetch_curl_options for easier debugging/experimentation
+
+= 1.22.10 - 11/Mar/2022 =
+
+* FIX: Fix a regression in the 1.22.9 adjustment to the internal S3 library's evaluation of when to use a Host: header
+* FIX: Fix a long-standing issue whereby if S3-related credentials were being tested via the front-end UI, and multiple back-end instances were present, then the wrong settings could be used in making decisions on Host: headers
+
+= 1.22.9 - 10/Mar/2022 =
+
+* SECURITY: Fixed a failure to sanitise printed URLs properly, leading to a targetted XSS opportunity (if an attacker persuades a logged-in admin to follow a link personally crafted for their site, he may be able to run JavaScript inside the browser - but on our testing, this ability is limited due to the sanitisation that was there - we have not been able to confirm that a payload causing damage is possible). Reported by Taurus Omar - https://taurusomar.com.
+* TWEAK: Adjust internal S3 library's evaluation of when to use a Host: header (improves compatibility with buckets with minimal access rules)
+* TWEAK: Adjust algorithm concerning likelihood of switching S3 libraries to accelerate deployment
+* TWEAK: Prevent PHP notice when using S3 with particular bucket naming and SSL
+
+= 1.22.8 - 03/Mar/2022 =
+
+* FIX: Do not attempt to use S3 DNS-style bucket naming in alternative library if SSL validation will fail due to AWS certificate wildcard policies or other bucket naming-related reasons
+* TWEAK: Add version number to alternative S3 library requests
+
+= 1.22.7 - 01/Mar/2022 =
+
+* FIX: Internal S3 library was missing a method for using session tokens together with Vault
+* FIX: Various UI issues with the S3 IAM Wizard
+* TWEAK: Use AWS SDK/Guzzle for S3 operations if Curl is not available
+* TWEAK: Prevent coding deprecation notice during S3 upload on PHP 8.1
 
 = 1.22.6 - 26/Feb/2022 =
 
@@ -1474,4 +1522,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.22.6: Various tweaks/fixes to work better with buggy third-party plugins wrt S3/compatible. N.B. 1.22.3 fixed a security issue (see the changelog for more info) on sites that have non-trusted logins. A recommended update for all.
+* 1.22.12: Various tweaks and fixes, the ability to select individual themes/plugins to restore. See changelog for full details. A recommended update for all.

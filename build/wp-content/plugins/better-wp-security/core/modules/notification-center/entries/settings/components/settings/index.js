@@ -4,6 +4,7 @@
 import { TextControl, Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -14,8 +15,9 @@ import {
 	PageHeader,
 	PrimaryForm,
 	PrimaryFormSection,
+	useModuleSchemaValidator,
 } from '@ithemes/security.pages.settings';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { UserRoleList } from '..';
 
 export default function Settings( {
@@ -26,6 +28,8 @@ export default function Settings( {
 	allowCleanSave = false,
 	apiError,
 } ) {
+	const validator = useModuleSchemaValidator( 'notification-center' );
+	const [ errors, setErrors ] = useState( [] );
 	const { isDirty, isSaving, fromEmail, defaultRecipients } = useSelect(
 		( select ) => ( {
 			isDirty: select( MODULES_STORE_NAME ).areSettingsDirty(
@@ -44,11 +48,23 @@ export default function Settings( {
 					'notification-center',
 					'default_recipients'
 				) || {},
-		} )
+		} ),
+		[]
 	);
 	const { editSetting, resetSettingEdits } = useDispatch(
 		MODULES_STORE_NAME
 	);
+
+	const maybeSubmit = () => {
+		const isValid = validator();
+
+		if ( isValid === true ) {
+			setErrors( [] );
+			onSubmit();
+		} else {
+			setErrors( isValid.errorText );
+		}
+	};
 
 	return (
 		<>
@@ -63,8 +79,9 @@ export default function Settings( {
 				saveLabel={ saveLabel }
 				saveDisabled={ ! isDirty && ! allowCleanSave }
 				isSaving={ isSaving }
-				onSubmit={ onSubmit }
+				onSubmit={ maybeSubmit }
 				apiError={ apiError }
+				errors={ errors }
 				buttons={
 					allowUndo && [
 						<Button

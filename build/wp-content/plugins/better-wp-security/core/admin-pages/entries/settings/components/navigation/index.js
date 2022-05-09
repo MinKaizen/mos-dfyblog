@@ -23,7 +23,7 @@ export default function Navigation( {
 	allowForward = false,
 	children,
 } ) {
-	const pages = usePages();
+	const pages = usePages( { location: 'primary' } );
 	const { root, page: active } = useParams();
 	const childPath = useChildPath();
 
@@ -37,10 +37,6 @@ export default function Navigation( {
 				} ) }
 			>
 				{ pages.map( ( item, i ) => {
-					if ( false === item.priority ) {
-						return null;
-					}
-
 					let asLink = ! guided;
 
 					if ( allowBack && i <= activeIndex ) {

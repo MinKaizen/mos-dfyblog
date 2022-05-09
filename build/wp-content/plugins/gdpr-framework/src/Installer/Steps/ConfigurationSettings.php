@@ -17,15 +17,16 @@ class ConfigurationSettings extends InstallerStep implements InstallerStepInterf
 
     protected function renderContent()
     {
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
-        $deleteAction      = gdpr('options')->get('delete_action');
-        $deleteActionEmail = gdpr('options')->get('delete_action_email');
+        global $gdpr;
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
+        $deleteAction      = $gdpr->Options->get('delete_action');
+        $deleteActionEmail = $gdpr->Options->get('delete_action_email');
 
-        $exportAction      = gdpr('options')->get('export_action');
-        $exportActionEmail = gdpr('options')->get('export_action_email');
+        $exportAction      = $gdpr->Options->get('export_action');
+        $exportActionEmail = $gdpr->Options->get('export_action_email');
 
-        $reassign = gdpr('options')->get('delete_action_reassign');
-        $reassignUser = gdpr('options')->get('delete_action_reassign_user');
+        $reassign = $gdpr->Options->get('delete_action_reassign');
+        $reassignUser = $gdpr->Options->get('delete_action_reassign_user');
 
         echo gdpr('view')->render(
             $this->template,
@@ -43,28 +44,29 @@ class ConfigurationSettings extends InstallerStep implements InstallerStepInterf
 
     public function submit()
     {
+        global $gdpr;
         if (isset($_POST['gdpr_export_action'])) {
-            gdpr('options')->set('export_action', sanitize_text_field($_POST['gdpr_export_action']));
+            $gdpr->Options->set('export_action', sanitize_text_field($_POST['gdpr_export_action']));
         }
 
         if (isset($_POST['gdpr_export_action_email'])) {
-            gdpr('options')->set('export_action_email', sanitize_email($_POST['gdpr_export_action_email']));
+            $gdpr->Options->set('export_action_email', sanitize_email($_POST['gdpr_export_action_email']));
         }
 
         if (isset($_POST['gdpr_delete_action'])) {
-            gdpr('options')->set('delete_action', sanitize_text_field($_POST['gdpr_delete_action']));
+            $gdpr->Options->set('delete_action', sanitize_text_field($_POST['gdpr_delete_action']));
         }
 
         if (isset($_POST['gdpr_delete_action_email'])) {
-            gdpr('options')->set('delete_action_email', sanitize_email($_POST['gdpr_delete_action_email']));
+            $gdpr->Options->set('delete_action_email', sanitize_email($_POST['gdpr_delete_action_email']));
         }
 
         if (isset($_POST['gdpr_delete_action_reassign'])) {
-            gdpr('options')->set('delete_action_reassign', sanitize_text_field($_POST['gdpr_delete_action_reassign']));
+            $gdpr->Options->set('delete_action_reassign', sanitize_text_field($_POST['gdpr_delete_action_reassign']));
         }
 
         if (isset($_POST['gdpr_delete_action_reassign_user'])) {
-            gdpr('options')->set('delete_action_reassign_user', sanitize_text_field($_POST['gdpr_delete_action_reassign_user']));
+            $gdpr->Options->set('delete_action_reassign_user', sanitize_text_field($_POST['gdpr_delete_action_reassign_user']));
         }
     }
 }

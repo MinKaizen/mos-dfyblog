@@ -6,10 +6,15 @@ class PrivacyToolsPage
 {
     public function __construct()
     {
-        gdpr()->singleton(PrivacyToolsPageController::class);
-        gdpr()->make(PrivacyToolsPageShortcode::class);
-
-        gdpr()->singleton(PrivacyToolsPageShortcode::class);
-        gdpr()->make(PrivacyToolsPageShortcode::class);
+        global $gdpr;
+        $controller = new PrivacyToolsPageController(
+            $gdpr->DataSubjectAuthenticator
+            , $gdpr->DataSubjectIdentificator
+            , $gdpr->DataSubject
+            , $gdpr->DataExporter
+            , $gdpr->UserConsentModel
+            );
+        $gdpr->Controller = $controller;
+        new PrivacyToolsPageShortcode($controller, $gdpr->Consent);
     }
 }

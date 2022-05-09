@@ -30,7 +30,11 @@ import {
 	ErrorList,
 	HelpList,
 } from '@ithemes/security-components';
-import { CORE_STORE_NAME, MODULES_STORE_NAME } from '@ithemes/security-data';
+import { withNavigate } from '@ithemes/security-hocs';
+import {
+	CORE_STORE_NAME,
+	MODULES_STORE_NAME,
+} from '@ithemes/security.packages.data';
 import {
 	PageHeader,
 	PrimarySchemaFormInputs,
@@ -47,11 +51,10 @@ import {
 	makeConditionalSettingsSchema,
 	getModuleTypes,
 	appendClassNameAtPath,
-	validateModuleRequirements,
+	useModuleRequirementsValidator,
 } from '../../utils';
 import { useNavigation, ChildPages } from '../../page-registration';
 import './style.scss';
-import { withNavigate } from '@ithemes/security-hocs';
 
 function useTypes() {
 	const { root } = useParams();
@@ -64,6 +67,7 @@ function useTypes() {
 			featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
 		} )
 	);
+	const validateModuleRequirements = useModuleRequirementsValidator();
 
 	const getModules = () =>
 		editedModules.filter( ( module ) => {
@@ -80,6 +84,14 @@ function useTypes() {
 			}
 
 			if ( root === 'onboard' && ! module.settings?.onboard.length ) {
+				return false;
+			}
+
+			if (
+				root === 'import' &&
+				! module.settings?.onboard.length &&
+				! module.settings?.import.length
+			) {
 				return false;
 			}
 
@@ -117,6 +129,18 @@ function useTypes() {
 				if (
 					root === 'onboard' &&
 					! module.settings.onboard.some(
+						( setting ) => !! schema.properties[ setting ]
+					)
+				) {
+					return false;
+				}
+
+				if (
+					root === 'import' &&
+					! module.settings.onboard.some(
+						( setting ) => !! schema.properties[ setting ]
+					) &&
+					! module.settings.import.some(
 						( setting ) => !! schema.properties[ setting ]
 					)
 				) {
@@ -207,7 +231,7 @@ export default function Configure() {
 
 				<Route path={ path }>
 					{ nav.length > 0 &&
-						( root === 'onboard' ? (
+						( root !== 'settings' ? (
 							<Intro to={ `${ url }/${ nav[ 0 ].slug }` } />
 						) : (
 							<Redirect to={ `${ url }/${ nav[ 0 ].slug }` } />
@@ -288,7 +312,7 @@ function ModulePage( { module, tabs, onSelect } ) {
 	const { root } = useParams();
 
 	const Concrete =
-		root === 'onboard' ? ConfigureModuleOnboard : ConfigureModuleSettings;
+		root === 'settings' ? ConfigureModuleSettings : ConfigureModuleOnboard;
 
 	return (
 		<>
@@ -304,6 +328,7 @@ function ModulePage( { module, tabs, onSelect } ) {
 }
 
 function ConfigureModuleOnboard( { tabs, module, onSelect } ) {
+	const { root } = useParams();
 	const { previous, goNext } = useNavigation(
 		tabs?.map( ( tab ) => tab.name )
 	);
@@ -323,7 +348,9 @@ function ConfigureModuleOnboard( { tabs, module, onSelect } ) {
 			cancelLabel={ __( 'Back', 'better-wp-security' ) }
 			cancelRoute={ previous }
 			filterFields={ ( _, setting ) =>
-				module.settings.onboard.includes( setting )
+				module.settings.onboard.includes( setting ) ||
+				( root === 'import' &&
+					module.settings.import.includes( setting ) )
 			}
 		/>
 	);
@@ -490,10 +517,10 @@ function ModuleLinks( { module } ) {
 			module.id === 'password-requirements'
 				? __( 'User Groups', 'better-wp-security' )
 				: sprintf(
-						/* translators: 1. The number of user groups. */
-						__( 'User Groups (%d)', 'better-wp-security' ),
-						size( module.user_groups )
-				  );
+					/* translators: 1. The number of user groups. */
+					__( 'User Groups (%d)', 'better-wp-security' ),
+					size( module.user_groups )
+				);
 
 		links.push(
 			<Link

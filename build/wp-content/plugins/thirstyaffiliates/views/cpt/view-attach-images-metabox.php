@@ -10,14 +10,14 @@ wp_nonce_field( 'thirsty_affiliates_cpt_nonce', '_thirstyaffiliates_nonce' ); ?>
             data-editor="content"
             data-uploader-title="<?php esc_attr_e( 'Add Image To Affiliate Link' , 'thirstyaffiliates' ); ?>"
             data-uploader-button-text="<?php esc_attr_e('Add To Affiliate Link'); ?>" >
-            <?php _e( 'Upload/Insert' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'Upload/Insert' , 'thirstyaffiliates' ); ?>
             <span class="wp-media-buttons-icon"></span>
         </div>
 
     <?php else : ?>
 
         <div class="button-secondary" id="ta_upload_insert_img">
-            <?php _e( 'Upload/Insert' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'Upload/Insert' , 'thirstyaffiliates' ); ?>
             <a class="thickbox" href="<?php echo esc_attr( admin_url( 'media-upload.php?post_id=' . $post->ID . '?type=image&TB_iframe=1' ) ); ?>">
                 <span class="wp-media-buttons-icon"></span>
             </a>
@@ -25,14 +25,14 @@ wp_nonce_field( 'thirsty_affiliates_cpt_nonce', '_thirstyaffiliates_nonce' ); ?>
 
     <?php endif; ?>
 
-    <span class="or"><?php _e( 'or' , 'thirstyaffliates' ); ?></span>
+    <span class="or"><?php esc_html_e( 'or' , 'thirstyaffliates' ); ?></span>
 
     <div class="add-external-image">
-        <button type="button" class="button" id="add-external-image"><?php _e( 'Add external image' , 'thirstyaffiliates' ); ?></button>
+        <button type="button" class="button" id="add-external-image"><?php esc_html_e( 'Add external image' , 'thirstyaffiliates' ); ?></button>
         <div class="external-image-form">
-            <input type="url" value="" placeholder="<?php _e( 'Image source here' , 'thirstyaffiliates' ); ?>">
-            <button type="button" class="button-primary add-external"><?php _e( 'Add image' , 'thirstyaffiliates' ); ?></button>
-            <button type="button" class="button cancel"><?php _e( 'Cancel' , 'thirstyaffiliates' ); ?></button>
+            <input type="url" value="" placeholder="<?php esc_html_e( 'Image source here' , 'thirstyaffiliates' ); ?>">
+            <button type="button" class="button-primary add-external"><?php esc_html_e( 'Add image' , 'thirstyaffiliates' ); ?></button>
+            <button type="button" class="button cancel"><?php esc_html_e( 'Cancel' , 'thirstyaffiliates' ); ?></button>
         </div>
     </div>
 
@@ -43,7 +43,7 @@ wp_nonce_field( 'thirsty_affiliates_cpt_nonce', '_thirstyaffiliates_nonce' ); ?>
 </script>
 
 <?php if ( ! empty( $attachments ) ) : ?>
-    <div id="thirsty_image_holder" data-attachments="<?php echo esc_attr( json_encode( $attachments ) ); ?>">
+    <div id="thirsty_image_holder" data-attachments="<?php echo esc_attr( wp_json_encode( $attachments ) ); ?>">
         <?php foreach ( $attachments as $attachment_id ) {
 
             if ( filter_var( $attachment_id , FILTER_VALIDATE_URL ) ) {
@@ -55,9 +55,9 @@ wp_nonce_field( 'thirsty_affiliates_cpt_nonce', '_thirstyaffiliates_nonce' ); ?>
 
                 $img = wp_get_attachment_image_src( $attachment_id , 'full' );
                 include( $this->_constants->VIEWS_ROOT_PATH() . 'cpt/view-attach-images-metabox-single-image.php' );
-                
+
             }
-            
+
         } ?>
     </div>
 <?php endif; ?>

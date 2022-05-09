@@ -104,13 +104,14 @@ class WPML
 
     public function saveConsentTypes($newConsentTypes)
     {
+        global $gdpr;
         if (!defined('ICL_LANGUAGE_CODE')) {
             return $newConsentTypes;
         }
 
         $code = (string)ICL_LANGUAGE_CODE;
         $translatedConsentTypes = [];
-        $currentConsentTypes = gdpr('options')->get('consent_types', null, false);
+        $currentConsentTypes = $gdpr->Options->get('consent_types', null, false);
 
         if (count($newConsentTypes)) {
             foreach ($newConsentTypes as &$newConsentType) {

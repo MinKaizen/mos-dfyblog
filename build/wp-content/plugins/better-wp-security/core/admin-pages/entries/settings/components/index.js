@@ -2,6 +2,7 @@ export { default as Sidebar } from './sidebar';
 export { default as Main, AsideFill } from './main';
 export { default as Toolbar, ToolbarFill } from './toolbar';
 export { default as Navigation, NavigationFill } from './navigation';
+export { default as AdvancedNavigation } from './advanced-navigation';
 export {
 	default as Breadcrumbs,
 	useBreadcrumbTrail,

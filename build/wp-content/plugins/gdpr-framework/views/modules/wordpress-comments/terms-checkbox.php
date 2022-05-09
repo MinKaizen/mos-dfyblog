@@ -3,9 +3,10 @@
 		<input type="checkbox" required name="gdpr_terms" id="gdpr_terms" aria-label="GDPR Checkbox" value="1" />
 		<?php $enabled = gdpr( 'options' )->get( 'enable_tac' ); ?>
 		<?php
+		global $gdpr;
 		wp_enqueue_script( 'jquery' );
-		wp_register_style( 'gdpr-consent-until', gdpr( 'config' )->get( 'plugin.url' ) . 'assets/css/consentuntil.min.css', array(), true );
-		wp_register_script( 'gdpr-consent-until-js', gdpr( 'config' )->get( 'plugin.url' ) . 'assets/js/consentuntil.min.js', array(), true, true );
+		wp_register_style( 'gdpr-consent-until', $gdpr->PluginUrl . 'assets/css/consentuntil.min.css', array(), true );
+		wp_register_script( 'gdpr-consent-until-js', $gdpr->PluginUrl . 'assets/js/consentuntil.min.js', array(), true, true );
 		wp_register_style( 'gdpr-consent-until-dashicons', includes_url() . '/css/dashicons.min.css', array(), true );
 		wp_enqueue_script( 'gdpr-consent-until-js' );
 		wp_enqueue_style( 'gdpr-consent-until' );

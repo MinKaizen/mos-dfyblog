@@ -787,9 +787,11 @@ final class ITSEC_Lockout {
 			$message = apply_filters( "itsec_{$slug}_lockout_message", $message, $context );
 		}
 
+		wp_clear_auth_cookie();
+
 		$current_user = wp_get_current_user();
 
-		if ( is_object( $current_user ) && isset( $current_user->ID ) ) {
+		if ( $current_user instanceof WP_User && $current_user->exists() ) {
 			wp_logout();
 		}
 

@@ -18,11 +18,12 @@ class PrivacyToolsPageShortcode
 
     public function renderPage()
     {
-        if (!gdpr('options')->get('enable')) {
+        global $gdpr;
+        if (!$gdpr->Options->get('enable')) {
             return __('This page is currently disabled.', 'gdpr-framework');
         }
 
-        if ((!gdpr('options')->get('tools_page') || is_null(get_post(gdpr('options')->get('tools_page')))) && !gdpr('options')->get('custom_tools_page')) {
+        if ((!$gdpr->Options->get('tools_page') || is_null(get_post($gdpr->Options->get('tools_page')))) && !$gdpr->Options->get('custom_tools_page')) {
             return __('Please configure the Privacy Tools page in the admin interface.', 'gdpr-framework');
         }
 
@@ -51,11 +52,12 @@ class PrivacyToolsPageShortcode
 	}
 	public function renderDoNotSellForm()
     {
-        if (!gdpr('options')->get('enable')) {
+        global $gdpr;
+        if (!$gdpr->Options->get('enable')) {
             return __('This page is currently disabled.', 'gdpr-framework');
         }
 
-        if (!gdpr('options')->get('tools_page') || is_null(get_post(gdpr('options')->get('tools_page')))) {
+        if (!$gdpr->Options->get('tools_page') || is_null(get_post($gdpr->Options->get('tools_page')))) {
             return __('Please configure the Privacy Tools page in the admin interface.', 'gdpr-framework');
         }
         $slug = 'do-not-sell-request';

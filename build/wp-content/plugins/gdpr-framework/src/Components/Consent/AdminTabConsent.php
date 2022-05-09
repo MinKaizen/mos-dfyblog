@@ -68,8 +68,8 @@ class AdminTabConsent extends AdminTab
      */
     public function renderConsentForm()
     {
-        
-        $consentInfo = gdpr('options')->get('consent_info');
+        global $gdpr;
+        $consentInfo = $gdpr->Options->get('consent_info');
 
         if (is_null($consentInfo)) {
             $consentInfo = $this->getDefaultConsentInfo();
@@ -81,7 +81,6 @@ class AdminTabConsent extends AdminTab
         $defaultConsentTypes = $this->consentManager->getDefaultConsentTypes();
         $customConsentTypes = $this->consentManager->getCustomConsentTypes();
 
-        // todo: move to a filter
         if (defined('ICL_LANGUAGE_CODE')) {
             $prefix = ICL_LANGUAGE_CODE . '_';
         } else {
@@ -96,9 +95,10 @@ class AdminTabConsent extends AdminTab
      */
     public function updateConsentData()
     {
+        global $gdpr;
 		// Update additional information
         if (isset($_POST['gdpr_consent_info'])) {
-            gdpr('options')->set('consent_info', wp_unslash($_POST['gdpr_consent_info']));
+            $gdpr->Options->set('consent_info', wp_unslash($_POST['gdpr_consent_info']));
         }
 
         // Update consent types

@@ -283,6 +283,9 @@
       }
     },
     "uiSchema": {
+      "nginx_file": {
+        "ui:resettable": true
+      },
       "lockout_white_list": {
         "ui:field": "TextareaListField",
         "ui:rows": 10
@@ -415,6 +418,9 @@
       "server-type": [
         "nginx"
       ]
+    },
+    "enable_grade_report": {
+      "install-type": "pro"
     }
   },
   "removed-settings": [
@@ -436,5 +442,18 @@
     "lockout_white_list",
     "proxy",
     "proxy_header"
-  ]
+  ],
+  "import-export": {
+    "import-settings": [
+      "proxy",
+      "proxy_header",
+      "log_location",
+      "nginx_file"
+    ],
+    "exclude-settings": [
+      "server_ips",
+      "use_cron",
+      "cron_test_time"
+    ]
+  }
 }

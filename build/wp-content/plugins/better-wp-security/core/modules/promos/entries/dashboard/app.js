@@ -68,14 +68,14 @@ function Footer() {
 			</section>
 			<FlexSpacer />
 			<a
-				href="https://ithemes.com/security/why-go-pro/"
+				href="https://ithem.es/included-with-pro"
 				className="itsec-promo-pro-upgrade__details"
 			>
 				{ __( 'What’s included with Pro?', 'better-wp-security' ) }
 			</a>
 			<Button
 				className="itsec-promo-pro-upgrade__button"
-				href="https://ithemes.com/security/"
+				href="https://ithem.es/go-security-pro-now"
 			>
 				{ __( 'Go Pro Now', 'better-wp-security' ) }
 			</Button>

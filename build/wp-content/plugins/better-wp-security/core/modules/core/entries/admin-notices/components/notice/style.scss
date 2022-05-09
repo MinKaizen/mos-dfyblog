@@ -1,5 +1,3 @@
-@import "mixins.scss";
-
 $border-radius: 3px;
 $side-padding: 20px;
 
@@ -10,7 +8,7 @@ $side-padding: 20px;
 
     .itsec-admin-notice__header {
         background: #eeecec;
-        padding: $side-padding / 2;
+        padding: calc(#{$side-padding} / 2);
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
 
@@ -64,7 +62,7 @@ $side-padding: 20px;
     .itsec-admin-notice__header .itsec-admin-notice__header-inset {
         background: white;
         border-radius: 5px;
-        padding: $side-padding / 2;
+        padding: calc(#{$side-padding} / 2);
     }
 
     .itsec-admin-notice__header h4 {

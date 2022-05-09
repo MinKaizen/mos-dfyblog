@@ -14,7 +14,7 @@ export default function PromoCard( { title } ) {
 			<Button
 				className="itsec-edit-cards__action itsec-edit-cards__action--add"
 				label={ __( 'Go Pro', 'better-wp-security' ) }
-				href="https://ithemes.com/security/"
+				href="https://ithemes.com/security/?utm_source=wordpressadmin&utm_medium=dashboardcard&utm_campaign=itsecfreecta"
 				icon="external"
 			/>
 		</li>

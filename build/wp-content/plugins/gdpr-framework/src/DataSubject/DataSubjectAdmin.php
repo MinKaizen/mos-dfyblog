@@ -11,7 +11,9 @@ class DataSubjectAdmin
 
     public function registerTab($tabs)
     {
-        $tabs['data-subject'] = gdpr()->make(AdminTabDataSubject::class);
+        global $gdpr;
+
+        $tabs['data-subject'] = new AdminTabDataSubject($gdpr->DataSubject);
 
         return $tabs;
     }

@@ -7,24 +7,36 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The GDPR Framework 1.0\n"
 "Report-Msgid-Bugs-To: gdpr@codelight.eu\n"
-"POT-Creation-Date: 2021-10-28 11:20-0400\n"
-"PO-Revision-Date: 2021-10-28 11:47-0400\n"
+"POT-Creation-Date: 2022-04-18 11:06-0400\n"
+"PO-Revision-Date: 2022-04-18 11:20-0400\n"
 "Last-Translator: Zankov Group LTD. <office@zankov-group.com>\n"
 "Language-Team: \n"
 "Language: bg_BG\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: gdpr-framework.php:110
+#: gdpr-framework.php:111
+msgid "First Name"
+msgstr "Име"
+
+#: gdpr-framework.php:112
+msgid "Last Name"
+msgstr "Фамилия"
+
+#: gdpr-framework.php:113
+msgid "Email"
+msgstr "Имейл"
+
+#: gdpr-framework.php:140
 #, fuzzy
 msgctxt "(Admin)"
 msgid "WordPress GDPR &rsaquo; Error"
 msgstr "WordPress GDPR › Грешка"
 
-#: gdpr-framework.php:121
+#: gdpr-framework.php:151
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "You must be using PHP 5.6.33 or greater."
@@ -32,15 +44,12 @@ msgctxt "(Admin)"
 msgid "You must be using PHP 5.6.0 or greater."
 msgstr "Трябва да използвате PHP 5.6.33 или по-нова."
 
-#: gdpr-framework.php:122
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Invalid PHP version"
+#: gdpr-framework.php:152
 msgctxt "(Admin)"
 msgid "Invalid PHP version"
 msgstr "Невалидна версия на PHP"
 
-#: gdpr-framework.php:132
+#: gdpr-framework.php:162
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "You must be using WordPress 4.3.0 or greater."
@@ -48,7 +57,7 @@ msgctxt "(Admin)"
 msgid "You must be using WordPress 4.3.0 or greater."
 msgstr "Трябва да използвате WordPress 4.3.0 или по-нова."
 
-#: gdpr-framework.php:133
+#: gdpr-framework.php:163
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Invalid WordPress version"
@@ -56,34 +65,12 @@ msgctxt "(Admin)"
 msgid "Invalid WordPress version"
 msgstr "Невалидна версия на WordPress"
 
-#: gdpr-framework.php:204
+#: gdpr-framework.php:236
 msgctxt "(Admin)"
 msgid "Anonymous"
 msgstr "Анонимен"
 
-#: gdpr-helper-functions.php:75
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "You appear to be running a development version of GDPR. You must run "
-#| "<code>composer install</code> from the plugin directory."
-msgctxt "(Admin)"
-msgid ""
-"You appear to be running a development version of GDPR. You must run "
-"<code>composer install</code> from the plugin directory."
-msgstr ""
-"Изглежда, че използвате версия за разработка на GDPR. Трябва да стартирате "
-"<code> install композитор </ code> от директорията на добавката."
-
-#: gdpr-helper-functions.php:80
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Autoloader not found."
-msgctxt "(Admin)"
-msgid "Autoloader not found."
-msgstr "Autoloader не е намерен."
-
-#: gdpr-helper-functions.php:126
+#: gdpr-helper-functions.php:195
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website."
@@ -91,41 +78,38 @@ msgstr ""
 "Този уебсайт използва \"бисквитки\", за да гарантирате, че получавате най-"
 "доброто изживяване на нашия уебсайт."
 
-#: gdpr-helper-functions.php:139
+#: gdpr-helper-functions.php:208
 msgid "Decline"
 msgstr "упадък"
 
-#: gdpr-helper-functions.php:152
+#: gdpr-helper-functions.php:221
 msgid "Accept"
 msgstr "приемам"
 
-#: gdpr-helper-functions.php:165
+#: gdpr-helper-functions.php:234
 msgid "Learn more"
 msgstr "Научете повече"
 
-#: gdpr-helper-functions.php:220
+#: gdpr-helper-functions.php:289
 msgid "Cookie Policy"
 msgstr "Политика за „бисквитките“"
 
-#: gdpr-helper-functions.php:258
+#: gdpr-helper-functions.php:327
 msgid "Settings"
 msgstr "Настройки"
 
-#: gdpr-helper-functions.php:259
+#: gdpr-helper-functions.php:328
 #, fuzzy
 msgid "PREMIUM"
 msgstr "ПРЕМИЯ"
 
-#: src/Admin/AdminTab.php:195
+#: src/Admin/AdminTab.php:208
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:114
 msgctxt "(Admin)"
 msgid "Save"
 msgstr "Запази"
 
-#: src/Admin/AdminTab.php:231
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Policy generated!"
+#: src/Admin/AdminTab.php:244
 msgctxt "(Admin)"
 msgid "Policy generated!"
 msgstr "Политиката е генерирана!"
@@ -135,72 +119,57 @@ msgctxt "(Admin)"
 msgid "General"
 msgstr "Основни"
 
-#: src/Admin/AdminTabGeneral.php:55
+#: src/Admin/AdminTabGeneral.php:56
 msgctxt "(Admin)"
 msgid "General Settings"
 msgstr "Основни настройки"
 
-#: src/Admin/AdminTabGeneral.php:60
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable Privacy Tools"
+#: src/Admin/AdminTabGeneral.php:61
 msgctxt "(Admin)"
 msgid "Enable Privacy Tools"
 msgstr "Включи Политика за лични данни"
 
-#: src/Admin/AdminTabGeneral.php:67
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable Term and Conditions"
+#: src/Admin/AdminTabGeneral.php:68
 msgctxt "(Admin)"
 msgid "Enable Term and Conditions"
 msgstr "Активиране на термин и условия"
 
-#: src/Admin/AdminTabGeneral.php:74
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable Comment Checkbox"
+#: src/Admin/AdminTabGeneral.php:75
 msgctxt "(Admin)"
 msgid "Disable Comment Checkbox"
 msgstr "Деактивирайте квадратчето за отметки за коментарите"
 
-#: src/Admin/AdminTabGeneral.php:81
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable Register Form Checkbox"
+#: src/Admin/AdminTabGeneral.php:82
 msgctxt "(Admin)"
 msgid "Disable Register Form Checkbox"
 msgstr "Деактивиране на формуляр за регистрация на формуляр"
 
-#: src/Admin/AdminTabGeneral.php:91
+#: src/Admin/AdminTabGeneral.php:92
 msgctxt "(Admin)"
 msgid "Email Setting"
 msgstr "Настройка на имейл"
 
-#: src/Admin/AdminTabGeneral.php:96
+#: src/Admin/AdminTabGeneral.php:97
 msgctxt "(Admin)"
 msgid "From Name"
 msgstr "От имени"
 
-#: src/Admin/AdminTabGeneral.php:103
+#: src/Admin/AdminTabGeneral.php:104
 msgctxt "(Admin)"
 msgid "From Email"
 msgstr "От Емайл"
 
-#: src/Admin/AdminTabGeneral.php:112
+#: src/Admin/AdminTabGeneral.php:113
 msgctxt "(Admin)"
 msgid "Pages"
 msgstr "Страници"
 
-#: src/Admin/AdminTabGeneral.php:117 src/Admin/WordpressAdmin.php:166
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Privacy Tools Page"
+#: src/Admin/AdminTabGeneral.php:118 src/Admin/WordpressAdmin.php:166
 msgctxt "(Admin)"
 msgid "Privacy Tools Page"
 msgstr "Страница с инструменти "
 
-#: src/Admin/AdminTabGeneral.php:124
+#: src/Admin/AdminTabGeneral.php:125
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Privacy Policy Custom URL"
@@ -208,25 +177,22 @@ msgctxt "(Admin)"
 msgid "Privacy Tools Custom URL"
 msgstr "Политика за поверителност Потребителски URL"
 
-#: src/Admin/AdminTabGeneral.php:131 src/Admin/WordpressAdmin.php:162
+#: src/Admin/AdminTabGeneral.php:132 src/Admin/WordpressAdmin.php:162
 msgctxt "(Admin)"
 msgid "Privacy Policy Page"
 msgstr "Страница за поверителност"
 
-#: src/Admin/AdminTabGeneral.php:138
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Privacy Policy Custom URL"
+#: src/Admin/AdminTabGeneral.php:139
 msgctxt "(Admin)"
 msgid "Privacy Policy Custom URL"
 msgstr "Политика за поверителност Потребителски URL"
 
-#: src/Admin/AdminTabGeneral.php:145
+#: src/Admin/AdminTabGeneral.php:146
 msgctxt "(Admin)"
 msgid "Terms & Conditions Page"
 msgstr "Условията и Правила за ползване"
 
-#: src/Admin/AdminTabGeneral.php:152
+#: src/Admin/AdminTabGeneral.php:153
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Terms & Conditions Page"
@@ -234,169 +200,121 @@ msgctxt "(Admin)"
 msgid "Terms & Conditions Custom URL"
 msgstr "Страница за Общи условия"
 
-#: src/Admin/AdminTabGeneral.php:162
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "View & Export Data"
+#: src/Admin/AdminTabGeneral.php:163
 msgctxt "(Admin)"
 msgid "View & Export Data"
 msgstr "Преглед и Експортиране на данни"
 
-#: src/Admin/AdminTabGeneral.php:167
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Export action"
+#: src/Admin/AdminTabGeneral.php:168
 msgctxt "(Admin)"
 msgid "Export action"
 msgstr "Действие за експортиране"
 
-#: src/Admin/AdminTabGeneral.php:174 src/Admin/AdminTabGeneral.php:213
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Email to notify"
+#: src/Admin/AdminTabGeneral.php:175 src/Admin/AdminTabGeneral.php:221
 msgctxt "(Admin)"
 msgid "Email to notify"
 msgstr "Email за уведомяване"
 
-#: src/Admin/AdminTabGeneral.php:185
+#: src/Admin/AdminTabGeneral.php:183
 #, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete & Anonymize Data"
+msgctxt "(Admin)"
+msgid "Unknown Data Subject Message"
+msgstr "Съобщение за неизвестен субект на данни"
+
+#: src/Admin/AdminTabGeneral.php:193
 msgctxt "(Admin)"
 msgid "Delete & Anonymize Data"
 msgstr "Изтриване и Анонимни данни"
 
-#: src/Admin/AdminTabGeneral.php:190
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete action"
+#: src/Admin/AdminTabGeneral.php:198
 msgctxt "(Admin)"
 msgid "Delete action"
 msgstr "Действие при изтриване"
 
-#: src/Admin/AdminTabGeneral.php:197
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete or reassign content?"
+#: src/Admin/AdminTabGeneral.php:205
 msgctxt "(Admin)"
 msgid "Delete or reassign content?"
 msgstr "Да се ​​изтрие ли или да се присвои съдържание?"
 
-#: src/Admin/AdminTabGeneral.php:205
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Reassign content to"
+#: src/Admin/AdminTabGeneral.php:213
 msgctxt "(Admin)"
 msgid "Reassign content to"
 msgstr "Пренасочване на съдържание към"
 
-#: src/Admin/AdminTabGeneral.php:225
+#: src/Admin/AdminTabGeneral.php:233
 msgctxt "(Admin)"
 msgid "Styling"
 msgstr "Оформление"
 
-#: src/Admin/AdminTabGeneral.php:230
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable basic styling on Privacy Tools page"
+#: src/Admin/AdminTabGeneral.php:238
 msgctxt "(Admin)"
 msgid "Enable basic styling on Privacy Tools page"
 msgstr "Активирайте основния стил на страницата Инструменти за поверителност"
 
-#: src/Admin/AdminTabGeneral.php:242
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Compatibility"
+#: src/Admin/AdminTabGeneral.php:250
 msgctxt "(Admin)"
 msgid "Compatibility"
 msgstr "Съвместимост"
 
-#: src/Admin/AdminTabGeneral.php:247
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable automatic theme compatibility"
+#: src/Admin/AdminTabGeneral.php:255
 msgctxt "(Admin)"
 msgid "Enable automatic theme compatibility"
 msgstr "Активирайте автоматичната съвместимост на темите"
 
-#: src/Admin/AdminTabGeneral.php:259
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Woocommerce Integration"
+#: src/Admin/AdminTabGeneral.php:267
 msgctxt "(Admin)"
 msgid "Woocommerce Integration"
 msgstr "Интеграция с Woocommerce"
 
-#: src/Admin/AdminTabGeneral.php:264
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable WooCommerce Compatibility"
+#: src/Admin/AdminTabGeneral.php:272
 msgctxt "(Admin)"
 msgid "Enable WooCommerce Compatibility"
 msgstr "Активиране на съвместимостта на WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:271
+#: src/Admin/AdminTabGeneral.php:279
 #: views/admin/general/woo-disable_checkbox.php:10
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable WooCommerce Privacy Checkbox"
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Privacy Checkbox"
 msgstr "Деактивирайте квадратчето за поверителност на WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:278
+#: src/Admin/AdminTabGeneral.php:286
 #: views/admin/general/woo-disable_register_checkbox.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable WooCommerce Register Privacy Checkbox"
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Register Privacy Checkbox"
 msgstr ""
 "Деактивирайте полето за поверителност на регистъра за поверителност на "
 "WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:290
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Easy Digital Download Integration"
+#: src/Admin/AdminTabGeneral.php:298
 msgctxt "(Admin)"
 msgid "Easy Digital Download Integration"
 msgstr "Лесна интеграция с цифрово изтегляне"
 
-#: src/Admin/AdminTabGeneral.php:295
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable EDD Compatibility"
+#: src/Admin/AdminTabGeneral.php:303
 msgctxt "(Admin)"
 msgid "Enable EDD Compatibility"
 msgstr "Активиране на EDD съвместимостта"
 
-#: src/Admin/AdminTabGeneral.php:322
-#: src/Components/CookiePopup/AdminTabCookiePopup.php:181
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable Checkbox For Comments"
+#: src/Admin/AdminTabGeneral.php:333
+#: src/Components/CookiePopup/AdminTabCookiePopup.php:184
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Comments"
 msgstr "Забранете квадратчето за отметка за коментари"
 
-#: src/Admin/AdminTabGeneral.php:330
-#: src/Components/CookiePopup/AdminTabCookiePopup.php:188
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Disable Checkbox For Register Form"
+#: src/Admin/AdminTabGeneral.php:342
+#: src/Components/CookiePopup/AdminTabCookiePopup.php:192
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Register Form"
 msgstr "Деактивиране на квадратчето за регистрация"
 
-#: src/Admin/AdminTabGeneral.php:408 src/Admin/AdminTabGeneral.php:424
-#: src/Admin/AdminTabGeneral.php:449 src/Admin/AdminTabGeneral.php:506
+#: src/Admin/AdminTabGeneral.php:431 src/Admin/AdminTabGeneral.php:448
+#: src/Admin/AdminTabGeneral.php:476 src/Admin/AdminTabGeneral.php:552
 #: views/installer/steps/configuration-settings.php:62
 msgctxt "(Admin)"
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Изберете &mdash;"
 
-#: src/Admin/WordpressAdmin.php:68
+#: src/Admin/WordpressAdmin.php:65
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Privacy & GDPR Settings"
@@ -404,7 +322,7 @@ msgctxt "(Admin)"
 msgid "Privacy & GDPR Settings"
 msgstr "Настройки за поверителност и GDPR"
 
-#: src/Admin/WordpressAdmin.php:69 views/installer/welcome-notice.php:6
+#: src/Admin/WordpressAdmin.php:66 views/installer/welcome-notice.php:6
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Data443 GDPR"
@@ -437,19 +355,11 @@ msgid "Display Consent Calendar"
 msgstr "Показване на календара за съгласие"
 
 #: src/Components/Consent/AdminTabConsent.php:172
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Consent slug is a required field!"
 msgctxt "(Admin)"
 msgid "Consent slug is a required field!"
 msgstr "Консултантската слуз е задължително поле!"
 
 #: src/Components/Consent/AdminTabConsent.php:177
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "You may only use alphanumeric characters, dash and underscore in the "
-#| "consent slug field."
 msgctxt "(Admin)"
 msgid ""
 "You may only use alphanumeric characters, dash and underscore in the consent "
@@ -459,9 +369,6 @@ msgstr ""
 "полето за съгласие за складиране."
 
 #: src/Components/Consent/AdminTabConsent.php:182
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Consent title is a required field!"
 msgctxt "(Admin)"
 msgid "Consent title is a required field!"
 msgstr "Типовото съгласие е задължително поле!"
@@ -486,19 +393,15 @@ msgstr ""
 "за това колко месеца е дадено съгласието им за техните коментации и "
 "регистрация."
 
-#: src/Components/Consent/ConsentManager.php:53
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:144
+#: src/Components/Consent/ConsentManager.php:55
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:146
 #, php-format
 msgid "I accept the %sPrivacy Policy%s"
 msgstr "Приемам %sPrivacy Policy%s"
 
-#: src/Components/Consent/ConsentManager.php:57
-#: src/Components/Consent/ConsentManager.php:78
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This consent is not visible by default. If someone wishes to withdraw it, "
-#| "they should simply request to delete all their data."
+#: src/Components/Consent/ConsentManager.php:59
+#: src/Components/Consent/ConsentManager.php:103
+#: src/Components/Consent/ConsentManager.php:111
 msgctxt "(Admin)"
 msgid ""
 "This consent is not visible by default. If someone wishes to withdraw it, "
@@ -507,26 +410,45 @@ msgstr ""
 "Това съгласие не се вижда по подразбиране. Ако някой желае да го оттегли, "
 "той трябва просто да поиска да изтрие всичките си данни."
 
-#: src/Components/Consent/ConsentManager.php:74
+#: src/Components/Consent/ConsentManager.php:70
+#, fuzzy
+msgid "Do Not Sell My Data"
+msgstr "Не продавай моите данни"
+
+#: src/Components/Consent/ConsentManager.php:72
+#, fuzzy
+msgctxt "(Admin)"
+msgid "I do not consent to having my information sold by "
+msgstr "Не давам съгласие информацията ми да бъде продадена от "
+
+#: src/Components/Consent/ConsentManager.php:79
+#, fuzzy
+msgid "Receive Communications from "
+msgstr "Съгласен съм да получавам други съобщения от "
+
+#: src/Components/Consent/ConsentManager.php:81
+#, fuzzy
+msgctxt "(Admin)"
+msgid "I agree to receive other communications from "
+msgstr "Съгласен съм да получавам други съобщения от "
+
+#: src/Components/Consent/ConsentManager.php:99
 #, php-format
 msgid "I accept the %sTerms & Conditions%s"
 msgstr "Приемам %sTerms & Conditions%s"
 
-#: src/Components/Consent/ConsentManager.php:87
+#: src/Components/Consent/ConsentManager.php:110
 #, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Woocommerce Policy Consent"
+msgctxt "(Admin)"
+msgid "Site Cookie Consent"
+msgstr "Съгласие за бисквитки на сайта"
+
+#: src/Components/Consent/ConsentManager.php:120
 msgctxt "(Admin)"
 msgid "Woocommerce Policy Consent"
 msgstr "Съгласие за политиката на Woocommerce"
 
-#: src/Components/Consent/ConsentManager.php:88
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This consent is visible by default on woocommerce checkout page. If "
-#| "someone wishes to withdraw it, they should simply request to delete all "
-#| "their data."
+#: src/Components/Consent/ConsentManager.php:121
 msgctxt "(Admin)"
 msgid ""
 "This consent is visible by default on woocommerce checkout page. If someone "
@@ -536,7 +458,7 @@ msgstr ""
 "woocommerce. Ако някой желае да го оттегли, те трябва просто да поискат да "
 "изтрият всичките си данни."
 
-#: src/Components/Consent/ConsentManager.php:389
+#: src/Components/Consent/ConsentManager.php:404
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Company information"
@@ -544,35 +466,23 @@ msgid "Consent Information"
 msgstr "Информация за Фирмата"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:17
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Popup"
 msgctxt "(Admin)"
 msgid "Cookie Popup"
 msgstr "Изскачащ"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:44
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Popup Settings"
 msgctxt "(Admin)"
 msgid "Cookie Popup Settings"
 msgstr "Настройки на изскачащи прозорци"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:48
 #: views/admin/general/enable-popup.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable Cookie Acceptance Popup"
 msgctxt "(Admin)"
 msgid "Enable Cookie Acceptance Popup"
 msgstr "Активиране на изскачащия прозорец за приемане на \"бисквитките\""
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:54
 #: views/admin/general/enable-onetime-popup.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable One Time Cookie Acceptance Popup"
 msgctxt "(Admin)"
 msgid "Enable One Time Cookie Acceptance Popup"
 msgstr ""
@@ -580,121 +490,76 @@ msgstr ""
 "време"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:60
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable Privacy policy on Popup"
 msgctxt "(Admin)"
 msgid "Enable Privacy policy on Popup"
 msgstr "Активирайте правилата за поверителност в изскачащите прозорци"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:66
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Popup header"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Popup header"
 msgstr "Притурка за приемане на бисквитки"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:72
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Popup Content"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Popup Content"
 msgstr "Съдържание на изскачащи прозорци за приемане на бисквитки"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:81
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Acceptance Popup Setting"
 msgctxt "(Admin)"
 msgid "Acceptance Popup Setting"
 msgstr "Приемане на изскачащи настройки"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:86
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Popup Position"
 msgctxt "(Admin)"
 msgid "Popup Position"
 msgstr "Изскачаща позиция"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:93
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Popup theme"
 msgctxt "(Admin)"
 msgid "Popup theme"
 msgstr "Изскачаща тема"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:100
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Popup Allow Text"
 msgctxt "(Admin)"
 msgid "Popup Allow Text"
 msgstr "Изскачащ Allow Text"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:107
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Popup Dismiss Text"
 msgctxt "(Admin)"
 msgid "Popup Dismiss Text"
 msgstr "Изскачащ отказ от текст"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:114
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Popup Learn More Text"
 msgctxt "(Admin)"
 msgid "Popup Learn More Text"
 msgstr "Изскачане Научете повече текст"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:121
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance link target"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance link target"
 msgstr "Цел на връзката Приемане на бисквитки"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:128
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Background Color"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Background Color"
 msgstr "Бял цвят на фоновото приемане на бисквитките"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:135
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Text Color"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Text Color"
 msgstr "Цвят на текста за приемане на бисквитките"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:142
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Button Backgroung Color"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Button Backgroung Color"
 msgstr "Бутон за приемане на бисквитките"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:149
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Button Color"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Button Color"
 msgstr "Цвят на бутона за приемане на бисквитките"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:156
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Cookie Acceptance Border Color"
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Border Color"
 msgstr "Цвят на границата на приемане на бисквитките"
@@ -749,15 +614,12 @@ msgid "Privacy Policy"
 msgstr "Политика за Лични данни"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:71
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Company information"
 msgctxt "(Admin)"
 msgid "Company information"
 msgstr "Информация за Фирмата"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:76
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:223
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:224
 msgctxt "(Admin)"
 msgid "Company Name"
 msgstr "Име на фирма"
@@ -768,15 +630,12 @@ msgid "Company Email"
 msgstr "Имейл на фирмата"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:91
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Company Location"
 msgctxt "(Admin)"
 msgid "Company Location"
 msgstr "Местоположение на Фирмата"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:107
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:259
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:263
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Representative Contact Name"
@@ -785,7 +644,7 @@ msgid "Representative Contact Name"
 msgstr "Представително име за контакт"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:114
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:266
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:271
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Representative Contact Email"
@@ -794,7 +653,7 @@ msgid "Representative Contact Email"
 msgstr "Представителни имейл за контакт"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:121
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:273
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:279
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Representative Contact Phone"
@@ -811,7 +670,7 @@ msgid "Data Protection Authority"
 msgstr "Орган за защита на данните"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:143
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:302
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:309
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Data Protection Authority Website"
@@ -820,7 +679,7 @@ msgid "Data Protection Authority Website"
 msgstr "Уебсайт на Органа за защита на данните"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:150
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:309
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:317
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Data Protection Authority Email"
@@ -829,7 +688,7 @@ msgid "Data Protection Authority Email"
 msgstr "Имейл за защитата на данни"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:157
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:316
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:325
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Data Protection Authority Phone"
@@ -871,20 +730,17 @@ msgid "Data Protection Officer Email"
 msgstr "Email на Служителя по защита на данните"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:204
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:347
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete Text"
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:360
 msgctxt "(Admin)"
 msgid "Delete Text"
 msgstr "Изтриване на текст"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:230
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:232
 msgctxt "(Admin)"
 msgid "Contact Email"
 msgstr "Имейл за контакт"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:249
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:252
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Representative Contact"
@@ -892,7 +748,7 @@ msgctxt "(Admin)"
 msgid "Representative Contact"
 msgstr "Представителен контакти"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:252
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:255
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Knowledge base: Do I need to appoint an EU-based representative?"
@@ -900,13 +756,13 @@ msgctxt "(Admin)"
 msgid "Knowledge base: Do I need to appoint an EU-based representative?"
 msgstr "База знания: Трябва ли да назнача представител на ЕС?"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:289
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:295
 #, fuzzy, php-format
 msgctxt "(Admin)"
 msgid "See the %slist of contacts here%s."
 msgstr "Вижте %s списък с контакти тук%s."
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:333
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:344
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "DPO Name"
@@ -914,7 +770,7 @@ msgctxt "(Admin)"
 msgid "DPO Name"
 msgstr "ДПО Име"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:340
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:352
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "From Email"
@@ -922,16 +778,13 @@ msgctxt "(Admin)"
 msgid "DPO Email"
 msgstr "От имейл"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:422
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Save & Generate Policy"
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:436
 msgctxt "(Admin)"
 msgid "Save & Generate Policy"
 msgstr "Запазване и генериране на правила"
 
-#: src/Components/PrivacyPolicy/PrivacyPolicy.php:81
-#: src/Installer/Installer.php:309 src/Installer/Steps/PolicySettings.php:210
+#: src/Components/PrivacyPolicy/PrivacyPolicy.php:86
+#: src/Installer/Installer.php:316 src/Installer/Steps/PolicySettings.php:214
 #: views/themes/storefront/footer.php:3
 #: views/themes/twentyseventeen/footer.php:3
 #: views/themes/twentysixteen/footer.php:4
@@ -1025,22 +878,22 @@ msgstr ""
 "Вградете предоставения кратък код, за да покажете безопасното си уплътнение "
 "за поверителност."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:22
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:55
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:23
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:57
 msgid "This page is currently disabled."
 msgstr "Тази страница не е активна."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:26
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:59
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:27
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:61
 #, fuzzy
 msgid "Please configure the Privacy Tools page in the admin interface."
 msgstr ""
 "Моля, конфигурирайте страницата Инструменти за поверителност в "
 "администраторски интерфейс."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:42
-#: src/Installer/Installer.php:318
-#: src/Installer/Steps/ConfigurationPages.php:65
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:43
+#: src/Installer/Installer.php:325
+#: src/Installer/Steps/ConfigurationPages.php:67
 #: views/themes/storefront/footer.php:7
 #: views/themes/twentyseventeen/footer.php:7
 #: views/themes/twentysixteen/footer.php:9
@@ -1054,21 +907,21 @@ msgid "Support"
 msgstr "Поддръжка"
 
 #: src/Components/WordpressUser/Controllers/DashboardDataPageController.php:54
-#: views/privacy-tools/notices.php:19
+#: views/privacy-tools/notices.php:20
 msgid "We have received your request and will reply within 30 days."
 msgstr "Получихме Вашето искане и ще отговорим в рамките на 30 дни."
 
 #: src/Components/WordpressUser/Controllers/DashboardDataPageController.php:59
-#: views/privacy-tools/notices.php:15
+#: views/privacy-tools/notices.php:16
 msgid "Consent withdrawn."
 msgstr "Съгласието е оттеглено."
 
-#: src/Components/WordpressUser/RegistrationForm.php:56
+#: src/Components/WordpressUser/RegistrationForm.php:58
 msgid "<strong>ERROR</strong>: You must accept the terms and conditions."
 msgstr "<strong>ERROR</strong>: Трябва да приемете Общите условия."
 
-#: src/Components/WordpressUser/WordpressUser.php:63
 #: src/Components/WordpressUser/WordpressUser.php:64
+#: src/Components/WordpressUser/WordpressUser.php:65
 #: views/modules/wordpress-user/dashboard/data-page/header.php:2
 msgctxt "(Admin)"
 msgid "Privacy Tools"
@@ -1076,26 +929,23 @@ msgstr "Управление на Лични данни"
 
 #: src/DataSubject/AdminTabDataSubject.php:27
 #: src/DataSubject/AdminTabDataSubject.php:41
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Data Subjects"
 msgctxt "(Admin)"
 msgid "Data Subjects"
 msgstr "Субекти на данни"
 
-#: src/DataSubject/DataRepository.php:143
+#: src/DataSubject/DataRepository.php:146
 msgid "Data exported"
 msgstr "Данните са Експортирани"
 
-#: src/DataSubject/DataRepository.php:158
+#: src/DataSubject/DataRepository.php:162
 msgid "Data export request"
 msgstr "Заявка за Експорт на данни"
 
-#: src/DataSubject/DataRepository.php:171
+#: src/DataSubject/DataRepository.php:176
 msgid "Data removed"
 msgstr "Данните са премахнати"
 
-#: src/DataSubject/DataRepository.php:186
+#: src/DataSubject/DataRepository.php:192
 msgid "Data removal request"
 msgstr "Заявка за премахване на Данни"
 
@@ -1104,1427 +954,1420 @@ msgstr "Заявка за премахване на Данни"
 msgid "Your personal data on"
 msgstr "Вашите лични данни за"
 
-#: src/Helpers.php:27
+#: src/Helpers.php:28
 msgctxt "(Admin)"
 msgid "Austria"
 msgstr "Австрия"
 
-#: src/Helpers.php:28
+#: src/Helpers.php:29
 msgctxt "(Admin)"
 msgid "Belgium"
 msgstr "Белгия"
 
-#: src/Helpers.php:29
+#: src/Helpers.php:30
 msgctxt "(Admin)"
 msgid "Bulgaria"
 msgstr "България"
 
-#: src/Helpers.php:30
+#: src/Helpers.php:31
 msgctxt "(Admin)"
 msgid "Croatia"
 msgstr "Хърватия"
 
-#: src/Helpers.php:31
+#: src/Helpers.php:32
 msgctxt "(Admin)"
 msgid "Cyprus"
 msgstr "Кипър"
 
-#: src/Helpers.php:32
+#: src/Helpers.php:33
 msgctxt "(Admin)"
 msgid "Czech Republic"
 msgstr "Чешка република"
 
-#: src/Helpers.php:33
+#: src/Helpers.php:34
 msgctxt "(Admin)"
 msgid "Denmark"
 msgstr "Дания"
 
-#: src/Helpers.php:34
+#: src/Helpers.php:35
 msgctxt "(Admin)"
 msgid "Estonia"
 msgstr "Естония"
 
-#: src/Helpers.php:35
+#: src/Helpers.php:36
 msgctxt "(Admin)"
 msgid "Finland"
 msgstr "Финландия"
 
-#: src/Helpers.php:36
+#: src/Helpers.php:37
 msgctxt "(Admin)"
 msgid "France"
 msgstr "Франция"
 
-#: src/Helpers.php:37
+#: src/Helpers.php:38
 msgctxt "(Admin)"
 msgid "Germany"
 msgstr "Германия"
 
-#: src/Helpers.php:38
+#: src/Helpers.php:39
 msgctxt "(Admin)"
 msgid "Greece"
 msgstr "Гърция"
 
-#: src/Helpers.php:39
+#: src/Helpers.php:40
 msgctxt "(Admin)"
 msgid "Hungary"
 msgstr "Унгария"
 
-#: src/Helpers.php:40
+#: src/Helpers.php:41
 msgctxt "(Admin)"
 msgid "Ireland"
 msgstr "Ирландия"
 
-#: src/Helpers.php:41
+#: src/Helpers.php:42
 msgctxt "(Admin)"
 msgid "Italy"
 msgstr "Италия"
 
-#: src/Helpers.php:42
+#: src/Helpers.php:43
 msgctxt "(Admin)"
 msgid "Latvia"
 msgstr "Латвия"
 
-#: src/Helpers.php:43
+#: src/Helpers.php:44
 msgctxt "(Admin)"
 msgid "Lithuania"
 msgstr "Литва"
 
-#: src/Helpers.php:44
+#: src/Helpers.php:45
 msgctxt "(Admin)"
 msgid "Luxembourg"
 msgstr "Люксембург"
 
-#: src/Helpers.php:45
+#: src/Helpers.php:46
 msgctxt "(Admin)"
 msgid "Malta"
 msgstr "Малта"
 
-#: src/Helpers.php:46
+#: src/Helpers.php:47
 msgctxt "(Admin)"
 msgid "Netherlands"
 msgstr "Холандия"
 
-#: src/Helpers.php:47
+#: src/Helpers.php:48
 msgctxt "(Admin)"
 msgid "Poland"
 msgstr "Полша"
 
-#: src/Helpers.php:48
+#: src/Helpers.php:49
 msgctxt "(Admin)"
 msgid "Portugal"
 msgstr "Португалия"
 
-#: src/Helpers.php:49
+#: src/Helpers.php:50
 msgctxt "(Admin)"
 msgid "Romania"
 msgstr "Румъния"
 
-#: src/Helpers.php:50
+#: src/Helpers.php:51
 msgctxt "(Admin)"
 msgid "Slovakia"
 msgstr "Словакия"
 
-#: src/Helpers.php:51
+#: src/Helpers.php:52
 msgctxt "(Admin)"
 msgid "Slovenia"
 msgstr "Словения"
 
-#: src/Helpers.php:52
+#: src/Helpers.php:53
 msgctxt "(Admin)"
 msgid "Spain"
 msgstr "Испания"
 
-#: src/Helpers.php:53
+#: src/Helpers.php:54
 msgctxt "(Admin)"
 msgid "Sweden"
 msgstr "Швеция"
 
-#: src/Helpers.php:54
+#: src/Helpers.php:55
 msgctxt "(Admin)"
 msgid "United Kingdom"
 msgstr "Обединеното Kралство"
 
-#: src/Helpers.php:56
+#: src/Helpers.php:57
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Afghanistan "
 msgstr "Афганистан "
 
-#: src/Helpers.php:57
+#: src/Helpers.php:58
 msgctxt "(Admin)"
 msgid "Åland Islands"
 msgstr "Аландските острови"
 
-#: src/Helpers.php:58
+#: src/Helpers.php:59
 msgctxt "(Admin)"
 msgid "Albania"
 msgstr "Албания"
 
-#: src/Helpers.php:59
+#: src/Helpers.php:60
 msgctxt "(Admin)"
 msgid "Algeria"
 msgstr "Алжир"
 
-#: src/Helpers.php:60
+#: src/Helpers.php:61
 #, fuzzy
 msgctxt "(Admin)"
 msgid "American Samoa  "
 msgstr "Американска Самоа  "
 
-#: src/Helpers.php:61
+#: src/Helpers.php:62
 msgctxt "(Admin)"
 msgid "Andorra"
 msgstr "Андора"
 
-#: src/Helpers.php:62
+#: src/Helpers.php:63
 msgctxt "(Admin)"
 msgid "Angola"
 msgstr "Ангола"
 
-#: src/Helpers.php:63
+#: src/Helpers.php:64
 msgctxt "(Admin)"
 msgid "Anguilla"
 msgstr "Ангуила"
 
-#: src/Helpers.php:64
+#: src/Helpers.php:65
 msgctxt "(Admin)"
 msgid "Antarctica"
 msgstr "Антарктика"
 
-#: src/Helpers.php:65
+#: src/Helpers.php:66
 msgctxt "(Admin)"
 msgid "Antigua and Barbuda"
 msgstr "Антигуа и Барбуда"
 
-#: src/Helpers.php:66
+#: src/Helpers.php:67
 msgctxt "(Admin)"
 msgid "Argentina"
 msgstr "Аржентина"
 
-#: src/Helpers.php:67
+#: src/Helpers.php:68
 msgctxt "(Admin)"
 msgid "Armenia"
 msgstr "Армения"
 
-#: src/Helpers.php:68
+#: src/Helpers.php:69
 msgctxt "(Admin)"
 msgid "Aruba"
 msgstr "Аруба"
 
-#: src/Helpers.php:69
+#: src/Helpers.php:70
 msgctxt "(Admin)"
 msgid "Australia"
 msgstr "Австралия"
 
-#: src/Helpers.php:70
+#: src/Helpers.php:71
 msgctxt "(Admin)"
 msgid "Azerbaijan"
 msgstr "Азербайджан"
 
-#: src/Helpers.php:71
+#: src/Helpers.php:72
 msgctxt "(Admin)"
 msgid "Bahrain"
 msgstr "Бахрейн"
 
-#: src/Helpers.php:72
+#: src/Helpers.php:73
 msgctxt "(Admin)"
 msgid "Bahamas"
 msgstr "Бахами"
 
-#: src/Helpers.php:73
+#: src/Helpers.php:74
 msgctxt "(Admin)"
 msgid "Bangladesh"
 msgstr "Бангладеш"
 
-#: src/Helpers.php:74
+#: src/Helpers.php:75
 msgctxt "(Admin)"
 msgid "Barbados"
 msgstr "Барбадос"
 
-#: src/Helpers.php:75
+#: src/Helpers.php:76
 msgctxt "(Admin)"
 msgid "Belarus"
 msgstr "Беларус"
 
-#: src/Helpers.php:76
+#: src/Helpers.php:77
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Belize"
 msgstr "Белийз"
 
-#: src/Helpers.php:77
+#: src/Helpers.php:78
 msgctxt "(Admin)"
 msgid "Benin"
 msgstr "Бенин"
 
-#: src/Helpers.php:78
+#: src/Helpers.php:79
 msgctxt "(Admin)"
 msgid "Bermuda"
 msgstr "Бермудски острови"
 
-#: src/Helpers.php:79
+#: src/Helpers.php:80
 msgctxt "(Admin)"
 msgid "Bhutan"
 msgstr "Бутан"
 
-#: src/Helpers.php:80
+#: src/Helpers.php:81
 msgctxt "(Admin)"
 msgid "Bolivia, Plurinational State of"
 msgstr "Боливия"
 
-#: src/Helpers.php:81
+#: src/Helpers.php:82
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Bonaire, Sint Eustatius and Saba"
 msgstr "Бонер, Синт Еустатиус и Саба"
 
-#: src/Helpers.php:82
+#: src/Helpers.php:83
 msgctxt "(Admin)"
 msgid "Bosnia and Herzegovina"
 msgstr "Босна и Херцеговина"
 
-#: src/Helpers.php:83
+#: src/Helpers.php:84
 msgctxt "(Admin)"
 msgid "Botswana"
 msgstr "Ботсуана"
 
-#: src/Helpers.php:84
+#: src/Helpers.php:85
 msgctxt "(Admin)"
 msgid "Bouvet Island"
 msgstr "Остров Буве"
 
-#: src/Helpers.php:85
+#: src/Helpers.php:86
 msgctxt "(Admin)"
 msgid "Brazil"
 msgstr "Бразилия"
 
-#: src/Helpers.php:86
+#: src/Helpers.php:87
 msgctxt "(Admin)"
 msgid "British Indian Ocean Territory"
 msgstr "Британска територия в Индийския океан"
 
-#: src/Helpers.php:87
+#: src/Helpers.php:88
 msgctxt "(Admin)"
 msgid "Brunei Darussalam"
 msgstr "Бруней Даруссалам"
 
-#: src/Helpers.php:88
+#: src/Helpers.php:89
 msgctxt "(Admin)"
 msgid "Burkina Faso"
 msgstr "Буркина Фасо"
 
-#: src/Helpers.php:89
+#: src/Helpers.php:90
 msgctxt "(Admin)"
 msgid "Burundi"
 msgstr "Бурунди"
 
-#: src/Helpers.php:90
+#: src/Helpers.php:91
 msgctxt "(Admin)"
 msgid "Cambodia"
 msgstr "Камбоджа"
 
-#: src/Helpers.php:91
+#: src/Helpers.php:92
 msgctxt "(Admin)"
 msgid "Cameroon"
 msgstr "Камерун"
 
-#: src/Helpers.php:92
+#: src/Helpers.php:93
 msgctxt "(Admin)"
 msgid "Canada"
 msgstr "Канада"
 
-#: src/Helpers.php:93
+#: src/Helpers.php:94
 msgctxt "(Admin)"
 msgid "Cape Verde"
 msgstr "Кабо Верде"
 
-#: src/Helpers.php:94
+#: src/Helpers.php:95
 msgctxt "(Admin)"
 msgid "Cayman Islands"
 msgstr "Кайманови острови"
 
-#: src/Helpers.php:95
+#: src/Helpers.php:96
 msgctxt "(Admin)"
 msgid "Central African Republic"
 msgstr "Централна Африканска република"
 
-#: src/Helpers.php:96
+#: src/Helpers.php:97
 msgctxt "(Admin)"
 msgid "Chad"
 msgstr "Чад"
 
-#: src/Helpers.php:97
+#: src/Helpers.php:98
 msgctxt "(Admin)"
 msgid "Chile"
 msgstr "Чили"
 
-#: src/Helpers.php:98
+#: src/Helpers.php:99
 msgctxt "(Admin)"
 msgid "China"
 msgstr "Китай"
 
-#: src/Helpers.php:99
+#: src/Helpers.php:100
 msgctxt "(Admin)"
 msgid "Christmas Island"
 msgstr "Коледни острови"
 
-#: src/Helpers.php:100
+#: src/Helpers.php:101
 msgctxt "(Admin)"
 msgid "Cocos (Keeling) Islands"
 msgstr "Кокосови (Кийлинг) острови"
 
-#: src/Helpers.php:101
+#: src/Helpers.php:102
 msgctxt "(Admin)"
 msgid "Colombia"
 msgstr "Колумбия"
 
-#: src/Helpers.php:102
+#: src/Helpers.php:103
 msgctxt "(Admin)"
 msgid "Comoros"
 msgstr "Коморски острови"
 
-#: src/Helpers.php:103
+#: src/Helpers.php:104
 msgctxt "(Admin)"
 msgid "Congo"
 msgstr "Конго"
 
-#: src/Helpers.php:104
+#: src/Helpers.php:105
 msgctxt "(Admin)"
 msgid "Congo, the Democratic Republic of the"
 msgstr "Демократична република Конго"
 
-#: src/Helpers.php:105
+#: src/Helpers.php:106
 msgctxt "(Admin)"
 msgid "Cook Islands"
 msgstr "Острови Кук"
 
-#: src/Helpers.php:106
+#: src/Helpers.php:107
 msgctxt "(Admin)"
 msgid "Costa Rica"
 msgstr "Коста Рика"
 
-#: src/Helpers.php:107
+#: src/Helpers.php:108
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Côte dIvoire"
 msgstr "Кот дВоар"
 
-#: src/Helpers.php:108
+#: src/Helpers.php:109
 msgctxt "(Admin)"
 msgid "Cuba"
 msgstr "Куба"
 
-#: src/Helpers.php:109
+#: src/Helpers.php:110
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Curaçao"
 msgstr "Кюрасао"
 
-#: src/Helpers.php:110
+#: src/Helpers.php:111
 msgctxt "(Admin)"
 msgid "Djibouti"
 msgstr "Джибути"
 
-#: src/Helpers.php:111
+#: src/Helpers.php:112
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Dominica"
 msgstr "Доминиканa"
 
-#: src/Helpers.php:112
+#: src/Helpers.php:113
 msgctxt "(Admin)"
 msgid "Dominican Republic"
 msgstr "Доминиканска Република"
 
-#: src/Helpers.php:113
+#: src/Helpers.php:114
 msgctxt "(Admin)"
 msgid "Ecuador"
 msgstr "Еквадор"
 
-#: src/Helpers.php:114
+#: src/Helpers.php:115
 msgctxt "(Admin)"
 msgid "Egypt"
 msgstr "Египет"
 
-#: src/Helpers.php:115
+#: src/Helpers.php:116
 msgctxt "(Admin)"
 msgid "El Salvador"
 msgstr "Ел Салвадор"
 
-#: src/Helpers.php:116
+#: src/Helpers.php:117
 msgctxt "(Admin)"
 msgid "Equatorial Guinea"
 msgstr "Екваториална Гвинея"
 
-#: src/Helpers.php:117
+#: src/Helpers.php:118
 msgctxt "(Admin)"
 msgid "Eritrea"
 msgstr "Еритрея"
 
-#: src/Helpers.php:118
+#: src/Helpers.php:119
 msgctxt "(Admin)"
 msgid "Ethiopia"
 msgstr "Етиопия"
 
-#: src/Helpers.php:119
+#: src/Helpers.php:120
 msgctxt "(Admin)"
 msgid "Falkland Islands (Malvinas)"
 msgstr "Фолкландски о-ви (Малвински)"
 
-#: src/Helpers.php:120
+#: src/Helpers.php:121
 msgctxt "(Admin)"
 msgid "Faroe Islands"
 msgstr "Фарьорските острови"
 
-#: src/Helpers.php:121
+#: src/Helpers.php:122
 msgctxt "(Admin)"
 msgid "Fiji"
 msgstr "Фиджи"
 
-#: src/Helpers.php:122
+#: src/Helpers.php:123
 msgctxt "(Admin)"
 msgid "French Guiana"
 msgstr "Френска Гвиана"
 
-#: src/Helpers.php:123
+#: src/Helpers.php:124
 msgctxt "(Admin)"
 msgid "French Polynesia"
 msgstr "Френска Полинезия"
 
-#: src/Helpers.php:124
+#: src/Helpers.php:125
 msgctxt "(Admin)"
 msgid "French Southern Territories"
 msgstr "Френски Южни Територии"
 
-#: src/Helpers.php:125
+#: src/Helpers.php:126
 msgctxt "(Admin)"
 msgid "Gabon"
 msgstr "Габон"
 
-#: src/Helpers.php:126
+#: src/Helpers.php:127
 msgctxt "(Admin)"
 msgid "Gambia"
 msgstr "Гамбия"
 
-#: src/Helpers.php:127
+#: src/Helpers.php:128
 msgctxt "(Admin)"
 msgid "Georgia"
 msgstr "Джорджия"
 
-#: src/Helpers.php:128
+#: src/Helpers.php:129
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Georgia "
 msgstr "Грузия "
 
-#: src/Helpers.php:129
+#: src/Helpers.php:130
 msgctxt "(Admin)"
 msgid "Ghana"
 msgstr "Гана"
 
-#: src/Helpers.php:130
+#: src/Helpers.php:131
 msgctxt "(Admin)"
 msgid "Gibraltar"
 msgstr "Гибралтар"
 
-#: src/Helpers.php:131
+#: src/Helpers.php:132
 msgctxt "(Admin)"
 msgid "Greenland"
 msgstr "Гренландия"
 
-#: src/Helpers.php:132
+#: src/Helpers.php:133
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Grenada "
 msgstr "Гренада "
 
-#: src/Helpers.php:133
+#: src/Helpers.php:134
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guadeloupe  "
 msgstr "Гваделупа  "
 
-#: src/Helpers.php:134
+#: src/Helpers.php:135
 msgctxt "(Admin)"
 msgid "Guam"
 msgstr "Гуам"
 
-#: src/Helpers.php:135
+#: src/Helpers.php:136
 msgctxt "(Admin)"
 msgid "Guatemala"
 msgstr "Гватемала"
 
-#: src/Helpers.php:136
+#: src/Helpers.php:137
 msgctxt "(Admin)"
 msgid "Guernsey"
 msgstr "Гърнзи"
 
-#: src/Helpers.php:137
+#: src/Helpers.php:138
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea  "
 msgstr "Гвинея  "
 
-#: src/Helpers.php:138
+#: src/Helpers.php:139
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea-Bissau   "
 msgstr "Гвинея-Бисау   "
 
-#: src/Helpers.php:139
+#: src/Helpers.php:140
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guyana  "
 msgstr "Гвиана  "
 
-#: src/Helpers.php:140
+#: src/Helpers.php:141
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Haiti   "
 msgstr "Хаити   "
 
-#: src/Helpers.php:141
+#: src/Helpers.php:142
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Heard Island and McDonald Islands   "
 msgstr "Острови Хърд и Макдоналд   "
 
-#: src/Helpers.php:142
+#: src/Helpers.php:143
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Holy See (Vatican City State)   "
 msgstr "Свети Зее (щат Ватикана)   "
 
-#: src/Helpers.php:143
+#: src/Helpers.php:144
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Honduras    "
 msgstr "Хондурас    "
 
-#: src/Helpers.php:144
+#: src/Helpers.php:145
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Hong Kong   "
 msgstr "Хонконг   "
 
-#: src/Helpers.php:145
+#: src/Helpers.php:146
 #, fuzzy
 msgctxt "(Admin)"
 msgid "India   "
 msgstr "Индия   "
 
-#: src/Helpers.php:146
+#: src/Helpers.php:147
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Indonesia   "
 msgstr "Индонезия   "
 
-#: src/Helpers.php:147
+#: src/Helpers.php:148
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Iran, Islamic Republic of   "
 msgstr "Иран, Ислямска република   "
 
-#: src/Helpers.php:148
+#: src/Helpers.php:149
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Iraq    "
 msgstr "Ирак    "
 
-#: src/Helpers.php:149
+#: src/Helpers.php:150
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Isle of Man "
 msgstr "Манския о-в "
 
-#: src/Helpers.php:150
+#: src/Helpers.php:151
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Israel  "
 msgstr "Израел  "
 
-#: src/Helpers.php:151
+#: src/Helpers.php:152
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jamaica "
 msgstr "Ямайка "
 
-#: src/Helpers.php:152
+#: src/Helpers.php:153
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Japan   "
 msgstr "Япония   "
 
-#: src/Helpers.php:153
+#: src/Helpers.php:154
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jersey  "
 msgstr "Джърси  "
 
-#: src/Helpers.php:154
+#: src/Helpers.php:155
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jordan  "
 msgstr "Йордания  "
 
-#: src/Helpers.php:155
+#: src/Helpers.php:156
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kazakhstan  "
 msgstr "Казахстан  "
 
-#: src/Helpers.php:156
+#: src/Helpers.php:157
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kenya   "
 msgstr "Кения   "
 
-#: src/Helpers.php:157
+#: src/Helpers.php:158
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kiribati    "
 msgstr "Кирибати    "
 
-#: src/Helpers.php:158
+#: src/Helpers.php:159
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Democratic Peoples Republic of   "
 msgstr "Корея, Република демократични народи   "
 
-#: src/Helpers.php:159
+#: src/Helpers.php:160
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Republic of  "
 msgstr "Корея, Република  "
 
-#: src/Helpers.php:160
+#: src/Helpers.php:161
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kuwait  "
 msgstr "Кувейт  "
 
-#: src/Helpers.php:161
+#: src/Helpers.php:162
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kyrgyzstan  "
 msgstr "Киргизстан  "
 
-#: src/Helpers.php:162
+#: src/Helpers.php:163
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lao Peoples Democratic Republic "
 msgstr "Лао народи Демократична република "
 
-#: src/Helpers.php:163
+#: src/Helpers.php:164
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lebanon "
 msgstr "Ливан "
 
-#: src/Helpers.php:164
+#: src/Helpers.php:165
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lesotho "
 msgstr "Лесото "
 
-#: src/Helpers.php:165
+#: src/Helpers.php:166
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Liberia "
 msgstr "Либерия "
 
-#: src/Helpers.php:166
+#: src/Helpers.php:167
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Libya   "
 msgstr "Либия   "
 
-#: src/Helpers.php:167
+#: src/Helpers.php:168
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Macao   "
 msgstr "Макао   "
 
-#: src/Helpers.php:168
+#: src/Helpers.php:169
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Macedonia, the Former Yugoslav Republic of  "
 msgstr "Македония, Бивша югославска република  "
 
-#: src/Helpers.php:169
+#: src/Helpers.php:170
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Madagascar  "
 msgstr "Мадагаскар  "
 
-#: src/Helpers.php:170
+#: src/Helpers.php:171
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Malawi  "
 msgstr "Малави  "
 
-#: src/Helpers.php:171
+#: src/Helpers.php:172
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Malaysia    "
 msgstr "Малайзия    "
 
-#: src/Helpers.php:172
+#: src/Helpers.php:173
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Maldives    "
 msgstr "Малдиви    "
 
-#: src/Helpers.php:173
+#: src/Helpers.php:174
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mali    "
 msgstr "Мали    "
 
-#: src/Helpers.php:174
+#: src/Helpers.php:175
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Marshall Islands    "
 msgstr "Маршалови острови    "
 
-#: src/Helpers.php:175
+#: src/Helpers.php:176
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Martinique  "
 msgstr "Мартиника  "
 
-#: src/Helpers.php:176
+#: src/Helpers.php:177
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritania  "
 msgstr "Мавритания  "
 
-#: src/Helpers.php:177
+#: src/Helpers.php:178
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritius   "
 msgstr "Мавриций   "
 
-#: src/Helpers.php:178
+#: src/Helpers.php:179
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mayotte "
 msgstr "Майот "
 
-#: src/Helpers.php:179
+#: src/Helpers.php:180
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mexico  "
 msgstr "Мексико  "
 
-#: src/Helpers.php:180
+#: src/Helpers.php:181
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Micronesia, Federated States of "
 msgstr "Микронезия, Федерирани щати на "
 
-#: src/Helpers.php:181
+#: src/Helpers.php:182
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Moldova, Republic of    "
 msgstr "Молдова, Република    "
 
-#: src/Helpers.php:182
+#: src/Helpers.php:183
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Monaco  "
 msgstr "Монако  "
 
-#: src/Helpers.php:183
+#: src/Helpers.php:184
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mongolia    "
 msgstr "Монголия    "
 
-#: src/Helpers.php:184
+#: src/Helpers.php:185
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Montenegro  "
 msgstr "Черна гора  "
 
-#: src/Helpers.php:185
+#: src/Helpers.php:186
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Montserrat  "
 msgstr "Монсерат  "
 
-#: src/Helpers.php:186
+#: src/Helpers.php:187
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Morocco "
 msgstr "Мароко "
 
-#: src/Helpers.php:187
+#: src/Helpers.php:188
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mozambique  "
 msgstr "Мозамбик  "
 
-#: src/Helpers.php:188
+#: src/Helpers.php:189
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Myanmar "
 msgstr "Мианмар "
 
-#: src/Helpers.php:189
+#: src/Helpers.php:190
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Namibia "
 msgstr "Намибия "
 
-#: src/Helpers.php:190
+#: src/Helpers.php:191
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nauru   "
 msgstr "Науру   "
 
-#: src/Helpers.php:191
+#: src/Helpers.php:192
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nepal   "
 msgstr "Непал   "
 
-#: src/Helpers.php:192
+#: src/Helpers.php:193
 #, fuzzy
 msgctxt "(Admin)"
 msgid "New Caledonia   "
 msgstr "Нова Каледония   "
 
-#: src/Helpers.php:193
+#: src/Helpers.php:194
 #, fuzzy
 msgctxt "(Admin)"
 msgid "New Zealand "
 msgstr "Нова Зеландия "
 
-#: src/Helpers.php:194
+#: src/Helpers.php:195
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nicaragua   "
 msgstr "Никарагуа   "
 
-#: src/Helpers.php:195
+#: src/Helpers.php:196
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Niger   "
 msgstr "Нигер   "
 
-#: src/Helpers.php:196
+#: src/Helpers.php:197
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nigeria "
 msgstr "Нигерия "
 
-#: src/Helpers.php:197
+#: src/Helpers.php:198
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Niue    "
 msgstr "Ниуе    "
 
-#: src/Helpers.php:198
+#: src/Helpers.php:199
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Norfolk Island  "
 msgstr "Остров Норфолк  "
 
-#: src/Helpers.php:199
+#: src/Helpers.php:200
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Northern Mariana Islands    "
 msgstr "Северни Мариански острови    "
 
-#: src/Helpers.php:200
+#: src/Helpers.php:201
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Oman    "
 msgstr "Оман    "
 
-#: src/Helpers.php:201
+#: src/Helpers.php:202
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Pakistan    "
 msgstr "Пакистан    "
 
-#: src/Helpers.php:202
+#: src/Helpers.php:203
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Palau   "
 msgstr "Палау   "
 
-#: src/Helpers.php:203
+#: src/Helpers.php:204
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Palestine, State of "
 msgstr "Палестина, Държава на "
 
-#: src/Helpers.php:204
+#: src/Helpers.php:205
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Panama  "
 msgstr "Панама  "
 
-#: src/Helpers.php:205
+#: src/Helpers.php:206
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Papua New Guinea    "
 msgstr "Папуа Нова Гвинея    "
 
-#: src/Helpers.php:206
+#: src/Helpers.php:207
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Paraguay    "
 msgstr "Парагвай    "
 
-#: src/Helpers.php:207
+#: src/Helpers.php:208
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Peru    "
 msgstr "Перу    "
 
-#: src/Helpers.php:208
+#: src/Helpers.php:209
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Philippines "
 msgstr "Филипини "
 
-#: src/Helpers.php:209
+#: src/Helpers.php:210
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Pitcairn    "
 msgstr "Питкерн    "
 
-#: src/Helpers.php:210
+#: src/Helpers.php:211
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Puerto Rico "
 msgstr "Пуерто Рико "
 
-#: src/Helpers.php:211
+#: src/Helpers.php:212
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Qatar   "
 msgstr "Катар   "
 
-#: src/Helpers.php:212
+#: src/Helpers.php:213
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Réunion "
 msgstr "Реюнион "
 
-#: src/Helpers.php:213
+#: src/Helpers.php:214
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Russian Federation  "
 msgstr "Руска федерация  "
 
-#: src/Helpers.php:214
+#: src/Helpers.php:215
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Rwanda  "
 msgstr "Руанда  "
 
-#: src/Helpers.php:215
+#: src/Helpers.php:216
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Barthélemy    "
 msgstr "Сен Бартелми    "
 
-#: src/Helpers.php:216
+#: src/Helpers.php:217
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Helena, Ascension and Tristan da Cunha    "
 msgstr "Света Елена, Асенсион и Тристан да Кунха    "
 
-#: src/Helpers.php:217
+#: src/Helpers.php:218
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Kitts and Nevis   "
 msgstr "Сейнт Китс и Невис   "
 
-#: src/Helpers.php:218
+#: src/Helpers.php:219
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Lucia "
 msgstr "Сейнт Лусия "
 
-#: src/Helpers.php:219
+#: src/Helpers.php:220
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Martin (French part)  "
 msgstr "Сен Мартен (френска част)  "
 
-#: src/Helpers.php:220
+#: src/Helpers.php:221
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Pierre and Miquelon   "
 msgstr "Сен Пиер и Микелон   "
 
-#: src/Helpers.php:221
+#: src/Helpers.php:222
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Vincent and the Grenadines    "
 msgstr "Сейнт Винсънт и Гренадини    "
 
-#: src/Helpers.php:222
+#: src/Helpers.php:223
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Samoa   "
 msgstr "Самоа   "
 
-#: src/Helpers.php:223
+#: src/Helpers.php:224
 #, fuzzy
 msgctxt "(Admin)"
 msgid "San Marino  "
 msgstr "Сан Марино  "
 
-#: src/Helpers.php:224
+#: src/Helpers.php:225
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sao Tome and Principe   "
 msgstr "Сао Томе и Принсипи   "
 
-#: src/Helpers.php:225
+#: src/Helpers.php:226
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saudi Arabia    "
 msgstr "Саудитска Арабия    "
 
-#: src/Helpers.php:226
+#: src/Helpers.php:227
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Senegal "
 msgstr "Сенегал "
 
-#: src/Helpers.php:227
+#: src/Helpers.php:228
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Serbia  "
 msgstr "Сърбия  "
 
-#: src/Helpers.php:228
+#: src/Helpers.php:229
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Seychelles  "
 msgstr "Сейшели  "
 
-#: src/Helpers.php:229
+#: src/Helpers.php:230
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sierra Leone    "
 msgstr "Сиера Леоне    "
 
-#: src/Helpers.php:230
+#: src/Helpers.php:231
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Singapore   "
 msgstr "Сингапур   "
 
-#: src/Helpers.php:231
+#: src/Helpers.php:232
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sint Maarten (Dutch part)   "
 msgstr "Синт Маартен (холандска част)   "
 
-#: src/Helpers.php:232
+#: src/Helpers.php:233
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Solomon Islands "
 msgstr "Соломонови острови "
 
-#: src/Helpers.php:233
+#: src/Helpers.php:234
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Somalia "
 msgstr "Сомалия "
 
-#: src/Helpers.php:234
+#: src/Helpers.php:235
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Africa    "
 msgstr "Южна Африка    "
 
-#: src/Helpers.php:235
+#: src/Helpers.php:236
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Georgia and the South Sandwich Islands    "
 msgstr "Южна Грузия и Южните сандвич острови    "
 
-#: src/Helpers.php:236
+#: src/Helpers.php:237
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Sudan "
 msgstr "Южен Судан "
 
-#: src/Helpers.php:237
+#: src/Helpers.php:238
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sri Lanka   "
 msgstr "Шри Ланка   "
 
-#: src/Helpers.php:238
+#: src/Helpers.php:239
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sudan   "
 msgstr "Судан   "
 
-#: src/Helpers.php:239
+#: src/Helpers.php:240
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Suriname    "
 msgstr "Суринам    "
 
-#: src/Helpers.php:240
+#: src/Helpers.php:241
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Svalbard and Jan Mayen  "
 msgstr "Свалбард и Ян Майен  "
 
-#: src/Helpers.php:241
+#: src/Helpers.php:242
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Swaziland   "
 msgstr "Свазиленд   "
 
-#: src/Helpers.php:242
+#: src/Helpers.php:243
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Syrian Arab Republic    "
 msgstr "Сирийска арабска република    "
 
-#: src/Helpers.php:243
+#: src/Helpers.php:244
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Taiwan   "
 msgstr "Тайван   "
 
-#: src/Helpers.php:244
+#: src/Helpers.php:245
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tajikistan  "
 msgstr "Таджикистан  "
 
-#: src/Helpers.php:245
+#: src/Helpers.php:246
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tanzania, United Republic of    "
 msgstr "Танзания, Обединена република    "
 
-#: src/Helpers.php:246
+#: src/Helpers.php:247
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Thailand    "
 msgstr "Тайланд    "
 
-#: src/Helpers.php:247
+#: src/Helpers.php:248
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Timor-Leste "
 msgstr "Тимор-Лесте "
 
-#: src/Helpers.php:248
+#: src/Helpers.php:249
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Togo    "
 msgstr "Того    "
 
-#: src/Helpers.php:249
+#: src/Helpers.php:250
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tokelau "
 msgstr "Токелау "
 
-#: src/Helpers.php:250
+#: src/Helpers.php:251
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tonga   "
 msgstr "Тонга   "
 
-#: src/Helpers.php:251
+#: src/Helpers.php:252
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Trinidad and Tobago "
 msgstr "Тринидад и Тобаго "
 
-#: src/Helpers.php:252
+#: src/Helpers.php:253
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tunisia "
 msgstr "Тунис "
 
-#: src/Helpers.php:253
+#: src/Helpers.php:254
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turkey  "
 msgstr "Турция  "
 
-#: src/Helpers.php:254
+#: src/Helpers.php:255
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turkmenistan    "
 msgstr "Туркменистан    "
 
-#: src/Helpers.php:255
+#: src/Helpers.php:256
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turks and Caicos Islands    "
 msgstr "Острови Търкс и Кайкос    "
 
-#: src/Helpers.php:256
+#: src/Helpers.php:257
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tuvalu  "
 msgstr "Тувалу  "
 
-#: src/Helpers.php:257
+#: src/Helpers.php:258
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uganda  "
 msgstr "Уганда  "
 
-#: src/Helpers.php:258
+#: src/Helpers.php:259
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Ukraine "
 msgstr "Украйна "
 
-#: src/Helpers.php:259
+#: src/Helpers.php:260
 #, fuzzy
 msgctxt "(Admin)"
 msgid "United Arab Emirates    "
 msgstr "Обединени арабски емирства    "
 
-#: src/Helpers.php:260
+#: src/Helpers.php:261
 #, fuzzy
 msgctxt "(Admin)"
 msgid "United States Minor Outlying Islands    "
 msgstr "Малки далечни острови на Съединените Американски Щати    "
 
-#: src/Helpers.php:261
+#: src/Helpers.php:262
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uruguay "
 msgstr "Уругвай "
 
-#: src/Helpers.php:262
+#: src/Helpers.php:263
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uzbekistan  "
 msgstr "Узбекистан  "
 
-#: src/Helpers.php:263
+#: src/Helpers.php:264
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Vanuatu "
 msgstr "Вануату "
 
-#: src/Helpers.php:264
+#: src/Helpers.php:265
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Venezuela, Bolivarian Republic of   "
 msgstr "Венецуела, Боливарска република   "
 
-#: src/Helpers.php:265
+#: src/Helpers.php:266
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Viet Nam    "
 msgstr "Виетнам    "
 
-#: src/Helpers.php:266
+#: src/Helpers.php:267
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, British "
 msgstr "Вирджински острови, Британски "
 
-#: src/Helpers.php:267
+#: src/Helpers.php:268
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, U.S.    "
 msgstr "Вирджински острови, САЩ    "
 
-#: src/Helpers.php:268
+#: src/Helpers.php:269
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Wallis and Futuna   "
 msgstr "Уолис и Футуна   "
 
-#: src/Helpers.php:269
+#: src/Helpers.php:270
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Western Sahara  "
 msgstr "Западна Сахара  "
 
-#: src/Helpers.php:270
+#: src/Helpers.php:271
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Yemen   "
 msgstr "Йемен   "
 
-#: src/Helpers.php:271
+#: src/Helpers.php:272
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Zambia  "
 msgstr "Замбия  "
 
-#: src/Helpers.php:272
+#: src/Helpers.php:273
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Zimbabwe    "
 msgstr "Зимбабве    "
 
-#: src/Helpers.php:287
+#: src/Helpers.php:288
 msgctxt "(Admin)"
 msgid "Iceland"
 msgstr "Исландия"
 
-#: src/Helpers.php:288
+#: src/Helpers.php:289
 msgctxt "(Admin)"
 msgid "Norway"
 msgstr "Норвегия"
 
-#: src/Helpers.php:289
+#: src/Helpers.php:290
 msgctxt "(Admin)"
 msgid "Liechtenstein"
 msgstr "Лихтенщайн"
 
-#: src/Helpers.php:290
+#: src/Helpers.php:291
 msgctxt "(Admin)"
 msgid "Switzerland"
 msgstr "Швейцария"
 
-#: src/Helpers.php:291
+#: src/Helpers.php:292
 msgctxt "(Admin)"
 msgid "United States"
 msgstr "САЩ"
 
-#: src/Helpers.php:377
+#: src/Helpers.php:383
 msgid "An error has occurred. Please contact the site administrator."
 msgstr "Възникна грешка. Моля, свържете се с администратора на сайта."
 
-#: src/Installer/Installer.php:146
+#: src/Installer/Installer.php:145
 msgctxt "(Admin)"
 msgid "Setup Wizard"
 msgstr "Съветник за настройките"
 
-#: src/Installer/Steps/ConfigurationPages.php:23
-#: src/Installer/Steps/ConfigurationPages.php:33
-#: src/Installer/Steps/PolicySettings.php:23
-#: src/Installer/Steps/PolicySettings.php:48
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "&mdash; Create a new page &mdash;"
+#: src/Installer/Steps/ConfigurationPages.php:24
+#: src/Installer/Steps/ConfigurationPages.php:34
+#: src/Installer/Steps/PolicySettings.php:24
+#: src/Installer/Steps/PolicySettings.php:49
 msgctxt "(Admin)"
 msgid "&mdash; Create a new page &mdash;"
 msgstr "&mdash; Създайте нова страница &mdash;"
 
-#: src/Installer/Steps/PolicySettings.php:38
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "We have automatically selected your WooCommerce Terms & Conditions page."
+#: src/Installer/Steps/PolicySettings.php:39
 msgctxt "(Admin)"
 msgid ""
 "We have automatically selected your WooCommerce Terms & Conditions page."
@@ -2576,46 +2419,46 @@ msgstr ""
 "квадратчето за отметка, за да включите данни за търсене в инструмента за "
 "поверителност."
 
-#: src/Modules/EddGdpr/EddGdpr.php:47
+#: src/Modules/EddGdpr/EddGdpr.php:48
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Company information"
 msgid "EDD Customer Information"
 msgstr "Информация за Фирмата"
 
-#: src/Modules/EddGdpr/EddGdpr.php:56
+#: src/Modules/EddGdpr/EddGdpr.php:57
 #, fuzzy
 msgid "EDD Order Information"
 msgstr "Информация за поръчките на EDD"
 
-#: src/Modules/EddGdpr/EddGdpr.php:65
+#: src/Modules/EddGdpr/EddGdpr.php:66
 #, fuzzy
 msgid "EDD File Downloads"
 msgstr "Изтегляния на EDD файлове"
 
-#: src/Modules/EddGdpr/EddGdpr.php:74
+#: src/Modules/EddGdpr/EddGdpr.php:75
 #, fuzzy
 msgid "EDD API Access Logs"
 msgstr "Регистрационни файлове за достъп до EDD API"
 
-#: src/Modules/NewsletterGdpr/NewsletterGdpr.php:79
+#: src/Modules/NewsletterGdpr/NewsletterGdpr.php:82
 #, fuzzy
 msgid "Newsletter Form submissions: "
 msgstr "Бюлетин Формуляр подавания: "
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:46
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:47
 msgid "Customer Information"
 msgstr "Информация за клиента"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:53
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:54
 msgid "Order Information"
 msgstr "Информация за поръчка"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:162
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:165
 msgid "Please acknowledge the Privacy Policy"
 msgstr "Моля, потвърдете Декларацията за поверителност"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:177
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:180
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Your Privacy Policy has been generated."
@@ -2628,27 +2471,16 @@ msgid "Nonce error for action \"%s\". Please go back and try again!"
 msgstr "Nonce error for action \"%s\". Please go back and try again!"
 
 #: src/Router.php:149
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "You do not have the required permissions to perform this action!"
 msgctxt "(Admin)"
 msgid "You do not have the required permissions to perform this action!"
 msgstr "Нямате необходимите разрешения за изпълнение на това действие!"
 
 #: views/admin/consent.php:3
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Default consent types"
 msgctxt "(Admin)"
 msgid "Default consent types"
 msgstr "Стандартни типове съгласие"
 
 #: views/admin/consent.php:4
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "These are the consent types that have been automatically registered by "
-#| "the framework or a plugin."
 msgctxt "(Admin)"
 msgid ""
 "These are the consent types that have been automatically registered by the "
@@ -2690,20 +2522,11 @@ msgid "Hidden"
 msgstr "Скрит"
 
 #: views/admin/consent.php:29
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Custom consent types"
 msgctxt "(Admin)"
 msgid "Custom consent types"
 msgstr "Типове персонализирано съгласие"
 
 #: views/admin/consent.php:30
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Here you can add custom consent types to track. They will not be used "
-#| "anywhere by default - you will need to build an integration for each of "
-#| "them."
 msgctxt "(Admin)"
 msgid ""
 "Here you can add custom consent types to track. They will not be used "
@@ -2714,17 +2537,11 @@ msgstr ""
 "интеграция за всеки от тях."
 
 #: views/admin/consent.php:35
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Machine-readable slug"
 msgctxt "(Admin)"
 msgid "Machine-readable slug"
 msgstr "Машинно четене"
 
 #: views/admin/consent.php:44 views/admin/consent.php:69
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Visible?"
 msgctxt "(Admin)"
 msgid "Visible?"
 msgstr "Видим?"
@@ -2735,43 +2552,26 @@ msgid "Remove"
 msgstr "Премахни"
 
 #: views/admin/consent.php:79
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Show Consent types"
 msgctxt "(Admin)"
 msgid "Show Consent types"
 msgstr "Показване на типовете съгласия"
 
 #: views/admin/consent.php:80
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Add consent type"
 msgctxt "(Admin)"
 msgid "Add consent type"
 msgstr "Добавете тип съгласие"
 
 #: views/admin/consent.php:81
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Hide consent types"
 msgctxt "(Admin)"
 msgid "Hide consent types"
 msgstr "Скриване на типовете съгласие"
 
 #: views/admin/consent.php:95
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Additional info"
 msgctxt "(Admin)"
 msgid "Additional info"
 msgstr "ПОВЕЧЕ ИНФОРМАЦИЯ"
 
 #: views/admin/consent.php:97
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This text will be displayed to your data subjects on the Privacy Tools "
-#| "page."
 msgctxt "(Admin)"
 msgid ""
 "This text will be displayed to your data subjects on the Privacy Tools page."
@@ -2785,11 +2585,6 @@ msgid " "
 msgstr " "
 
 #: views/admin/data-subjects/search-form.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "On this page, you can find which data subjects personal data you are "
-#| "storing and download, export or delete it."
 msgctxt "(Admin)"
 msgid ""
 "On this page, you can find which data subjects personal data you are storing "
@@ -2799,9 +2594,6 @@ msgstr ""
 "изтегляте, експортирате или изтривате."
 
 #: views/admin/data-subjects/search-form.php:10
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Find data subject by email"
 msgctxt "(Admin)"
 msgid "Find data subject by email"
 msgstr "Намери данни по Email"
@@ -2830,35 +2622,21 @@ msgid "Data found."
 msgstr "Нищо не е намерено"
 
 #: views/admin/data-subjects/search-results.php:14
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "is not a registered user."
 msgctxt "(Admin)"
 msgid "is not a registered user."
 msgstr "не е регистриран потребител."
 
 #: views/admin/data-subjects/search-results.php:21
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Download data (html)"
 msgctxt "(Admin)"
 msgid "Download data (html)"
 msgstr "Свали данните (html) формат"
 
 #: views/admin/data-subjects/search-results.php:22
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Export data (json)"
 msgctxt "(Admin)"
 msgid "Export data (json)"
 msgstr "Свали данните (json) формат"
 
 #: views/admin/data-subjects/search-results.php:26
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This user has admin capabilities. Deleting data via this interface is "
-#| "disabled."
 msgctxt "(Admin)"
 msgid ""
 "This user has admin capabilities. Deleting data via this interface is "
@@ -2868,17 +2646,11 @@ msgstr ""
 "този интерфейс е деактивирано."
 
 #: views/admin/data-subjects/search-results.php:29
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Anonymize data"
 msgctxt "(Admin)"
 msgid "Anonymize data"
 msgstr "Анонимни данни"
 
 #: views/admin/data-subjects/search-results.php:30
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete data"
 msgctxt "(Admin)"
 msgid "Delete data"
 msgstr "Изтрий данните"
@@ -2890,9 +2662,6 @@ msgstr "Открихме данни за този потребител, но н�
 
 #: views/admin/data-subjects/search-results.php:41
 #: views/modules/wordpress-user/dashboard/profile-page/table-consent.php:4
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Consents given"
 msgctxt "(Admin)"
 msgid "Consents given"
 msgstr "Дадени съгласия"
@@ -2906,9 +2675,6 @@ msgid "No consents given!"
 msgstr "Няма дадени съгласия"
 
 #: views/admin/general/custom-policy-url.php:6
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Leave blank if privacy policy page already selected"
 msgctxt "(Admin)"
 msgid "Leave blank if privacy policy page already selected"
 msgstr ""
@@ -2941,28 +2707,17 @@ msgstr "Email адрес"
 
 #: views/admin/general/delete-action-reassign.php:3
 #: views/installer/steps/configuration-settings.php:50
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete content"
 msgctxt "(Admin)"
 msgid "Delete content"
 msgstr "Изтриване на съдържание"
 
 #: views/admin/general/delete-action-reassign.php:6
 #: views/installer/steps/configuration-settings.php:53
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Reassign content to a user"
 msgctxt "(Admin)"
 msgid "Reassign content to a user"
 msgstr "Преназначаване съдържание на потребител"
 
 #: views/admin/general/delete-action-reassign.php:10
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "If the user has submitted any content on your site, should it be deleted "
-#| "or reassigned to another user?"
 msgctxt "(Admin)"
 msgid ""
 "If the user has submitted any content on your site, should it be deleted or "
@@ -3032,17 +2787,11 @@ msgid "Enable EDD data on GDPR tool."
 msgstr "Активиране на EDD данни за инструмента GDPR."
 
 #: views/admin/general/edd-compatibility.php:12
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Will work for EDD Version 2.0.0 or later."
 msgctxt "(Admin)"
 msgid "Will work for EDD Version 2.0.0 or later."
 msgstr "Ще работи за EDD версия 2.0.0 или по-нова."
 
 #: views/admin/general/enable-policy-popup.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable Policy Link On Popup"
 msgctxt "(Admin)"
 msgid "Enable Policy Link On Popup"
 msgstr "Активиране на връзката по правилата при изскачащи прозорци"
@@ -3062,18 +2811,11 @@ msgstr ""
 "gdpr_cookie_consent </b> неговия приет в изскачащ прозорец бутон за приемане."
 
 #: views/admin/general/enable-tac.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enable the term and condition page."
 msgctxt "(Admin)"
 msgid "Enable the term and condition page."
 msgstr "Активирайте страницата за термини и условия."
 
 #: views/admin/general/enable.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Enable the view, export and forget functionality for users and visitors"
 msgctxt "(Admin)"
 msgid "Enable the view, export and forget functionality for users and visitors"
 msgstr ""
@@ -3081,12 +2823,6 @@ msgstr ""
 "потребителите и посетителите"
 
 #: views/admin/general/enable.php:12
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Enable the Privacy Tools page on front-end and dashboard. This allows "
-#| "visitors to request viewing and deleting their personal data and withdraw "
-#| "consents."
 msgctxt "(Admin)"
 msgid ""
 "Enable the Privacy Tools page on front-end and dashboard. This allows "
@@ -3146,17 +2882,26 @@ msgstr ""
 
 #: views/admin/general/theme-compatibility.php:9
 #: views/installer/steps/integrations.php:21
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Automatically add Privacy Policy and Privacy Tools links to your site "
-#| "footer."
 msgctxt "(Admin)"
 msgid ""
 "Automatically add Privacy Policy and Privacy Tools links to your site footer."
 msgstr ""
 "Автоматично добавяне на страниците Политика за лични данни и Управление на "
 "лични данни в долната част на сайта."
+
+#: views/admin/general/unknown-user-message.php:6
+#, fuzzy
+#| msgctxt "(Admin)"
+#| msgid ""
+#| "This text will be displayed to your data subjects on the Privacy Tools "
+#| "page."
+msgctxt "(Admin)"
+msgid ""
+"This message is displayed if the email entered on the privacy tools page is "
+"not found."
+msgstr ""
+"Този текст ще се покаже на субектите Ви на данни на страницата Инструменти "
+"за поверителност."
 
 #: views/admin/general/woo-compatibility.php:9
 #, fuzzy
@@ -3167,20 +2912,17 @@ msgid "Enable WooCommerce data on GDPR tool."
 msgstr "Активиране на данните за WooCommerce за инструмента GDPR."
 
 #: views/admin/general/woo-compatibility.php:12
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Will work for WooCommerce Version 3.4.0 or later."
 msgctxt "(Admin)"
 msgid "Will work for WooCommerce Version 3.4.0 or later."
 msgstr "Ще работи за WooCommerce версия 3.4.0 или по-нова."
 
-#: views/admin/notices/header-privacy-safe.php:4
+#: views/admin/notices/header-privacy-safe.php:5
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe By Data443"
 msgstr "Сейф за поверителност по данни443"
 
-#: views/admin/notices/header.php:4 views/admin/settings-page.php:3
+#: views/admin/notices/header.php:5 views/admin/settings-page.php:3
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "The GDPR Framework"
@@ -3195,11 +2937,6 @@ msgid "Need help? Take a look at our %sdocumentation%s."
 msgstr "Нуждаете се от помощ? Погледни %sdocumentation% ни."
 
 #: views/admin/notices/helper-autoinstall.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "A Privacy Policy page has been created, but it is empty. You can generate "
-#| "a policy template on this page."
 msgctxt "(Admin)"
 msgid ""
 "A Privacy Policy page has been created, but it is empty. You can generate a "
@@ -3208,12 +2945,14 @@ msgstr ""
 "Страницата с правила за поверителност е създадена, но е празна. Можете да "
 "генерирате шаблон за правила на тази страница."
 
+#: views/admin/notices/helper-autoinstall.php:6
+#, fuzzy, php-format
+#| msgid "I accept the %sPrivacy Policy%s"
+msgctxt "(Admin)"
+msgid "Read more about the %sPrivacy Policy%s"
+msgstr "Приемам %sPrivacy Policy%s"
+
 #: views/admin/notices/helper-policy.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Heads up - your Privacy Policy still requires some attention. Find the "
-#| "places marked with [TODO] and replace them with real content!"
 msgctxt "(Admin)"
 msgid ""
 "Heads up - your Privacy Policy still requires some attention. Find the "
@@ -3263,17 +3002,12 @@ msgid "Data443™ Global Privacy Manager"
 msgstr "Data443™ Privacy Manager"
 
 #: views/admin/privacy-manager/header.php:3
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "ensures privacy regulation compliance, such as GDPR, CCPA, LGPD, etc, at "
-#| "the next level."
 msgctxt "(Admin)"
 msgid ""
 "ensures privacy regulation compliance, such as GDPR, CCPA, LGPD, etc, at the "
 "next level."
 msgstr ""
-"гарантира спазването на правилата за поверителност, като например GDPR, "
+"гарантира спазването на правилата за поверителност, като например CCPA, "
 "CCPA, LGPD и т.н., на следващото ниво."
 
 #: views/admin/privacy-manager/header.php:4
@@ -3375,11 +3109,6 @@ msgid "PowerBI and Dashboarding"
 msgstr "PowerBI и Табло за управление"
 
 #: views/admin/privacy-manager/header.php:21
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "No matter where you are on your data privacy journey, the ultimate goal "
-#| "is compliance."
 msgctxt "(Admin)"
 msgid ""
 "No matter where you are on your data privacy journey, the ultimate goal is "
@@ -3389,52 +3118,32 @@ msgstr ""
 "спазването на правилата."
 
 #: views/admin/privacy-manager/header.php:21
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "enables your organization to comply with all privacy regulations."
 msgctxt "(Admin)"
 msgid "enables your organization to comply with all privacy regulations."
 msgstr ""
 "позволява на вашата организация да спазва всички правила за поверителност."
 
 #: views/admin/privacy-policy/description-policy-page.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Select the page which will contain your Privacy Policy"
 msgctxt "(Admin)"
 msgid "Select the page which will contain your Privacy Policy"
 msgstr "Изберете страницата, която ще съдържа вашата Политика за Лични данни"
 
 #: views/admin/privacy-policy/generated.php:3
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Your Privacy Policy has been generated."
 msgctxt "(Admin)"
 msgid "Your Privacy Policy has been generated."
 msgstr "Политиката за Лични данни беше генерирана."
 
 #: views/admin/privacy-policy/generated.php:20
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "&laquo; Back"
 msgctxt "(Admin)"
 msgid "&laquo; Back"
 msgstr "&laquo; Назад"
 
 #: views/admin/privacy-policy/has-dpo.php:11
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "I have appointed a Data Protection Officer (DPO)"
 msgctxt "(Admin)"
 msgid "I have appointed a Data Protection Officer (DPO)"
 msgstr "Назначих служител по защита на данните (ДЗД)"
 
 #: views/admin/privacy-policy/header.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This page allows you to generate a Privacy Policy based on the "
-#| "information you entered below."
 msgctxt "(Admin)"
 msgid ""
 "This page allows you to generate a Privacy Policy based on the information "
@@ -3477,7 +3186,7 @@ msgctxt "(Admin)"
 msgid "Support our development efforts! leave a %s5-star rating%s."
 msgstr "Подкрепете усилията ни за развитие! оставете %s5-звезден рейтинг%s."
 
-#: views/admin/support/contents.php:5 views/installer/steps/finish.php:10
+#: views/admin/support/contents.php:5 views/installer/steps/finish.php:11
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Need more info?"
@@ -3485,7 +3194,7 @@ msgctxt "(Admin)"
 msgid "Need more info?"
 msgstr "Нуждаете се от повече информация?"
 
-#: views/admin/support/contents.php:11 views/installer/steps/finish.php:16
+#: views/admin/support/contents.php:11 views/installer/steps/finish.php:17
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Site Owner's guide to GDPR"
@@ -3493,7 +3202,7 @@ msgctxt "(Admin)"
 msgid "Site Owner's guide to GDPR"
 msgstr "Ръководство на собственика на сайта за GDPR"
 
-#: views/admin/support/contents.php:14 views/installer/steps/finish.php:19
+#: views/admin/support/contents.php:14 views/installer/steps/finish.php:20
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Read the full guide on GDPR compliance."
@@ -3501,23 +3210,17 @@ msgctxt "(Admin)"
 msgid "Read the full guide on GDPR compliance."
 msgstr "Прочетете пълния наръчник за съответствие с GDPR."
 
-#: views/admin/support/contents.php:20 views/installer/steps/finish.php:25
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Knowledge base"
+#: views/admin/support/contents.php:20 views/installer/steps/finish.php:26
 msgctxt "(Admin)"
 msgid "Knowledge base"
 msgstr "Знание"
 
-#: views/admin/support/contents.php:23 views/installer/steps/finish.php:28
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Check out the knowledge base for common questions and answers."
+#: views/admin/support/contents.php:23 views/installer/steps/finish.php:29
 msgctxt "(Admin)"
 msgid "Check out the knowledge base for common questions and answers."
 msgstr "Проверете базата знания за често срещани въпроси и отговори."
 
-#: views/admin/support/contents.php:29 views/installer/steps/finish.php:34
+#: views/admin/support/contents.php:29 views/installer/steps/finish.php:35
 #, fuzzy
 #| msgctxt "(Admin)"
 #| msgid "Developer's guide to GDPR"
@@ -3525,35 +3228,24 @@ msgctxt "(Admin)"
 msgid "Developer's guide to GDPR"
 msgstr "Ръководство за програмисти за GDPR"
 
-#: views/admin/support/contents.php:32 views/installer/steps/finish.php:37
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "We have a thorough guide to help making custom sites compliant."
+#: views/admin/support/contents.php:32 views/installer/steps/finish.php:38
 msgctxt "(Admin)"
 msgid "We have a thorough guide to help making custom sites compliant."
 msgstr ""
 "Имаме задълбочено ръководство, което ни помага да направим персонализираните "
 "сайтове съвместими."
 
-#: views/admin/support/contents.php:40 views/installer/steps/finish.php:45
+#: views/admin/support/contents.php:40 views/installer/steps/finish.php:46
 msgctxt "(Admin)"
 msgid "Need help?"
 msgstr "Нужда от помощ?"
 
-#: views/admin/support/contents.php:46 views/installer/steps/finish.php:51
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Submit a support request"
+#: views/admin/support/contents.php:46 views/installer/steps/finish.php:52
 msgctxt "(Admin)"
 msgid "Submit a support request"
 msgstr "Изпратете заявка за поддръжка"
 
-#: views/admin/support/contents.php:49 views/installer/steps/finish.php:54
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "Found a bug or have a question about the plugin? Submit a support request "
-#| "and we’ll get right on it!"
+#: views/admin/support/contents.php:49 views/installer/steps/finish.php:55
 msgctxt "(Admin)"
 msgid ""
 "Found a bug or have a question about the plugin? Submit a support request "
@@ -3562,35 +3254,22 @@ msgstr ""
 "Открихте грешка или имате въпрос относно приставката? Изпратете заявка за "
 "поддръжка и ще се оправим!"
 
-#: views/admin/support/contents.php:55 views/installer/steps/finish.php:60
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Request a consultation"
+#: views/admin/support/contents.php:55 views/installer/steps/finish.php:61
 msgctxt "(Admin)"
 msgid "Request a consultation"
 msgstr "Поискайте консултация"
 
-#: views/admin/support/contents.php:58 views/installer/steps/finish.php:63
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Need assistance in making your site compliant? We can help!"
+#: views/admin/support/contents.php:58 views/installer/steps/finish.php:64
 msgctxt "(Admin)"
 msgid "Need assistance in making your site compliant? We can help!"
 msgstr "Нуждаете се от помощ при съгласуването на сайта Ви? Можем да помогнем!"
 
 #: views/admin/wizard-buttons.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Restart setup wizard"
 msgctxt "(Admin)"
 msgid "Restart setup wizard"
 msgstr "Рестартирай настройката"
 
 #: views/email/action-export.php:8 views/email/action-forget.php:12
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This email is just for your information. You don't need to take any action"
 msgctxt "(Admin)"
 msgid ""
 "This email is just for your information. You don't need to take any action"
@@ -3599,9 +3278,6 @@ msgstr ""
 "никакви действия"
 
 #: views/email/action-forget.php:8
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "The data subject had a user account on your website."
 msgctxt "(Admin)"
 msgid "The data subject had a user account on your website."
 msgstr "Субектът на данните има потребителски профил на уебсайта Ви."
@@ -3651,57 +3327,36 @@ msgid "As a reminder: according to GDPR, you have 30 days to comply."
 msgstr "Напомняне: според GDPR имате 30 дни, за да се съобразите."
 
 #: views/global/delete-action.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically anonymize data"
 msgctxt "(Admin)"
 msgid "Automatically anonymize data"
 msgstr "Автоматично анонимизиране на данните"
 
 #: views/global/delete-action.php:5
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically delete data"
 msgctxt "(Admin)"
 msgid "Automatically delete data"
 msgstr "Автоматично изтриване на данните"
 
 #: views/global/delete-action.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically anonymize data and notify me via email"
 msgctxt "(Admin)"
 msgid "Automatically anonymize data and notify me via email"
 msgstr "Автоматично анонимизиране на данните и уведомяване чрез Email."
 
 #: views/global/delete-action.php:13
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically delete data and notify me via email"
 msgctxt "(Admin)"
 msgid "Automatically delete data and notify me via email"
 msgstr "Автоматично изтриване на данните и уведомяване чрез Email."
 
 #: views/global/delete-action.php:16 views/global/export-action.php:10
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Only notify me via email"
 msgctxt "(Admin)"
 msgid "Only notify me via email"
 msgstr "Само ме уведоми чрез Email."
 
 #: views/global/export-action.php:2
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically download data"
 msgctxt "(Admin)"
 msgid "Automatically download data"
 msgstr "Автоматично сваляне на данните"
 
 #: views/global/export-action.php:6
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Automatically download data and notify me via email"
 msgctxt "(Admin)"
 msgid "Automatically download data and notify me via email"
 msgstr "Автоматично сваляне на данните и уведомяване чрез Email."
@@ -3755,25 +3410,16 @@ msgid "The The GDPR Framework setup has not been finalized yet."
 msgstr "Настройката на GDPR все още не е финализирана."
 
 #: views/installer/continue-notice.php:3
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "You can continue the setup at any time."
 msgctxt "(Admin)"
 msgid "You can continue the setup at any time."
 msgstr "Можете да продължите настройката по всяко време."
 
 #: views/installer/continue-notice.php:6
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Continue the setup wizard"
 msgctxt "(Admin)"
 msgid "Continue the setup wizard"
 msgstr "Продължи с настройката"
 
 #: views/installer/continue-notice.php:9
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Hide this message"
 msgctxt "(Admin)"
 msgid "Hide this message"
 msgstr "Скрий съобщението"
@@ -3818,9 +3464,6 @@ msgid "Configuration"
 msgstr "Конфигурация"
 
 #: views/installer/header.php:46
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Forms & Consent"
 msgctxt "(Admin)"
 msgid "Forms & Consent"
 msgstr "Форми и съгласие"
@@ -3858,9 +3501,6 @@ msgstr "Може би по-късно"
 
 #: views/installer/steps/configuration-settings.php:23
 #: views/installer/steps/configuration-settings.php:73
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Enter the email address to notify"
 msgctxt "(Admin)"
 msgid "Enter the email address to notify"
 msgstr "Въведете имейл адреса за уведомяване"
@@ -3896,25 +3536,16 @@ msgid "Tools"
 msgstr "Инструменти"
 
 #: views/installer/welcome-notice.php:10
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Run the setup wizard"
 msgctxt "(Admin)"
 msgid "Run the setup wizard"
 msgstr "Пуснете помощника за настройка"
 
 #: views/installer/welcome-notice.php:14
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Auto-install pages"
 msgctxt "(Admin)"
 msgid "Auto-install pages"
 msgstr "Автоматично инсталиране на страници"
 
 #: views/installer/welcome-notice.php:18
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Skip and install manually"
 msgctxt "(Admin)"
 msgid "Skip and install manually"
 msgstr "Инсталирай ръчно"
@@ -3939,11 +3570,6 @@ msgstr ""
 "имейл)."
 
 #: views/modules/contact-form-7/generator-privacy.php:6
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "This tag generates the default text for Terms & Conditions and/or Privacy "
-#| "Policy checkbox."
 msgctxt "(Admin)"
 msgid ""
 "This tag generates the default text for Terms & Conditions and/or Privacy "
@@ -3975,67 +3601,59 @@ msgstr "Съгласие"
 msgid "Withdraw"
 msgstr "Оттегляне"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:5
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:6
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:5
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete this user and all data"
 msgctxt "(Admin)"
 msgid "Delete this user and all data"
 msgstr "Изтрийте този потребител и всички данни"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:11
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:12
 msgctxt "(Admin)"
 msgid "Delete my data"
 msgstr "Изтрий данните ми"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:15
-#: views/privacy-tools/form-delete.php:4 views/privacy-tools/form-delete.php:24
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:16
+#: views/privacy-tools/form-delete.php:6 views/privacy-tools/form-delete.php:26
 msgid "Delete all data we have gathered about you."
 msgstr "Изтрийте всички данни, които сме събрали за вас."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:16
-#: views/privacy-tools/form-delete.php:5 views/privacy-tools/form-delete.php:25
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:17
+#: views/privacy-tools/form-delete.php:7 views/privacy-tools/form-delete.php:27
 msgid "If you have a user account on our site, it will also be deleted."
 msgstr "Ако имате потребителски акаунт на нашия сайт, той също ще бъде изтрит."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:17
-#: views/privacy-tools/form-delete.php:6 views/privacy-tools/form-delete.php:26
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:18
+#: views/privacy-tools/form-delete.php:8 views/privacy-tools/form-delete.php:28
 msgid "Be careful - this action is permanent and CANNOT be undone."
 msgstr "Бъдете внимателни - това действие е не може да бъде отменено."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:19
-#: views/privacy-tools/form-delete.php:8
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:20
+#: views/privacy-tools/form-delete.php:10
 msgid "Note Regarding Order:"
 msgstr "Забележка относно поръчката:"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:20
-#: views/privacy-tools/form-delete.php:9
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:21
+#: views/privacy-tools/form-delete.php:11
 msgid ""
 "Your order with status Processing will not get deleted until status change."
 msgstr ""
 "Вашата поръчка със статус Обработка няма да бъде изтрита до промяна на "
 "статуса."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:21
-#: views/privacy-tools/form-delete.php:10
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:22
+#: views/privacy-tools/form-delete.php:12
 msgid "Your order with status Completed will get anonymize."
 msgstr "Вашата поръчка със завършен статус ще стане анонимна."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:22
-#: views/privacy-tools/form-delete.php:11
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:23
+#: views/privacy-tools/form-delete.php:13
 msgid "If you delete Completed order you can't apply for refund."
 msgstr ""
 "Ако изтриете попълнената поръчка, не можете да кандидатствате за "
 "възстановяване."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:28
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:29
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:23
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid ""
-#| "You seem to have an administrator or equivalent role, so deleting/"
-#| "anonymizing via this page is disabled."
 msgctxt "(Admin)"
 msgid ""
 "You seem to have an administrator or equivalent role, so deleting/"
@@ -4071,17 +3689,11 @@ msgid "Alternatively, you can export it in machine-readable JSON format."
 msgstr "Друга възможност е да го експортирате във машинно четене JSON формат."
 
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:11
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Delete user and all data"
 msgctxt "(Admin)"
 msgid "Delete user and all data"
 msgstr "Изтрий потребителя и всички данни"
 
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:14
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Anonymize user and all data"
 msgctxt "(Admin)"
 msgid "Anonymize user and all data"
 msgstr "Анонимизиране на потребителя и всички данни"
@@ -4100,17 +3712,11 @@ msgid "GDPR Data"
 msgstr "GDPR данни"
 
 #: views/modules/wordpress-user/dashboard/profile-page/header.php:6
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "This user has been anonymized."
 msgctxt "(Admin)"
 msgid "This user has been anonymized."
 msgstr "Потребителя беше добавен, като анонимен."
 
 #: views/modules/wordpress-user/dashboard/profile-page/table-consent.php:17
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "No consents given"
 msgctxt "(Admin)"
 msgid "No consents given"
 msgstr "Няма дадени съгласия"
@@ -4169,13 +3775,13 @@ msgstr "Изпрати заявка"
 msgid "Consent types"
 msgstr "Типове съгласие"
 
-#: views/privacy-tools/form-delete.php:1
+#: views/privacy-tools/form-delete.php:3
 #: views/privacy-tools/notice-admin-role.php:1
 msgid "Delete my user and data"
 msgstr "Изтрий ме, като потребител и данни."
 
-#: views/privacy-tools/form-delete.php:18
-#: views/privacy-tools/form-delete.php:30
+#: views/privacy-tools/form-delete.php:20
+#: views/privacy-tools/form-delete.php:32
 msgid "Delete my data"
 msgstr "Изтрий моите данни"
 
@@ -4200,14 +3806,11 @@ msgid "Send email"
 msgstr "Изпрати Emial"
 
 #: views/privacy-tools/notice-admin-role.php:4
-#, fuzzy
-#| msgctxt "(Admin)"
-#| msgid "Data deletion is disabled for administrative accounts."
 msgctxt "(Admin)"
 msgid "Data deletion is disabled for administrative accounts."
 msgstr "Изтриването на данни е забранено за административните профили."
 
-#: views/privacy-tools/notices.php:3
+#: views/privacy-tools/notices.php:4
 msgid ""
 "We will send you an email with the link to access your data. Please check "
 "your spam folder as well!"
@@ -4215,15 +3818,15 @@ msgstr ""
 "Ще ви изпратим имейл с връзката, за да получите достъп до вашите данни. "
 "Моля, проверете и папката си за спам!"
 
-#: views/privacy-tools/notices.php:7
+#: views/privacy-tools/notices.php:8
 msgid "The email you entered does not appear to be a valid email."
 msgstr "Въведеният от вас имейл адрес не изглежда валиден имейл."
 
-#: views/privacy-tools/notices.php:11
+#: views/privacy-tools/notices.php:12
 msgid "Sorry - the link seems to have expired. Please try again!"
 msgstr "За съжаление - връзката изглежда е изтекла. Моля, опитайте отново!"
 
-#: views/privacy-tools/notices.php:23
+#: views/privacy-tools/notices.php:24
 msgid "Your personal data has been removed!"
 msgstr "Вашите лични данни бяха премахнати!"
 
@@ -4261,6 +3864,27 @@ msgstr "Данни443 ОРЗД"
 #, fuzzy
 msgid "https://www.data443.com/"
 msgstr "https://www.data443.com/"
+
+#, fuzzy
+#~| msgctxt "(Admin)"
+#~| msgid ""
+#~| "You appear to be running a development version of GDPR. You must run "
+#~| "<code>composer install</code> from the plugin directory."
+#~ msgctxt "(Admin)"
+#~ msgid ""
+#~ "You appear to be running a development version of GDPR. You must run "
+#~ "<code>composer install</code> from the plugin directory."
+#~ msgstr ""
+#~ "Изглежда, че използвате версия за разработка на GDPR. Трябва да "
+#~ "стартирате <code> install композитор </ code> от директорията на "
+#~ "добавката."
+
+#, fuzzy
+#~| msgctxt "(Admin)"
+#~| msgid "Autoloader not found."
+#~ msgctxt "(Admin)"
+#~ msgid "Autoloader not found."
+#~ msgstr "Autoloader не е намерен."
 
 #, php-format
 #~ msgid "%sERROR:%s You need to accept the privacy policy to post a comment."
@@ -4353,9 +3977,6 @@ msgstr "https://www.data443.com/"
 
 #~ msgid "Workstation"
 #~ msgstr "Workstation"
-
-#~ msgid "Last Scan"
-#~ msgstr "Последно сканиране"
 
 #~ msgid "No ClassiDocs data found!"
 #~ msgstr "Няма намерени данни за ClassiDocs!"

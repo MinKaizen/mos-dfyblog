@@ -31,15 +31,16 @@ class WordpressUser
      * @param DataManager        $dataManager
      */
     public function __construct(DataSubjectManager $dataSubjectManager, DataManager $dataManager)
-    { 
+    {
+        global $gdpr;
         $this->dataSubjectManager = $dataSubjectManager;
         $this->dataManager = $dataManager;
 
-        gdpr()->make(DashboardProfilePageController::class);
-        gdpr()->make(RegistrationForm::class);
+        new DashboardProfilePageController($dataSubjectManager, $gdpr->DataExporter);
+        new RegistrationForm($dataSubjectManager);
 
-        if (gdpr('options')->get('enable')) {
-            gdpr()->make(DashboardDataPageController::class);
+        if ($gdpr->Options->get('enable')) {
+            new DashboardDataPageController($gdpr->DataExporter, $gdpr->DataSubjectAuthenticator);
 
             // Register Privacy Tools page in admin
             add_action('admin_menu', [$this, 'registerDashboardDataPage']);

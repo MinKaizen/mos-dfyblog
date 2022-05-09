@@ -19,7 +19,7 @@ function AddCard( { ldo, cardAtLimit, isAdding, add } ) {
 					className="itsec-edit-cards__action itsec-edit-cards__action--add"
 					label={ __( 'Add', 'better-wp-security' ) }
 					icon="plus"
-					tooltip={ false }
+					showTooltip={ false }
 				/>
 			</li>
 		)

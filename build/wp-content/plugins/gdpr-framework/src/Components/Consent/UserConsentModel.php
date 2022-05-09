@@ -152,14 +152,11 @@ class UserConsentModel
 			$future_date = '9999-12-31 23:59:59';
 		}
 
-		
-
 		if ($this->exists($email, $consent)) {
 			return $wpdb->update(
 				$this->tableName,
 				[
 					'version'     => $version,
-					'consent'     => $consent,
 					'status'      => $status,
 					'updated_at'  => current_time( 'mysql' ),
 					'ip'          => $_SERVER['REMOTE_ADDR'],
@@ -243,20 +240,6 @@ class UserConsentModel
 				$email
 			))), true);
 		}
-		/**
-         * Workaround to an issue with array_column in PHP5.6 - thanks @paulnewson
-         */
-        // if (version_compare(PHP_VERSION, '7') >= 0) {
-        //     return array_column($wpdb->get_results($wpdb->prepare(
-        //         "SELECT * FROM {$this->tableName} WHERE email = %s and status = 1;",
-        //         $email
-        //     )), 'consent');
-        // } else {
-        //     return array_column(json_decode(json_encode($wpdb->get_results($wpdb->prepare(
-        //         "SELECT * FROM {$this->tableName} WHERE email = %s and status = 1;",
-        //         $email
-        //     ))), true), 'consent');
-        // }
 	}
 
 	
@@ -363,7 +346,6 @@ class UserConsentModel
 				$this->tableName,
 				[
 					'email'      => $anonymizedId,
-					'consent'    => $consent,
 					'status'     => 0,
 					'updated_at' => current_time( 'mysql' ),
 					'ip'         => $_SERVER['REMOTE_ADDR'],

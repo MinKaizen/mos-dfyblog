@@ -338,6 +338,22 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
     }
 
     /**
+     * Add custom HTML ta tag
+     *
+     * @since 3.10.4
+     * @access public
+     *
+     * @param array $tags     List of allowed HTML tags
+     * @param string $context Context name
+     * @return array          Array of allowed HTML tags
+     */
+    public function add_affiliate_link_tag( $tags, $context ) {
+        $tags['ta'] = $tags['a'];
+
+        return $tags;
+    }
+
+    /**
      * Register metaboxes
      *
      * @since 3.0.0
@@ -514,12 +530,12 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
         $inserted_to       = $thirstylink->get_prop( 'inserted_to' );
         $timezone          = new \DateTimeZone( $this->_helper_functions->get_site_current_timezone() );
         $last_scanned      = \DateTime::createFromFormat( 'Y-m-d G:i:s' , $thirstylink->get_prop( 'scanned_inserted' ) );
-        $not_yet_scanned   = __( 'Not yet scanned' , 'thirstyaffiliates' );
+        $not_yet_scanned   = esc_html__( 'Not yet scanned' , 'thirstyaffiliates' );
 
         if ( $last_scanned )
             $last_scanned->setTimezone( $timezone );
 
-        $last_scanned_txt        = $last_scanned !== false ? __( 'Last scanned on:' , 'thirstyaffiliates' ) . ' <em>' . $last_scanned->format( 'F j, Y g:ia' ) . '</em>' : $not_yet_scanned;
+        $last_scanned_txt        = $last_scanned !== false ? esc_html__( 'Last scanned on:' , 'thirstyaffiliates' ) . ' <em>' . $last_scanned->format( 'F j, Y g:ia' ) . '</em>' : $not_yet_scanned;
         $inserted_into_rows_html = $this->get_inserted_into_rows_html( $inserted_to );
 
         include( $this->_constants->VIEWS_ROOT_PATH() . 'cpt/view-inserted-link-scanner-metabox.php' );
@@ -539,20 +555,25 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
         global $wpdb;
 
         if ( ! is_array( $inserted_to ) || empty( $inserted_to ) )
-            return '<tr><td colspan="4">' . __( 'No results found.' , 'thirstyaffiliates' ) . '</td></tr>';
+            return '<tr><td colspan="4">' . esc_html__( 'No results found.' , 'thirstyaffiliates' ) . '</td></tr>';
 
+        $inserted_to = array_map( 'intval', $inserted_to );
         $inserted_to_str = implode( ',' , $inserted_to );
-        $results         = $wpdb->get_results( "SELECT ID , post_title , post_type FROM $wpdb->posts WHERE ID IN ( $inserted_to_str )" );
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $results = $wpdb->get_results( 
+            "SELECT ID , post_title , post_type FROM $wpdb->posts WHERE ID IN ( $inserted_to_str )",  
+        );
 
         ob_start();
         foreach ( $results as $object ) : ?>
             <tr>
                 <td class="id"><?php echo esc_html( $object->ID ); ?></td>
-                <td class="title"><?php echo mb_strimwidth( esc_html( $object->post_title ) , 0 , 60 , "..." ); ?></td>
+                <td class="title"><?php echo mb_strimwidth( esc_html( $object->post_title ) , 0 , 60 , "..." ); // phpcs:ignore WordPress.Security.EscapeOutput  ?></td>
                 <td class="post-type"><?php echo esc_html( $object->post_type ); ?></td>
                 <td class="actions">
-                    <a class="view" href="<?php echo get_permalink( $object->ID ); ?>" target="_blank"><span class="dashicons dashicons-admin-links"></span></a>
-                    <a class="edit" href="<?php echo get_edit_post_link( $object->ID ); ?>" target="_blank"><span class="dashicons dashicons-edit"></span></a>
+                    <a class="view" href="<?php echo esc_url( get_permalink( $object->ID ) ); ?>" target="_blank"><span class="dashicons dashicons-admin-links"></span></a>
+                    <a class="edit" href="<?php echo esc_url( get_edit_post_link( $object->ID ) ); ?>" target="_blank"><span class="dashicons dashicons-edit"></span></a>
                 </td>
             </tr>
         <?php endforeach;
@@ -580,7 +601,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
      */
     public function save_post( $post_id ) {
 
-        if ( ! isset( $_POST[ '_thirstyaffiliates_nonce' ] ) || ! wp_verify_nonce( $_POST['_thirstyaffiliates_nonce'], 'thirsty_affiliates_cpt_nonce' ) )
+        if ( ! isset( $_POST[ '_thirstyaffiliates_nonce' ] ) || ! wp_verify_nonce( sanitize_key( $_POST['_thirstyaffiliates_nonce'] ), 'thirsty_affiliates_cpt_nonce' ) )
             return;
 
         // remove save_post hooked action to prevent infinite loop
@@ -588,24 +609,39 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         $thirstylink = $this->get_thirstylink_post( $post_id );
 
+        if( isset( $_POST[ 'ta_destination_url' ] ) ){
+            $thirstylink->set_prop( 'destination_url', esc_url_raw( $_POST[ 'ta_destination_url' ] ) ); // phpcs:ignore WordPress.Security
+        }else{
+            $thirstylink->set_prop( 'destination_url', '' );
+        }
+
         // set Properties
-        $thirstylink->set_prop( 'destination_url' , esc_url_raw( $_POST[ 'ta_destination_url' ] ) );
-        $thirstylink->set_prop( 'no_follow' , sanitize_text_field( $_POST[ 'ta_no_follow' ] ) );
-        $thirstylink->set_prop( 'new_window' , sanitize_text_field( $_POST[ 'ta_new_window' ] ) );
-        $thirstylink->set_prop( 'pass_query_str' , sanitize_text_field( $_POST[ 'ta_pass_query_str' ] ) );
-        $thirstylink->set_prop( 'redirect_type' , sanitize_text_field( $_POST[ 'ta_redirect_type' ] ) );
-        $thirstylink->set_prop( 'rel_tags' , sanitize_text_field( $_POST[ 'ta_rel_tags' ] ) );
-        $thirstylink->set_prop( 'css_classes' , sanitize_text_field( $_POST[ 'ta_css_classes' ] ) );
+        $properties = array(
+            'no_follow'      => 'ta_no_follow',
+            'new_window'     => 'ta_new_window',
+            'pass_query_str' => 'ta_pass_query_str',
+            'redirect_type'  => 'ta_redirect_type',
+            'rel_tags'       => 'ta_rel_tags',
+            'css_classes'    => 'ta_css_classes',
+        );
+
+        foreach( $properties as $property_key => $post_key ){
+            if( isset( $_POST[ $post_key ] ) ){
+                $thirstylink->set_prop( $property_key, sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) ) );
+            }else{
+                $thirstylink->set_prop( $property_key, '' );
+            }
+        }
 
         if ( isset( $_POST[ 'post_name' ] ) )
-            $thirstylink->set_prop( 'slug' , sanitize_text_field( $_POST[ 'post_name' ] ) );
+            $thirstylink->set_prop( 'slug' , sanitize_text_field( wp_unslash( $_POST[ 'post_name' ] ) ) );
 
         if ( isset( $_POST[ 'ta_uncloak_link' ] ) )
-            $thirstylink->set_prop( 'uncloak_link' , sanitize_text_field( $_POST[ 'ta_uncloak_link' ] ) );
+            $thirstylink->set_prop( 'uncloak_link' , sanitize_text_field( $_POST[ 'ta_uncloak_link' ] ) ); // phpcs:ignore WordPress.Security
 
-        if ( isset( $_POST[ 'ta_category_slug' ] ) && $_POST[ 'ta_category_slug' ] ) {
+        if ( isset( $_POST[ 'ta_category_slug' ] ) && $_POST[ 'ta_category_slug' ] ) { // phpcs:ignore WordPress.Security
 
-            $category_slug_id = (int) sanitize_text_field( $_POST[ 'ta_category_slug' ] );
+            $category_slug_id = (int) sanitize_text_field( wp_unslash( $_POST[ 'ta_category_slug' ] ) );
             $category_slug    = get_term( $category_slug_id , Plugin_Constants::AFFILIATE_LINKS_TAX );
             $thirstylink->set_prop( 'category_slug_id' , $category_slug_id );
             $thirstylink->set_prop( 'category_slug' , $category_slug->slug );
@@ -717,7 +753,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         $post_type = get_post_type();
         if ( !$post_type && isset( $_GET[ 'post_type' ] ) )
-            $post_type = $_GET[ 'post_type' ];
+            $post_type = $_GET[ 'post_type' ]; // phpcs:ignore WordPress.Security
 
         if ( ! is_admin() || $post_type !== Plugin_Constants::AFFILIATE_LINKS_CPT )
             return;
@@ -762,25 +798,25 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
         switch ( $column ) {
 
             case 'link_id' :
-                echo '<span>' . $post_id . '</span>';
+                echo '<span>' . esc_html( $post_id ) . '</span>';
                 break;
 
             case 'redirect_type' :
-                echo $redirect_type;
-                echo $redirect_type === 'global' ? ' (' . $this->_helper_functions->get_option( 'ta_link_redirect_type' , '302' ) . ')' : '';
+                echo esc_html( $redirect_type );
+                echo $redirect_type === 'global' ? ' (' . esc_html( $this->_helper_functions->get_option( 'ta_link_redirect_type' , '302' ) ) . ')' : '';
                 break;
 
             case 'cloaked_url' :
                 echo '<div class="ta-display-input-wrap">';
-                echo '<input style="width:100%;" type="text" value="' . $thirstylink->get_prop( 'permalink' ) . '" readonly>';
-                echo '<a href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>';
+                echo '<input style="width:100%;" type="text" value="' . esc_attr( $thirstylink->get_prop( 'permalink' ) ) . '" readonly>';
+                echo '<a href="' . esc_url( $edit_link ) . '"><span class="dashicons dashicons-edit"></span></a>';
                 echo '</div>';
                 break;
 
             case 'link_destination' :
                 echo '<div class="ta-display-input-wrap">';
-                echo '<input style="width:100%;" type="text" value="' . $thirstylink->get_prop( 'destination_url' ) . '" readonly>';
-                echo '<a href="' . $edit_link . '"><span class="dashicons dashicons-edit"></span></a>';
+                echo '<input style="width:100%;" type="text" value="' . esc_attr( $thirstylink->get_prop( 'destination_url' ) ) . '" readonly>';
+                echo '<a href="' . esc_url( $edit_link ) . '"><span class="dashicons dashicons-edit"></span></a>';
                 echo '</div>';
                 break;
 
@@ -916,17 +952,21 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_edit', 'publish_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_get_category_slug', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'term_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
-            $link_cat_id = (int) sanitize_text_field( $_POST[ 'term_id' ] );
+            $link_cat_id = (int) sanitize_text_field( wp_unslash( $_POST[ 'term_id' ] ) );
             $category    = get_term( $link_cat_id , Plugin_Constants::AFFILIATE_LINKS_TAX );
 
             $response = array( 'status' => 'success' , 'category_slug' => $category->slug );
         }
 
-        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) ); 
         echo wp_json_encode( $response );
         wp_die();
     }
@@ -941,11 +981,15 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_edit', 'publish_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_link_inserted_scanner', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'link_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
-            $link_id      = (int) sanitize_text_field( $_POST[ 'link_id' ] );
+            $link_id      = (int) sanitize_text_field( wp_unslash( $_POST[ 'link_id' ] ) );
             $thirstylink  = $this->get_thirstylink_post( $link_id );
             $inserted_to  = $thirstylink->scan_where_links_inserted();
             $timezone     = new \DateTimeZone( $this->_helper_functions->get_site_current_timezone() );
@@ -955,11 +999,11 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
             $response = array(
                 'status'         => 'success',
                 'results_markup' => $this->get_inserted_into_rows_html( $inserted_to ),
-                'last_scanned'   => __( 'Last scanned on:' , 'thirstyaffiliates' ) . ' <em>' . $last_scanned->format( 'F j, Y g:ia' ) . '</em>'
+                'last_scanned'   => esc_html__( 'Last scanned on:' , 'thirstyaffiliates' ) . ' <em>' . $last_scanned->format( 'F j, Y g:ia' ) . '</em>'
             );
         }
 
-        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) ); 
         echo wp_json_encode( $response );
         wp_die();
     }
@@ -1001,6 +1045,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         // replace permalink with link ID
         add_filter( 'get_sample_permalink_html', array( $this , 'replace_permalink_with_id' ), 10 , 2 );
+        add_filter( 'wp_kses_allowed_html', array( $this, 'add_affiliate_link_tag' ), 10, 2 );
 
         // metaboxes
         add_action( 'add_meta_boxes' , array( $this , 'register_metaboxes' ) );

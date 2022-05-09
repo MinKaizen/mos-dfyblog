@@ -7,9 +7,13 @@ import { omitBy } from 'lodash';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { TextControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+
+/**
+ * iThemes dependencies
+ */
+import { SearchControl } from '@ithemes/ui';
 
 /**
  * Internal dependencies
@@ -60,7 +64,7 @@ function useActorsSelect( emptyLabel = '' ) {
 	return options;
 }
 
-export default function Search( { query } ) {
+export default function Search( { query, isQuerying } ) {
 	const actors = useActorsSelect( __( 'All', 'better-wp-security' ) );
 	const [ search, setSearch ] = useState( {
 		search: '',
@@ -99,12 +103,12 @@ export default function Search( { query } ) {
 					}
 				} }
 			/>
-			<TextControl
+			<SearchControl
 				value={ search.search }
 				onChange={ ( term ) => onSearch( { search: term } ) }
-				hideLabelFromVision
-				label={ __( 'Search', 'better-wp-security' ) }
-				type="search"
+				isSearching={ isQuerying }
+				surfaceVariant="secondary"
+				placeholder={ __( 'Search Bans', 'better-wp-security' ) }
 			/>
 		</section>
 	);

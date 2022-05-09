@@ -12,7 +12,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { apiFetch, createNotice, awaitPromise, doAction } from '../controls';
 import { STORE_NAME } from './';
 
@@ -121,7 +121,7 @@ export function* resetOnboarding() {
 	yield doAction( 'onboard.reset' );
 }
 
-export function* completeOnboarding() {
+export function* completeOnboarding( { root } ) {
 	const throwIf = ( maybeError ) => {
 		if ( maybeError instanceof Error ) {
 			throw maybeError;
@@ -135,6 +135,10 @@ export function* completeOnboarding() {
 
 	try {
 		for ( const step of steps ) {
+			if ( step.activeCallback && ! step.activeCallback( { root } ) ) {
+				continue;
+			}
+
 			yield { type: SET_COMPLETION_STEP, step };
 			const callback = step.callback();
 
@@ -154,6 +158,7 @@ export function* completeOnboarding() {
 
 		yield { type: SET_COMPLETION_STEP, step: true };
 	} catch ( error ) {
+		yield { type: SET_COMPLETION_STEP, step: false };
 		yield createNotice(
 			'error',
 			sprintf(
@@ -200,6 +205,7 @@ export function registerCompletionStep( {
 	priority,
 	render,
 	callback,
+	activeCallback,
 } ) {
 	return {
 		type: REGISTER_COMPLETION_STEP,
@@ -208,6 +214,7 @@ export function registerCompletionStep( {
 		priority,
 		render,
 		callback,
+		activeCallback,
 	};
 }
 

@@ -22,7 +22,7 @@ import {
 	PageHeader,
 	Breadcrumbs,
 } from '@ithemes/security.pages.settings';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { Settings, Notification } from '../';
 
 export default function Page( { asyncNotifications, asyncUsersAndRoles } ) {
@@ -39,8 +39,10 @@ export default function Page( { asyncNotifications, asyncUsersAndRoles } ) {
 		value: usersAndRoles,
 	} = asyncUsersAndRoles;
 
-	const error = useSelect( ( select ) =>
-		select( MODULES_STORE_NAME ).getError( 'notification-center' )
+	const error = useSelect(
+		( select ) =>
+			select( MODULES_STORE_NAME ).getError( 'notification-center' ),
+		[]
 	);
 	const { saveSettings } = useDispatch( MODULES_STORE_NAME );
 
@@ -52,14 +54,22 @@ export default function Page( { asyncNotifications, asyncUsersAndRoles } ) {
 		return null;
 	}
 
+	const onSubmit =
+		root === 'settings'
+			? () => saveSettings( 'notification-center' )
+			: goNext;
+	const saveLabel =
+		root === 'settings' ? undefined : __( 'Continue', 'better-wp-security' );
+	const allowCleanSave = root !== 'settings';
+
 	if ( 'onboard' === root ) {
 		return (
 			<Settings
 				usersAndRoles={ usersAndRoles }
-				onSubmit={ goNext }
-				saveLabel={ __( 'Continue', 'better-wp-security' ) }
+				onSubmit={ onSubmit }
+				saveLabel={ saveLabel }
 				allowUndo={ false }
-				allowCleanSave
+				allowCleanSave={ allowCleanSave }
 				apiError={ error }
 			/>
 		);
@@ -83,36 +93,51 @@ export default function Page( { asyncNotifications, asyncUsersAndRoles } ) {
 					notifications={ notifications }
 					usersAndRoles={ usersAndRoles }
 					apiError={ error }
+					onSubmit={ onSubmit }
+					saveLabel={ saveLabel }
+					allowCleanSave={ allowCleanSave }
 				/>
 			</Route>
 			<Route path={ path }>
 				{ nav }
 				<Settings
 					usersAndRoles={ usersAndRoles }
-					onSubmit={ () => saveSettings( 'notification-center' ) }
+					onSubmit={ onSubmit }
 					apiError={ error }
+					saveLabel={ saveLabel }
+					allowCleanSave={ allowCleanSave }
 				/>
 			</Route>
 		</Switch>
 	);
 }
 
-function NotificationPage( { notifications, usersAndRoles, apiError } ) {
+function NotificationPage( {
+	notifications,
+	usersAndRoles,
+	apiError,
+	onSubmit,
+	saveLabel,
+	allowCleanSave,
+} ) {
 	const { child: notification } = useParams();
 
-	const { isDirty, isSaving, settings } = useSelect( ( select ) => ( {
-		isDirty: select( MODULES_STORE_NAME ).areSettingsDirty(
-			'notification-center'
-		),
-		isSaving: select( MODULES_STORE_NAME ).isSavingSettings(
-			'notification-center'
-		),
-		settings: select( MODULES_STORE_NAME ).getEditedSetting(
-			'notification-center',
-			'notifications'
-		),
-	} ) );
-	const { editSetting, saveSettings, resetSettingEdits } = useDispatch(
+	const { isDirty, isSaving, settings } = useSelect(
+		( select ) => ( {
+			isDirty: select( MODULES_STORE_NAME ).areSettingsDirty(
+				'notification-center'
+			),
+			isSaving: select( MODULES_STORE_NAME ).isSavingSettings(
+				'notification-center'
+			),
+			settings: select( MODULES_STORE_NAME ).getEditedSetting(
+				'notification-center',
+				'notifications'
+			),
+		} ),
+		[]
+	);
+	const { editSetting, resetSettingEdits } = useDispatch(
 		MODULES_STORE_NAME
 	);
 
@@ -139,8 +164,10 @@ function NotificationPage( { notifications, usersAndRoles, apiError } ) {
 				onChange={ onChange }
 				isSaving={ isSaving }
 				isDirty={ isDirty }
-				onSubmit={ () => saveSettings( 'notification-center' ) }
+				onSubmit={ onSubmit }
 				onUndo={ () => resetSettingEdits( 'notification-center' ) }
+				saveLabel={ saveLabel }
+				allowCleanSave={ allowCleanSave }
 				apiError={ apiError }
 			/>
 		</>

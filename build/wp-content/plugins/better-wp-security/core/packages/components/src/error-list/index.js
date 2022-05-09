@@ -10,6 +10,7 @@ export default function ErrorList( {
 	schemaError,
 	title,
 	className,
+	hasBorder,
 } ) {
 	const all = [
 		...errors,
@@ -26,6 +27,7 @@ export default function ErrorList( {
 			messages={ all }
 			title={ title }
 			className={ className }
+			hasBorder={ hasBorder }
 			type="error"
 		/>
 	);

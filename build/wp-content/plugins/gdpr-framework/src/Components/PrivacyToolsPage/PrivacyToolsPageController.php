@@ -76,9 +76,10 @@ class PrivacyToolsPageController {
 	}
 
 	public function enqueue_donotsell() {
+		global $gdpr;
 		wp_enqueue_script(
 			'donot-sell-form',
-			gdpr( 'config' )->get( 'plugin.url' ) . 'assets/js/gdpr-donotsell.js',
+			$gdpr->PluginUrl . 'assets/js/gdpr-donotsell.js',
 			array( 'jquery' ),
 			GDPR_FRAMEWORK_VERSION,
 			true
@@ -93,13 +94,14 @@ class PrivacyToolsPageController {
 	}
 
 	public function enqueue() {
+		global $gdpr;
 		if ( ! gdpr( 'options' )->get( 'enable_stylesheet' ) || ! is_page( gdpr( 'options' )->get( 'tools_page' ) ) ) {
 			return;
 		}
 
 		wp_enqueue_style(
 			'gdpr-framework-privacy-tools',
-			gdpr( 'config' )->get( 'plugin.url' ) . 'assets/privacy-tools.css'
+			$gdpr->PluginUrl . 'assets/privacy-tools.css'
 		);
 
 	}
@@ -109,9 +111,9 @@ class PrivacyToolsPageController {
 		exit;
 	}
 
-	/**
-	 * If the given email address exists as a data subject, send an authentication email to that address
-	 */
+    /**
+     * If the given email address exists as a data subject, send an authentication email to that address
+     */
     public function sendIdentificationEmail() {
         // Additional safety check
         if ( ! is_email( $_REQUEST['email'] ) ) {
@@ -120,15 +122,15 @@ class PrivacyToolsPageController {
             $requested_email = sanitize_email( $_REQUEST['email'] );
         }
 
-        $user = get_user_by( 'email', $requested_email );
-        if (empty($user)) {
-            $this->redirect( array( 'gdpr_notice' => 'unregistered_user' ) );
-        }
-
         if ( $this->dataSubjectIdentificator->isDataSubject( $requested_email ) ) {
             $this->dataSubjectIdentificator->sendIdentificationEmail( $requested_email );
         } else {
-            $this->dataSubjectIdentificator->sendNoDataFoundEmail( $requested_email );
+            $user = get_user_by( 'email', $requested_email );
+            if (empty($user)) {
+                $this->redirect( array( 'gdpr_notice' => 'unregistered_user' ) );
+            } else {
+                $this->dataSubjectIdentificator->sendNoDataFoundEmail( $requested_email );
+            }
         }
 
         $this->redirect( array( 'gdpr_notice' => 'email_sent' ) );
@@ -366,6 +368,7 @@ class PrivacyToolsPageController {
 				$email   = sanitize_email( $form_data['donotsell_email'] );
 				$consent = 'do-not-sell-info';
 				$output  = $this->UserConsentModel->give( $email, $consent, $valid_until = null );
+				$this->UserConsentModel->give( $email, 'receive-communications', $valid_until = null );
 			}
 			// Post was not created/updated, so let's output the error message.
 			if ( is_wp_error( $new_post ) ) {

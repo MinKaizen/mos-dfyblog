@@ -14,7 +14,8 @@ class AdminHelper
 
     protected function toolsHelper()
     {
-        $toolsPage = gdpr('options')->get('tools_page');
+        global $gdpr;
+        $toolsPage = $gdpr->Options->get('tools_page');
 
         // Display the notice only on Tools page
         if (!$toolsPage || !isset($_GET['post']) || $_GET['post'] !== $toolsPage) {
@@ -42,7 +43,8 @@ class AdminHelper
 
     protected function policyHelper()
     {
-        $policyPage = gdpr('options')->get('policy_page');
+        global $gdpr;
+        $policyPage = $gdpr->Options->get('policy_page');
 
         // Display the notice only on Policy page
         if (!$policyPage || !isset($_GET['post']) || $_GET['post'] !== $policyPage) {
@@ -59,22 +61,23 @@ class AdminHelper
 
     protected function settingsHelper()
     {
-        if (gdpr('options')->get('is_installed') &&
-            ((!gdpr('options')->get('tools_page') || is_null(get_post(gdpr('options')->get('tools_page'))))) && !gdpr('options')->get('custom_tools_page')) {
+        global $gdpr;
+        if ($gdpr->Options->get('is_installed') &&
+            ((!$gdpr->Options->get('tools_page') || is_null(get_post($gdpr->Options->get('tools_page'))))) && !$gdpr->Options->get('custom_tools_page')) {
             $this->renderSettingsHelperNotice();
         }
 
-        if ('download_and_notify' === gdpr('options')->get('export_action') || 'notify' === gdpr('options')->get('export_action')) {
-            if (!gdpr('options')->get('export_action_email')) {
+        if ('download_and_notify' === $gdpr->Options->get('export_action') || 'notify' === $gdpr->Options->get('export_action')) {
+            if (!$gdpr->Options->get('export_action_email')) {
                 $this->renderSettingsHelperNotice();
             }
         }
 
-        if ('anonymize_and_notify' === gdpr('options')->get('delete_action') ||
-            'delete_and_notify' === gdpr('options')->get('delete_action') ||
-            'notify' === gdpr('options')->get('delete_action')
+        if ('anonymize_and_notify' === $gdpr->Options->get('delete_action') ||
+            'delete_and_notify' === $gdpr->Options->get('delete_action') ||
+            'notify' === $gdpr->Options->get('delete_action')
         ) {
-            if (!gdpr('options')->get('delete_action_email')) {
+            if (!$gdpr->Options->get('delete_action_email')) {
                 $this->renderSettingsHelperNotice();
             }
         }

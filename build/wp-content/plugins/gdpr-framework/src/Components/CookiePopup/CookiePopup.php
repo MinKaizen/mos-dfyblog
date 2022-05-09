@@ -1,6 +1,7 @@
 <?php
 
 namespace Codelight\GDPR\Components\CookiePopup;
+
 /**
  * Handles putting together and rendering the privacy policy page
  *
@@ -17,7 +18,7 @@ class CookiePopup
 
     public function registerAdminTab($tabs)
     {    
-        $tabs['cookie-popup'] = gdpr()->make(AdminTabCookiePopup::class);
+        $tabs['cookie-popup'] = new AdminTabCookiePopup();
         return $tabs;
     }
 }

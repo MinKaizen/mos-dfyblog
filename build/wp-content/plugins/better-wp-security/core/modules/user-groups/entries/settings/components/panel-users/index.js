@@ -8,7 +8,8 @@ import { map } from 'lodash';
  */
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { compose, withState, withInstanceId } from '@wordpress/compose';
+import { compose, withInstanceId } from '@wordpress/compose';
+import { useState } from '@wordpress/element';
 import {
 	withDispatch,
 	withSelect,
@@ -54,9 +55,8 @@ function PanelUsers( {
 	loading,
 	onChange,
 	disabled = false,
-	selectSearch,
-	setState,
 } ) {
+	const [ selectSearch, setSelectSearch ] = useState( '' );
 	const selectId = `itsec-user-group-panel-users__select-${ instanceId }`;
 	const values = loading ? [] : users.map( formatUser );
 
@@ -82,7 +82,7 @@ function PanelUsers( {
 				}
 				inputValue={ selectSearch }
 				onInputChange={ ( newSelect ) =>
-					setState( { selectSearch: newSelect } )
+					setSelectSearch( newSelect )
 				}
 			/>
 		</BaseControl>
@@ -90,7 +90,6 @@ function PanelUsers( {
 }
 
 export default compose( [
-	withState( { selectSearch: '' } ),
 	withSelect( ( select, { groupId } ) => {
 		const userIds =
 			select(

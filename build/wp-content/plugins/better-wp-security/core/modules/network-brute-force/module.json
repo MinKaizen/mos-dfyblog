@@ -84,6 +84,13 @@
     "email",
     "updates_optin"
   ],
+  "import-export": {
+    "import-settings": [
+      "email",
+      "updates_optin",
+      "api_key"
+    ]
+  },
   "removed-settings": [
     "api_nag"
   ],

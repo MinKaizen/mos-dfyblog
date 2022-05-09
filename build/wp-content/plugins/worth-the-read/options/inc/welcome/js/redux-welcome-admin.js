@@ -1,294 +1,325 @@
-(function( $ ) {
-    'use strict';
+/* global window */
 
-    $.redux_welcome = $.redux_welcome || {};
+( function( $ ) {
+$.redux_welcome = $.redux_welcome || {};
 
-    $( document ).ready(
-        function() {
-            $.redux_welcome.initQtip();
-            if ( jQuery( document.getElementById( "support_div" ) ).is( ":visible" ) ) {
-                $.redux_welcome.initSupportPage();
-            }
-            $.redux_welcome.supportHash();
-        }
-    );
+	$( document ).ready(
+		function() {
+			$.redux_welcome.initQtip();
 
+			if ( $( document.getElementById( 'support_div' ) ).is( ':visible' ) ) {
+				$.redux_welcome.initSupportPage();
+			}
 
-    $.redux_welcome.supportHash = function() {
+			$.redux_welcome.supportHash();
+		}
+	);
 
-        jQuery( "#support_hash" ).focus(
-            function() {
-                var $this = jQuery( this );
-                $this.select();
+	$.redux_welcome.supportHash = function() {
+		$( '#support_hash' ).on(
+			'focus',
+			function() {
+				var $this = $( this );
+				$this.trigger( 'select' );
 
-                // Work around Chrome's little problem
-                $this.mouseup(
-                    function() {
-                        // Prevent further mouseup intervention
-                        $this.unbind( "mouseup" );
-                        return false;
-                    }
-                );
-            }
-        );
+				// Work around Chrome's little problem.
+				$this.on(
+					'mouseup',
+					function() {
 
-        jQuery( '.redux_support_hash' ).click(
-            function( e ) {
+						// Prevent further mouseup intervention.
+						$this.off( 'mouseup' );
+						return false;
+					}
+				);
+			}
+		);
 
-                var $button = jQuery( this );
-                if ( $button.hasClass( 'disabled' ) ) {
-                    return;
-                }
-                var $nonce = jQuery( '#redux_support_nonce' ).val();
-                $button.addClass( 'disabled' );
-                $button.parent().append( '<span class="spinner" style="display:block;float: none;margin: 10px auto;"></span>' );
-                $button.closest( '.spinner' ).fadeIn();
-                if ( !window.console ) console = {};
-                console.log = console.log || function( name, data ) {};
-                jQuery.ajax(
-                    {
-                        type: "post",
-                        dataType: "json",
-                        url: ajaxurl,
-                        data: {
-                            action: "redux_support_hash",
-                            nonce: $nonce
-                        },
-                        error: function( response ) {
-                            console.log( response );
-                            $button.removeClass( 'disabled' );
-                            $button.parent().find( '.spinner' ).remove();
-                            alert( 'There was an error. Please try again later.' );
-                        },
-                        success: function( response ) {
-                            if ( response.status == "success" ) {
-                                jQuery( '#support_hash' ).val( 'http://support.redux.io/?id=' + response.identifier );
-                                $button.parents( 'fieldset:first' ).find( '.next' ).removeAttr( 'disabled' ).click();
-                            } else {
-                                console.log( response );
-                                alert( 'There was an error. Please try again later.' );
-                            }
-                        }
-                    }
-                );
-                e.preventDefault();
-            }
-        );
-    };
+		$( '.redux_support_hash' ).on(
+			'click',
+			function( e ) {
+				var $nonce;
 
-    $.redux_welcome.initSupportPage = function() {
-        //jQuery time
-        var current_fs, next_fs, previous_fs; //fieldsets
-        var left, opacity, scale; //fieldset properties which we will animate
-        var animating; //flag to prevent quick multi-click glitches
+				var $button = $( this );
 
-        $.fn.actualHeight = function() {
-            // find the closest visible parent and get it's hidden children
-            var visibleParent = this.closest( ':visible' ).children(),
-                thisHeight;
+				if ( $button.hasClass( 'disabled' ) ) {
+					return;
+				}
 
-            // set a temporary class on the hidden parent of the element
-            visibleParent.addClass( 'temp-show' );
+				$nonce = $( '#redux_support_nonce' ).val();
 
-            // get the height
-            thisHeight = this.height();
+				$button.addClass( 'disabled' );
+				$button.parent().append( '<span class="spinner" style="display:block;float: none;margin: 10px auto;"></span>' );
 
-            // remove the temporary class
-            visibleParent.removeClass( 'temp-show' );
+				$button.closest( '.spinner' ).fadeIn();
 
-            return thisHeight;
-        };
+				if ( ! window.console ) {
+					window.console = {};
+				}
 
-        function setHeight() {
-            var $height = 0;
-            jQuery( document ).find( '#support_div fieldset' ).each(
-                function() {
-                    var $actual = $( this ).actualHeight();
-                    if ( $height < $actual ) {
-                        $height = $actual;
-                    }
-                }
-            );
-            jQuery( '#support_div' ).height( $height + 20 );
-        }
+				$.ajax(
+					{
+						type: 'post',
+						dataType: 'json',
+						url: window.ajaxurl,
+						data: {
+							action: 'redux_support_hash',
+							nonce: $nonce
+						},
+						error: function( response ) {
+							console.log( response );
+							$button.removeClass( 'disabled' );
+							$button.parent().find( '.spinner' ).remove();
+							alert( 'There was an error. Please try again later.' );
+						},
+						success: function( response ) {
+							if ( 'success' === response.status ) {
+								$( '#support_hash' ).val( 'https://support.redux.io/?id=' + response.identifier );
+								$button.parents( 'fieldset:first' ).find( '.next' ).prop( 'disabled', false ).trigger( 'click' );
+							} else {
+								window.console.log( response );
+								alert( 'There was an error. Please try again later.' );
+							}
+						}
+					}
+				);
 
-        setHeight();
-        $( window ).on(
-            'resize', function() {
-                setHeight();
-            }
-        );
-        jQuery( '#is_user' ).click(
-            function() {
-                jQuery( '#final_support .is_user' ).show();
-                jQuery( '#final_support .is_developer' ).hide();
-                jQuery( this ).parents( 'fieldset:first' ).find( '.next' ).click();
-            }
-        );
-        jQuery( '#is_developer' ).click(
-            function() {
-                jQuery( '#final_support .is_user' ).hide();
-                jQuery( '#final_support .is_developer' ).show();
-                jQuery( this ).parents( 'fieldset:first' ).find( '.next' ).click();
-            }
-        );
+				e.preventDefault();
+			}
+		);
+	};
 
-        jQuery( "#support_div .next" ).click(
-            function() {
-                if ( animating ) return false;
-                animating = true;
+	$.redux_welcome.initSupportPage = function() {
+		var current_fs, next_fs, previous_fs;   // Fieldsets.
+		var left, opacity, scale;               // Fieldset properties which we will animate.
+		var animating;                          // Flag to prevent quick multi-click glitches.
 
-                current_fs = jQuery( this ).parent();
-                next_fs = jQuery( this ).parent().next();
+		$.fn.actualHeight = function() {
 
-                //activate next step on progressbar using the index of next_fs
-                jQuery( "#progressbar li" ).eq( jQuery( "fieldset" ).index( next_fs ) ).addClass( "active" );
+			// Find the closest visible parent and get it's hidden children.
+			var visibleParent = this.closest( ':visible' ).children(), thisHeight;
 
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate(
-                    {opacity: 0}, {
-                        step: function( now, mx ) {
-                            //as the opacity of current_fs reduces to 0 - stored in "now"
-                            //1. scale current_fs down to 80%
-                            scale = 1 - (1 - now) * 0.2;
-                            //2. bring next_fs from the right(50%)
-                            left = (now * 50) + "%";
-                            //3. increase opacity of next_fs to 1 as it moves in
-                            opacity = 1 - now;
-                            current_fs.css( {'transform': 'scale(' + scale + ')'} );
-                            next_fs.css( {'left': left, 'opacity': opacity} );
-                        },
-                        duration: 800,
-                        complete: function() {
-                            current_fs.hide();
-                            animating = false;
-                        },
-                        //this comes from the custom easing plugin
-                        easing: 'easeInOutBack'
-                    }
-                );
-            }
-        );
+			// Set a temporary class on the hidden parent of the element.
+			visibleParent.addClass( 'temp-show' );
 
-        jQuery( "#support_div .previous" ).click(
-            function() {
-                if ( animating ) return false;
-                animating = true;
+			// Get the height.
+			thisHeight = this.height();
 
-                current_fs = jQuery( this ).parent();
-                previous_fs = jQuery( this ).parent().prev();
+			// Remove the temporary class.
+			visibleParent.removeClass( 'temp-show' );
 
-                //de-activate current step on progressbar
-                jQuery( "#progressbar li" ).eq( jQuery( "fieldset" ).index( current_fs ) ).removeClass( "active" );
+			return thisHeight;
+		};
 
-                //show the previous fieldset
-                previous_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate(
-                    {opacity: 0}, {
-                        step: function( now, mx ) {
-                            //as the opacity of current_fs reduces to 0 - stored in "now"
-                            //1. scale previous_fs from 80% to 100%
-                            scale = 0.8 + (1 - now) * 0.2;
-                            //2. take current_fs to the right(50%) - from 0%
-                            left = ((1 - now) * 50) + "%";
-                            //3. increase opacity of previous_fs to 1 as it moves in
-                            opacity = 1 - now;
-                            current_fs.css( {'left': left} );
-                            previous_fs.css( {'transform': 'scale(' + scale + ')', 'opacity': opacity} );
-                        },
-                        duration: 800,
-                        complete: function() {
-                            current_fs.hide();
-                            animating = false;
-                        },
-                        //this comes from the custom easing plugin
-                        easing: 'easeInOutBack'
-                    }
-                );
-            }
-        );
-    }
+		function setHeight() {
+			var $height = 0;
 
-    $.redux_welcome.initQtip = function() {
-        if ( $().qtip ) {
-            var shadow = 'qtip-shadow';
-            var color = 'qtip-dark';
-            var rounded = '';
-            var style = ''; //qtip-bootstrap';
+			$( document ).find( '#support_div fieldset' ).each(
+				function() {
+					var $actual = $( this ).actualHeight();
+					if ( $height < $actual ) {
+						$height = $actual;
+					}
+				}
+			);
 
-            var classes = shadow + ',' + color + ',' + rounded + ',' + style;
-            classes = classes.replace( /,/g, ' ' );
+			$( '#support_div' ).height( $height + 20 );
+		}
 
-            // Get position data
-            var myPos = 'top center';
-            var atPos = 'bottom center';
+		setHeight();
 
-            // Tooltip trigger action
-            var showEvent = 'click';
-            var hideEvent = 'click mouseleave';
+		$( window ).on(
+			'resize',
+			function() {
+				setHeight();
+			}
+		);
 
-            // Tip show effect
-            var tipShowEffect = 'slide';
-            var tipShowDuration = '500';
+		$( '#is_user' ).on(
+			'click',
+			function() {
+				$( '#final_support .is_user' ).show();
+				$( '#final_support .is_developer' ).hide();
+				$( this ).parents( 'fieldset:first' ).find( '.next' ).trigger( 'click' );
+			}
+		);
 
-            // Tip hide effect
-            var tipHideEffect = 'slide';
-            var tipHideDuration = '500';
+		$( '#is_developer' ).on(
+			'click',
+			function() {
+				$( '#final_support .is_user' ).hide();
+				$( '#final_support .is_developer' ).show();
+				$( this ).parents( 'fieldset:first' ).find( '.next' ).trigger( 'click' );
+			}
+		);
 
-            $( '.redux-hint-qtip' ).each(
-                function() {
-                    $( this ).qtip(
-                        {
-                            content: {
-                                text: $( this ).attr( 'qtip-content' ),
-                                title: $( this ).attr( 'qtip-title' )
-                            },
-                            show: {
-                                effect: function() {
-                                    switch ( tipShowEffect ) {
-                                        case 'slide':
-                                            $( this ).slideDown( tipShowDuration );
-                                            break;
-                                        case 'fade':
-                                            $( this ).fadeIn( tipShowDuration );
-                                            break;
-                                        default:
-                                            $( this ).show();
-                                            break;
-                                    }
-                                },
-                                event: showEvent,
-                            },
-                            hide: {
-                                effect: function() {
-                                    switch ( tipHideEffect ) {
-                                        case 'slide':
-                                            $( this ).slideUp( tipHideDuration );
-                                            break;
-                                        case 'fade':
-                                            $( this ).fadeOut( tipHideDuration );
-                                            break;
-                                        default:
-                                            $( this ).show( tipHideDuration );
-                                            break;
-                                    }
-                                },
-                                event: hideEvent,
-                            },
-                            style: {
-                                classes: classes,
-                            },
-                            position: {
-                                my: myPos,
-                                at: atPos,
-                            },
-                        }
-                    );
-                }
-            );
-        }
-    };
+		$( '#support_div .next' ).on(
+			'click',
+			function() {
+				if ( animating ) {
+					return false;
+				}
+
+				animating = true;
+
+				current_fs = $( this ).parent();
+				next_fs    = $( this ).parent().next();
+
+				// Activate next step on progressbar using the index of next_fs.
+				$( '#progressbar li' ).eq( $( 'fieldset' ).index( next_fs ) ).addClass( 'active' );
+
+				// Show the next fieldset.
+				next_fs.show();
+
+				// Hide the current fieldset with style.
+				current_fs.animate(
+					{ opacity: 0 },
+					{
+						step: function( now ) {
+
+							// As the opacity of current_fs reduces to 0 - stored in 'now'.
+							// 1. scale current_fs down to 80%.
+							scale = 1 - ( 1 - now ) * 0.2;
+
+							// 2. bring next_fs from the right(50%)
+							left = ( now * 50 ) + '%';
+
+							// 3. increase opacity of next_fs to 1 as it moves in
+							opacity = 1 - now;
+
+							current_fs.css( { 'transform': 'scale(' + scale + ')' } );
+							next_fs.css( { 'left': left, 'opacity': opacity } );
+						},
+						duration: 800, complete: function() {
+							current_fs.hide();
+							animating = false;
+						},
+						easing: 'easeInOutBack'
+					}
+				);
+			}
+		);
+
+		$( '#support_div .previous' ).on(
+			'click',
+			function() {
+				if ( animating ) {
+					return false;
+				}
+
+				animating = true;
+
+				current_fs  = $( this ).parent();
+				previous_fs = $( this ).parent().prev();
+
+				// De-activate current step on progressbar.
+				$( '#progressbar li' ).eq( $( 'fieldset' ).index( current_fs ) ).removeClass( 'active' );
+
+				// Show the previous fieldset.
+				previous_fs.show();
+
+				// Hide the current fieldset with style.
+				current_fs.animate(
+					{ opacity: 0 },
+					{
+						step: function( now ) {
+
+							// As the opacity of current_fs reduces to 0 - stored in 'now'.
+							// 1. scale previous_fs from 80% to 100%.
+							scale = 0.8 + ( 1 - now ) * 0.2;
+
+							// 2. take current_fs to the right(50%) - from 0%.
+							left = ( ( 1 - now ) * 50 ) + '%';
+
+							// 3. increase opacity of previous_fs to 1 as it moves in.
+							opacity = 1 - now;
+
+							current_fs.css( { 'left': left } );
+							previous_fs.css( { 'transform': 'scale(' + scale + ')', 'opacity': opacity } );
+						},
+						duration: 800, complete: function() {
+							current_fs.hide();
+							animating = false;
+						}, // This comes from the custom easing plugin
+						easing: 'easeInOutBack'
+					}
+				);
+			}
+		);
+	};
+
+	$.redux_welcome.initQtip = function() {
+		var shadow  = 'qtip-shadow';
+		var color   = 'qtip-dark';
+		var rounded = '';
+		var style   = ''; // Qtip-bootstrap'.
+		var classes = shadow + ',' + color + ',' + rounded + ',' + style;
+
+		// Get position data.
+		var myPos = 'top center';
+		var atPos = 'bottom center';
+
+		// Tooltip trigger action.
+		var showEvent = 'mouseenter';
+		var hideEvent = 'click mouseleave';
+
+		// Tip show effect.
+		var tipShowEffect   = 'slide';
+		var tipShowDuration = '300';
+
+		// Tip hide effect.
+		var tipHideEffect   = 'slide';
+		var tipHideDuration = '300';
+
+		if ( $().qtip ) {
+			classes = classes.replace( /,/g, ' ' );
+
+			$( '.redux-hint-qtip' ).each(
+				function() {
+					$( this ).qtip(
+						{
+							content: {
+								text: $( this ).attr( 'qtip-content' ), title: $( this ).attr( 'qtip-title' )
+							},
+							show: {
+								effect: function() {
+									switch ( tipShowEffect ) {
+										case 'slide':
+											$( this ).slideDown( tipShowDuration );
+											break;
+										case 'fade':
+											$( this ).fadeIn( tipShowDuration );
+											break;
+										default:
+											$( this ).show();
+											break;
+									}
+								},
+								event: showEvent
+							}, hide: {
+								effect: function() {
+									switch ( tipHideEffect ) {
+										case 'slide':
+											$( this ).slideUp( tipHideDuration );
+											break;
+										case 'fade':
+											$( this ).fadeOut( tipHideDuration );
+											break;
+										default:
+											$( this ).show( tipHideDuration );
+											break;
+									}
+								}, event: hideEvent
+							}, style: {
+								classes: classes
+							}, position: {
+								my: myPos,
+								at: atPos
+							}
+						}
+					);
+				}
+			);
+		}
+	};
 })( jQuery );

@@ -11,8 +11,6 @@ class Modal
     protected $data;
 
     /**
-     * todo: replace with a proper factory pattern via gdpr()?
-     *
      * AdminNotice constructor.
      */
     public function __construct()
@@ -31,7 +29,7 @@ class Modal
     public function render()
     {
         if (!$this->template) {
-            trigger_error('Template not set for admin notice!', E_USER_ERROR);
+            return;
         }
 
         echo gdpr('view')->render('admin/modals/header', $this->data);

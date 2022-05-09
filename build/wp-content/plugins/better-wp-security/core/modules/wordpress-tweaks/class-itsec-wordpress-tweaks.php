@@ -59,17 +59,18 @@ final class ITSEC_WordPress_Tweaks {
 	}
 
 	public function init() {
-		$this->add_config_hooks();
+		if ( ITSEC_Core::is_temp_disable_modules_set() ) {
+			return;
+		}
 
+		$this->add_config_hooks();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			// Don't risk blocking anything with WP_CLI.
 			return;
 		}
 
-
 		$this->settings = ITSEC_Modules::get_settings( 'wordpress-tweaks' );
-
 
 		// Functional code for the valid_user_login_type setting.
 		if ( 'email' === $this->settings['valid_user_login_type'] ) {

@@ -994,18 +994,21 @@ final class ITSEC_Lib {
 	 *
 	 * @author Modified from ticket #25331
 	 *
-	 * @param int    $timestamp
-	 * @param string $format Specify the format. If blank, will default to the date and time format settings.
+	 * @param int|DateTimeInterface $time   The time to use.
+	 * @param string                $format Specify the format. If blank, will default to the date and time format settings.
 	 *
 	 * @return string
 	 */
-	public static function date_format_i18n_and_local_timezone( $timestamp, $format = '' ) {
+	public static function date_format_i18n_and_local_timezone( $time, $format = '' ) {
+		if ( $time instanceof \DateTimeInterface ) {
+			$time = $time->getTimestamp();
+		}
 
 		if ( ! $format ) {
 			$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 		}
 
-		return date_i18n( $format, strtotime( get_date_from_gmt( date( 'Y-m-d H:i:s', $timestamp ) ) ) );
+		return date_i18n( $format, strtotime( get_date_from_gmt( date( 'Y-m-d H:i:s', $time ) ) ) );
 	}
 
 	/**
@@ -1121,6 +1124,50 @@ final class ITSEC_Lib {
 		}
 
 		$modify[ array_shift( $keys ) ] = $value;
+
+		return $array;
+	}
+
+	/**
+	 * Removes items at the given locations from an array.
+	 *
+	 * This accepts a dotted path with '*' to represent wildcards.
+	 *
+	 * @param array  $array
+	 * @param string $dotted_path
+	 *
+	 * @return array
+	 */
+	public static function array_remove( array $array, string $dotted_path ): array {
+		$paths = explode( '.', $dotted_path );
+
+		return self::_array_remove( $array, $paths );
+	}
+
+	private static function _array_remove( array $array, array $paths ): array {
+		if ( ! $array ) {
+			return $array;
+		}
+
+		$path = array_shift( $paths );
+
+		if ( '*' === $path ) {
+			foreach ( $array as $k => $v ) {
+				if ( is_array( $v ) ) {
+					$array[ $k ] = self::_array_remove( $v, $paths );
+				} elseif ( ! $paths ) {
+					// If the last dotted path is a wildcard,
+					// remove all elements.
+					unset( $array[ $k ] );
+				}
+			}
+		} elseif ( isset( $array[ $path ] ) ) {
+			if ( is_array( $array[ $path ] ) && $paths ) {
+				$array[ $path ] = self::_array_remove( $array[ $path ], $paths );
+			} else {
+				unset( $array[ $path ] );
+			}
+		}
 
 		return $array;
 	}
@@ -1548,7 +1595,7 @@ final class ITSEC_Lib {
 	 *
 	 * @param string $header
 	 *
-	 * @return string[]
+	 * @return array[]
 	 * @example Parsing the Accept-Language header.
 	 *
 	 * "en-US,en;q=0.9,de;q=0.8" transforms to:
@@ -2296,7 +2343,7 @@ final class ITSEC_Lib {
 			'type'                 => 'object',
 			'additionalProperties' => false,
 			'properties'           => [
-				'version' => [
+				'version'       => [
 					'type'                 => 'object',
 					'additionalProperties' => false,
 					'properties'           => [
@@ -2310,8 +2357,14 @@ final class ITSEC_Lib {
 						],
 					],
 				],
-				'ssl'     => [
+				'ssl'           => [
 					'type' => 'boolean',
+				],
+				'feature-flags' => [
+					'type'  => 'array',
+					'items' => [
+						'type' => 'string',
+					],
 				],
 			],
 		];
@@ -2346,6 +2399,19 @@ final class ITSEC_Lib {
 							'ssl',
 							$requirement ? __( 'Your site must support SSL.', 'better-wp-security' ) : __( 'Your site must not support SSL.', 'better-wp-security' )
 						);
+					}
+					break;
+				case 'feature-flags':
+					foreach ( $requirement as $flag ) {
+						if ( ! ITSEC_Lib_Feature_Flags::is_enabled( $flag ) ) {
+							$error->add(
+								'feature-flags',
+								sprintf(
+									__( 'The \'%s\' feature flag must be enabled.', 'better-wp-security' ),
+									( ITSEC_Lib_Feature_Flags::get_flag_config( $flag )['title'] ?? $flag ) ?: $flag
+								)
+							);
+						}
 					}
 					break;
 			}
@@ -2562,5 +2628,24 @@ final class ITSEC_Lib {
 		}
 
 		array_walk( $value, [ static::class, 'resolve_ref' ], $definitions );
+	}
+
+	/**
+	 * Generates a v4 UUID using a CSPRNG.
+	 *
+	 * @return string
+	 */
+	public static function generate_uuid4(): string {
+		return sprintf(
+			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+			wp_rand( 0, 0xffff ),
+			wp_rand( 0, 0xffff ),
+			wp_rand( 0, 0xffff ),
+			wp_rand( 0, 0x0fff ) | 0x4000,
+			wp_rand( 0, 0x3fff ) | 0x8000,
+			wp_rand( 0, 0xffff ),
+			wp_rand( 0, 0xffff ),
+			wp_rand( 0, 0xffff )
+		);
 	}
 }

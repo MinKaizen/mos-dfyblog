@@ -25,7 +25,7 @@
         <?php endif; ?>
 
         <?php if ('unregistered_user' === sanitize_key($_REQUEST['gdpr_notice'])): ?>
-            <?= __('The email you entered is not associated with any user on this site.', 'gdpr-framework'); ?>
+            <?= __(sanitize_text_field(gdpr('options')->get('unknown_user_message', GDPR_DEFAULT_UNKNOWN_USER_MESSAGE)), 'gdpr-framework'); ?>
         <?php endif; ?>
     </mark>
 </div>

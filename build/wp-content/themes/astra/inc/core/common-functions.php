@@ -1158,7 +1158,15 @@ if ( ! function_exists( 'astra_get_pro_url' ) ) :
 			$astra_pro_url = add_query_arg( 'utm_campaign', sanitize_text_field( $campaign ), $astra_pro_url );
 		}
 
-		return esc_url( apply_filters( 'astra_get_pro_url', $astra_pro_url, $url ) );
+		$astra_pro_url = esc_url( apply_filters( 'astra_get_pro_url', $astra_pro_url, $url ) );
+		$astra_pro_url = remove_query_arg( 'bsf', $astra_pro_url );
+
+		$ref = get_option( 'astra_partner_url_param', '' );
+		if ( ! empty( $ref ) ) {
+			$astra_pro_url = add_query_arg( 'bsf', sanitize_text_field( $ref ), $astra_pro_url );
+		}
+
+		return $astra_pro_url;
 	}
 
 endif;
@@ -1549,4 +1557,15 @@ function astra_zero_font_size_case() {
  */
 function astra_wp_version_compare( $version, $compare ) {
 	return version_compare( get_bloginfo( 'version' ), $version, $compare );
+}
+
+/**
+ * Check if existing setup is live with old block editor compatibilities.
+ *
+ * @return bool true|false.
+ */
+function astra_block_based_legacy_setup() {
+	$astra_settings = get_option( ASTRA_THEME_SETTINGS );
+	$legacy_setup   = ( isset( $astra_settings['blocks-legacy-setup'] ) && isset( $astra_settings['wp-blocks-ui'] ) && 'legacy' === $astra_settings['wp-blocks-ui'] ) ? true : false;
+	return $legacy_setup;
 }

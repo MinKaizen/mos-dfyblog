@@ -318,8 +318,24 @@ function ub_include_block_attribute_css() {
                                 'border: none;';
                             }
                             if($attributes['buttons'][$key]['buttonRounded']){
-                                $blockStylesheets .= 'border-radius: ' . (array_key_exists('buttonRadius', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadius'] ? $attributes['buttons'][$key]['buttonRadius'] : '60' )
-                                                        . (array_key_exists('buttonRadiusUnit', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadiusUnit'] ? $attributes['buttons'][$key]['buttonRadiusUnit'] : 'px') . ';' . PHP_EOL;
+                                if(array_key_exists('topLeftRadius', $button) && array_key_exists('topLeftRadiusUnit', $button) &&
+                                    array_key_exists('topRightRadius', $button) && array_key_exists('topRightRadiusUnit', $button) && 
+                                    array_key_exists('bottomLeftRadius', $button) && array_key_exists('bottomLeftRadiusUnit', $button) &&
+                                    array_key_exists('bottomRightRadius', $button) && array_key_exists('bottomRightRadiusUnit', $button)){
+                                        if( count(array_unique( [ $button['topLeftRadius'], $button['topRightRadius'], $button['bottomLeftRadius'], $button['bottomRightRadius'] ] )) === 1
+                                            && count(array_unique( [ $button['topLeftRadiusUnit'], $button['topRightRadiusUnit'], $button['bottomLeftRadiusUnit'], $button['bottomRightRadiusUnit'] ] )) === 1 ){
+                                                $blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ';';
+                                        }
+                                        else{
+                                            $blockStylesheets .= 'border-radius: ' . $button['topLeftRadius'] . $button['topLeftRadiusUnit'] . ' ' . $button['topRightRadius'] . $button['topRightRadiusUnit'] . ' ' .
+                                                    $button['bottomRightRadius'] . $button['bottomRightRadiusUnit'] . ' ' . $button['bottomLeftRadius'] . $button['bottomLeftRadiusUnit'] . ';'; 
+                                        }
+                                    }
+                                else{
+                                    $blockStylesheets .= 'border-radius: ' . (array_key_exists('buttonRadius', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadius'] ? $attributes['buttons'][$key]['buttonRadius'] : '60' )
+                                                            . (array_key_exists('buttonRadiusUnit', $attributes['buttons'][$key]) && $attributes['buttons'][$key]['buttonRadiusUnit'] ? $attributes['buttons'][$key]['buttonRadiusUnit'] : 'px') . ';' . PHP_EOL;
+                                }
+
                             }
                             else{
                                 $blockStylesheets .= 'border-radius: 0;' . PHP_EOL;
@@ -445,10 +461,16 @@ function ub_include_block_attribute_css() {
                     break;
                 case 'ub/divider':
                     $blockStylesheets .= '#ub_divider_' . $attributes['blockID'] . '{' . PHP_EOL .
-                                        'border-top: '.$attributes['borderSize'].'px '.$attributes['borderStyle'].' '.$attributes['borderColor'] .';' . PHP_EOL .
-                                        'margin-top: '.$attributes['borderHeight'].'px;' . PHP_EOL .
-                                        'margin-bottom: '.$attributes['borderHeight'].'px;' . PHP_EOL .
-                    '}' . PHP_EOL;
+                                        'border-top: ' . $attributes['borderSize'] . 'px ' . $attributes['borderStyle'] . ' ' . $attributes['borderColor'] .';' . PHP_EOL .
+                                        'margin-top: ' . $attributes['borderHeight'] . 'px;' . PHP_EOL .
+                                        'margin-bottom: ' . $attributes['borderHeight'] .'px;' . PHP_EOL .
+                                        'width: ' . $attributes['width'] . '%;' . PHP_EOL;
+
+                    if($attributes['alignment'] !== 'center'){
+                        $blockStylesheets .= 'margin-' . $attributes['alignment'] . ': 0 !important;' . PHP_EOL;
+                    }
+
+                    $blockStylesheets .= '}' . PHP_EOL;
                     break;
                 case 'ub/expand':
                     $blockStylesheets .= '#ub-expand-' . $attributes['blockID'] . ' .ub-expand-toggle-button{' . PHP_EOL .
@@ -848,8 +870,8 @@ function ub_include_block_attribute_css() {
                             font-size: 1em;
                             height: ' . ((4 + $attributes['iconSize']) / 10) . 'em; 
                             width: ' . ((4 + $attributes['iconSize']) / 10) . 'em;
-                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 ' . $iconData[0]. ' ' .$iconData[1]
-                            .'\"><path fill=\"%23'.substr($attributes['iconColor'],1).'\" d=\"'.$iconData[2].'\"></path></svg>\');' . PHP_EOL .
+                            background-image:url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' . $iconData[0]. ' ' .$iconData[1]
+                            .'"><path fill="%23'.substr($attributes['iconColor'],1).'" d="'.$iconData[2].'"></path></svg>\');' . PHP_EOL .
                         '}' .
                         $prefix . ' li{' . PHP_EOL .
                             'text-indent: -' . (0.4 + $attributes['iconSize'] * 0.1) . 'em;' . PHP_EOL .

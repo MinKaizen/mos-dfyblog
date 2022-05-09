@@ -1,4 +1,4 @@
-/* global wp , ajaxurl , tb_remove */
+/* global wp , ajaxurl , tb_remove, ta_affiliate_link_page_params */
 import $ from "jquery";
 
 /**
@@ -61,7 +61,12 @@ export default function affiliate_link_attachment_init() {
                 $.ajax( {
                     url      : ajaxurl,
                     type     : "POST",
-                    data     : { action : "ta_add_attachments_to_affiliate_link" , attachment_ids : attachment_ids , affiliate_link_id : affiliate_link_id },
+                    data     : {
+                        action : "ta_add_attachments_to_affiliate_link",
+                        _ajax_nonce: ta_affiliate_link_page_params.add_attachments_nonce,
+                        attachment_ids : attachment_ids,
+                        affiliate_link_id : affiliate_link_id
+                    },
                     dataType : "json"
                 } )
                 .done( function( data ) {
@@ -141,7 +146,12 @@ export default function affiliate_link_attachment_init() {
         $.ajax( {
             url      : ajaxurl,
             type     : "POST",
-            data     : { action : "ta_remove_attachment_to_affiliate_link" , attachment_id : attachment_id , affiliate_link_id : affiliate_link_id },
+            data     : {
+                action : "ta_remove_attachment_to_affiliate_link",
+                _ajax_nonce: ta_affiliate_link_page_params.remove_attachments_nonce,
+                attachment_id : attachment_id,
+                affiliate_link_id : affiliate_link_id
+            },
             dataType : "json"
         } )
         .done( function( data ) {
@@ -169,6 +179,8 @@ export default function affiliate_link_attachment_init() {
 
             } else {
 
+                $this.removeClass( "removing" );
+
                 // TODO: Make vex dialog
                 alert( data.error_msg );
                 console.log( data );
@@ -177,6 +189,8 @@ export default function affiliate_link_attachment_init() {
 
         } )
         .fail( function( jqxhr ) {
+
+            $this.removeClass( "removing" );
 
             // TODO: Make vex dialog
             alert( "Failed to remove attachment from affiliate link" ); // TODO: Internationalize
@@ -247,10 +261,11 @@ export default function affiliate_link_attachment_init() {
      * Implement add external image form.
      */
     $attach_images_metabox.on( "click" , ".external-image-form button.add-external" , function() {
-        
+
         const $input = $attach_images_metabox.find( ".external-image-form input" ),
             data     = {
                 action  : "ta_insert_external_image",
+                _ajax_nonce : ta_affiliate_link_page_params.insert_external_image_nonce,
                 url     : $input.val(),
                 link_id : $( "input[name=post_ID]" ).val()
             };
@@ -264,7 +279,7 @@ export default function affiliate_link_attachment_init() {
 
                 $attach_images_metabox.find( "#thirsty_image_holder" ).append( data.markup ).show();
                 $thirsty_image_holder.trigger( "ta_center_images" );
-            
+
             } else {
 
                 // TODO: Make this as vex dialog
@@ -302,14 +317,14 @@ export default function affiliate_link_attachment_init() {
             for ( x = 0; x <= $images.length; x++ ) {
 
                 $image = $( $images[x] );
-    
+
                 if ( ! $image.width() ) continue;
-    
+
                 marginLeft = ( $image.width() - 100 ) / 2;
-                $image.css( 'margin-left' , -marginLeft );
+                $image.css( "margin-left" , -marginLeft );
             }
         } , 500 );
-        
+
     } );
     $thirsty_image_holder.trigger( "ta_center_images" );
 }

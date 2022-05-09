@@ -17,7 +17,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useAsync } from '@ithemes/security-hocs';
 import { Page as RegisterPage } from '@ithemes/security.pages.settings';
 import { STORE_NAME as SEARCH_STORE_NAME } from '@ithemes/security-search';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { Page } from './components';
 import './style.scss';
 
@@ -44,9 +44,9 @@ export default function App() {
 		<RegisterPage
 			id="notification-center"
 			title={ __( 'Notifications', 'better-wp-security' ) }
-			icon="bell"
+			icon="email-alt"
 			priority={ 20 }
-			roots={ [ 'onboard', 'settings' ] }
+			roots={ [ 'onboard', 'import', 'settings' ] }
 			key={ asyncNotifications.status + asyncUsersAndRoles.status }
 		>
 			{ () => (

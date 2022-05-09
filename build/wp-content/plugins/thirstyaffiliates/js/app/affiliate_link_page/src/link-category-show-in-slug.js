@@ -1,4 +1,4 @@
-/* global ajaxurl */
+/* global ajaxurl, ta_affiliate_link_page_params */
 import $ from "jquery";
 
 /**
@@ -65,6 +65,7 @@ export default function link_category_show_in_slug() {
 
         $.post( ajaxurl , {
             action  : "ta_get_category_slug",
+            _ajax_nonce: ta_affiliate_link_page_params.get_category_slug_nonce,
             term_id : cat_id
         }, function( data ) {
 
@@ -115,6 +116,7 @@ export default function link_category_show_in_slug() {
 
         $.post( ajaxurl , {
             action  : "ta_get_category_slug",
+            _ajax_nonce: ta_affiliate_link_page_params.get_category_slug_nonce,
             term_id : first_category.val()
         }, function( data ) {
 

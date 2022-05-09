@@ -46,7 +46,8 @@
 }
 
 .itsec-settings-main__content > *,
-.itsec-settings-main__content > .components-disabled > * {
+.itsec-settings-main__content > .components-disabled > *,
+.itsec-settings-main__content > form > * {
     margin-bottom: 1rem;
 
     @include break-small {

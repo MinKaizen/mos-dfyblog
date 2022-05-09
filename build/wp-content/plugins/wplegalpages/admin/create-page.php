@@ -17,13 +17,14 @@ $privacy       = file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'te
 $lp_pro_active = get_option( '_lp_pro_active' );
 ?>
 <div class="wrap">
+<div id="wplegal-mascot-app"></div>
 	<?php
 	if ( '1' !== $lp_pro_active ) :
 		?>
 	<div style="">
 		<div style="line-height: 2.4em;" class='wplegalpages-pro-promotion'>
-			<a href="https://club.wpeka.com/product/wplegalpages/?utm_source=plugin-banner&utm_campaign=wplegalpages&utm_content=upgrade-to-pro" target="_blank">
-				<img alt="Upgrade to Pro" src="<?php echo esc_attr( WPL_LITE_PLUGIN_URL ) . 'admin/images/upgrade-to-pro.jpg'; ?>">
+			<a href="https://club.wpeka.com/product/wplegalpages/?utm_source=plugin-banner&utm_campaign=wplegalpages-createlegal&utm_content=upgrade-to-pro" target="_blank">
+				<img alt="Upgrade to Pro" src="<?php echo esc_attr( WPL_LITE_PLUGIN_URL ) . 'admin/images/upgrade-to-pro-version.png'; ?>">
 			</a>
 		</div>
 	</div>
@@ -50,13 +51,14 @@ $lp_pro_active = get_option( '_lp_pro_active' );
 			$content       = isset( $_POST['lp-content'] ) ? wp_kses_post( wp_unslash( $_POST['lp-content'] ) ) : '';
 			$template_lang = isset( $_POST['template_language'] ) ? sanitize_text_field( wp_unslash( $_POST['template_language'] ) ) : '';
 			$post_args     = array(
-				'post_title'   => apply_filters( 'the_title', $page_title ),
+				'post_title'   => html_entity_decode( apply_filters( 'the_title', $page_title ) ),
 				'post_content' => $content,
 				'post_type'    => 'page',
 				'post_status'  => 'publish',
 				'post_author'  => 1,
 			);
-			$pid           = wp_insert_post( $post_args );
+			
+			$pid = wp_insert_post( $post_args );
 			update_post_meta( $pid, 'is_legal', 'yes' );
 			$url = get_permalink( $pid );
 			?>
@@ -336,7 +338,7 @@ if ( $countof_pages[0]->cntPages < $max_limit ) {
 
 		<div id="lp_generalid_right" class="postbox ">
 			<h3 class="hndle"  style="padding:0px 10px 12px 10px; font-size:20px;"> <?php esc_attr_e( 'WPLegalPages Pro Templates', 'wplegalpages' ); ?> </h3><br/>
-			<ul>
+			<ul class="wplegal-templates">
 				<li>Terms of use <strong>(forced agreement - don't allow your users to proceed without agreeing to your terms)</strong></li>
 				<li>Linking policy template</li>
 				<li>About Us</li>

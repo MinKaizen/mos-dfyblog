@@ -3,7 +3,9 @@
 class ITSEC_Admin_Notice_New_Feature_Core implements ITSEC_Admin_Notice {
 
 	public function get_id() {
-		return 'release-new-ui-launch';
+		return ITSEC_Core::is_pro() ?
+			'release-import-export-launch' :
+			'release-site-scanner-free';
 	}
 
 	public function get_title() {
@@ -11,10 +13,9 @@ class ITSEC_Admin_Notice_New_Feature_Core implements ITSEC_Admin_Notice {
 	}
 
 	public function get_message() {
-		return sprintf(
-			esc_html__( 'iThemes Security %s is here!', 'better-wp-security' ),
-			ITSEC_Core::is_pro() ? '7.0' : '8.0'
-		);
+		return ITSEC_Core::is_pro() ?
+			esc_html__( 'iThemes Security Pro 7.1 is here!', 'better-wp-security' ) :
+			esc_html__( 'iThemes Security Pro’s most popular and powerful feature is now free in iThemes Security 8.1!', 'better-wp-security' );
 	}
 
 	public function get_meta() {
@@ -32,12 +33,12 @@ class ITSEC_Admin_Notice_New_Feature_Core implements ITSEC_Admin_Notice {
 	public function get_actions() {
 		return array(
 			'blog' => new ITSEC_Admin_Notice_Action_Link(
-				add_query_arg( 'itsec_view_release_post', 'release-new-ui', admin_url( 'index.php' ) ),
+				add_query_arg( 'itsec_view_release_post', $this->get_id(), admin_url( 'index.php' ) ),
 				esc_html__( 'See What’s New', 'better-wp-security' ),
 				ITSEC_Admin_Notice_Action::S_PRIMARY,
 				function () {
 					$this->handle_dismiss();
-					$url = ITSEC_Core::is_pro() ? 'https://ithemes.com/?p=64448' : 'https://ithemes.com/?p=65086';
+					$url = ITSEC_Core::is_pro() ? 'https://ithemes.com/?p=72545' : 'https://ithemes.com/?p=73198';
 
 					wp_redirect( $url );
 					die;

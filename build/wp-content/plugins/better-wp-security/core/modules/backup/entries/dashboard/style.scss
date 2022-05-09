@@ -66,6 +66,11 @@
             border-spacing: 0;
 
             @include sticky-table();
+
+            th:last-child,
+            td:last-child {
+                text-align: right;
+            }
         }
     }
 

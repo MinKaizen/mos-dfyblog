@@ -1,10 +1,16 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { TextControl, Button } from '@wordpress/components';
-import { compose, withInstanceId, withState } from '@wordpress/compose';
-import { withSelect, withDispatch } from '@wordpress/data';
+import { useInstanceId } from '@wordpress/compose';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -13,17 +19,26 @@ import DefaultLayout from './default-layout.svg';
 import ScratchLayout from './scratch-layout.svg';
 import './style.scss';
 
-function CreateDashboard( {
-	instanceId,
-	defaultLabel,
-	scratchLabel,
-	setState,
-	addingScratch,
-	addingDefault,
-	add,
-	canCreate,
-	canCreateLoaded,
-} ) {
+export default function CreateDashboard() {
+	const [ defaultLabel, setDefaultLabel ] = useState( '' );
+	const [ scratchLabel, setScratchLabel ] = useState( '' );
+	const [ hasError, setHasError ] = useState( {} );
+
+	const { canCreate, canCreateLoaded, addingScratch, addingDefault } = useSelect( ( select ) => ( {
+		canCreate: select( 'ithemes-security/dashboard' ).canCreateDashboards(),
+		canCreateLoaded: select(
+			'ithemes-security/dashboard'
+		).isCanCreateDashboardsLoaded(),
+		addingScratch: select( 'ithemes-security/dashboard' ).isAddingDashboard(
+			'create-dashboard-scratch'
+		),
+		addingDefault: select( 'ithemes-security/dashboard' ).isAddingDashboard(
+			'create-dashboard-default'
+		),
+	} ) );
+
+	const { addDashboard: add } = useDispatch( 'ithemes-security/dashboard' );
+
 	if ( ! canCreate && canCreateLoaded ) {
 		return (
 			<div className="itsec-create-dashboard">
@@ -41,7 +56,6 @@ function CreateDashboard( {
 		e.preventDefault();
 
 		const dashboard = {};
-
 		switch ( type ) {
 			case 'scratch':
 				dashboard.label = scratchLabel;
@@ -52,6 +66,10 @@ function CreateDashboard( {
 				break;
 			default:
 				return;
+		}
+		if ( dashboard.label.trim().length <= 0 ) {
+			setHasError( { [ type ]: true } );
+			return;
 		}
 
 		add( dashboard, `create-dashboard-${ type }` );
@@ -70,29 +88,14 @@ function CreateDashboard( {
 						) }
 					</p>
 				</header>
-				<form onSubmit={ create( 'default' ) }>
-					<TextControl
-						className="itsec-create-dashboard__name"
-						label={ __( 'Dashboard Name', 'better-wp-security' ) }
-						placeholder={ __( 'Dashboard Name…', 'better-wp-security' ) }
-						id={ `itsec-create-dashboard__name--default-${ instanceId }` }
-						value={ defaultLabel }
-						onChange={ ( label ) =>
-							setState( { defaultLabel: label } )
-						}
-						disabled={ addingDefault || addingScratch }
-					/>
-					<div className="itsec-create-dashboard__trigger-container">
-						<Button
-							className="itsec-create-dashboard__trigger"
-							type="submit"
-							isBusy={ addingDefault }
-							disabled={ addingScratch }
-						>
-							{ __( 'Create Board', 'better-wp-security' ) }
-						</Button>
-					</div>
-				</form>
+				<CreateDashboardForm
+					label={ defaultLabel }
+					onLabelChange={ setDefaultLabel }
+					onSubmit={ create( 'default' ) }
+					isBusy={ addingDefault }
+					isDisabled={ addingScratch }
+					hasError={ hasError.default }
+				/>
 			</section>
 
 			<section className="itsec-create-dashboard__start itsec-create-dashboard__start--scratch">
@@ -109,50 +112,47 @@ function CreateDashboard( {
 						) }
 					</p>
 				</header>
-				<form onSubmit={ create( 'scratch' ) }>
-					<TextControl
-						className="itsec-create-dashboard__name"
-						label={ __( 'Dashboard Name', 'better-wp-security' ) }
-						placeholder={ __( 'Dashboard Name…', 'better-wp-security' ) }
-						id={ `itsec-create-dashboard__name--name-${ instanceId }` }
-						value={ scratchLabel }
-						onChange={ ( label ) =>
-							setState( { scratchLabel: label } )
-						}
-						disabled={ addingDefault || addingScratch }
-					/>
-					<div className="itsec-create-dashboard__trigger-container">
-						<Button
-							className="itsec-create-dashboard__trigger"
-							type="submit"
-							isBusy={ addingScratch }
-							disabled={ addingDefault }
-						>
-							{ __( 'Create Board', 'better-wp-security' ) }
-						</Button>
-					</div>
-				</form>
+				<CreateDashboardForm
+					label={ scratchLabel }
+					onLabelChange={ setScratchLabel }
+					onSubmit={ create( 'scratch' ) }
+					isBusy={ addingScratch }
+					isDisabled={ addingDefault }
+					hasError={ hasError.scratch }
+				/>
 			</section>
 		</div>
 	);
 }
 
-export default compose( [
-	withInstanceId,
-	withState( { defaultLabel: '', scratchLabel: '' } ),
-	withSelect( ( select ) => ( {
-		canCreate: select( 'ithemes-security/dashboard' ).canCreateDashboards(),
-		canCreateLoaded: select(
-			'ithemes-security/dashboard'
-		).isCanCreateDashboardsLoaded(),
-		addingScratch: select( 'ithemes-security/dashboard' ).isAddingDashboard(
-			'create-dashboard-scratch'
-		),
-		addingDefault: select( 'ithemes-security/dashboard' ).isAddingDashboard(
-			'create-dashboard-default'
-		),
-	} ) ),
-	withDispatch( ( dispatch ) => ( {
-		add: dispatch( 'ithemes-security/dashboard' ).addDashboard,
-	} ) ),
-] )( CreateDashboard );
+function CreateDashboardForm( { label, onLabelChange, onSubmit, isDisabled, isBusy, hasError } ) {
+	const instanceId = useInstanceId( CreateDashboard );
+
+	return (
+		<form onSubmit={ onSubmit }>
+			<TextControl
+				className={ classnames( 'itsec-create-dashboard__name', {
+					'itsec-create-dashboard__name--hide-help-text': ! hasError,
+				} ) }
+				label={ __( 'Dashboard Name', 'better-wp-security' ) }
+				placeholder={ __( 'Dashboard Name…', 'better-wp-security' ) }
+				id={ `itsec-create-dashboard__name--${ instanceId }` }
+				value={ label }
+				onChange={ onLabelChange }
+				disabled={ isBusy || isDisabled }
+				help={ __( 'Entering a dashboard name is required.', 'better-wp-security' ) }
+				required
+			/>
+			<div className="itsec-create-dashboard__trigger-container">
+				<Button
+					className="itsec-create-dashboard__trigger"
+					type="submit"
+					isBusy={ isBusy }
+					disabled={ isDisabled }
+				>
+					{ __( 'Create Board', 'better-wp-security' ) }
+				</Button>
+			</div>
+		</form>
+	);
+}

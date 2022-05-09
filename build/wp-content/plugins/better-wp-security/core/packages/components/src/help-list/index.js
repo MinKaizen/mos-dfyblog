@@ -15,7 +15,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { HELP_STORE_NAME } from '@ithemes/security-data';
+import { HELP_STORE_NAME } from '@ithemes/security.packages.data';
 import { Markup } from '@ithemes/security-components';
 import './style.scss';
 
@@ -83,8 +83,8 @@ function RemoteHelp( { topic, fallback } ) {
 				: [],
 			fallbackLoaded: fallback
 				? select( HELP_STORE_NAME ).hasFinishedResolution( 'getHelp', [
-						fallback,
-				  ] )
+					fallback,
+				] )
 				: true,
 		} )
 	);

@@ -136,13 +136,13 @@ function MalwareScan( { card, config } ) {
 												>
 													{ showRawDetails
 														? __(
-																'Hide Raw Details',
-																'better-wp-security'
-														  )
+															'Hide Raw Details',
+															'better-wp-security'
+														)
 														: __(
-																'Show Raw Details',
-																'better-wp-security'
-														  ) }
+															'Show Raw Details',
+															'better-wp-security'
+														) }
 												</Button>
 												<div
 													id={ `itsec-card-malware-scan__raw-details--${ instanceId }` }

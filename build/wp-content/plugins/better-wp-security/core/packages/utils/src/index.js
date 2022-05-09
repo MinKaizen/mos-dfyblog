@@ -188,7 +188,7 @@ export function entriesToObject( entries ) {
 /**
  * Splits a list into two arrays, with items that pass the filter in the first array, and ones that fail in the second.
  *
- * @param {Array} array
+ * @param {Array}    array
  * @param {Function} filter
  * @return {Array<Array>} Split array.
  */
@@ -221,8 +221,8 @@ export const MYSTERY_MAN_AVATAR =
 /**
  * Gets a targetHint from an object.
  *
- * @param {Object} object
- * @param {string} header
+ * @param {Object}  object
+ * @param {string}  header
  * @param {boolean} undefinedIfEmpty
  * @return {Array<string>|undefined} The target hint value.
  */

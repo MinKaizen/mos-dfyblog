@@ -33,7 +33,7 @@ module.exports = function makeConfig( directory, pro ) {
 	*/
 	const entries = glob
 		.sync( 'core/modules/**/entries/*.js' )
-		.reduce( function ( acc, entry ) {
+		.reduce( function( acc, entry ) {
 			const baseName = path.basename( entry, '.js' );
 			let out = path.join( entry, '..', '..', baseName );
 			out = out.replace( /^core\/modules\//, '' );
@@ -48,7 +48,7 @@ module.exports = function makeConfig( directory, pro ) {
 		entries,
 		glob
 			.sync( 'core/admin-pages/entries/*.js' )
-			.reduce( function ( acc, entry ) {
+			.reduce( function( acc, entry ) {
 				const baseName = path.basename( entry, '.js' );
 				const out = 'pages/' + baseName;
 
@@ -62,7 +62,7 @@ module.exports = function makeConfig( directory, pro ) {
 	if ( pro ) {
 		Object.assign(
 			entries,
-			glob.sync( 'pro/**/entries/*.js' ).reduce( function ( acc, entry ) {
+			glob.sync( 'pro/**/entries/*.js' ).reduce( function( acc, entry ) {
 				const baseName = path.basename( entry, '.js' );
 				let out = path.join( entry, '..', '..', baseName );
 				out = out.replace( /^pro\//, '' );
@@ -73,6 +73,8 @@ module.exports = function makeConfig( directory, pro ) {
 			}, {} )
 		);
 	}
+
+	entries[ 'packages/data' ] = './core/packages/data/src/index.js';
 
 	const vendors = [
 		// {
@@ -112,7 +114,7 @@ module.exports = function makeConfig( directory, pro ) {
 				{}
 			),
 			...wpExternals,
-			function ( context, request, callback ) {
+			function( context, request, callback ) {
 				if ( /^@ithemes\/security\./.test( request ) ) {
 					const parts = request.split( '.' );
 					const external = {
@@ -138,7 +140,7 @@ module.exports = function makeConfig( directory, pro ) {
 							options: {
 								configFile: path.resolve(
 									directory,
-									'./core/packages/webpack/src/babel.js'
+									'./core/packages/webpack/src/babel.config.json'
 								),
 							},
 						},
@@ -163,7 +165,7 @@ module.exports = function makeConfig( directory, pro ) {
 						{
 							loader: 'sass-loader',
 							options: {
-								outputStyle: debug ? 'nested' : 'compressed',
+								outputStyle: debug ? 'expanded' : 'compressed',
 								sourceMap: debug ? 'inline' : false,
 								data: '@import "config.scss";',
 								includePaths: [
@@ -246,6 +248,8 @@ module.exports = function makeConfig( directory, pro ) {
 		resolve: {
 			modules: [ path.resolve( directory, './' ), 'node_modules' ],
 			alias: {
+				// Always load the same copy of @emotion/react to prevent issues with npm linking our UI library.
+				'@emotion/react': path.resolve( directory, './node_modules/@emotion/react' ),
 				'@ithemes/security-utils': path.resolve(
 					directory,
 					'./core/packages/utils/src/index.js'
@@ -266,10 +270,6 @@ module.exports = function makeConfig( directory, pro ) {
 					directory,
 					'./core/packages/i18n/src/index.js'
 				),
-				'@ithemes/security-data': path.resolve(
-					directory,
-					'./core/packages/data/src/index.js'
-				),
 				'@ithemes/security-rjsf-theme': path.resolve(
 					directory,
 					'./core/packages/rjsf-theme/src/index.js'
@@ -278,7 +278,7 @@ module.exports = function makeConfig( directory, pro ) {
 					directory,
 					'./core/packages/search/src/index.js'
 				),
-				...Object.keys( entries ).reduce( function ( acc, entry ) {
+				...Object.keys( entries ).reduce( function( acc, entry ) {
 					const parts = entry.split( '/' );
 					const alias = `@ithemes/security.${ parts[ 0 ] }.${ parts[ 1 ] }`;
 

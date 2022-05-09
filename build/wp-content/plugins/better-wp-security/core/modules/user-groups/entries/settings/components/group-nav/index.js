@@ -38,7 +38,7 @@ import {
 	SelectableCard,
 	Breadcrumbs,
 } from '@ithemes/security.pages.settings';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import {
 	FlexSpacer,
 	HelpList,
@@ -115,6 +115,7 @@ export default function GroupNav() {
 }
 
 function UserGroupsIntro() {
+	const { root } = useParams();
 	const { help } = useSelect(
 		( select ) =>
 			select( MODULES_STORE_NAME ).getModule( 'user-groups' ) || {}
@@ -128,7 +129,7 @@ function UserGroupsIntro() {
 		const navIds = registry
 			.select( 'ithemes-security/user-groups-editor' )
 			.getMatchableNavIds();
-		navigateTo( `/onboard/user-groups/${ navIds[ 0 ] }` );
+		navigateTo( `/${ root }/user-groups/${ navIds[ 0 ] }` );
 	};
 	const onCustom = async () => {
 		await applyDefaultGroupSettings();
@@ -216,9 +217,9 @@ function GroupNavRoute( { root } ) {
 	return (
 		<>
 			<Help />
-			<ManageGroup groupId={ groupId } showSave={ root !== 'onboard' } />
+			<ManageGroup groupId={ groupId } showSave={ root === 'settings' } />
 
-			{ root === 'onboard' && (
+			{ root !== 'settings' && (
 				<Flex>
 					{ previous && (
 						<FlexItem>

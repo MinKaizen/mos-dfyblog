@@ -62,9 +62,6 @@ class Installer
 		if(!$this->isPrivcySafeNotified()) {
 			$this->run_privacysafe_promo();
 		}
-
-		
-		
     }
 
     /**
@@ -113,7 +110,8 @@ class Installer
      */
     public function maybeDisplayDisclaimer()
     {
-        if (!gdpr('options')->get('plugin_disclaimer_accepted') && (isset($_GET['page']) && 'privacy' === $_GET['page'])) {
+        global $gdpr;
+        if (!$gdpr->Options->get('plugin_disclaimer_accepted') && (isset($_GET['page']) && 'privacy' === $_GET['page'])) {
             $acceptUrl = add_query_arg([
                 'gdpr_action' => 'accept_disclaimer',
                 'gdpr_nonce'  => wp_create_nonce('gdpr/admin/action/accept_disclaimer'),
@@ -128,7 +126,8 @@ class Installer
      */
     public function acceptDisclaimer()
     {
-        gdpr('options')->set('plugin_disclaimer_accepted', 'yes');
+        global $gdpr;
+        $gdpr->Options->set('plugin_disclaimer_accepted', 'yes');
         wp_safe_redirect(gdpr('helpers')->getAdminUrl());
         exit;
     }
@@ -169,9 +168,10 @@ class Installer
      */
     public function restartWizard()
     {
-        gdpr('options')->delete('installer_step');
-        gdpr('options')->delete('is_installed');
-        gdpr('options')->delete('is_privacysafe_notified');
+        global $gdpr;
+        $gdpr->Options->delete('installer_step');
+        $gdpr->Options->delete('is_installed');
+        $gdpr->Options->delete('is_privacysafe_notified');
 
         wp_safe_redirect(self_admin_url());
         exit;
@@ -217,7 +217,8 @@ class Installer
      */
     protected function isInstalled()
     {
-        return gdpr('options')->get('is_installed');
+        global $gdpr;
+        return $gdpr->Options->get('is_installed');
     }
     /**
      * Check if the Privacy Safe notice is already ran
@@ -226,7 +227,8 @@ class Installer
      */
     protected function isPrivcySafeNotified()
     {
-        return gdpr('options')->get('is_privacysafe_notified');
+        global $gdpr;
+        return $gdpr->Options->get('is_privacysafe_notified');
     }
 
     /**
@@ -234,7 +236,8 @@ class Installer
      */
     public function getCurrentStepSlug()
     {
-        return gdpr('options')->get('installer_step');
+        global $gdpr;
+        return $gdpr->Options->get('installer_step');
     }
 
     /**
@@ -242,6 +245,7 @@ class Installer
      */
     protected function displayWelcomeNotice()
     {
+        global $gdpr;
         // Make sure we display the notice only to admins
         if (!current_user_can(apply_filters('gdpr/capability', 'manage_options'))) {
             return;
@@ -269,12 +273,13 @@ class Installer
 	 * 
 	 */
     public function run_privacysafe_promo() {
-		$skipNoticeUrl = add_query_arg([
+        global $gdpr;
+        $skipNoticeUrl = add_query_arg([
             'gdpr_action' => 'skip_notice',
             'gdpr_nonce'  => wp_create_nonce("gdpr/admin/action/skip_notice"),
         ]);
         // Make sure we display the notice only to admins
-		gdpr('privacy-safe')->add(
+        $gdpr->PrivacySafe->add(
             'installer/privacy-safe-notice',
             compact('skipNoticeUrl')
         );
@@ -287,6 +292,7 @@ class Installer
      */
     protected function displayContinueNotice($url)
     {
+        global $gdpr;
         // Make sure we display the notice only to admins
         if (!current_user_can(apply_filters('gdpr/capability', 'manage_options'))) {
             return;
@@ -305,13 +311,14 @@ class Installer
      */
     public function autoInstall()
     {
+        global $gdpr;
         $policyPageId = wp_insert_post([
             'post_title'   => __('Privacy Policy', 'gdpr-framework'),
             'post_type'    => 'page',
             'post_status'  => 'publish',
         ]);
 
-        gdpr('options')->set('policy_page', $policyPageId);
+        $gdpr->Options->set('policy_page', $policyPageId);
 
         $toolsPageId = wp_insert_post([
             'post_content' => '<!-- wp:shortcode -->[gdpr_privacy_tools]<!-- /wp:shortcode -->',
@@ -319,14 +326,14 @@ class Installer
             'post_type'    => 'page',
             'post_status'  => 'publish',
         ]);
-        gdpr('options')->set('tools_page', $toolsPageId);
+        $gdpr->Options->set('tools_page', $toolsPageId);
 
         // Woocommerce compatibility - automatically add their terms page
         if (get_option('woocommerce_terms_page_id')) {
-            gdpr('options')->set('terms_page', get_option('woocommerce_terms_page_id'));
+            $gdpr->Options->set('terms_page', get_option('woocommerce_terms_page_id'));
         }
 
-        gdpr('options')->set('is_installed', 'yes');
+        $gdpr->Options->set('is_installed', 'yes');
         wp_safe_redirect(gdpr('helpers')->getAdminUrl('&gdpr-tab=privacy-policy&gdpr-notice=autoinstall'));
         exit;
     }
@@ -336,7 +343,8 @@ class Installer
      */
     public function skipInstall()
     {
-        gdpr('options')->set('is_installed', 'yes');
+        global $gdpr;
+        $gdpr->Options->set('is_installed', 'yes');
         wp_safe_redirect(gdpr('helpers')->getAdminUrl());
         exit;
     }
@@ -345,7 +353,8 @@ class Installer
      */
     public function skipNotice()
     {
-        gdpr('options')->set('is_privacysafe_notified', 'yes');
+        global $gdpr;
+        $gdpr->Options->set('is_privacysafe_notified', 'yes');
         wp_safe_redirect(gdpr('helpers')->getAdminUrl());
         exit;
     }

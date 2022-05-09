@@ -52,7 +52,8 @@ class ContactForm7
 
     public function renderPrivacyTag()
     {
-        $privacyPolicyUrl = get_permalink(gdpr('options')->get('policy_page'));
+        global $gdpr;
+        $privacyPolicyUrl = get_permalink($gdpr->Options->get('policy_page'));
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
         return gdpr('view')->render(

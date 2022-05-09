@@ -263,8 +263,8 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         if ( is_admin() ) return;
 
         $link_id      = $thirstylink->get_id();
-        $http_referer = isset( $_SERVER[ 'HTTP_REFERER' ] ) ? $_SERVER[ 'HTTP_REFERER' ] : '';
-        $query_string = isset( $_SERVER[ 'QUERY_STRING' ] ) ? $_SERVER[ 'QUERY_STRING' ] : '';
+        $http_referer = isset( $_SERVER[ 'HTTP_REFERER' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'HTTP_REFERER' ] ) ) : '';
+        $query_string = isset( $_SERVER[ 'QUERY_STRING' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'QUERY_STRING' ] ) ) : '';
         $cloaked_url  = $query_string ? $thirstylink->get_prop( 'permalink' ) . '?' . $query_string : $thirstylink->get_prop( 'permalink' );
 
         $same_site           = $http_referer && strrpos( 'x' . $http_referer , home_url() );
@@ -294,11 +294,11 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             wp_die();
 
-        $link_id      = isset( $_REQUEST[ 'link_id' ] ) ? (int) sanitize_text_field( $_REQUEST[ 'link_id' ] ) : 0;
-        $http_referer = isset( $_REQUEST[ 'page' ] ) ? esc_url_raw( $_REQUEST[ 'page' ] ) : '';
-        $cloaked_url  = isset( $_REQUEST[ 'href' ] ) ? esc_url_raw( $_REQUEST[ 'href' ] ) : '';
-        $keyword      = isset( $_REQUEST[ 'keyword' ] ) ? sanitize_text_field( $_REQUEST[ 'keyword' ] ) : '';
-        $query_string = isset( $_REQUEST[ 'qs' ] ) ? sanitize_text_field( $_REQUEST[ 'qs' ] ) : '';
+        $link_id      = isset( $_REQUEST[ 'link_id' ] ) ? (int) sanitize_text_field( wp_unslash( $_REQUEST[ 'link_id' ] ) ) : 0;
+        $http_referer = isset( $_REQUEST[ 'page' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'page' ] ) ) : '';
+        $cloaked_url  = isset( $_REQUEST[ 'href' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'href' ] ) ) : '';
+        $keyword      = isset( $_REQUEST[ 'keyword' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'keyword' ] ) ) : '';
+        $query_string = isset( $_REQUEST[ 'qs' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'qs' ] ) ) : '';
 
         if ( ! $link_id )
             $link_id = url_to_postid( $cloaked_url );
@@ -315,7 +315,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
 
             // print actual affiliate link redirect url for enhanced javascript redirect support.
             if ( get_option( 'ta_enable_javascript_frontend_redirect' ) == 'yes' )
-                echo $redirect_url;
+                echo esc_url_raw( $redirect_url );
         }
 
         wp_die();
@@ -351,10 +351,14 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
             return array();
 
         $link_clicks_db = $wpdb->prefix . Plugin_Constants::LINK_CLICK_DB;
-        $link_ids_str   = implode( ', ' , $link_ids );
-        $query          = "SELECT * FROM $link_clicks_db WHERE date_clicked between '$start_date' and '$end_date' and link_id IN ( $link_ids_str )";
+        $link_ids_str = implode( ',', array_map('intval', $link_ids) );
 
-        return $wpdb->get_results( $query );
+        return $wpdb->get_results( $wpdb->prepare(
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "SELECT * FROM $link_clicks_db WHERE link_id IN ({$link_ids_str}) AND date_clicked  between %s and %s",
+            $start_date,
+            $end_date
+        ) );
     }
 
     /**
@@ -375,15 +379,23 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         $links_click_meta_db = $wpdb->prefix . Plugin_Constants::LINK_CLICK_META_DB;
 
         if ( $single ){
-
-            $meta = $wpdb->get_row( "SELECT meta_value FROM $links_click_meta_db WHERE click_id = '$click_id' and meta_key = '$meta_key'" , ARRAY_A );
+            $meta = $wpdb->get_row( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT meta_value FROM $links_click_meta_db WHERE click_id = %d and meta_key = %s",
+                $click_id,
+                $meta_key
+            ), ARRAY_A );
             return array_shift( $meta );
 
         } else {
 
             $meta     = array();
-            $raw_data = $wpdb->get_results( "SELECT meta_value FROM $links_click_meta_db WHERE click_id = '$click_id' and meta_key = '$meta_key'" , ARRAY_N );
-
+            $raw_data = $wpdb->get_results( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT meta_value FROM $links_click_meta_db WHERE click_id = %d and meta_key = %s",
+                $click_id,
+                $meta_key
+            ), ARRAY_N );
             foreach ( $raw_data as $data )
                 $meta[] = array_shift( $data );
 
@@ -402,19 +414,21 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface( 'reports', 'manage_options' ) ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'link_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
             // save timezone to use
-            $timezone = isset( $_POST[ 'timezone' ] ) ? sanitize_text_field( $_POST[ 'timezone' ] ) : '';
+            $timezone = isset( $_POST[ 'timezone' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'timezone' ] ) ) : '';
             $this->set_browser_zone_str( $timezone );
 
-            $link_id     = isset( $_POST[ 'link_id' ] ) ? (int) sanitize_text_field( $_POST[ 'link_id' ] ) : 0;
+            $link_id     = isset( $_POST[ 'link_id' ] ) ? (int) sanitize_text_field( wp_unslash( $_POST[ 'link_id' ] ) ) : 0;
             $thirstylink = new Affiliate_Link( $link_id );
-            $range_txt   = isset( $_POST[ 'range' ] ) ? sanitize_text_field( $_POST[ 'range' ] ) : '';
-            $start_date  = isset( $_POST[ 'start_date' ] ) ? sanitize_text_field( $_POST[ 'start_date' ] ) : '';
-            $end_date    = isset( $_POST[ 'end_date' ] ) ? sanitize_text_field( $_POST[ 'end_date' ] ) : '';
+            $range_txt   = isset( $_POST[ 'range' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'range' ] ) ) : '';
+            $start_date  = isset( $_POST[ 'start_date' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'start_date' ] ) ) : '';
+            $end_date    = isset( $_POST[ 'end_date' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'end_date' ] ) ) : '';
 
             if ( ! $thirstylink->get_id() )
                 $response = array( 'status' => 'fail' , 'error_msg' => __( 'Selected affiliate link is invalid' , 'thirstyaffiliates' ) );
@@ -448,18 +462,20 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface( 'reports', 'manage_options' ) ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'timezone' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
             // save timezone to use
-            $timezone = isset( $_POST[ 'timezone' ] ) ? sanitize_text_field( $_POST[ 'timezone' ] ) : '';
+            $timezone = isset( $_POST[ 'timezone' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'timezone' ] ) ) : '';
             $this->set_browser_zone_str( $timezone );
 
             $cpt_slug      = Plugin_Constants::AFFILIATE_LINKS_CPT;
-            $current_range = isset( $_POST[ 'range' ] ) ? sanitize_text_field( $_POST[ 'range' ] ) : '7day';
-            $start_date    = isset( $_POST[ 'start_date' ] ) ? sanitize_text_field( $_POST[ 'start_date' ] ) : '';
-            $end_date      = isset( $_POST[ 'end_date' ] ) ? sanitize_text_field( $_POST[ 'end_date' ] ) : '';
+            $current_range = isset( $_POST[ 'range' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'range' ] ) ) : '7day';
+            $start_date    = isset( $_POST[ 'start_date' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'start_date' ] ) ) : '';
+            $end_date      = isset( $_POST[ 'end_date' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'end_date' ] ) ) : '';
             $range         = $this->get_report_range_details( $current_range , $start_date , $end_date );
 
             // get all published affiliate link ids
@@ -520,7 +536,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
     public function get_current_report( $tab = '' ) {
 
         if ( ! $tab )
-            $tab = isset( $_GET[ 'tab' ] ) ? esc_attr( $_GET[ 'tab' ] ) : 'link_performance';
+            $tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( wp_unslash(  $_GET[ 'tab' ] ) ) : 'link_performance';
 
         // get all registered sections and fields
         $reports = $this->get_all_reports();
@@ -597,14 +613,14 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         // skip if section data is empty
         if ( empty( $current_report ) ) return; ?>
 
-        <div class="ta-settings ta-settings-<?php echo $current_report[ 'tab' ]; ?> wrap">
+        <div class="ta-settings ta-settings-<?php echo esc_attr( $current_report[ 'tab' ] ); ?> wrap">
 
             <?php $this->render_reports_nav(); ?>
 
-            <h1><?php echo $current_report[ 'title' ]; ?></h1>
-            <p class="desc"><?php echo $current_report[ 'desc' ]; ?></p>
+            <h1><?php echo esc_html( $current_report[ 'title' ] ); ?></h1>
+            <p class="desc"><?php echo wp_kses_post( $current_report[ 'desc' ] ); ?></p>
 
-            <?php echo $report_content; ?>
+            <?php  echo $report_content;  // phpcs:ignore WordPress.Security.EscapeOutput ?>
         </div>
         <?php
     }
@@ -626,8 +642,8 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         <nav class="thirsty-nav-tab">
             <?php foreach ( $reports as $report ) : ?>
 
-                <a href="<?php echo $base_url . '&tab=' . $report[ 'tab' ]; ?>" class="tab <?php echo ( $current[ 'tab' ] === $report[ 'tab' ] ) ? 'tab-active' : ''; ?>">
-                    <?php echo $report[ 'name' ]; ?>
+                <a href="<?php echo esc_url( $base_url . '&tab=' . esc_attr( $report[ 'tab' ] ) );  ?>" class="tab <?php echo ( $current[ 'tab' ] === $report[ 'tab' ] ) ? 'tab-active' : ''; ?>">
+                    <?php echo esc_html( $report[ 'name' ] ); ?>
                 </a>
 
             <?php endforeach; ?>
@@ -648,10 +664,10 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
     public function get_link_performance_report_content() {
 
         $cpt_slug      = Plugin_Constants::AFFILIATE_LINKS_CPT;
-        $current_range = isset( $_GET[ 'range' ] ) ? sanitize_text_field( $_GET[ 'range' ] ) : '7day';
-        $start_date    = isset( $_GET[ 'start_date' ] ) ? sanitize_text_field( $_GET[ 'start_date' ] ) : '';
-        $end_date      = isset( $_GET[ 'end_date' ] ) ? sanitize_text_field( $_GET[ 'end_date' ] ) : '';
-        $link_id       = isset( $_GET[ 'link_id' ] ) ? sanitize_text_field( $_GET[ 'link_id' ] ) : '';
+        $current_range = isset( $_GET[ 'range' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'range' ] ) ) : '7day';
+        $start_date    = isset( $_GET[ 'start_date' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'start_date' ] ) ) : '';
+        $end_date      = isset( $_GET[ 'end_date' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'end_date' ] ) ) : '';
+        $link_id       = isset( $_GET[ 'link_id' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'link_id' ] ) ) : '';
         $range         = $this->get_report_range_details( $current_range , $start_date , $end_date );
         $range_nav     = apply_filters( 'ta_link_performances_report_nav' , array(
             'year'       => __( 'Year' , 'thirstyaffiliates' ),
@@ -720,9 +736,23 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
                 break;
 
             case 'custom' :
-                $data[ 'type' ]       = 'custom';
-                $data[ 'start_date' ] = new \DateTime( $start_date , $timezone );
-                $data[ 'end_date' ]   = new \DateTime( $end_date . ' 23:59:59' , $timezone );
+                $data[ 'type' ] = 'custom';
+
+                try {
+                    $data[ 'start_date' ] = new \DateTime( $start_date , $timezone );
+                    $data[ 'end_date' ]   = new \DateTime( $end_date . ' 23:59:59' , $timezone );
+                } catch ( \Exception $e ) {
+                    $start_date = new \DateTime( 'now -6 days' , $timezone );
+
+                    // set hours, minutes and seconds to zero
+                    $start_date->setTime( 0 , 0 , 0 );
+                    $now->setTime( 23 , 59 , 59 );
+
+                    $data[ 'type' ]       = '7day';
+                    $data[ 'start_date' ] = $start_date;
+                    $data[ 'end_date' ]   = $now;
+                }
+
                 break;
 
             case '7day' :
@@ -933,17 +963,20 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
             $clicks_meta_db = $wpdb->prefix . Plugin_Constants::LINK_CLICK_META_DB;
 
             // get click ids based on set range.
-            $query      = "SELECT id FROM $clicks_db WHERE date_clicked < DATE_ADD( NOW() , INTERVAL -" . $trim_point . " MONTH )";
-            $click_ids  = $wpdb->get_col( $query );
+            $click_ids  = $wpdb->get_col( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT id FROM $clicks_db WHERE date_clicked < DATE_ADD( NOW() , INTERVAL - %d MONTH )",
+                $trim_point
+            ) );
 
             // Proceed on deleting data when $click_ids are present
             if ( is_array( $click_ids ) && ! empty( $click_ids ) ) {
 
-                $click_ids_string = implode( $click_ids , ',' );
+                $click_ids_string = implode( ',', $click_ids );
 
                 // delete click data
-                $wpdb->query( "DELETE FROM $clicks_meta_db WHERE click_id IN ( $click_ids_string )" );
-                $wpdb->query( "DELETE FROM $clicks_db WHERE id IN ( $click_ids_string )" );
+                $wpdb->query( "DELETE FROM $clicks_meta_db WHERE click_id IN ( $click_ids_string )" );// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                $wpdb->query( "DELETE FROM $clicks_db WHERE id IN ( $click_ids_string )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             }
         }
 
@@ -989,7 +1022,11 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
 
         $link_click_db      = $wpdb->prefix . Plugin_Constants::LINK_CLICK_DB;
         $link_click_meta_db = $wpdb->prefix . Plugin_Constants::LINK_CLICK_META_DB;
-        $click_ids          = $wpdb->get_col( "SELECT id FROM $link_click_db WHERE link_id = $link_id" );
+        $click_ids          = $wpdb->get_col( $wpdb->prepare(
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "SELECT id FROM $link_click_db WHERE link_id = %d",
+            $link_id
+        ));
 
         if ( ! is_array( $click_ids ) || empty( $click_ids ) )
             return;
@@ -997,10 +1034,10 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         $click_ids_str = implode( ',' , $click_ids );
 
         // delete click meta records.
-        $wpdb->query( "DELETE FROM $link_click_meta_db WHERE click_id IN ( $click_ids_str )" );
+        $wpdb->query( "DELETE FROM $link_click_meta_db WHERE click_id IN ( $click_ids_str )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
         // delete click records.
-        $wpdb->query( "DELETE FROM $link_click_db WHERE id IN ( $click_ids_str )" );
+        $wpdb->query( "DELETE FROM $link_click_db WHERE id IN ( $click_ids_str )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 
     /**
@@ -1043,7 +1080,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
      *
      * @since 3.0.0
      * @access public
-     * @inherit ThirstyAffiliates\Interfaces\Initiable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Initiable_Interface
      */
     public function initialize() {
 
@@ -1051,10 +1088,10 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         if ( get_option( 'ta_enable_stats_reporting_module' , 'yes' ) !== 'yes' )
             return;
 
-        add_action( 'wp_ajax_ta_click_data_redirect' , array( $this , 'ajax_save_click_data_on_redirect' ) , 10 );
-        add_action( 'wp_ajax_ta_fetch_report_by_linkid' , array( $this , 'ajax_fetch_report_by_linkid' ) , 10 );
-        add_action( 'wp_ajax_ta_init_first_report' , array( $this , 'ajax_init_first_report' ) , 10 );
-        add_action( 'wp_ajax_nopriv_ta_click_data_redirect' , array( $this , 'ajax_save_click_data_on_redirect' ) , 10 );
+        add_action( 'wp_ajax_ta_click_data_redirect' , array( $this , 'ajax_save_click_data_on_redirect' ) );
+        add_action( 'wp_ajax_nopriv_ta_click_data_redirect' , array( $this , 'ajax_save_click_data_on_redirect' ) );
+        add_action( 'wp_ajax_ta_fetch_report_by_linkid' , array( $this , 'ajax_fetch_report_by_linkid' ) );
+        add_action( 'wp_ajax_ta_init_first_report' , array( $this , 'ajax_init_first_report' ) );
     }
 
     /**
@@ -1062,7 +1099,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
      *
      * @since 3.0.0
      * @access public
-     * @inherit ThirstyAffiliates\Interfaces\Model_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Model_Interface
      */
     public function run() {
 

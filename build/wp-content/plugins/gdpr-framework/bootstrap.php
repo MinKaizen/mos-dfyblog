@@ -1,33 +1,47 @@
 <?php
 
-/**
- * Set up config object, store plugin URL and path there
- * along with various other items
- */
-\Codelight\GDPR\Container::getInstance()->bindIf('config', function () {
-    return new \Codelight\GDPR\Config(['plugin' => ['url' => plugin_dir_url(__FILE__), 'path' => plugin_dir_path(__FILE__), 'template_path' => plugin_dir_path(__FILE__) . 'views/'], 'help' => ['url' => 'https://www.data443.com/gdpr-framework/']]);
-}, \true);
-/**
- * Set up the application container
- *
- * @param string                   $abstract
- * @param array                    $parameters
- * @param \Codelight\GDPR\Container $container
- *
- * @return \Codelight\GDPR\Container|mixed
- */
-function gdpr($abstract = null, $parameters = [], \Codelight\GDPR\Container $container = null)
+require_once(dirname(__FILE__).'/src/Singleton.php');
+
+function gdpr($name)
 {
-    $container = $container ?: \Codelight\GDPR\Container::getInstance();
-    if (!$abstract) {
-        return $container;
+    global $gdpr;
+    if ($name === 'admin-notice') {
+        return $gdpr->AdminNotice;
+    } elseif ($name === 'themes') {
+        return $gdpr->Themes;
+    } elseif ($name === 'view') {
+        return $gdpr->View;
+    } elseif ($name === 'helpers') {
+        return $gdpr->Helpers;
+    } elseif ($name === 'admin-error') {
+        return $gdpr->AdminError;
+    } elseif ($name === 'options') {
+        return $gdpr->Options;
+    } elseif ($name === 'consent') {
+        return $gdpr->Consent;
+    } elseif ($name === 'data-subject') {
+        return $gdpr->DataSubject;
+    } elseif ($name === 'controller') {
+        return $gdpr->Controller;
     }
-    return $container->bound($abstract) ? $container->makeWith($abstract, $parameters) : $container->makeWith("gdpr.{$abstract}", $parameters);
+    die("Unknown name in gdpr: " . $name);
 }
-/**
- * Start the plugin on plugins_loaded at priority 0.
- */
+
+add_action('init', function() {
+
+    if (!is_admin()) {
+        return;
+    }
+
+    new \Codelight\GDPR\SetupAdmin();
+}, 0);
+
+include_once(dirname(__FILE__).'/src/Updater/Updater.php');
+
 add_action('plugins_loaded', function () use($gdpr_error) {
     new \Codelight\GDPR\Updater\Updater();
-    new \Codelight\GDPR\Setup();
+
+    global $gdpr;
+    $gdpr = new \Codelight\GDPR\Singleton();
+    $gdpr->init(__FILE__);
 }, 0);

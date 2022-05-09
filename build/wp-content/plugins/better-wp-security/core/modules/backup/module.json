@@ -194,5 +194,10 @@
         }
       }
     }
+  },
+  "import-export": {
+    "exclude-settings": [
+      "last_run"
+    ]
   }
 }

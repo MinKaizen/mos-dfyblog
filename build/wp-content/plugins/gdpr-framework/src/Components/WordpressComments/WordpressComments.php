@@ -190,8 +190,6 @@ class WordpressComments {
 	}
 
 	/**
-	 * Todo: this currently doesn't include spam or trashed comments
-	 *
 	 * @param $email
 	 * @return array|int
 	 */

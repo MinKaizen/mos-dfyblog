@@ -18,7 +18,13 @@ const store = registerStore( 'ithemes-security/user-groups-editor', {
 	selectors,
 	resolvers,
 	reducer: userGroupsEditor,
-	persist: [ 'edits', 'settingEdits', 'bulkSettingEdits', 'localGroupIds' ],
+	persist: [
+		'edits',
+		'settingEdits',
+		'bulkSettingEdits',
+		'localGroupIds',
+		'markedForDelete',
+	],
 } );
 
 export default store;

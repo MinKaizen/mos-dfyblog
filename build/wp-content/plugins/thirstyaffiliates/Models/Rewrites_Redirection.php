@@ -278,7 +278,7 @@ class Rewrites_Redirection implements Model_Interface , Deactivatable_Interface 
 
         $cat_slug    = is_object( $thirstylink ) ? $thirstylink->get_category_slug() : '';
         $link_prefix = $this->_helper_functions->get_thirstylink_link_prefix();
-        $referrer    = isset( $_SERVER[ 'REQUEST_URI' ] ) ? $_SERVER[ 'REQUEST_URI' ] : '';
+        $referrer    = isset( $_SERVER[ 'REQUEST_URI' ] ) ? sanitize_text_field( wp_unslash( $_SERVER[ 'REQUEST_URI' ] ) ) : '';
         $needle      = '/' . $link_prefix . '/';
 
         // if setting is disabled or category slug is not defined, then return as validated.
@@ -303,7 +303,7 @@ class Rewrites_Redirection implements Model_Interface , Deactivatable_Interface 
     public function pass_query_string_to_destination_url( $redirect_url , $thirstylink , $query_string = '' ) {
 
         if ( ! $query_string && isset( $_SERVER[ 'QUERY_STRING' ] ) )
-            $query_string = $_SERVER[ 'QUERY_STRING' ];
+            $query_string = sanitize_text_field( wp_unslash( $_SERVER[ 'QUERY_STRING' ] ) );
 
         if ( ! $query_string || ! $thirstylink->is( 'pass_query_str' ) )
             return $redirect_url;
@@ -378,14 +378,14 @@ class Rewrites_Redirection implements Model_Interface , Deactivatable_Interface 
 
         global $post;
 
-        $is_apache = strpos( $_SERVER[ 'SERVER_SOFTWARE' ] , 'Apache' ) !== false;
+        $is_apache = strpos( $_SERVER[ 'SERVER_SOFTWARE' ] , 'Apache' ) !== false; // phpcs:ignore WordPress.Security
 
         if ( $is_apache || ! is_object( $post ) || $post->post_type !== Plugin_Constants::AFFILIATE_LINKS_CPT || ! $this->_helper_functions->is_user_agent_bot() )
             return;
 
-        $message = apply_filters( 'ta_blocked_bots_non_apache_message' , sprintf( __( "<h1>Forbidden</h1><p>You don't have permission to access %s on this server.</p>" , 'thirstyaffiliates' ) , $_SERVER[ 'REQUEST_URI' ] ) );
+        $message = apply_filters( 'ta_blocked_bots_non_apache_message' , sprintf( __( "<h1>Forbidden</h1><p>You don't have permission to access %s on this server.</p>" , 'thirstyaffiliates' ) , $_SERVER[ 'REQUEST_URI' ] ) ); // phpcs:ignore WordPress.Security
         header( 'HTTP/1.0 403 Forbidden' );
-        die( $message );
+        die( $message ); // phpcs:ignore WordPress.Security.EscapeOutput
     }
 
 

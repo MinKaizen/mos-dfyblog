@@ -42,6 +42,10 @@
                 font-style: oblique;
             }
 
+            &.itsec-create-dashboard__name--hide-help-text .components-base-control__help {
+                visibility: hidden;
+            }
+
             .components-base-control__label {
                 border: 0;
                 clip: rect(1px, 1px, 1px, 1px);
@@ -58,7 +62,7 @@
 
         & .itsec-create-dashboard__trigger-container {
             text-align: center;
-            margin-top: 2em;
+            margin-top: 1rem;
         }
 
         & .itsec-create-dashboard__trigger {

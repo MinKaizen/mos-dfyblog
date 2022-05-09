@@ -294,4 +294,26 @@ class ITSEC_Lib_REST {
 			$error->add_data( array_merge( (array) $data, [ 'status' => $status ] ) );
 		}
 	}
+
+	/**
+	 * Makes a REST API URL from a REST API root and path.
+	 *
+	 * @param string $root
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public static function rest_url( string $root, string $path ): string {
+		if ( strpos( $root, '?' ) !== - 1 ) {
+			$path = str_replace( '?', '&', $path );
+		}
+
+		$path = preg_replace( '/^\//', '', $path );
+
+		if ( strpos( $root, '?' ) !== - 1 ) {
+			$path = str_replace( '?', '&', $path );
+		}
+
+		return $root . $path;
+	}
 }

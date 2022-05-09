@@ -9,7 +9,7 @@ class DoNotSell {
 	}
 
 	public function registerAdminTab( $tabs ) {
-		 $tabs['do-not-sell'] = gdpr()->make( AdminTabDoNotSell::class );
+		 $tabs['do-not-sell'] = new AdminTabDoNotSell();
 		return $tabs;
 	}
 }

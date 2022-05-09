@@ -52,9 +52,9 @@ function Notice( {
 								url
 									? undefined
 									: () => {
-											onRemove();
-											onClick();
-									  }
+										onRemove();
+										onClick();
+									}
 							}
 							className={ classnames(
 								'notice__action',

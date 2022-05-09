@@ -35,7 +35,8 @@ class DataRepository
      */
     public function export($email, $format, $force = false)
     {
-        $action = gdpr('options')->get('export_action');
+        global $gdpr;
+        $action = $gdpr->Options->get('export_action');
         $data = null;
 
         if ($force) {
@@ -70,7 +71,8 @@ class DataRepository
      */
     public function forget($email, $forceAction = null)
     {
-        $action = gdpr('options')->get('delete_action');
+        global $gdpr;
+        $action = $gdpr->Options->get('delete_action');
 
         if ($forceAction) {
             $action = $forceAction;
@@ -138,8 +140,9 @@ class DataRepository
      */
     protected function notifyExportAction($email, $format)
     {
+        global $gdpr;
         gdpr('helpers')->mail(
-            gdpr('options')->get('export_action_email'),
+            $gdpr->Options->get('export_action_email'),
             __("Data exported", 'gdpr-framework'),
             gdpr('view')->render('email/action-export', compact('email', 'format')),
             ['Content-Type: text/html; charset=UTF-8']
@@ -151,10 +154,11 @@ class DataRepository
      */
     protected function notifyExportRequest($email, $format)
     {
+        global $gdpr;
         $adminTabLink = esc_url(gdpr('helpers')->getAdminUrl('&gdpr-tab=data-subject&search=' . $email));
 
         gdpr('helpers')->mail(
-            gdpr('options')->get('export_action_email'),
+            $gdpr->Options->get('export_action_email'),
             __("Data export request", 'gdpr-framework'),
             gdpr('view')->render('email/request-export', compact('email', 'format', 'adminTabLink')),
             ['Content-Type: text/html; charset=UTF-8']
@@ -166,8 +170,9 @@ class DataRepository
      */
     protected function notifyForgetAction($email, $userId = null)
     {
+        global $gdpr;
         gdpr('helpers')->mail(
-            gdpr('options')->get('delete_action_email'),
+            $gdpr->Options->get('delete_action_email'),
             __("Data removed", 'gdpr-framework'),
             gdpr('view')->render('email/action-forget', compact('email', 'userId')),
             ['Content-Type: text/html; charset=UTF-8']
@@ -179,10 +184,11 @@ class DataRepository
      */
     protected function notifyForgetRequest($email)
     {
+        global $gdpr;
         $adminTabLink = esc_url(gdpr('helpers')->getAdminUrl('&gdpr-tab=data-subject&search=' . $email));
 
         gdpr('helpers')->mail(
-            gdpr('options')->get('delete_action_email'),
+            $gdpr->Options->get('delete_action_email'),
             __("Data removal request", 'gdpr-framework'),
             gdpr('view')->render('email/request-forget', compact('email', 'adminTabLink')),
             ['Content-Type: text/html; charset=UTF-8']

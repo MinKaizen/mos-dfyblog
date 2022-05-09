@@ -165,123 +165,145 @@ class AdminTabCookiePopup extends AdminTab
     }
     public function renderEnableCheckbox()
     {
-        $enabled = gdpr('options')->get('enable');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable');
         echo gdpr('view')->render('admin/general/enable', compact('enabled'));
     }
 
     public function renderEnableCheckboxtac()
     {
-        $enabled = gdpr('options')->get('enable_tac');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_tac');
         echo gdpr('view')->render('admin/general/enable-tac', compact('enabled'));
     }
     public function renderCommentCheckbox()
     {
+        global $gdpr;
         $content['option_name'] = 'comment_checkbox';
-        $content['value'] = gdpr('options')->get('comment_checkbox');
+        $content['value'] = $gdpr->Options->get('comment_checkbox');
         $content['option'] = _x('Disable Checkbox For Comments', '(Admin)', 'gdpr-framework');
         echo gdpr('view')->render('admin/general/disble-checkbox', compact('content'));
     }
     public function renderRegisterCheckbox()
-    {   
+    {
+        global $gdpr;
         $content['option_name'] = 'register_checkbox';
-        $content['value'] = gdpr('options')->get('register_checkbox');
+        $content['value'] = $gdpr->Options->get('register_checkbox');
         $content['option'] = _x('Disable Checkbox For Register Form', '(Admin)', 'gdpr-framework');
         echo gdpr('view')->render('admin/general/disble-checkbox', compact('content'));
     }
     public function renderEnableCheckboxpopup()
     {
-        $enabled = gdpr('options')->get('enable_popup');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_popup');
         echo gdpr('view')->render('admin/general/enable-popup', compact('enabled'));
     }
     public function renderEnableOneTimeCheckboxpopup()
     {
-        $enabled = gdpr('options')->get('onetime_popup');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('onetime_popup');
         echo gdpr('view')->render('admin/general/enable-onetime-popup', compact('enabled'));
     }    
     public function renderEnablePolicyOnPopup()
     {
-        $enabled = gdpr('options')->get('policy_popup');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('policy_popup');
         echo gdpr('view')->render('admin/general/enable-policy-popup', compact('enabled'));
     }
     public function renderheaderCheckboxpopup()
     {
-        $content = gdpr('options')->get('header');
+        global $gdpr;
+        $content = $gdpr->Options->get('header');
         echo gdpr('view')->render('admin/general/enable_popup_header', compact('content'));
     }
     public function rendercontentCheckboxpopup()
     {
-        $content = gdpr('options')->get('popup_content');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_content');
         echo gdpr('view')->render('admin/general/enable_popup_content', compact('content'));
     }
     public function renderNameFrom()
     {
-        $content = gdpr('options')->get('name_from');
+        global $gdpr;
+        $content = $gdpr->Options->get('name_from');
         echo gdpr('view')->render('admin/general/name_from', compact('content'));
     }
     public function renderEmailFrom()
     {
-        $content = gdpr('options')->get('email_from');
+        global $gdpr;
+        $content = $gdpr->Options->get('email_from');
         echo gdpr('view')->render('admin/general/email_from', compact('content'));
     }
     public function renderAllowContentPopup()
     {
-        $content = gdpr('options')->get('popup_allow_text');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_allow_text');
         echo gdpr('view')->render('admin/general/enable_popup_allow_content', compact('content'));
     }
     public function renderDismissContentPopup()
     {
-        $content = gdpr('options')->get('popup_dismiss_text');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_dismiss_text');
         echo gdpr('view')->render('admin/general/enable_popup_dismiss_content', compact('content'));
     }
     public function renderlearnmorePopup()
     {
-        $content = gdpr('options')->get('popup_learnmore_text');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_learnmore_text');
         echo gdpr('view')->render('admin/general/enable_popup_learnmore_content', compact('content'));
     }
     public function renderpopupBackgroundcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_background');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_background');
         $content['option'] = 'background';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderpopupTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_text');
         $content['option'] = 'text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderpopuplinktarget()
     {
-        $content = gdpr('options')->get('popup_link_target');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_link_target');
         echo gdpr('view')->render('admin/general/popup_link_target', compact('content'));
     }
     public function renderbuttonBackgroundcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_button_background');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_button_background');
         $content['option'] = 'button_background';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderbuttonTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_button_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_button_text');
         $content['option'] = 'button_text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderborderTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_border_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_border_text');
         $content['option'] = 'border_text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderPopupPositionSelector()
     {
-        $positionAction = gdpr('options')->get('popup_position');
+        global $gdpr;
+        $positionAction = $gdpr->Options->get('popup_position');
         echo gdpr('view')->render('admin/general/position-action', compact('positionAction'));
         echo gdpr('view')->render('admin/general/description-position-action');
     }
 	public function renderPopupThemeSelector()
     {
-        $themeAction = gdpr('options')->get('popup_theme');
+        global $gdpr;
+        $themeAction = $gdpr->Options->get('popup_theme');
         echo gdpr('view')->render('admin/general/theme-action', compact('themeAction'));
         echo gdpr('view')->render('admin/general/description-theme-action');
     }

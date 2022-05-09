@@ -80,6 +80,7 @@ abstract class InstallerStep
      */
     protected function enqueue()
     {
+        global $gdpr;
         wp_enqueue_style('common');
         wp_enqueue_style('buttons');
 
@@ -88,12 +89,12 @@ abstract class InstallerStep
          */
         wp_enqueue_style(
             'gdpr-installer',
-            gdpr('config')->get('plugin.url') . 'assets/gdpr-installer.css'
+            $gdpr->PluginUrl . 'assets/gdpr-installer.css'
         );
 
         wp_enqueue_style(
             'select2css',
-            gdpr('config')->get('plugin.url') . 'assets/select2-4.0.5.css'
+            $gdpr->PluginUrl . 'assets/select2-4.0.5.css'
         );
 
         wp_enqueue_script('jquery');
@@ -104,12 +105,12 @@ abstract class InstallerStep
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script(
             'select2',
-            gdpr('config')->get('plugin.url') . 'assets/select2-4.0.3.js',
+            $gdpr->PluginUrl . 'assets/select2-4.0.3.js',
             ['jquery']
         );
         wp_enqueue_script(
             'conditional-show',
-            gdpr('config')->get('plugin.url') . 'assets/conditional-show.js',
+            $gdpr->PluginUrl . 'assets/conditional-show.js',
             ['jquery']
         );
 
@@ -119,7 +120,7 @@ abstract class InstallerStep
 
         wp_enqueue_script(
             'jquery-repeater',
-            gdpr('config')->get('plugin.url') . 'assets/jquery.repeater.min.js',
+            $gdpr->PluginUrl . 'assets/jquery.repeater.min.js',
             ['jquery']
         );
 
@@ -128,7 +129,7 @@ abstract class InstallerStep
          */
         wp_enqueue_script(
             'gdpr-installer',
-            gdpr('config')->get('plugin.url') . 'assets/gdpr-installer.js',
+            $gdpr->PluginUrl . 'assets/gdpr-installer.js',
             ['jquery', 'select2']
         );
     }
@@ -171,7 +172,8 @@ abstract class InstallerStep
      */
     public function getUrl()
     {
-        return gdpr('config')->get('installer.wizardUrl') . $this->slug;
+        global $gdpr;
+        return $gdpr->InstallerWizardUrl . $this->slug;
     }
 
     /**

@@ -12,9 +12,10 @@ class RegistrationForm
 
     public function __construct(DataSubjectManager $dataSubjectManager)
     {
+        global $gdpr;
         $this->dataSubjectManager = $dataSubjectManager;
-        if(!gdpr('options')->get('register_checkbox')){
-            if (gdpr('options')->get('policy_page') || gdpr('options')->get('custom_policy_page')) {
+        if(!$gdpr->Options->get('register_checkbox')){
+            if ($gdpr->Options->get('policy_page') || $gdpr->Options->get('custom_policy_page')) {
                 add_action('register_form', [$this, 'addRegisterFormCheckbox']);
                 add_filter('registration_errors', [$this, 'validate'], PHP_INT_MAX);
             }
@@ -23,20 +24,21 @@ class RegistrationForm
 
     public function addRegisterFormCheckbox()
     {
+        global $gdpr;
 		$privacyPolicyUrl = ! get_permalink( gdpr( 'options' )->get( 'custom_policy_page' ) ) ? get_permalink( gdpr( 'options' )->get( 'policy_page' ) ) : get_permalink( gdpr( 'options' )->get( 'custom_policy_page' ) );
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $privacyPolicyUrl = apply_filters( 'gdpr_custom_policy_link',$privacyPolicyUrl);
-        $termsPage = ! gdpr('options')->get('custom_terms_page') ? gdpr('options')->get('terms_page') : gdpr('options')->get('custom_terms_page');
+        $termsPage = ! $gdpr->Options->get('custom_terms_page') ? $gdpr->Options->get('terms_page') : $gdpr->Options->get('custom_terms_page');
 
-        if(gdpr('options')->get('custom_terms_page')){
-			$termsPage = gdpr('options')->get('custom_terms_page');
+        if($gdpr->Options->get('custom_terms_page')){
+			$termsPage = $gdpr->Options->get('custom_terms_page');
 			if ($termsPage) {
 				$termsUrl = $termsPage;
 			} else {
 				$termsUrl = false;
 			}
 		}else{
-			$termsPage = gdpr('options')->get('terms_page');
+			$termsPage = $gdpr->Options->get('terms_page');
 			if ($termsPage) {
 				$termsUrl = get_permalink($termsPage);
 			} else {

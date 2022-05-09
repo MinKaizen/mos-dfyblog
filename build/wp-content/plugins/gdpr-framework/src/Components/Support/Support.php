@@ -11,7 +11,7 @@ class Support
 
     public function registerTab($tabs)
     {
-        $tabs['support'] = gdpr()->make(AdminTabSupport::class);
+        $tabs['support'] = new AdminTabSupport();
 
         return $tabs;
     }

@@ -18,7 +18,7 @@ function RemoveCard( { card, config, remove } ) {
 				className="itsec-edit-cards__action itsec-edit-cards__action--remove"
 				label={ __( 'Remove', 'better-wp-security' ) }
 				icon="no"
-				tooltip={ false }
+				showTooltip={ false }
 				onClick={ remove }
 			/>
 			<span className="itsec-edit-cards__card-choice-title">

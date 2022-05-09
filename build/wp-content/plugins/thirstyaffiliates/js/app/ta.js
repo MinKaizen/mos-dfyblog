@@ -40,29 +40,29 @@ jQuery( document ).ready( function($) {
 
             // if link clicked is not an affiliate link, then skip.
             if ( ! thirstyFunctions.isThirstyLink( href ) && ! linkID ) return;
-            
+
             // prevent duplicate clicks.
             if ( $link.data( "clicked" ) ) {
                 e.preventDefault();
                 return;
             }
             $link.data( "clicked"  , true );
-    
+
             // get image filename and use it as keyword.
             if ( ! keyword && $link.find( 'img' ).length ) {
-    
+
                 imgsrc  = $link.find( 'img' ).prop( 'src' ).split('/');
                 keyword = imgsrc[ imgsrc.length - 1 ];
             }
-    
+
             if ( thirsty_global_vars.enable_js_redirect === 'yes' && $link.data( 'nojs' ) != true ) {
-    
+
                 e.preventDefault();
-    
+
                 if ( $link.prop( 'target' ) == '_blank' && ! thirstyFunctions.disableNewWindow() )
                     newWindow = window.open( '' , '_blank' );
             }
-    
+
             $.post( thirsty_global_vars.ajax_url , {
                 action  : 'ta_click_data_redirect',
                 href    : href,
@@ -71,12 +71,12 @@ jQuery( document ).ready( function($) {
                 keyword : keyword,
                 qs      : qs
             } , function( redirect_url ) {
-    
+
                 $link.data( "clicked"  , false );
-    
+
                 if ( thirsty_global_vars.enable_js_redirect !== 'yes' || $link.data( 'nojs' ) == true )
                     return;
-    
+
                 if ( newWindow )
                     newWindow.location.href = redirect_url ? redirect_url : href;
                 else
@@ -100,7 +100,7 @@ jQuery( document ).ready( function($) {
         /**
          * Check if we need to disable new window for enhanced javascript redirects.
          * This is intended to fix issue on browsing sites with FB/Messenger webview browser on iPhones.
-         * 
+         *
          * @since 3.3.6
          * @since 3.6 Add support for Instagram, Pinterest, Twitter, Electron and Steam.
          */
@@ -182,7 +182,7 @@ jQuery( document ).ready( function($) {
 
                 if ( response.status == 'success' ) {
 
-                    for ( x in response.data ) {
+                    for ( var x in response.data ) {
 
                         // make sure response data is valid before proceeding.
                         if ( typeof response.data[ x ] != 'object' ) continue;

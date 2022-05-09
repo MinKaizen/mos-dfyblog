@@ -40,6 +40,10 @@ export {
 	useNavigation,
 	useCurrentPage,
 } from './settings/page-registration';
-export { useNavigateTo, useConfigContext } from './settings/utils';
+export {
+	useNavigateTo,
+	useConfigContext,
+	useModuleSchemaValidator,
+} from './settings/utils';
 export { STORE_NAME as ONBOARD_STORE_NAME } from './settings/stores/onboard';
 export { STORE_NAME as TOOLS_STORE_NAME } from './settings/stores/tools';

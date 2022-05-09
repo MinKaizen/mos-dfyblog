@@ -1,6 +1,7 @@
 <?php
 
 namespace Codelight\GDPR\Components\PrivacyPolicy;
+
 /**
  * Handles putting together and rendering the privacy policy page
  *
@@ -21,48 +22,50 @@ class PrivacyPolicy
 
     public function registerAdminTab($tabs)
     {
-        $tabs['privacy-policy'] = gdpr()->make(AdminTabPrivacyPolicy::class);
+
+        $tabs['privacy-policy'] = new AdminTabPrivacyPolicy(new PolicyGenerator());
 
         return $tabs;
     }
 
     public function doShortcode($attributes)
     {
+        global $gdpr;
         $attributes = shortcode_atts([
             'item' => null,
         ], $attributes);
 
         switch ($attributes['item']) {
             case 'company_name':
-                return esc_html(gdpr('options')->get('company_name'));
+                return esc_html($gdpr->Options->get('company_name'));
             case 'company_email':
-                return esc_html(gdpr('options')->get('contact_email'));
+                return esc_html($gdpr->Options->get('contact_email'));
             case 'company_email_link':
-                $email = antispambot(gdpr('options')->get('contact_email'));
+                $email = antispambot($gdpr->Options->get('contact_email'));
                 return "<a href='mailto:{$email}'>{$email}</a>";
             case 'dpo_name':
-                return esc_html(gdpr('options')->get('dpo_name'));
+                return esc_html($gdpr->Options->get('dpo_name'));
             case 'dpo_email':
-                return esc_html(gdpr('options')->get('dpo_email'));
+                return esc_html($gdpr->Options->get('dpo_email'));
             case 'dpo_email_link':
-                $email = antispambot(gdpr('options')->get('dpo_email'));
+                $email = antispambot($gdpr->Options->get('dpo_email'));
                 return "<a href='mailto:{$email}'>{$email}</a>";
             case 'rep_name':
-                return esc_html(gdpr('options')->get('representative_contact_name'));
+                return esc_html($gdpr->Options->get('representative_contact_name'));
             case 'rep_email':
-                return esc_html(gdpr('options')->get('representative_contact_email'));
+                return esc_html($gdpr->Options->get('representative_contact_email'));
             case 'rep_email_link':
-                $email = antispambot(gdpr('options')->get('representative_contact_email'));
+                $email = antispambot($gdpr->Options->get('representative_contact_email'));
                 return "<a href='mailto:{$email}'>{$email}</a>";
             case 'authority_website':
-                return esc_html(gdpr('options')->get('dpa_website'));
+                return esc_html($gdpr->Options->get('dpa_website'));
             case 'authority_email':
-                return esc_html(gdpr('options')->get('dpa_email'));
+                return esc_html($gdpr->Options->get('dpa_email'));
             case 'authority_email_link':
-                $email = antispambot(gdpr('options')->get('dpa_email'));
+                $email = antispambot($gdpr->Options->get('dpa_email'));
                 return "<a href='mailto:{$email}'>{$email}</a>";
             case 'authority_phone':
-                return esc_html(gdpr('options')->get('dpa_phone'));
+                return esc_html($gdpr->Options->get('dpa_phone'));
             case null:
                 return '';
         }
@@ -72,11 +75,13 @@ class PrivacyPolicy
 
     public function renderUrlShortcode()
     {
+        global $gdpr;
         return gdpr('helpers')->getPrivacyPolicyPageUrl();
     }
 
     public function renderLinkShortcode($attributes)
     {
+        global $gdpr;
         $attributes = shortcode_atts([
             'title' => __('Privacy Policy', 'gdpr-framework'),
         ], $attributes);

@@ -15,7 +15,14 @@ const { registerBlockType } = wp.blocks;
 
 const { InspectorControls, ColorPalette } = wp.blockEditor || wp.editor;
 
-const { PanelBody, RangeControl, SelectControl } = wp.components;
+const {
+	PanelBody,
+	PanelRow,
+	RangeControl,
+	SelectControl,
+	Button,
+	ButtonGroup,
+} = wp.components;
 
 const { withSelect } = wp.data;
 
@@ -39,6 +46,14 @@ const attributes = {
 	borderHeight: {
 		type: "number",
 		default: 20,
+	},
+	width: {
+		type: "number",
+		default: 100,
+	},
+	alignment: {
+		type: "string",
+		default: "center",
 	},
 };
 /**
@@ -86,6 +101,8 @@ registerBlockType("ub/divider", {
 				borderStyle,
 				borderColor,
 				borderHeight,
+				width,
+				alignment,
 			},
 			isSelected,
 			setAttributes,
@@ -118,7 +135,6 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderSize: value })}
 							min={1}
 							max={20}
-							beforeIcon="minus"
 							allowReset
 						/>
 
@@ -128,10 +144,30 @@ registerBlockType("ub/divider", {
 							onChange={(value) => setAttributes({ borderHeight: value })}
 							min={10}
 							max={200}
-							beforeIcon="minus"
 							allowReset
 						/>
-
+						<RangeControl
+							label={__("Width")}
+							value={width}
+							onChange={(value) => setAttributes({ width: value })}
+							min={0}
+							max={100}
+							allowReset
+						/>
+						<PanelRow>
+							<p>{__("Alignment")}</p>
+							{width < 100 && (
+								<ButtonGroup>
+									{["left", "center", "right"].map((a) => (
+										<Button
+											icon={`align-${a}`}
+											isPressed={alignment === a}
+											onClick={() => setAttributes({ alignment: a })}
+										/>
+									))}
+								</ButtonGroup>
+							)}
+						</PanelRow>
 						<p>
 							{__("Color")}
 							<span
@@ -164,11 +200,19 @@ registerBlockType("ub/divider", {
 			<div className={className}>
 				<div
 					className="ub_divider"
-					style={{
-						borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
-						marginTop: borderHeight + "px",
-						marginBottom: borderHeight + "px",
-					}}
+					style={Object.assign(
+						{
+							borderTop: `${borderSize}px ${borderStyle} ${borderColor}`,
+							marginTop: borderHeight + "px",
+							marginBottom: borderHeight + "px",
+							width: width + "%",
+						},
+						alignment === "left"
+							? { marginLeft: "0" }
+							: alignment === "right"
+							? { marginRight: "0" }
+							: {}
+					)}
 				/>
 			</div>,
 		];

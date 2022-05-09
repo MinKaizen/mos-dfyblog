@@ -6,8 +6,8 @@
  * Description:       Tools to help make your website GDPR-compliant. Fully documented, extendable and developer-friendly.
  * Author:            Data443
  * Requires at least: 4.7
- * Requires PHP:      7.3
- * Version:           1.0.49
+ * Requires PHP:      5.6
+ * Version:           2.0.2
  * Author URI:        https://www.data443.com/
  * Text Domain:       gdpr-framework
  * Domain Path:       /languages
@@ -20,7 +20,22 @@ if (!defined('WPINC'))
     die;
 }
 
-define('GDPR_FRAMEWORK_VERSION', '1.0.49');
+if (defined('GDPR_FRAMEWORK_PRO_VERSION')) {
+    function GDPR_admin_notices() {
+        ?>
+        <div style="clear:both"></div>
+        <div class="error iwp" style="padding:10px;">
+            The PREMIUM GDPR plugin is already installed. Please deactivate this plugin to continue using the FREE version.
+        </div>
+        <div style="clear:both"></div>
+    <?php }
+    add_action('admin_notices', 'GDPR_admin_notices');
+    return;
+}
+
+define('GDPR_FRAMEWORK_VERSION', '2.0.2');
+
+define('GDPR_DEFAULT_UNKNOWN_USER_MESSAGE', 'Message received.');
 
 add_shortcode( 'gdpr_privacy_safe', 'render_privacy_safe' ); // preserve backward compatibility
 add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );
@@ -29,7 +44,8 @@ add_shortcode( 'data443_privacy_safe', 'render_privacy_safe' );
  * Render WHMCS Seal Generator Addon Javascript
  */
 function render_privacy_safe() {
-	wp_register_script( 'gdpr_whmcs_seal_generator', gdpr( 'config' )->get( 'plugin.url' ) . 'assets/js/showseal.js', null, true, true );
+    global $gdpr;
+	wp_register_script( 'gdpr_whmcs_seal_generator', $gdpr->PluginUrl . 'assets/js/showseal.js', null, true, true );
 	wp_localize_script(
 		'gdpr_whmcs_seal_generator',
 		'gdpr_seal_var',
@@ -203,6 +219,8 @@ function my_profile_update( $user_id, $old_user_data )
     $model = new \Codelight\GDPR\Components\Consent\UserConsentModel();
     $model->savelog($user_id,$userdata);
 }
+
+include_once(dirname(__FILE__).'/autoload.php');
 
 register_activation_hook(__FILE__, function () {
 	if (in_array('gdpr-framework-pro/gdpr-framework.php', apply_filters('active_plugins', get_option('active_plugins')))) {

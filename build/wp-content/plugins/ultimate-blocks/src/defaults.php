@@ -621,6 +621,14 @@ $defaultValues = array(
             'borderHeight' => array(
                 'type' => 'number',
                 'default' => 20
+            ),
+            'width' => array(
+                'type' => 'number',
+                'default' => 100
+            ),
+            'alignment' => array(
+                'type' => 'string',
+                'default' => 'center'
             )
         )
     ),

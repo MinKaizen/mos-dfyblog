@@ -25,14 +25,8 @@ class WordpressAdminPage
         // Register the tabs
         add_action('admin_init', [$this, 'registerTabs']);
 
-        // todo
-        //if (gdpr('options')->get('plugin_disclaimer_accepted')) {
-            // Initialize the active tab
-            add_action('admin_init', [$this, 'initActiveTab']);
-        //}
-
-        // todo
-        // gdpr('admin-modal')->add('gdpr-test', 'admin/modals/test', ['title' => 'Test modal']);
+        // Initialize the active tab
+        add_action('admin_init', [$this, 'initActiveTab']);
     }
 
     /**
@@ -133,10 +127,7 @@ class WordpressAdminPage
         return $navigation;
     }
 
-
     /**
-     * todo: move to helper?
-     *
      * @param $slug
      * @return string
      */

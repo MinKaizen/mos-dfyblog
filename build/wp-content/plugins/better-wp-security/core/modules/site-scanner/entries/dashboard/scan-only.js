@@ -2,9 +2,8 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
+import { createInterpolateElement, useState } from '@wordpress/element';
 import { Modal } from '@wordpress/components';
-import { compose, withState } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -16,7 +15,8 @@ import {
 } from '@ithemes/security.dashboard.dashboard';
 import { SiteScanResults } from '@ithemes/security-components';
 
-function ScanOnly( { card, config, scanResults, setState } ) {
+export default function ScanOnly( { card, config } ) {
+	const [ scanResults, setScanResults ] = useState( undefined );
 	return (
 		<div className="itsec-card--type-malware-scan itsec-card--type-malware--scan-only">
 			<CardHeader>
@@ -48,14 +48,14 @@ function ScanOnly( { card, config, scanResults, setState } ) {
 				card={ card }
 				onComplete={ ( href, response ) =>
 					href.endsWith( '/scan' ) &&
-					setState( { scanResults: response } )
+					setScanResults( response )
 				}
 			/>
 			{ scanResults && (
 				<Modal
 					title={ __( 'Scan Results', 'better-wp-security' ) }
 					onRequestClose={ () =>
-						setState( { scanResults: undefined } )
+						setScanResults( undefined )
 					}
 				>
 					<SiteScanResults
@@ -67,7 +67,3 @@ function ScanOnly( { card, config, scanResults, setState } ) {
 		</div>
 	);
 }
-
-export default compose( [ withState( { scanResults: undefined } ) ] )(
-	ScanOnly
-);

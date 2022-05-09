@@ -53,10 +53,12 @@ class View
      */
     protected function getTemplateDirectories()
     {
+        global $gdpr;
+
         $directories = array_filter([
             get_stylesheet_directory() . '/gdpr-framework/',
             get_template_directory() . '/gdpr-framework/',
-            gdpr('config')->get('plugin.template_path'),
+            $gdpr->PluginTemplatePath,
         ], 'is_dir');
 
         return array_unique(apply_filters('gdpr/views', $directories));

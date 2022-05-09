@@ -53,9 +53,16 @@ export function* getEditedModules() {
 	yield controls.resolveSelect( STORE_NAME, 'getModules' );
 }
 
-export function* getModule() {
-	yield controls.resolveSelect( STORE_NAME, 'getModules' );
-}
+export const getModule = {
+	*fulfill() {
+		yield controls.resolveSelect( STORE_NAME, 'getModules' );
+	},
+	isFulfilled( state, module ) {
+		return state.modules.includes(
+			( maybeModule ) => maybeModule.id === module
+		);
+	},
+};
 
 export function* getEditedModule() {
 	yield controls.resolveSelect( STORE_NAME, 'getModules' );

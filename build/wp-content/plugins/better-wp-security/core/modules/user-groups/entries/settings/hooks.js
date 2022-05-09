@@ -12,7 +12,7 @@ import { addAction, addFilter } from '@wordpress/hooks';
 addAction(
 	'ithemes-security.onboard.applyAnswerResponse',
 	'ithemes-security/user-groups/onboard.applyAnswerResponse',
-	function ( registry, answer ) {
+	function( registry, answer ) {
 		for ( const userGroup of answer.user_groups ) {
 			const created = registry
 				.dispatch( 'ithemes-security/user-groups-editor' )
@@ -67,7 +67,7 @@ addAction(
 addAction(
 	'ithemes-security.onboard.reset',
 	'ithemes-security/user-groups/onboard.reset',
-	function ( registry ) {
+	function( registry ) {
 		registry
 			.dispatch( 'ithemes-security/user-groups-editor' )
 			.deleteLocalGroups();
@@ -80,7 +80,7 @@ addAction(
 addFilter(
 	'ithemes-security.settings.isConditionalSettingActive',
 	'ithemes-security/user-groups/user-group-conditional',
-	function ( isActive, module, definition, context ) {
+	function( isActive, module, definition, context ) {
 		if ( ! isActive || ! definition[ 'user-groups' ] ) {
 			return isActive;
 		}

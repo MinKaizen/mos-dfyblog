@@ -25,6 +25,7 @@ import {
 	SET_GROUP_ERROR,
 	SET_BULK_ERRORS,
 	RESET_GROUP_SETTING,
+	MARK_GROUP_FOR_DELETION,
 } from './actions';
 
 const DEFAULT_STATE = {
@@ -35,6 +36,7 @@ const DEFAULT_STATE = {
 	saving: [],
 	errors: {},
 	bulkErrors: [],
+	markedForDelete: [],
 };
 
 export default function userGroupsEditor( state = DEFAULT_STATE, action ) {
@@ -153,6 +155,12 @@ export default function userGroupsEditor( state = DEFAULT_STATE, action ) {
 				...state,
 				edits: omit( state.edits, [ action.id ] ),
 				settingEdits: omit( state.settingEdits, [ action.id ] ),
+				markedForDelete: state.markedForDelete.filter(
+					( id ) => id !== action.id
+				),
+				localGroupIds: state.localGroupIds.filter(
+					( id ) => id !== action.id
+				),
 			};
 		case RESET_ALL_EDITS:
 			return {
@@ -160,6 +168,8 @@ export default function userGroupsEditor( state = DEFAULT_STATE, action ) {
 				edits: {},
 				settingEdits: {},
 				bulkSettingEdits: {},
+				markedForDelete: [],
+				localGroupIds: [],
 			};
 		case BULK_EDIT_GROUP_SETTING:
 			return {
@@ -185,14 +195,19 @@ export default function userGroupsEditor( state = DEFAULT_STATE, action ) {
 				...state,
 				bulkSettingEdits: {},
 			};
+		case MARK_GROUP_FOR_DELETION:
+			return {
+				...state,
+				markedForDelete: [ ...state.markedForDelete, action.id ],
+			};
 		case SET_GROUP_ERROR:
 			return {
 				...state,
 				errors: action.error
 					? {
-							...state.errors,
-							[ action.id ]: action.error,
-					  }
+						...state.errors,
+						[ action.id ]: action.error,
+					}
 					: omit( state.errors, [ action.id ] ),
 			};
 		case SET_BULK_ERRORS:

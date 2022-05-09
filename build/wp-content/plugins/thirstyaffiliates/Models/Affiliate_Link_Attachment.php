@@ -128,11 +128,18 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_edit', 'publish_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_add_attachments_to_affiliate_link', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'attachment_ids' ] ) || ! isset( $_POST[ 'affiliate_link_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
-            $result = $this->add_attachments_to_affiliate_link( $_POST[ 'attachment_ids' ] , $_POST[ 'affiliate_link_id' ] );
+            $attachment_ids    = map_deep( $_POST[ 'attachment_ids' ], 'intval' ); // phpcs:ignore WordPress.Security
+            $affiliate_link_id = sanitize_text_field( wp_unslash( $_POST[ 'affiliate_link_id' ] ) );
+
+            $result = $this->add_attachments_to_affiliate_link( $attachment_ids, $affiliate_link_id );
 
             if ( is_wp_error( $result ) )
                 $response = array( 'status' => 'fail' , 'error_msg' => $result->get_error_message() );
@@ -169,7 +176,7 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
      *
      * @param array $attachment_ids    Array of attachment ids.
      * @param int   $affiliate_link_id Id of the current affiliate link.
-     * @return \WP_Error | boolean WP_Error instance on failure, boolean true otherwise.
+     * @return \WP_Error|array WP_Error instance on failure, array of attachment IDs otherwise.
      */
     public function add_attachments_to_affiliate_link( $attachment_ids , $affiliate_link_id ) {
 
@@ -198,11 +205,16 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_edit', 'publish_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_remove_attachments_from_affiliate_link', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'attachment_id' ] ) || ! isset( $_POST[ 'affiliate_link_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
-
-            $result = $this->remove_attachment_to_affiliate_link( $_POST[ 'attachment_id' ] , $_POST[ 'affiliate_link_id' ] );
+            $attachment_id = (int) sanitize_text_field( wp_unslash( $_POST[ 'attachment_id' ] ) );
+            $affiliate_link_id = (int) sanitize_text_field( wp_unslash( $_POST[ 'affiliate_link_id' ] ) );
+            $result = $this->remove_attachment_to_affiliate_link( $attachment_id, $affiliate_link_id );
 
             if ( is_wp_error( $result ) )
                 $response = array( 'status' => 'fail' , 'error_msg' => $result->get_error_message() );
@@ -298,13 +310,17 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_edit', 'publish_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_insert_external_image', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'url' ] ) || ! isset( $_POST[ 'link_id' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
-        elseif ( ! filter_var( $_POST[ 'url' ] , FILTER_VALIDATE_URL ) || ! in_array( pathinfo( $_POST[ 'url' ] , PATHINFO_EXTENSION ) , $allowed_extensions ) )
+        elseif ( ! filter_var( $_POST[ 'url' ] , FILTER_VALIDATE_URL ) || ! in_array( strtolower( pathinfo( $_POST[ 'url' ] , PATHINFO_EXTENSION ) ) , $allowed_extensions ) ) // phpcs:ignore WordPress.Security
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'The external image source is not a valid url.' , 'thirstyaffiliates' ) );
         else {
 
-            $img_url = esc_url_raw( $_POST[ 'url' ] );
+            $img_url = esc_url_raw( $_POST[ 'url' ] ); // phpcs:ignore WordPress.Security
             $link_id = absint( $_POST[ 'link_id' ] );
             $result  = $this->add_attachments_to_affiliate_link( array( $img_url ) , $link_id );
 
@@ -344,7 +360,7 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Initiable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Initiable_Interface
      */
     public function initialize() {
 
@@ -359,7 +375,7 @@ class Affiliate_Link_Attachment implements Model_Interface , Initiable_Interface
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Model_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Model_Interface
      */
     public function run() {
 

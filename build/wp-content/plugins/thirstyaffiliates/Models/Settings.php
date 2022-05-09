@@ -834,11 +834,11 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <div class="wrap ta-settings">
 
-            <h2><?php _e( 'ThirstyAffiliates Settings' , 'thirstyaffiliates' ); ?></h2>
+            <h2><?php esc_html_e( 'ThirstyAffiliates Settings' , 'thirstyaffiliates' ); ?></h2>
 
             <?php
             settings_errors(); // Show notices based on the outcome of the settings save action
-            $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'ta_general_settings';
+            $active_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : 'ta_general_settings';
             ?>
 
             <div class="ta-settings-wrapper">
@@ -847,11 +847,11 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
                 <h2 class="nav-tab-wrapper">
                     <?php foreach ( $this->_settings_sections as $section_key => $section_data ) { ?>
-                        <a href="?post_type=thirstylink&page=thirsty-settings&tab=<?php echo $section_key; ?>" class="nav-tab <?php echo $active_tab == $section_key ? 'nav-tab-active' : ''; ?> <?php echo $section_key; ?>"><?php echo $section_data[ 'title' ]; ?></a>
+                        <a href="?post_type=thirstylink&page=thirsty-settings&tab=<?php echo esc_attr( $section_key ); ?>" class="nav-tab <?php echo $active_tab == $section_key ? 'nav-tab-active' : ''; ?> <?php echo esc_attr( $section_key ); ?>"><?php echo esc_html( $section_data[ 'title' ] ); ?></a>
                     <?php }  ?>
 
                     <?php if ( ! $this->_helper_functions->is_plugin_active( 'thirstyaffiliates-pro/thirstyaffiliates-pro.php' ) ) : ?>
-                        <a class="tapro-upgrade nav-tab" href="https://thirstyaffiliates.com/pricing/?utm_source=Free%20Plugin&utm_medium=Pro&utm_campaign=Admin%20Settings" target="_blank"><?php _e( 'Pro Features →' , 'thirstyaffiliates' ); ?></a>
+                        <a class="tapro-upgrade nav-tab" href="https://thirstyaffiliates.com/pricing/?utm_source=Free%20Plugin&utm_medium=Pro&utm_campaign=Admin%20Settings" target="_blank"><?php esc_html_e( 'Pro Features →' , 'thirstyaffiliates' ); ?></a>
                     <?php endif; ?>
                 </h2>
 
@@ -908,8 +908,8 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         ?>
 
-        <h2><?php echo $this->_settings_sections[ $active_tab ][ 'title' ]; ?></h2>
-        <p class="desc"><?php echo $this->_settings_sections[ $active_tab ][ 'desc' ]; ?></p>
+        <h2><?php echo esc_html( $this->_settings_sections[ $active_tab ][ 'title' ] ); ?></h2>
+        <p class="desc"><?php echo wp_kses_post( $this->_settings_sections[ $active_tab ][ 'desc' ] ); ?></p>
 
         <?php
 
@@ -932,7 +932,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         ?>
 
-        <input type="hidden" name="<?php echo esc_attr( $option[ 'id' ] ); ?>" value="<?php echo get_option( $option[ 'id' ] , '' ); ?>">
+        <input type="hidden" name="<?php echo esc_attr( $option[ 'id' ] ); ?>" value="<?php echo esc_attr( get_option( $option[ 'id' ] , '' ) ); ?>">
 
         <?php
 
@@ -977,7 +977,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <?php if ( ! in_array( $active_tab , $no_save_sections ) ) : ?>
             <p class="submit">
-                <input name="submit" id="submit" class="button button-primary" value="<?php _e( 'Save Changes' , 'thirstyaffiliates' ); ?>" type="submit">
+                <input name="submit" id="submit" class="button button-primary" value="<?php esc_html_e( 'Save Changes' , 'thirstyaffiliates' ); ?>" type="submit">
             </p>
         <?php endif;
 
@@ -1006,18 +1006,18 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
 
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <input
                     type  = "text"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width: 360px;'; ?>"
-                    value = "<?php echo get_option( $option[ 'id' ] ); ?>" >
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width: 360px;'; ?>"
+                    value = "<?php echo esc_attr( get_option( $option[ 'id' ] ) ); ?>" >
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
         </tr>
@@ -1040,18 +1040,18 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
 
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <input
                     type  = "url"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width: 360px;'; ?>"
-                    value = "<?php echo get_option( $option[ 'id' ] ); ?>" >
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width: 360px;'; ?>"
+                    value = "<?php echo esc_attr( get_option( $option[ 'id' ] ) ); ?>" >
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
         </tr>
@@ -1074,19 +1074,19 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
 
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <input
                     type  = "number"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width: 100px;'; ?>"
-                    value = "<?php echo get_option( $option[ 'id' ] ); ?>"
-                    min   = "<?php echo isset( $option[ 'min' ] )  ? $option[ 'min' ] : 0; ?>"
-                    max   = "<?php echo isset( $option[ 'max' ] )  ? $option[ 'max' ] : ''; ?>" >
-                <span><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></span>
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width: 100px;'; ?>"
+                    value = "<?php echo esc_attr( get_option( $option[ 'id' ] ) ); ?>"
+                    min   = "<?php echo isset( $option[ 'min' ] )  ? esc_attr( $option[ 'min' ] ) : 0; ?>"
+                    max   = "<?php echo isset( $option[ 'max' ] )  ? esc_attr( $option[ 'max' ] ) : ''; ?>" >
+                <span><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></span>
             </td>
 
         </tr>
@@ -1109,18 +1109,18 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
 
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <textarea
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
                     cols  = "60"
                     rows  = "8"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width: 360px;'; ?>"><?php echo get_option( $option[ 'id' ] ); ?></textarea>
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width: 360px;'; ?>"><?php echo esc_attr( get_option( $option[ 'id' ] ) ); ?></textarea>
                 <br />
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
         </tr>
@@ -1144,9 +1144,9 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
             $option_val = array(); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <?php foreach ( $option[ 'options' ] as $opt_key => $opt_text  ) {
 
                     $opt_key_class = str_replace( " " , "-" , $opt_key ); ?>
@@ -1156,16 +1156,16 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                         name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>[]"
                         id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                         class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                        style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : ''; ?>"
-                        value = "<?php echo $opt_key; ?>"
+                        style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : ''; ?>"
+                        value = "<?php echo esc_attr( $opt_key ); ?>"
                         <?php echo in_array( $opt_key , $option_val ) ? 'checked' : ''; ?>>
 
-                    <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo $opt_text; ?></label>
+                    <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo wp_kses_post( $opt_text ); ?></label>
                     <br>
 
                 <?php } ?>
 
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
             <script>
@@ -1199,9 +1199,9 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <?php foreach ( $option[ 'options' ] as $opt_key => $opt_text ) { ?>
 
                     <input
@@ -1209,16 +1209,16 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                         name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                         id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                         class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                        style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : ''; ?>"
-                        value = "<?php echo $opt_key; ?>"
+                        style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : ''; ?>"
+                        value = "<?php echo esc_attr( $opt_key ); ?>"
                         <?php echo $opt_key == $option_val ? 'checked' : ''; ?>>
 
-                    <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo $opt_text; ?></label>
+                    <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo wp_kses_post( $opt_text ); ?></label>
                     <br>
 
                 <?php } ?>
 
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
             <script>
@@ -1251,23 +1251,23 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         $option_value = $this->_helper_functions->get_option( $option[ 'id' ] , $option[ 'default' ] ); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?> <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?> <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>">
                 <select
-                    data-placeholder = "<?php echo isset( $option[ 'placeholder' ] ) ? $option[ 'placeholder' ] : 'Choose an option...' ; ?>"
+                    data-placeholder = "<?php echo isset( $option[ 'placeholder' ] ) ? esc_attr( $option[ 'placeholder' ]  ) : 'Choose an option...' ; ?>"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field selectize-select <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width:360px;'; ?>">
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width:360px;'; ?>">
 
                     <?php foreach ( $option[ 'options' ] as $opt_key => $opt_text ) { ?>
 
-                        <option value="<?php echo $opt_key; ?>" <?php selected( $option_value , $opt_key ); ?>><?php echo $opt_text; ?></option>
+                        <option value="<?php echo esc_attr( $opt_key ); ?>" <?php selected( $option_value , $opt_key ); ?>><?php echo esc_html( $opt_text ); ?></option>
 
                     <?php } ?>
                 </select>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
             <script>
@@ -1300,26 +1300,26 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
             $option_val = array(); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <select
                     multiple
-                    data-placeholder = "<?php echo isset( $option[ 'placeholder' ] ) ? $option[ 'placeholder' ] : 'Choose an option...' ; ?>"
+                    data-placeholder = "<?php echo isset( $option[ 'placeholder' ] ) ? esc_attr( $option[ 'placeholder' ] ) : 'Choose an option...' ; ?>"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>[]"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field selectize-select <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width:360px;'; ?>"
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width:360px;'; ?>"
                     <?php echo isset( $option[ 'required' ] ) && $option[ 'required' ] ? 'required' : '' ?>>
 
                     <?php foreach ( $option[ 'options' ] as $opt_key => $opt_text ) { ?>
 
-                        <option value="<?php echo $opt_key; ?>" <?php echo in_array( $opt_key , $option_val ) ? 'selected="selected"' : ''; ?>><?php echo $opt_text; ?></option>
+                        <option value="<?php echo esc_attr( $opt_key ); ?>" <?php echo in_array( $opt_key , $option_val ) ? 'selected="selected"' : ''; ?>><?php echo esc_html( $opt_text ); ?></option>
 
                     <?php } ?>
                 </select>
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
             <script>
@@ -1351,18 +1351,18 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <input
                     type  = "checkbox"
                     name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : ''; ?>"
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : ''; ?>"
                     value = "yes"
                     <?php echo get_option( $option[ 'id' ] ) === "yes" ? 'checked' : ''; ?>>
-                <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></label>
+                <label class="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></label>
             </td>
 
             <script>
@@ -1395,10 +1395,10 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         $editor_value = html_entity_decode( get_option( $option[ 'id' ] ) ); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
-                <style type="text/css"><?php echo "div#wp-" . $option[ 'id' ] . "-wrap{ width: 70% !important; }"; ?></style>
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
+                <style type="text/css"><?php echo "div#wp-" . esc_attr( $option[ 'id' ]) . "-wrap{ width: 70% !important; }"; ?></style>
 
                 <?php wp_editor( $editor_value , $option[ 'id' ] , array(
                     'wpautop' 		=> true,
@@ -1406,7 +1406,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                     'editor_height' => '300'
                 ) ); ?>
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
         </tr>
 
@@ -1427,24 +1427,24 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo $option[ 'title' ]; ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <input
                     type  = "text"
-                    name  = "<?php echo $option[ 'id' ]; ?>"
-                    id    = "<?php echo $option[ 'id' ]; ?>"
-                    class = "option-field <?php echo isset( $option[ 'class' ] ) ? $option[ 'class' ] : ''; ?>"
-                    style = "<?php echo isset( $option[ 'style' ] ) ? $option[ 'style' ] : 'width: 360px;'; ?>"
-                    value = "<?php echo get_option( $option[ 'id' ] ); ?>" >
+                    name  = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
+                    id    = "<?php echo esc_attr( $option[ 'id' ] ); ?>"
+                    class = "option-field <?php echo isset( $option[ 'class' ] ) ? esc_attr( $option[ 'class' ] ) : ''; ?>"
+                    style = "<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : 'width: 360px;'; ?>"
+                    value = "<?php echo esc_attr( get_option( $option[ 'id' ] ) ); ?>" >
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
 
             <script>
                 jQuery( document ).ready( function( $ ) {
 
-                    $( '#<?php echo $option[ 'id' ]; ?>' ).selectize( {
+                    $( '#<?php echo esc_attr( $option[ 'id' ] ); ?>' ).selectize( {
                         plugins   : [ 'restore_on_backspace' , 'remove_button' , 'drag_drop' ],
                         delimiter : ',',
                         persist   : false,
@@ -1479,15 +1479,15 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
             $option_value =  array(); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo $option[ 'title' ]; ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
 
-                <div class="key-value-fields-container" data-field-id="<?php echo $option[ 'id' ]; ?>">
+                <div class="key-value-fields-container" data-field-id="<?php echo esc_attr( $option[ 'id' ] ); ?>">
 
                     <header>
-                        <span class="key"><?php _e( 'Key' , 'thirstyaffiliates' ); ?></span>
-                        <span class="value"><?php _e( 'Value' , 'thirstyaffiliates' ); ?></span>
+                        <span class="key"><?php esc_html_e( 'Key' , 'thirstyaffiliates' ); ?></span>
+                        <span class="value"><?php esc_html_e( 'Value' , 'thirstyaffiliates' ); ?></span>
                     </header>
 
                     <div class="fields">
@@ -1508,8 +1508,8 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                             foreach ( $option_value as $key => $val ) { ?>
 
                                 <div class="data-set">
-                                    <input type="text" class="field key-field" value="<?php echo $key; ?>">
-                                    <input type="text" class="field value-field" value="<?php echo $val; ?>">
+                                    <input type="text" class="field key-field" value="<?php echo esc_attr( $key ); ?>">
+                                    <input type="text" class="field value-field" value="<?php echo esc_attr( $val ); ?>">
                                     <div class="controls">
                                         <span class="control add dashicons dashicons-plus-alt" autocomplete="off"></span>
                                         <span class="control delete dashicons dashicons-dismiss" autocomplete="off"></span>
@@ -1524,7 +1524,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
                 </div>
 
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
 
             </td>
         </tr>
@@ -1546,11 +1546,11 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
             <td>
-                <a id="<?php echo esc_attr( $option[ 'id' ] ); ?>" href="<?php echo $option[ 'link_url' ]; ?>" target="_blank"><?php echo $option[ 'link_text' ]; ?></a>
+                <a id="<?php echo esc_attr( $option[ 'id' ] ); ?>" href="<?php echo esc_url( $option[ 'link_url' ] ); ?>" target="_blank"><?php echo esc_html( $option[ 'link_text' ] ); ?></a>
                 <br>
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
             </td>
         </tr>
 
@@ -1572,8 +1572,8 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
             <th scope="row" colspan="2">
-                <h3><?php echo sanitize_text_field( $option[ 'title' ] ); ?></h3>
-                <?php echo isset( $option[ 'markup' ] ) ? $option[ 'markup' ] : ''; ?>
+                <h3><?php echo esc_html( $option[ 'title' ] ); ?></h3>
+                <?php echo isset( $option[ 'markup' ] ) ? wp_kses_post( $option[ 'markup' ] ) : ''; ?>
             </th>
         </tr>
 
@@ -1604,13 +1604,13 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
 
-            <th scope="row" class="title_desc"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row" class="title_desc"><?php echo esc_html( $option[ 'title' ] ); ?></th>
 
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?> <?php echo $processing; ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?> <?php echo esc_attr( $processing ); ?>">
 
                 <?php if ( !$database_processing ) { ?>
 
-                    <p><?php _e( 'Another application is currently processing the database. Please wait for this to complete.' , 'thirstyaffiliates' ); ?></p>
+                    <p><?php esc_html_e( 'Another application is currently processing the database. Please wait for this to complete.' , 'thirstyaffiliates' ); ?></p>
 
                 <?php } else { ?>
 
@@ -1620,15 +1620,15 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                         id="<?php echo esc_attr( $option[ 'id' ] ); ?>"
                         class="button button-primary"
                         style="<?php echo isset( $option[ 'style' ] ) ? esc_attr( $option[ 'style' ] ) : ''; ?>"
-                        value="<?php _e( 'Migrate' , 'thirstyaffiliates' ); ?>">
+                        value="<?php esc_html_e( 'Migrate' , 'thirstyaffiliates' ); ?>">
 
                     <span class="spinner"></span>
-                    <p class="status"><?php _e( 'Migrating data. Please wait...' , 'thirstyaffiliates' ); ?></p>
+                    <p class="status"><?php esc_html_e( 'Migrating data. Please wait...' , 'thirstyaffiliates' ); ?></p>
 
                 <?php } ?>
 
                 <br /><br />
-                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? $option[ 'desc' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'desc' ] ) ? wp_kses_post( $option[ 'desc' ] ) : ''; ?></p>
 
             </td>
 
@@ -1650,23 +1650,23 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         ?>
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
+            <th scope="row"><?php echo esc_html( $option[ 'title' ] ); ?></th>
             <td>
                 <ul>
                     <li>
-                        <a href="https://www.facebook.com/thirstyaffiliates/"><?php _e( 'Like us on Facebook' , 'thirstyaffiliates' ); ?></a>
+                        <a href="https://www.facebook.com/thirstyaffiliates/"><?php esc_html_e( 'Like us on Facebook' , 'thirstyaffiliates' ); ?></a>
                         <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fthirstyaffiliates&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font=arial&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px; vertical-align: bottom;" allowTransparency="true"></iframe>
                     </li>
                     <li>
-                        <a href="http://twitter.com/thirstyaff"><?php _e( 'Follow us on Twitter' , 'thirstyaffiliates' ); ?></a>
+                        <a href="http://twitter.com/thirstyaff"><?php esc_html_e( 'Follow us on Twitter' , 'thirstyaffiliates' ); ?></a>
                         <a href="https://twitter.com/thirstyaff" class="twitter-follow-button" data-show-count="true" style="vertical-align: bottom;">Follow @thirstyaff</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>
                     </li>
                     <li>
-                        <a href="https://www.linkedin.com/company-beta/2928598/"><?php _e( 'Follow us on Linkedin' , 'thirstyaffiliates' ); ?></a>
+                        <a href="https://www.linkedin.com/company-beta/2928598/"><?php esc_html_e( 'Follow us on Linkedin' , 'thirstyaffiliates' ); ?></a>
                     </li>
                     <li>
-                        <a href="https://thirstyaffiliates.com/affiliates?utm_source=Free%20Plugin&utm_medium=Help&utm_campaign=Affiliates%20Link" target="_blank"><?php _e( 'Join Our Affiliate Program' , 'thirstyaffiliates' ); ?></a>
-                        <?php _e( '(up to 30% commisions)' , 'thirstyaffiliates' ); ?>
+                        <a href="https://thirstyaffiliates.com/affiliates?utm_source=Free%20Plugin&utm_medium=Help&utm_campaign=Affiliates%20Link" target="_blank"><?php esc_html_e( 'Join Our Affiliate Program' , 'thirstyaffiliates' ); ?></a>
+                        <?php esc_html_e( '(up to 30% commisions)' , 'thirstyaffiliates' ); ?>
                     </li>
                 </ul>
             </td>
@@ -1687,8 +1687,8 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         $global_settings_string = $this->get_global_settings_string(); ?>
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
-            <th scope="row" class="title_desc"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></th>
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <th scope="row" class="title_desc"><?php echo esc_html( $option[ 'title' ] ); ?></th>
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <textarea
                     name="<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id="<?php echo esc_attr( $option[ 'id' ] ); ?>"
@@ -1697,9 +1697,9 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                     placeholder="<?php echo isset( $option[ 'placeholder' ] ) ? esc_attr( $option[ 'placeholder' ] ) : ''; ?>"
                     autocomplete="off"
                     readonly
-                    rows="10"><?php echo $global_settings_string; ?></textarea>
+                    rows="10"><?php echo esc_html( $global_settings_string ); ?></textarea>
                 <div class="controls">
-                    <a id="copy-settings-string" data-clipboard-target="#<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php _e( 'Copy' , 'thirstyaffiliates' ); ?></a>
+                    <a id="copy-settings-string" data-clipboard-target="#<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php esc_html_e( 'Copy' , 'thirstyaffiliates' ); ?></a>
                 </div>
             </td>
         </tr>
@@ -1722,9 +1722,9 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <tr valign="top" class="<?php echo esc_attr( $option[ 'id' ] ) . '-row'; ?>">
             <th scope="row" class="title_desc">
-                <label for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo sanitize_text_field( $option[ 'title' ] ); ?></label>
+                <label for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label>
             </th>
-            <td class="forminp forminp-<?php echo sanitize_title( $option[ 'type' ] ) ?>">
+            <td class="forminp forminp-<?php echo esc_attr( $option[ 'type' ] ) ?>">
                 <textarea
                     name="<?php echo esc_attr( $option[ 'id' ] ); ?>"
                     id="<?php echo esc_attr( $option[ 'id' ] ); ?>"
@@ -1733,10 +1733,10 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                     placeholder="<?php echo esc_attr( $option[ 'placeholder' ] ); ?>"
                     autocomplete="off"
                     rows="10"></textarea>
-                <p class="desc"><?php echo isset( $option[ 'description' ] ) ? $option[ 'description' ] : ''; ?></p>
+                <p class="desc"><?php echo isset( $option[ 'description' ] ) ? wp_kses_post( $option[ 'description' ] ) : ''; ?></p>
                 <div class="controls">
                     <span class="spinner"></span>
-                    <input type="button" id="import-setting-button" class="button button-primary" value="<?php _e( 'Import Settings' , 'thirstyaffiliates' ); ?>">
+                    <input type="button" id="import-setting-button" class="button button-primary" value="<?php esc_html_e( 'Import Settings' , 'thirstyaffiliates' ); ?>">
                 </div>
             </td>
         </tr>
@@ -1914,39 +1914,12 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
     */
 
     /**
-     * Get global settings string via ajax.
-     *
-     * @since 3.0.0
-     * @access public
-     */
-    public function ajax_get_global_settings_string() {
-
-        if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
-            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
-        else {
-
-            $global_settings_string = $this->get_global_settings_string();
-
-            if ( is_wp_error( $global_settings_string ) )
-                $response = array( 'status' => 'fail' , 'error_msg' => $global_settings_string->get_error_message() );
-            else
-                $response = array( 'status' => 'success' , 'global_settings_string' => $global_settings_string );
-
-        }
-
-        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
-        echo wp_json_encode( $response );
-        wp_die();
-
-    }
-
-    /**
      * Get global settings string.
      *
      * @since 3.0.0
      * @access public
      *
-     * @return WP_Error|string WP_Error on error, Base 64 encoded serialized global plugin settings otherwise.
+     * @return \WP_Error|string WP_Error on error, Base 64 encoded serialized global plugin settings otherwise.
      */
     public function get_global_settings_string() {
 
@@ -1971,11 +1944,15 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
-        elseif ( !isset( $_POST[ 'ta_settings_string' ] ) )
+        elseif ( ! $this->_helper_functions->current_user_authorized() )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_import_settings', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
+        elseif ( ! isset( $_POST[ 'ta_settings_string' ] ) || ! is_string( $_POST[ 'ta_settings_string' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Required parameter not passed' , 'thirstyaffiliates' ) );
         else {
 
-            $result = $this->import_settings( filter_var( $_POST[ 'ta_settings_string' ] , FILTER_SANITIZE_STRING ) );
+            $result = $this->import_settings( filter_var( $_POST[ 'ta_settings_string' ] , FILTER_SANITIZE_STRING ) ); // phpcs:ignore WordPress.Security
 
             if ( is_wp_error( $result ) )
                 $response = array( 'status' => 'fail' , 'error_msg' => $result->get_error_message() );
@@ -1997,12 +1974,9 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
      * @access public
      *
      * @param string $global_settings_string Settings string.
-     * @return WP_Error | boolean WP_Error instance on failure, boolean true otherwise.
+     * @return \WP_Error | boolean WP_Error instance on failure, boolean true otherwise.
      */
     public function import_settings( $global_settings_string ) {
-
-        if ( !$this->_helper_functions->current_user_authorized() )
-            return new \WP_Error( 'ta_unauthorized_operation_import_settings' , __( 'Unauthorized operation. Only authorized accounts can import settings' , 'thirstyaffiliates' )  );
 
         $settings_arr = @unserialize( base64_decode( $global_settings_string ) );
 
@@ -2069,7 +2043,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
     public function restrict_module_settings() {
 
         $screen = get_current_screen();
-        $tab    = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : null;
+        $tab    = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : null;
 
         if ( $screen->id !== 'thirstylink_page_thirsty-settings' || ! $tab ) return;
 
@@ -2094,7 +2068,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
         $default        = in_array( $current_module , $modules ) ? $default_values[ $current_module ] : null;
 
         if ( ! is_null( $default ) && get_option( $current_module , $default ) !== 'yes' )
-            wp_die( __( "Sorry, you are not allowed to access this page." , 'thirstyaffiliates' ) );
+            wp_die( esc_html__( "Sorry, you are not allowed to access this page." , 'thirstyaffiliates' ) );
 
     }
 
@@ -2112,7 +2086,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Activatable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Activatable_Interface
      */
     public function activate() {
 
@@ -2133,11 +2107,10 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Initiable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Initiable_Interface
      */
     public function initialize() {
 
-        add_action( 'wp_ajax_ta_get_global_settings_string' , array( $this , 'ajax_get_global_settings_string' ) );
         add_action( 'wp_ajax_ta_import_settings' , array( $this , 'ajax_import_settings' ) );
         add_action( 'wp_ajax_ta_dismiss_upgrade_header', array( $this, 'dismiss_upgrade_header' ) );
     }
@@ -2149,12 +2122,14 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
      */
     public function dismiss_upgrade_header() {
 
-      // Security check
-      if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'ta_dismiss_upgrade_header' ) ) {
-        die();
-      }
+        // Security check
+        if ( ! wp_doing_ajax() ) {
+            wp_send_json_error( __( 'Invalid AJAX call', 'thirstyaffiliates' ) );
+        } elseif ( ! check_ajax_referer( 'ta_dismiss_upgrade_header', false, false ) ) {
+            wp_send_json_error( __( 'Security Check Failed', 'thirstyaffiliates' ) );
+        }
 
-      update_option( 'ta_dismiss_upgrade_header', true );
+        update_option( 'ta_dismiss_upgrade_header', true );
     }
 
     public function ta_admin_header() {
@@ -2173,10 +2148,10 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <div class="ta-upgrade-header" id="ta-upgrade-header">
             <span id="close-ta-upgrade-header">X</span>
-            <?php _e( 'You\'re using ThirstyAffiliates Lite. To unlock more features, consider <a href="https://thirstyaffiliates.com/pricing?utm_source=plugin_admin&utm_medium=link&utm_campaign=in_plugin&utm_content=upgrade_header">upgrading to Pro.</a>' ); ?>
+            <?php _e( 'You\'re using ThirstyAffiliates Lite. To unlock more features, consider <a href="https://thirstyaffiliates.com/pricing?utm_source=plugin_admin&utm_medium=link&utm_campaign=in_plugin&utm_content=upgrade_header">upgrading to Pro.</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
         </div>
 
-        <div id="ta-admin-header"><img class="ta-logo" src="<?php echo $this->_constants->IMAGES_ROOT_URL() . 'TA.svg'; ?>" /></div>
+        <div id="ta-admin-header"><img class="ta-logo" src="<?php echo esc_url( $this->_constants->IMAGES_ROOT_URL() . 'TA.svg' ); ?>" /></div>
 
         <script>
             jQuery(document).ready(function($) {
@@ -2188,7 +2163,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                         type: 'POST',
                         data: {
                             action: 'ta_dismiss_upgrade_header',
-                            nonce: "<?php echo wp_create_nonce( 'ta_dismiss_upgrade_header' ); ?>"
+                            _ajax_nonce: "<?php echo wp_create_nonce( 'ta_dismiss_upgrade_header' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>"
                         },
                     })
                     .done(function() {
@@ -2361,7 +2336,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
     /**
      * Execute model.
      *
-     * @implements WordPress_Plugin_Boilerplate\Interfaces\Model_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Model_Interface
      *
      * @since 3.0.0
      * @access public

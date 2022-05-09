@@ -27,11 +27,14 @@ $( document ).ready( function() {
                     $.ajax( {
                         url      : ajaxurl,
                         type     : "POST",
-                        data     : { action : "ta_migrate_old_plugin_data" },
+                        data     : {
+                            action : "ta_migrate_old_plugin_data",
+                            _ajax_nonce: migration_var.migration_nonce
+                        },
                         dataType : "json"
                     } )
                     .done( function( data , text_status , jqxhr ) {
-                        
+
                         if ( data.status === "success" )
                             vex.dialog.alert( data.success_msg );
                         else {
@@ -48,10 +51,10 @@ $( document ).ready( function() {
                         console.log( jqxhr );
 
                     } )
-                    .always( function() { 
+                    .always( function() {
 
                         $this.removeAttr( "disabled" );
-                        $this.closest( ".forminp-migration_controls" ).removeClass( "-processing" );      
+                        $this.closest( ".forminp-migration_controls" ).removeClass( "-processing" );
 
                     } );
 

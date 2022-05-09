@@ -8,6 +8,8 @@ import {
 	RECEIVE_USER,
 	RECEIVE_SITE_INFO,
 	RECEIVE_CURRENT_USER_ID,
+	LOAD_INITIAL_FEATURE_FLAGS,
+	RECEIVE_BATCH_MAX_ITEMS,
 } from './actions';
 
 const DEFAULT_STATE = {
@@ -21,6 +23,8 @@ const DEFAULT_STATE = {
 		byType: {},
 	},
 	siteInfo: null,
+	featureFlags: [],
+	batchMaxItems: 0,
 };
 
 export default function reducer( state = DEFAULT_STATE, action ) {
@@ -72,6 +76,16 @@ export default function reducer( state = DEFAULT_STATE, action ) {
 			return {
 				...state,
 				siteInfo: action.siteInfo,
+			};
+		case LOAD_INITIAL_FEATURE_FLAGS:
+			return {
+				...state,
+				featureFlags: action.flags,
+			};
+		case RECEIVE_BATCH_MAX_ITEMS:
+			return {
+				...state,
+				batchMaxItems: action.maxItems,
 			};
 		default:
 			return state;

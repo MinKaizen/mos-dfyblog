@@ -49,7 +49,7 @@ window.addEventListener("load", function () {
 							url: gdpr_policy_page.ajaxurl,
 							type: "POST",
 							data: {
-								action: "add_consent_accept_cookies",
+								action: "gdpr_add_consent_accept_cookies",
 								userip: data.ip,
 							},
 							success: function (data) {
@@ -68,7 +68,7 @@ window.addEventListener("load", function () {
 							url: gdpr_policy_page.ajaxurl,
 							type: "POST",
 							data: {
-								action: "add_consent_deny_cookies",
+								action: "gdpr_add_consent_deny_cookies",
 								userip: data.ip,
 							},
 							success: function (data) {

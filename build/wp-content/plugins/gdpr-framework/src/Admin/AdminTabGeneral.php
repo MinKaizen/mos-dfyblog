@@ -27,6 +27,7 @@ class AdminTabGeneral extends AdminTab
         $this->registerSetting('gdpr_email_from');
         $this->registerSetting('gdpr_export_action');
         $this->registerSetting('gdpr_export_action_email');
+        $this->registerSetting('gdpr_unknown_user_message');
 
         $this->registerSetting('gdpr_delete_action');
         $this->registerSetting('gdpr_delete_action_reassign');
@@ -177,6 +178,13 @@ class AdminTabGeneral extends AdminTab
             ['class' => 'js-gdpr-export-action-email hidden']
         );
 
+        $this->registerSettingField(
+            'gdpr_unknown_user_message',
+            _x('Unknown Data Subject Message', '(Admin)', 'gdpr-framework'),
+            [$this, 'renderUnknownUserField'],
+            'gdpr_section_export'
+        );
+
         /**
          * Delete data
          */
@@ -305,109 +313,124 @@ class AdminTabGeneral extends AdminTab
 
     public function renderEnableCheckbox()
     {
-        $enabled = gdpr('options')->get('enable');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable');
         echo gdpr('view')->render('admin/general/enable', compact('enabled'));
     }
     
     public function renderEnableCheckboxtac()
     {
-        $enabled = gdpr('options')->get('enable_tac');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_tac');
         echo gdpr('view')->render('admin/general/enable-tac', compact('enabled'));
     }
 
     public function renderCommentCheckbox()
     {
+        global $gdpr;
         $content['option_name'] = 'comment_checkbox';
-        $content['value'] = gdpr('options')->get('comment_checkbox');
+        $content['value'] = $gdpr->Options->get('comment_checkbox');
         $content['option'] = _x('Disable Checkbox For Comments', '(Admin)', 'gdpr-framework');
         echo gdpr('view')->render('admin/general/disble-checkbox', compact('content'));
     }
 
     public function renderRegisterCheckbox()
-    {   
+    {
+        global $gdpr;
         $content['option_name'] = 'register_checkbox';
-        $content['value'] = gdpr('options')->get('register_checkbox');
+        $content['value'] = $gdpr->Options->get('register_checkbox');
         $content['option'] = _x('Disable Checkbox For Register Form', '(Admin)', 'gdpr-framework');
         echo gdpr('view')->render('admin/general/disble-checkbox', compact('content'));
     }
 
     public function renderEnableCheckboxpopup()
     {
-        $enabled = gdpr('options')->get('enable_popup');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_popup');
         echo gdpr('view')->render('admin/general/enable-popup', compact('enabled'));
     }
 
     public function renderEnableOneTimeCheckboxpopup()
     {
-        $enabled = gdpr('options')->get('onetime_popup');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('onetime_popup');
         echo gdpr('view')->render('admin/general/enable-onetime-popup', compact('enabled'));
     }  
 
     public function renderheaderCheckboxpopup()
     {
-        $content = gdpr('options')->get('header');
+        global $gdpr;
+        $content = $gdpr->Options->get('header');
         echo gdpr('view')->render('admin/general/enable_popup_header', compact('content'));
     }
     public function rendercontentCheckboxpopup()
     {
-        $content = gdpr('options')->get('popup_content');
+        global $gdpr;
+        $content = $gdpr->Options->get('popup_content');
         echo gdpr('view')->render('admin/general/enable_popup_content', compact('content'));
     }
 
     public function renderNameFrom()
     {
-        $content = gdpr('options')->get('name_from');
+        global $gdpr;
+        $content = $gdpr->Options->get('name_from');
         echo gdpr('view')->render('admin/general/name_from', compact('content'));
     }
 
     public function renderEmailFrom()
     {
-        $content = gdpr('options')->get('email_from');
+        global $gdpr;
+        $content = $gdpr->Options->get('email_from');
         echo gdpr('view')->render('admin/general/email_from', compact('content'));
     }
 
     public function renderpopupBackgroundcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_background');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_background');
         $content['option'] = 'background';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
 
     public function renderpopupTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_text');
         $content['option'] = 'text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
 
     public function renderbuttonBackgroundcolor()
     {
-        
-        $content['value'] = gdpr('options')->get('popup_button_background');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_button_background');
         $content['option'] = 'button_background';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
     public function renderbuttonTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_button_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_button_text');
         $content['option'] = 'button_text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
 
     public function renderborderTextcolor()
     {
-        $content['value'] = gdpr('options')->get('popup_border_text');
+        global $gdpr;
+        $content['value'] = $gdpr->Options->get('popup_border_text');
         $content['option'] = 'border_text';
         echo gdpr('view')->render('admin/general/popup_background_color_picker', compact('content'));
     }
 
     public function renderPrivacyToolsPageSelector()
     {
+        global $gdpr;
         wp_dropdown_pages([
             'name'              => 'gdpr_tools_page',
             'show_option_none'  => _x('&mdash; Select &mdash;', '(Admin)', 'gdpr-framework'),
             'option_none_value' => '0',
-            'selected'          => gdpr('options')->get('tools_page'),
+            'selected'          => $gdpr->Options->get('tools_page'),
             'class'             => 'js-gdpr-select2 gdpr-select',
             'post_status'       => 'publish,draft',
         ]);
@@ -419,11 +442,12 @@ class AdminTabGeneral extends AdminTab
      */
     public function renderPolicyPageSelector()
     {
+        global $gdpr;
         wp_dropdown_pages([
             'name'              => 'gdpr_policy_page',
             'show_option_none'  => _x('&mdash; Select &mdash;', '(Admin)', 'gdpr-framework'),
             'option_none_value' => '0',
-            'selected'          => gdpr('options')->get('policy_page'),
+            'selected'          => $gdpr->Options->get('policy_page'),
             'class'             => 'js-gdpr-select2 gdpr-select',
             'post_status'       => 'publish,draft',
         ]);
@@ -432,23 +456,26 @@ class AdminTabGeneral extends AdminTab
     
     public function renderPolicyCustomPageSelector()
     {
-        $content = gdpr('options')->get('custom_policy_page');
+        global $gdpr;
+        $content = $gdpr->Options->get('custom_policy_page');
         echo gdpr('view')->render('admin/general/custom-policy-url', compact('content'));
 	}
 	
     public function renderToolsCustomPageSelector()
     {
-        $content = gdpr('options')->get('custom_tools_page');
+        global $gdpr;
+        $content = $gdpr->Options->get('custom_tools_page');
         echo gdpr('view')->render('admin/general/custom-tools-url', compact('content'));
     }
     
     public function renderTermsPageSelector()
     {
+        global $gdpr;
         wp_dropdown_pages([
             'name'              => 'gdpr_terms_page',
             'show_option_none'  => _x('&mdash; Select &mdash;', '(Admin)', 'gdpr-framework'),
             'option_none_value' => '0',
-            'selected'          => gdpr('options')->get('terms_page'),
+            'selected'          => $gdpr->Options->get('terms_page'),
             'class'             => 'js-gdpr-select2 gdpr-select',
             'post_status'       => 'publish,draft',
         ]);
@@ -457,55 +484,74 @@ class AdminTabGeneral extends AdminTab
 	
 	public function renderCustomTermsPageSelector()
     {
-        $content = gdpr('options')->get('custom_terms_page');
+        global $gdpr;
+        $content = $gdpr->Options->get('custom_terms_page');
         echo gdpr('view')->render('admin/general/custom-terms-url', compact('content'));
     }
 
     public function renderExportActionSelector()
     {
-        $exportAction = gdpr('options')->get('export_action');
+        global $gdpr;
+        $exportAction = $gdpr->Options->get('export_action');
         echo gdpr('view')->render('admin/general/export-action', compact('exportAction'));
         echo gdpr('view')->render('admin/general/description-export-action');
     }
+
+    public function renderUnknownUserField()
+    {
+        $content = gdpr('options')->get('unknown_user_message', GDPR_DEFAULT_UNKNOWN_USER_MESSAGE);
+        if (empty(trim($content))) {
+            $content = GDPR_DEFAULT_UNKNOWN_USER_MESSAGE;
+            gdpr('options')->set('unknown_user_message', $content);
+        }
+        echo gdpr('view')->render('admin/general/unknown-user-message', compact('content'));
+    }
+
     public function renderPopupThemeSelector()
     {
-        $themeAction = gdpr('options')->get('popup_theme');
+        global $gdpr;
+        $themeAction = $gdpr->Options->get('popup_theme');
         echo gdpr('view')->render('admin/general/theme-action', compact('themeAction'));
         echo gdpr('view')->render('admin/general/description-theme-action');
     }
     public function renderPopupPositionSelector()
     {
-        $positionAction = gdpr('options')->get('popup_position');
+        global $gdpr;
+        $positionAction = $gdpr->Options->get('popup_position');
         echo gdpr('view')->render('admin/general/position-action', compact('positionAction'));
         echo gdpr('view')->render('admin/general/description-position-action');
     }
 
     public function renderExportActionEmail()
     {
-        $exportActionEmail = gdpr('options')->get('export_action_email');
+        global $gdpr;
+        $exportActionEmail = $gdpr->Options->get('export_action_email');
         echo gdpr('view')->render('admin/general/export-action-email', compact('exportActionEmail'));
     }
 
     public function renderDeleteActionSelector()
     {
-        $deleteAction = gdpr('options')->get('delete_action');
+        global $gdpr;
+        $deleteAction = $gdpr->Options->get('delete_action');
         echo gdpr('view')->render('admin/general/delete-action', compact('deleteAction'));
         echo gdpr('view')->render('admin/general/description-delete-action');
     }
 
     public function renderDeleteActionReassign()
     {
-        $reassign = gdpr('options')->get('delete_action_reassign');
+        global $gdpr;
+        $reassign = $gdpr->Options->get('delete_action_reassign');
         echo gdpr('view')->render('admin/general/delete-action-reassign', compact('reassign'));
     }
 
     public function renderDeleteActionReassignUser()
     {
+        global $gdpr;
         wp_dropdown_users([
             'name'              => 'gdpr_delete_action_reassign_user',
             'show_option_none'  => _x('&mdash; Select &mdash;', '(Admin)', 'gdpr-framework'),
             'option_none_value' => '0',
-            'selected'          => gdpr('options')->get('delete_action_reassign_user'),
+            'selected'          => $gdpr->Options->get('delete_action_reassign_user'),
             'class'             => 'js-gdpr-select2 gdpr-select',
             'role__in'          => apply_filters('gdpr/options/reassign/roles', ['administrator', 'editor']),
         ]);
@@ -513,40 +559,47 @@ class AdminTabGeneral extends AdminTab
 
     public function renderDeleteActionEmail()
     {
-        $deleteActionEmail = gdpr('options')->get('delete_action_email');
+        global $gdpr;
+        $deleteActionEmail = $gdpr->Options->get('delete_action_email');
         echo gdpr('view')->render('admin/general/delete-action-email', compact('deleteActionEmail'));
     }
 
     public function renderStylesheetSelector()
     {
-        $enabled = gdpr('options')->get('enable_stylesheet');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_stylesheet');
         echo gdpr('view')->render('admin/general/stylesheet', compact('enabled'));
     }
 
     public function renderThemeCompatibilitySelector()
     {
-        $enabled = gdpr('options')->get('enable_theme_compatibility');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_theme_compatibility');
         echo gdpr('view')->render('admin/general/theme-compatibility', compact('enabled'));
     }
 
     public function renderwooCompatibilitySelector()
     {
-        $enabled = gdpr('options')->get('enable_woo_compatibility');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_woo_compatibility');
         echo gdpr('view')->render('admin/general/woo-compatibility', compact('enabled'));
     }
     public function renderwoodisablewooSelector()
     {
-        $enabled = gdpr('options')->get('disable_checkbox_woo_compatibility');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('disable_checkbox_woo_compatibility');
         echo gdpr('view')->render('admin/general/woo-disable_checkbox', compact('enabled'));
     }
     public function renderwooregisterdisablewooSelector()
     {
-        $enabled = gdpr('options')->get('disable_register_checkbox_woo_compatibility');
+        global $gdpr;
+        $enabled = $gdpr->Options->get('disable_register_checkbox_woo_compatibility');
         echo gdpr('view')->render('admin/general/woo-disable_register_checkbox', compact('enabled'));
     }
     public function rendereddCompatibilitySelector()
-    {   
-        $enabled = gdpr('options')->get('enable_edd_compatibility');
+    {
+        global $gdpr;
+        $enabled = $gdpr->Options->get('enable_edd_compatibility');
         echo gdpr('view')->render('admin/general/edd-compatibility', compact('enabled'));
     }
 }

@@ -80,6 +80,7 @@ class DashboardDataPageController
      */
     public function renderConsentForm(DataSubject $dataSubject)
     {
+        global $gdpr;
         $consentData = $dataSubject->getVisibleConsentData();
 
         foreach ($consentData as &$item) {
@@ -91,7 +92,7 @@ class DashboardDataPageController
             ]);
         }
 
-        $consentInfo = wpautop(gdpr('options')->get('consent_info'));
+        $consentInfo = wpautop($gdpr->Options->get('consent_info'));
 
         echo gdpr('view')->render(
             "modules/wordpress-user/dashboard/data-page/form-consent",

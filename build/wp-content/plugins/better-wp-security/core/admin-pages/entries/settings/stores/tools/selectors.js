@@ -12,7 +12,7 @@ import { createRegistrySelector } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { TOOLS_STORE_NAME } from '../';
 
 const _combineTools = memize(

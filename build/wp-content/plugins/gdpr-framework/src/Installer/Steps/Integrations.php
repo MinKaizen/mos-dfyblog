@@ -17,7 +17,8 @@ class Integrations extends InstallerStep implements InstallerStepInterface
 
     protected function renderContent()
     {
-        $enableThemeCompatibility = gdpr('options')->get('enable_theme_compatibility');
+        global $gdpr;
+        $enableThemeCompatibility = $gdpr->Options->get('enable_theme_compatibility');
         $currentTheme = gdpr('themes')->getCurrentThemeName();
         $isThemeSupported = gdpr('themes')->isCurrentThemeSupported();
 
@@ -40,10 +41,11 @@ class Integrations extends InstallerStep implements InstallerStepInterface
 
     public function submit()
     {
+        global $gdpr;
         if (isset($_POST['gdpr_enable_theme_compatibility']) && 'yes' === $_POST['gdpr_enable_theme_compatibility']) {
-            gdpr('options')->set('enable_theme_compatibility', true);
+            $gdpr->Options->set('enable_theme_compatibility', true);
         } else {
-            gdpr('options')->set('enable_theme_compatibility', false);
+            $gdpr->Options->set('enable_theme_compatibility', false);
         }
     }
 }

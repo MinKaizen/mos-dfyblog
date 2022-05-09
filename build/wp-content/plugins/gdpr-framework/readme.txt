@@ -2,8 +2,8 @@
 Contributors: Data443
 Tags: gdpr, compliance, security, privacy, wordpress gdpr, eu privacy directive, eu cookie law, california privacy law, privacy law, general data protection, ccpa, gdpr law
 Requires at least: 4.7
-Tested up to: 5.8
-Requires PHP: 7.3
+Tested up to: 5.9
+Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -79,6 +79,7 @@ Steps to add consent with contact form 7 are as follow:
 3. Then go to the contact form 7 click on Acceptance button a pop-up will get open.
 4. Add the name of that acceptance same as that of slug i.e "contact_acceptance".
 5. Insert the tag then save the form then it will be embedded with contact form 7.
+   example tag: [acceptance contact_acceptance] I consent to email contact. [/acceptance]
 
 Compatibility Guide:
 
@@ -116,6 +117,22 @@ We are also planning to add other important privacy-related features missing fro
 5. GDPR FRAMEWORK PRIVACY TOOL
 
 == Change log ==
+
+= 2.0.2 (4/19/2022) =
+
+* FRAM-331 Fix cookie value to reflect a user allow or deny
+* FRAM-339 Update language translation files
+
+= 2.0.1 (3/16/2022) =
+
+* FRAM-320 Fix WooCommerce integration initialization call timing to be earlier
+* FRAM-323 Provide a settable message for the case where the email is not found
+* FRAM-325 Fix the problem of sending data to non-registered visitors
+
+= 2.0.0 (2/15/2022) =
+
+* Fram-306 Streamline the code to address malware warning from 3rd party code
+* Reduced PHP requirement to 5.6
 
 = 1.0.49 (1/18/2022) =
 * Fram-303 Automatically push a new release from GitHub to WordPress

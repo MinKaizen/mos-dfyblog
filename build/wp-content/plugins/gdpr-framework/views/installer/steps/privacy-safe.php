@@ -1,9 +1,10 @@
+<?php global $gdpr; ?>
 <h2>
 	Privacy Safe 
 </h2>
 <hr>
 <p class="gdpr-disclaimer">
-	<img src="<?php echo gdpr('config')->get('plugin.url');?>src/Components/PrivacySafe/Privacy-Safe-Brand.png"
+	<img src="<?php echo $gdpr->PluginUrl;?>src/Components/PrivacySafe/Privacy-Safe-Brand.png"
 		style="float:right;margin:15px;" />
 	<p>Strengthen your reputation. The privacy safe seal assures your customers that your business is in compliance with
 		privacy laws and regulations. The privacy safe seal will verify that the GDPR Framework plugin is installed.</p>

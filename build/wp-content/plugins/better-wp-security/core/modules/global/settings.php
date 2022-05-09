@@ -7,6 +7,8 @@ final class ITSEC_Global_Settings extends Config_Settings {
 		$default = parent::get_default( $setting, $default );
 
 		switch ( $setting ) {
+			case 'nginx_file':
+				return ABSPATH . 'nginx.conf';
 			case 'log_location':
 				return ITSEC_Core::get_storage_dir( 'logs' );
 			case 'enable_remote_help';

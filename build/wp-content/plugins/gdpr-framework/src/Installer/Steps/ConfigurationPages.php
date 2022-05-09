@@ -17,7 +17,8 @@ class ConfigurationPages extends InstallerStep implements InstallerStepInterface
 
     protected function renderContent()
     {
-        $policyPage         = gdpr('options')->get('policy_page');
+        global $gdpr;
+        $policyPage         = $gdpr->Options->get('policy_page');
         $policyPageSelector = wp_dropdown_pages([
             'name'              => 'gdpr_policy_page',
             'show_option_none'  => _x('&mdash; Create a new page &mdash;', '(Admin)', 'gdpr-framework'),
@@ -27,7 +28,7 @@ class ConfigurationPages extends InstallerStep implements InstallerStepInterface
             'class'             => 'gdpr-select js-gdpr-select2',
         ]);
         
-        $privacyToolsPage         = gdpr('options')->get('tools_page');
+        $privacyToolsPage         = $gdpr->Options->get('tools_page');
         $privacyToolsPageSelector = wp_dropdown_pages([
             'name'              => 'gdpr_tools_page',
             'show_option_none'  => _x('&mdash; Create a new page &mdash;', '(Admin)', 'gdpr-framework'),
@@ -50,11 +51,12 @@ class ConfigurationPages extends InstallerStep implements InstallerStepInterface
 
     public function submit()
     {
+        global $gdpr;
         if (isset($_POST['gdpr_create_tools_page']) && 'yes' === $_POST['gdpr_create_tools_page']) {
             $id = $this->createPrivacyToolsPage();
-            gdpr('options')->set('tools_page', $id);
+            $gdpr->Options->set('tools_page', $id);
         } else {
-            gdpr('options')->set('tools_page', $_POST['gdpr_tools_page']);
+            $gdpr->Options->set('tools_page', $_POST['gdpr_tools_page']);
         }
     }
 

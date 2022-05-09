@@ -11,10 +11,11 @@ include_once(EDD_PLUGIN_DIR . 'includes/privacy-functions.php');
 class EddGdpr
 {   
     public function __construct(DataSubjectManager $dataSubjectManager, ConsentManager $consentManager)
-    {  	
+    {
+        global $gdpr;
         $this->dataSubjectManager = $dataSubjectManager;
-        $this->consentManager = $consentManager;        
-        if (!gdpr('options')->get('enable_edd_compatibility'))
+        $this->consentManager = $consentManager;
+        if (!$gdpr->Options->get('enable_edd_compatibility'))
         {   
             return;
         }

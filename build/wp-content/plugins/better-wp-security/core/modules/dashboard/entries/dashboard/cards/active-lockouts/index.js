@@ -7,22 +7,27 @@ import memize from 'memize';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { compose, withState, pure } from '@wordpress/compose';
-import { Fragment } from '@wordpress/element';
-import { withSelect, withDispatch, dispatch } from '@wordpress/data';
+import { compose, pure } from '@wordpress/compose';
+import { Fragment, useState } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { dateI18n } from '@wordpress/date';
-import { Button, Spinner, Dashicon } from '@wordpress/components';
+import { Button } from '@wordpress/components';
+
+/**
+ * iThemes dependencies
+ */
+import { SearchControl } from '@ithemes/ui';
 
 /**
  * Internal dependencies
  */
+import { withDebounceHandler } from '@ithemes/security-hocs';
 import Header, { Title } from '../../components/card/header';
 import Footer from '../../components/card/footer';
 import MasterDetail, { Back } from '../../components/master-detail';
 import { CardHappy } from '../../components/empty-states';
 import Detail from './Detail';
 import lockoutController from './lockout-controller';
-import { withDebounceHandler } from '@ithemes/security-hocs';
 import './style.scss';
 
 function MasterRender( { master } ) {
@@ -49,7 +54,7 @@ function MasterRender( { master } ) {
 	);
 }
 
-const withLinks = memize( function ( lockouts, links ) {
+const withLinks = memize( function( lockouts, links ) {
 	return lockouts.map( ( lockout ) => ( {
 		...lockout,
 		links,
@@ -59,20 +64,25 @@ const withLinks = memize( function ( lockouts, links ) {
 function ActiveLockouts( {
 	card,
 	config,
-	isQuerying,
-	query,
-	selectedId,
-	releasingIds,
-	setState,
 } ) {
+	const [ selectedId, setSelectedId ] = useState( 0 );
+	const [ releasingIds, setReleasingIds ] = useState( [] );
+	const [ searchTerm, setSearchTerm ] = useState( '' );
+
+	const { isQuerying } = useSelect(
+		( select ) => ( {
+			isQuerying: select( 'ithemes-security/dashboard' ).isQueryingDashboardCard( card.id ),
+		} ),
+		[ card.id ]
+	);
+	const { queryDashboardCard: query, refreshDashboardCard } = useDispatch( 'ithemes-security/dashboard' );
 	const select = ( id ) => {
-		return setState( { selectedId: id } );
+		return setSelectedId( id );
 	};
 
 	const onRelease = async ( e ) => {
 		e.preventDefault();
-
-		setState( { releasingIds: [ ...releasingIds, selectedId ] } );
+		setReleasingIds( [ ...releasingIds, selectedId ] );
 
 		try {
 			await lockoutController.release(
@@ -85,13 +95,10 @@ function ActiveLockouts( {
 			console.warn( error );
 		}
 
-		await dispatch( 'ithemes-security/dashboard' ).refreshDashboardCard(
-			card.id
-		);
-		setState( {
-			selectedId: 0,
-			releasingIds: releasingIds.filter( ( id ) => id !== selectedId ),
-		} );
+		await refreshDashboardCard( card.id );
+
+		setSelectedId( 0 );
+		setReleasingIds( releasingIds.filter( ( id ) => id !== selectedId ) );
 	};
 
 	const isSmall = true;
@@ -108,14 +115,16 @@ function ActiveLockouts( {
 			</Header>
 			{ selectedId === 0 && (
 				<div className="itsec-card-active-lockouts__search-container">
-					<input
-						type="search"
-						onChange={ ( e ) =>
-							query( { search: e.target.value } )
-						}
+					<SearchControl
+						value={ searchTerm }
+						onChange={ ( next ) => {
+							setSearchTerm( next );
+							query( card.id, next ? { search: next } : {} );
+						} }
 						placeholder={ __( 'Search Lockouts', 'better-wp-security' ) }
+						isSearching={ isQuerying }
+						surfaceVariant="secondary"
 					/>
-					{ isQuerying ? <Spinner /> : <Dashicon icon="search" /> }
 				</div>
 			) }
 			{ isEmpty( card.data.lockouts ) ? (
@@ -139,22 +148,22 @@ function ActiveLockouts( {
 			) }
 			{ selectedId > 0 &&
 				card._links[ 'ithemes-security:release-lockout' ] && (
-					<Footer>
-						<span className="itsec-card-footer__action">
-							<Button
-								isPrimary
-								isSmall
-								aria-disabled={ releasingIds.includes(
-									selectedId
-								) }
-								isBusy={ releasingIds.includes( selectedId ) }
-								onClick={ onRelease }
-							>
-								{ __( 'Release Lockout', 'better-wp-security' ) }
-							</Button>
-						</span>
-					</Footer>
-				) }
+				<Footer>
+					<span className="itsec-card-footer__action">
+						<Button
+							isPrimary
+							isSmall
+							aria-disabled={ releasingIds.includes(
+								selectedId
+							) }
+							isBusy={ releasingIds.includes( selectedId ) }
+							onClick={ onRelease }
+						>
+							{ __( 'Release Lockout', 'better-wp-security' ) }
+						</Button>
+					</span>
+				</Footer>
+			) }
 		</div>
 	);
 }
@@ -162,20 +171,6 @@ function ActiveLockouts( {
 export const slug = 'active-lockouts';
 export const settings = {
 	render: compose( [
-		withState( { selectedId: 0, releasingIds: [] } ),
-		withSelect( ( select, ownProps ) => ( {
-			isQuerying: select(
-				'ithemes-security/dashboard'
-			).isQueryingDashboardCard( ownProps.card.id ),
-		} ) ),
-		withDispatch( ( d, ownProps ) => ( {
-			query( queryArgs ) {
-				return d( 'ithemes-security/dashboard' ).queryDashboardCard(
-					ownProps.card.id,
-					queryArgs
-				);
-			},
-		} ) ),
 		withDebounceHandler( 'query', 500, { leading: true } ),
 		pure,
 	] )( ActiveLockouts ),

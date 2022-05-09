@@ -273,6 +273,7 @@ class Bootstrap implements Model_Interface {
 
         update_option( Plugin_Constants::INSTALLED_VERSION , Plugin_Constants::VERSION ); // Update current installed plugin version
         update_option( 'ta_activation_code_triggered' , 'yes' ); // Mark activation code triggered
+        update_option( 'ta_activation_time' , time() ); // Mark activation code triggered
 
     }
 
@@ -409,8 +410,8 @@ class Bootstrap implements Model_Interface {
         if ( ! $screen_id = $this->_helper_functions->get_screen_id( $object_id ) )
             return;
 
-        $current_tab       = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : '';
-        $post_type         = isset( $_GET[ 'post_type' ] ) ? sanitize_text_field( $_GET[ 'post_type' ] ) : '';
+        $current_tab       = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : '';
+        $post_type         = isset( $_GET[ 'post_type' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'post_type' ] ) ) : '';
         $interfaces        = apply_filters( 'ta_admin_interfaces' , array() );
         $current_interface = $screen_id &&  isset( $interfaces[ $screen_id ] ) ? $interfaces[ $screen_id ] : null;
 
@@ -432,7 +433,7 @@ class Bootstrap implements Model_Interface {
 
         // kill page display error message if current user does not have capability.
         if ( ( $capability && ! current_user_can( $capability ) ) || ( $object_id && isset( $_GET[ 'post' ] ) && get_current_user_id() != get_post_field( 'post_author' , $object_id ) && ! current_user_can( 'edit_others_posts' ) ) )
-            wp_die( $error_message );
+            wp_die( esc_html( $error_message ) );
     }
 
     /**

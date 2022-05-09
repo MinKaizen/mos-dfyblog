@@ -86,43 +86,6 @@
     }
 
     & .itsec-card-active-lockouts__search-container {
-        position: relative;
-
-        & input[type="search"] {
-            width: 100%;
-            margin: 0;
-            padding: 3px 1em;
-            border: none;
-            box-shadow: none;
-            transition: all 400ms ease;
-            background: $highlight-blue;
-            color: $dark-gray-500;
-            border-radius: 0;
-
-            &:focus {
-                padding: 1em;
-            }
-
-            &::placeholder {
-                color: $dark-gray-100;
-            }
-
-            &::-webkit-search-cancel-button {
-                display: none;
-            }
-        }
-
-        & .components-spinner,
-        & .dashicon {
-            position: absolute;
-            right: 1em;
-            top: calc(50% - 9px);
-            margin: 0;
-        }
-
-        & .dashicon {
-            color: $dark-gray-100;
-            top: calc(50% - 10px);
-        }
+        padding: 1em;
     }
 }

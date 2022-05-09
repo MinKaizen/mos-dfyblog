@@ -1,4 +1,4 @@
-/* global jQuery parent */
+/* global jQuery parent ta_advance_link_picker_js_params */
 
 const $ = jQuery;
 const { editor,
@@ -33,7 +33,7 @@ export default function insert_affiliate_link_normal() {
 
 /**
  * Insert affiliate link callback.
- * 
+ *
  * @since 3.5
  */
 function insertAffiliateLink() {
@@ -67,16 +67,16 @@ function insertAffiliateLink() {
             break;
 
         }
-            
+
     }
 }
 
 /**
  * Insert affiliate link as shortcode.
- * 
+ *
  * @since 3.5
- * 
- * @param {object} linkData Desctructured object. 
+ *
+ * @param {object} linkData Desctructured object.
  */
 function insert_as_shortcode({ html_editor , linkText , linkID , content }) {
 
@@ -91,10 +91,10 @@ function insert_as_shortcode({ html_editor , linkText , linkID , content }) {
         editor.execCommand( "Unlink" , false , false );
 
         if ( isGutenberg ) {
-            
+
             let $tempNode = editor.$( "span.temp-ta-node" );
             $tempNode.replaceWith( replace_shortcodes( shortcode ) );
-            
+
             editor.selection.collapse();
 
         } else {
@@ -102,7 +102,7 @@ function insert_as_shortcode({ html_editor , linkText , linkID , content }) {
             editor.selection.setContent( shortcode );
             inputInstance.reset();
         }
-        
+
     }
 
     close_thickbox();
@@ -110,21 +110,22 @@ function insert_as_shortcode({ html_editor , linkText , linkID , content }) {
 
 /**
  * Insert affiliate link as image.
- * 
+ *
  * @since 3.5
- * 
- * @param {*} $el 
- * @param {*} param1 
+ *
+ * @param {*} $el
+ * @param {*} param1
  */
 function insert_as_image( $el , { html_editor , className , classHtml , titleHtml , href , rel , target, other_atts_string } ) {
 
     if ( className != "" )
         classHtml = classHtml.replace( "thirstylink" , "thirstylinkimg" );
-        
+
     const imgID = $el.data( "imgid" );
 
     $.post( parent.ajaxurl, {
         action  : "ta_get_image_markup_by_id",
+        _ajax_nonce : ta_advance_link_picker_js_params.get_image_markup_nonce,
         imgid   : imgID,
     }, ( response ) => {
 
@@ -139,35 +140,35 @@ function insert_as_image( $el , { html_editor , className , classHtml , titleHtm
                 close_thickbox();
 
                 if ( isGutenberg ) {
-            
+
                     let $tempNode = editor.$( "span.temp-ta-node" );
                     $tempNode.replaceWith( $tempNode.html() + linkHtml );
-                    
+
                     editor.selection.collapse();
-        
+
                 } else {
 
                     editor.execCommand( "mceInsertContent" , false , "" );
                     editor.execCommand( "mceInsertContent" , false , linkHtml );
                     inputInstance.reset();
                 }
-                
+
             }
         }
 
         close_thickbox();
 
     } , "json" );
-    
+
     if ( ! html_editor ) editor.selection.collapse();
 }
 
 /**
  * Insert affiliate link as link.
- * 
+ *
  * @since 3.5
- * 
- * @param {*} param0 
+ *
+ * @param {*} param0
  */
 function insert_as_link({ html_editor , linkText , content , className , classHtml , title , titleHtml , href , rel , target , other_atts , other_atts_string }) {
 
@@ -177,8 +178,8 @@ function insert_as_link({ html_editor , linkText , content , className , classHt
         content = linkText.trim() ? linkText : content;
 
     const linkHtml = `<a ${ classHtml + titleHtml } href="${ href }" rel="${ rel }" target="${ target }" ${ other_atts_string }>${ content }</a>`;
-    
-    
+
+
     if ( html_editor )
         replace_html_editor_selected_text( linkHtml );
     else {
@@ -202,18 +203,18 @@ function insert_as_link({ html_editor , linkText , content , className , classHt
         editor.execCommand( "Unlink" , false , false );
 
         if ( isGutenberg ) {
-            
+
             let $tempNode = editor.$( "span.temp-ta-node" );
             $tempNode.replaceWith( linkHtml );
-            
+
             let $tempLink = editor.$( "a.temp-ta-link" );
             editor.selection.select( $tempLink[0] );
             $tempLink.removeClass( "temp-ta-link" );
-            
+
             editor.selection.collapse();
 
         } else {
-            
+
             editor.execCommand( "mceInsertLink" , false , link_attributes );
             if ( ! linkText.trim() )
                 editor.selection.setContent( content );
@@ -228,10 +229,10 @@ function insert_as_link({ html_editor , linkText , content , className , classHt
 
 /**
  * Get link data.
- * 
+ *
  * @since 3.5
- * 
- * @param {jQuery object} $resultRow 
+ *
+ * @param {jQuery object} $resultRow
  */
 function getLinkData( $resultRow , html_editor ) {
 
@@ -267,7 +268,7 @@ function getLinkData( $resultRow , html_editor ) {
 
 /**
  * Toggle images block.
- * 
+ *
  * @since 3.5
  */
 function toggle_images_block() {

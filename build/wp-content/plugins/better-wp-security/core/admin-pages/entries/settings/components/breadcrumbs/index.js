@@ -83,7 +83,7 @@ export function useBreadcrumbTrail( title, match ) {
 		params: { root, page: currentPageId, child },
 	} = match || localMatch;
 
-	const pages = usePages( root );
+	const pages = usePages( { root } );
 	let childPages = useCurrentChildPages();
 
 	if ( useCurrentPage()?.id !== currentPageId ) {

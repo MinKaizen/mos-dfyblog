@@ -489,6 +489,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			ITSEC_Modules::register_module( 'security-check-pro', "$path/modules/security-check-pro" );
 			ITSEC_Modules::register_module( 'sync-connect', "$path/modules/sync-connect" );
 			ITSEC_Modules::register_module( 'site-scanner', "$path/modules/site-scanner" );
+			ITSEC_Modules::register_module( 'malware-scheduling', "$path/modules/malware-scheduling" );
 			ITSEC_Modules::register_module( 'hide-backend', "$path/modules/hide-backend" );
 		}
 
@@ -780,12 +781,12 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		 *
 		 * This value will be the same throughout the entire request.
 		 *
-		 * @return int
+		 * @return int|\DateTimeInterface
 		 */
-		public static function get_current_time_gmt() {
+		public static function get_current_time_gmt( bool $as_object = false ) {
 			$self = self::get_instance();
 
-			return $self->current_time_gmt;
+			return $as_object ? new \DateTimeImmutable( '@' . $self->current_time_gmt ) : $self->current_time_gmt;
 		}
 
 		/**
@@ -999,9 +1000,6 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 		 * @return string
 		 */
 		public static function get_storage_dir( $dir = '', $public = false ) {
-
-			require_once( self::get_core_dir() . '/lib/class-itsec-lib-directory.php' );
-
 			$wp_upload_dir = self::get_wp_upload_dir();
 
 			$storage_dir = $wp_upload_dir['basedir'];
@@ -1188,6 +1186,32 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			}
 
 			return $self->version;
+		}
+
+		/**
+		 * Gets the UTM campaign based on the Install Type.
+		 *
+		 * @return string
+		 */
+		public static function get_utm_campaign(): string {
+			return self::is_pro() ? 'itsecprocta' : 'itsecfreecta';
+		}
+
+		/**
+		 * Gets a link configured for Google Analytics tracking.
+		 *
+		 * @param string $link
+		 * @param string $source
+		 * @param string $medium
+		 *
+		 * @return string
+		 */
+		public static function get_tracking_link( string $link, string $source, string $medium ): string {
+			return add_query_arg( [
+				'utm_source'   => $source,
+				'utm_medium'   => $medium,
+				'utm_campaign' => self::get_utm_campaign(),
+			], $link );
 		}
 
 		public static function is_test_suite( $suite = '' ) {

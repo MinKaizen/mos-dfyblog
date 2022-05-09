@@ -7,17 +7,16 @@
       0 => 'backup/dashboard.css',
       1 => 'backup/dashboard.js',
     ),
-    'hash' => '9e3b9cc1c5acb3a56218b567ae9592da',
+    'hash' => '091763d10de79c55eb486c2ea1ff48b8',
     'contentHash' => 
     array (
-      'css/mini-extract' => '6f759663240a868e2247',
-      'javascript' => 'aee43e3c84d2a978045f',
+      'css/mini-extract' => '619194f0aef1b674e9f4',
+      'javascript' => '2c53334991b4a7a98c01',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'backup/dashboard',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'backup/dashboard',
     ),
     'dependencies' => 
     array (
@@ -32,26 +31,6 @@
       8 => 'wp-url',
     ),
   ),
-  'backup/dashboard--settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'backup/dashboard--settings.js',
-    ),
-    'hash' => 'b4b5ddf5c97f08c00a2b4fa14b6d9d3f',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '2d5367dde4a2c2fe83e5',
-    ),
-    'vendors' => 
-    array (
-    ),
-    'dependencies' => 
-    array (
-    ),
-  ),
   'core/admin-notices' => 
   array (
     'runtime' => false,
@@ -60,11 +39,11 @@
       0 => 'core/admin-notices.css',
       1 => 'core/admin-notices.js',
     ),
-    'hash' => '59230d0a5bb7cd77397a018e508b9f49',
+    'hash' => 'f8b36c8737c071cf95bb21d3e1daf7b3',
     'contentHash' => 
     array (
-      'css/mini-extract' => '377b30062e4bf838e773',
-      'javascript' => 'bfe6a1f62efb9b994bc2',
+      'css/mini-extract' => 'f837b039f5bcfecb0d4a',
+      'javascript' => '40d3bad77b28772eefac',
     ),
     'vendors' => 
     array (
@@ -90,15 +69,15 @@
     array (
       0 => 'core/admin-notices-api.js',
     ),
-    'hash' => '8797b98cc5d9a427f897da6d642d1b9b',
+    'hash' => '6dbd89266ad3f0316b40b861a7508388',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '0af86d68f8ffb4b563ca',
+      'javascript' => 'c05d9ab9657d5dbaaa9d',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
       1 => 'core/admin-notices-api',
     ),
     'dependencies' => 
@@ -119,11 +98,11 @@
       0 => 'core/admin-notices-dashboard-admin-bar.css',
       1 => 'core/admin-notices-dashboard-admin-bar.js',
     ),
-    'hash' => 'a6083b64bc12aa4d16859d4990c6e5b7',
+    'hash' => '455fb67e6065f1bf1256443b00cea473',
     'contentHash' => 
     array (
-      'css/mini-extract' => '8b79dc61003f8d2f2691',
-      'javascript' => 'e39b75d2de1cb2f9da81',
+      'css/mini-extract' => '31504e596293b38a2fc1',
+      'javascript' => 'f722c52262ab5673a5d2',
     ),
     'vendors' => 
     array (
@@ -151,11 +130,11 @@
       0 => 'core/packages/components/site-scan-results/style.css',
       1 => 'core/packages/components/site-scan-results/style.js',
     ),
-    'hash' => 'fbffa744590f4c911bcb3e6f18345102',
+    'hash' => '7dd67ca5d86333fe383fe009426ac946',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'a85996812781f1ceaf68',
-      'javascript' => '24177d7e432ef0d3c373',
+      'css/mini-extract' => 'cc7af4c542b875b0b733',
+      'javascript' => '925a51036df5b8ad5cf4',
     ),
     'vendors' => 
     array (
@@ -173,11 +152,11 @@
       0 => 'core/settings.css',
       1 => 'core/settings.js',
     ),
-    'hash' => '8403b702f4c00ac5038c57aeedcf7485',
+    'hash' => 'e53770bda944e72dbe7a7976ab00fa9a',
     'contentHash' => 
     array (
-      'css/mini-extract' => '8b79dc61003f8d2f2691',
-      'javascript' => '12854e687e789b11aec2',
+      'css/mini-extract' => '31504e596293b38a2fc1',
+      'javascript' => '53030e4b99f6ffd78b84',
     ),
     'vendors' => 
     array (
@@ -204,15 +183,15 @@
     array (
       0 => 'dashboard/api.js',
     ),
-    'hash' => '9ef933518925f327e58480103eff1798',
+    'hash' => '990a653297993f5323d5b32d76570df9',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'e64745fca7790e5213ff',
+      'javascript' => 'af94a55e8ef4468fa8ee',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
       1 => 'dashboard/api',
     ),
     'dependencies' => 
@@ -236,45 +215,47 @@
       0 => 'dashboard/dashboard.css',
       1 => 'dashboard/dashboard.js',
     ),
-    'hash' => '3b4ca879274a7d45c3c1eb8ce4030734',
+    'hash' => 'bd126a15180b006b59d85a649f7e39ab',
     'contentHash' => 
     array (
-      'css/mini-extract' => '2bca136858509a889717',
-      'javascript' => 'b59d3cd59ec9103976d1',
+      'css/mini-extract' => 'd3368d2f644336504341',
+      'javascript' => 'b175cc65360000ab9ee3',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'dashboard/dashboard',
-      6 => 'vendors/dashboard/dashboard',
-      7 => 'vendors/recharts',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'vendors/dashboard/dashboard--settings',
+      6 => 'dashboard/dashboard',
+      7 => 'vendors/dashboard/dashboard',
+      8 => 'vendors/recharts',
     ),
     'dependencies' => 
     array (
       0 => '@ithemes/security.dashboard.api',
-      1 => 'lodash',
-      2 => 'react',
-      3 => 'react-dom',
-      4 => 'wp-a11y',
-      5 => 'wp-api-fetch',
-      6 => 'wp-components',
-      7 => 'wp-compose',
-      8 => 'wp-data',
-      9 => 'wp-date',
-      10 => 'wp-dom-ready',
-      11 => 'wp-element',
-      12 => 'wp-hooks',
-      13 => 'wp-i18n',
-      14 => 'wp-is-shallow-equal',
-      15 => 'wp-keycodes',
-      16 => 'wp-notices',
-      17 => 'wp-plugins',
-      18 => 'wp-primitives',
-      19 => 'wp-url',
+      1 => '@ithemes/security.packages.data',
+      2 => 'lodash',
+      3 => 'react',
+      4 => 'react-dom',
+      5 => 'wp-a11y',
+      6 => 'wp-api-fetch',
+      7 => 'wp-components',
+      8 => 'wp-compose',
+      9 => 'wp-data',
+      10 => 'wp-date',
+      11 => 'wp-dom-ready',
+      12 => 'wp-element',
+      13 => 'wp-hooks',
+      14 => 'wp-i18n',
+      15 => 'wp-is-shallow-equal',
+      16 => 'wp-keycodes',
+      17 => 'wp-notices',
+      18 => 'wp-plugins',
+      19 => 'wp-primitives',
+      20 => 'wp-url',
     ),
   ),
   'dashboard/dashboard--settings' => 
@@ -285,11 +266,32 @@
       0 => 'dashboard/dashboard--settings.css',
       1 => 'dashboard/dashboard--settings.js',
     ),
-    'hash' => '2b6571358543391738a5e6cfe19f8d09',
+    'hash' => 'ce75efeee61b363ba8a8d9c91d466054',
     'contentHash' => 
     array (
-      'css/mini-extract' => '29e9442b48fe485f4b02',
-      'javascript' => '567f81e809b25fc43b13',
+      'css/mini-extract' => '6e667999baef62719894',
+      'javascript' => 'f481a3e3eee16f35f58f',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  'dashboard/dashboard--settings--go-pro' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'dashboard/dashboard--settings--go-pro.css',
+      1 => 'dashboard/dashboard--settings--go-pro.js',
+    ),
+    'hash' => '666622c78ae538885a0ecba32bf73d5c',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => 'e23890facfef842f0039',
+      'javascript' => '6cf9b42641e21024facd',
     ),
     'vendors' => 
     array (
@@ -306,11 +308,11 @@
       0 => 'file-permissions/settings.css',
       1 => 'file-permissions/settings.js',
     ),
-    'hash' => '422bf32821b89fcc873f088b73cecf77',
+    'hash' => 'c87a7b012c89f0115ae0c3c18ecd00ad',
     'contentHash' => 
     array (
-      'css/mini-extract' => '779204f706330ab6f1ae',
-      'javascript' => '9eb274b7bea0b021400b',
+      'css/mini-extract' => '98af2e6472b50c92a681',
+      'javascript' => 'a4ae44f95abbc7fa8f34',
     ),
     'vendors' => 
     array (
@@ -334,17 +336,16 @@
       0 => 'file-writing/settings.css',
       1 => 'file-writing/settings.js',
     ),
-    'hash' => 'e1460a0e8e48a5fb54ee0cb1cb7a9721',
+    'hash' => 'bf34c68c45dea00f9b30ebe90a45c995',
     'contentHash' => 
     array (
-      'css/mini-extract' => '037c4d17eaa8f39b5f62',
-      'javascript' => 'ce55af6fa72bc1fbdd98',
+      'css/mini-extract' => '9054297eaac4fe10545a',
+      'javascript' => '48f7c8aa365c625769bd',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'file-writing/settings',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'file-writing/settings',
     ),
     'dependencies' => 
     array (
@@ -366,108 +367,25 @@
       0 => 'global/settings.css',
       1 => 'global/settings.js',
     ),
-    'hash' => '4546e333959257de47ece25724d13aef',
+    'hash' => '20c283f6ae9ad43a0828326b07231a5e',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'f9be2e1a9ddf11673999',
-      'javascript' => 'ce0d648c7b83073cc1ba',
+      'css/mini-extract' => 'f2f55603e58943c188a0',
+      'javascript' => '81a8fe8707a9fd8ea29e',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'global/settings',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'vendors/dashboard/dashboard--settings',
+      6 => 'global/settings',
     ),
     'dependencies' => 
     array (
-      0 => 'lodash',
-      1 => 'react',
-      2 => 'react-dom',
-      3 => 'wp-a11y',
-      4 => 'wp-api-fetch',
-      5 => 'wp-components',
-      6 => 'wp-compose',
-      7 => 'wp-data',
-      8 => 'wp-element',
-      9 => 'wp-i18n',
-      10 => 'wp-is-shallow-equal',
-      11 => 'wp-keycodes',
-      12 => 'wp-plugins',
-      13 => 'wp-primitives',
-      14 => 'wp-url',
-    ),
-  ),
-  'network-brute-force/settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'network-brute-force/settings.css',
-      1 => 'network-brute-force/settings.js',
-    ),
-    'hash' => '19d3589415bd1d085c0421499ed54c14',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => 'f938fc9b0b53f383c66b',
-      'javascript' => '2ebd7fb40a0f4be1495a',
-    ),
-    'vendors' => 
-    array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'network-brute-force/settings',
-    ),
-    'dependencies' => 
-    array (
-      0 => 'lodash',
-      1 => 'react',
-      2 => 'react-dom',
-      3 => 'wp-a11y',
-      4 => 'wp-api-fetch',
-      5 => 'wp-components',
-      6 => 'wp-compose',
-      7 => 'wp-data',
-      8 => 'wp-element',
-      9 => 'wp-i18n',
-      10 => 'wp-is-shallow-equal',
-      11 => 'wp-keycodes',
-      12 => 'wp-plugins',
-      13 => 'wp-primitives',
-      14 => 'wp-url',
-    ),
-  ),
-  'notification-center/settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'notification-center/settings.css',
-      1 => 'notification-center/settings.js',
-    ),
-    'hash' => '2261513b975cfbf486e0dbd4e8787087',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '29f32b5ceb0a4544f28c',
-      'javascript' => 'c92e67d53d02a30506c7',
-    ),
-    'vendors' => 
-    array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'notification-center/settings',
-    ),
-    'dependencies' => 
-    array (
-      0 => '@ithemes/security.pages.settings',
+      0 => '@ithemes/security.packages.data',
       1 => 'lodash',
       2 => 'react',
       3 => 'react-dom',
@@ -485,6 +403,122 @@
       15 => 'wp-url',
     ),
   ),
+  'network-brute-force/settings' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'network-brute-force/settings.css',
+      1 => 'network-brute-force/settings.js',
+    ),
+    'hash' => 'db18676b4fd14b7edd024f6ab25128cb',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => 'dd99784259070127f55c',
+      'javascript' => '1ab2af9575d7f55ffd4f',
+    ),
+    'vendors' => 
+    array (
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'vendors/dashboard/dashboard--settings',
+      6 => 'network-brute-force/settings',
+    ),
+    'dependencies' => 
+    array (
+      0 => '@ithemes/security.packages.data',
+      1 => 'lodash',
+      2 => 'react',
+      3 => 'react-dom',
+      4 => 'wp-a11y',
+      5 => 'wp-api-fetch',
+      6 => 'wp-components',
+      7 => 'wp-compose',
+      8 => 'wp-data',
+      9 => 'wp-element',
+      10 => 'wp-i18n',
+      11 => 'wp-is-shallow-equal',
+      12 => 'wp-keycodes',
+      13 => 'wp-plugins',
+      14 => 'wp-primitives',
+      15 => 'wp-url',
+    ),
+  ),
+  'notification-center/settings' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'notification-center/settings.css',
+      1 => 'notification-center/settings.js',
+    ),
+    'hash' => '255a701334ad6714e226cd6900e7110c',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '82bfc7d5c1593e81b971',
+      'javascript' => '172deb1096b50b4a1c85',
+    ),
+    'vendors' => 
+    array (
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'notification-center/settings',
+    ),
+    'dependencies' => 
+    array (
+      0 => '@ithemes/security.packages.data',
+      1 => '@ithemes/security.pages.settings',
+      2 => 'lodash',
+      3 => 'react',
+      4 => 'react-dom',
+      5 => 'wp-a11y',
+      6 => 'wp-api-fetch',
+      7 => 'wp-components',
+      8 => 'wp-compose',
+      9 => 'wp-data',
+      10 => 'wp-element',
+      11 => 'wp-i18n',
+      12 => 'wp-is-shallow-equal',
+      13 => 'wp-keycodes',
+      14 => 'wp-plugins',
+      15 => 'wp-primitives',
+      16 => 'wp-url',
+    ),
+  ),
+  'packages/data' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'packages/data.js',
+    ),
+    'hash' => '32cdf834e20abcd370750e6ba835e562',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '31d6cfe0d16ae931b73c',
+      'javascript' => 'd17f7a4f727278ac470e',
+    ),
+    'vendors' => 
+    array (
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'packages/data',
+    ),
+    'dependencies' => 
+    array (
+      0 => 'lodash',
+      1 => 'wp-api-fetch',
+      2 => 'wp-data',
+      3 => 'wp-element',
+      4 => 'wp-i18n',
+      5 => 'wp-url',
+    ),
+  ),
   'packages/preload' => 
   array (
     'runtime' => false,
@@ -492,11 +526,11 @@
     array (
       0 => 'packages/preload.js',
     ),
-    'hash' => '8cacd145821494a359fc90d9f25a094e',
+    'hash' => 'ee66e31c9cb0f260600fa21b35695d4e',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'b4c691d2b1db14aac484',
+      'javascript' => '9113a1b9844c0a0dfaed',
     ),
     'vendors' => 
     array (
@@ -504,6 +538,47 @@
     ),
     'dependencies' => 
     array (
+    ),
+  ),
+  'pages/go-pro' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'pages/go-pro.css',
+      1 => 'pages/go-pro.js',
+    ),
+    'hash' => 'c753c95e9a2741285e7a9a7a82e61733',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '62a1043f3cb5b10f9578',
+      'javascript' => '9c3a9d8c9ecf1619feb5',
+    ),
+    'vendors' => 
+    array (
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'pages/go-pro',
+    ),
+    'dependencies' => 
+    array (
+      0 => '@ithemes/security.packages.data',
+      1 => 'lodash',
+      2 => 'react',
+      3 => 'react-dom',
+      4 => 'wp-api-fetch',
+      5 => 'wp-components',
+      6 => 'wp-compose',
+      7 => 'wp-data',
+      8 => 'wp-dom-ready',
+      9 => 'wp-element',
+      10 => 'wp-i18n',
+      11 => 'wp-is-shallow-equal',
+      12 => 'wp-keycodes',
+      13 => 'wp-primitives',
+      14 => 'wp-url',
     ),
   ),
   'pages/settings' => 
@@ -514,41 +589,44 @@
       0 => 'pages/settings.css',
       1 => 'pages/settings.js',
     ),
-    'hash' => '6357ed962df0fecc8c364f02a2ccd7b3',
+    'hash' => '7ee8a355baffdac840164863d80f8bdb',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'ecded2b59c04a766931c',
-      'javascript' => '1358278fd2978eac90be',
+      'css/mini-extract' => 'a2abad058eca81672d27',
+      'javascript' => '880983a346fc1e18e796',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'vendors//user-groups--pages/settings',
-      6 => 'pages/settings',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'vendors/dashboard/dashboard--settings',
+      6 => 'vendors//user-groups--pages/settings',
+      7 => 'pages/settings',
+      8 => 'vendors/pages/settings',
     ),
     'dependencies' => 
     array (
-      0 => 'lodash',
-      1 => 'react',
-      2 => 'react-dom',
-      3 => 'wp-a11y',
-      4 => 'wp-api-fetch',
-      5 => 'wp-components',
-      6 => 'wp-compose',
-      7 => 'wp-data',
-      8 => 'wp-dom-ready',
-      9 => 'wp-element',
-      10 => 'wp-hooks',
-      11 => 'wp-i18n',
-      12 => 'wp-is-shallow-equal',
-      13 => 'wp-keycodes',
-      14 => 'wp-plugins',
-      15 => 'wp-primitives',
-      16 => 'wp-url',
+      0 => '@ithemes/security.packages.data',
+      1 => 'lodash',
+      2 => 'react',
+      3 => 'react-dom',
+      4 => 'wp-a11y',
+      5 => 'wp-api-fetch',
+      6 => 'wp-components',
+      7 => 'wp-compose',
+      8 => 'wp-data',
+      9 => 'wp-dom-ready',
+      10 => 'wp-element',
+      11 => 'wp-hooks',
+      12 => 'wp-i18n',
+      13 => 'wp-is-shallow-equal',
+      14 => 'wp-keycodes',
+      15 => 'wp-plugins',
+      16 => 'wp-primitives',
+      17 => 'wp-url',
     ),
   ),
   'password-requirements/settings' => 
@@ -559,11 +637,11 @@
       0 => 'password-requirements/settings.css',
       1 => 'password-requirements/settings.js',
     ),
-    'hash' => '5c5b30b23559edd0ebfbeaf9f8e8799d',
+    'hash' => '157ab17bd7452c0c667aa7c42dc14f84',
     'contentHash' => 
     array (
-      'css/mini-extract' => '19edc97895b4a77b191a',
-      'javascript' => 'fd15ec3b41005e477eb3',
+      'css/mini-extract' => '9e64471763eaaf5f3b9c',
+      'javascript' => '50b5f7202c52ff6e9a01',
     ),
     'vendors' => 
     array (
@@ -584,25 +662,67 @@
       0 => 'promos/dashboard.css',
       1 => 'promos/dashboard.js',
     ),
-    'hash' => '1679e74cc64f057e8e42251de465671c',
+    'hash' => '27fe1f59c02478d306acaa175e986e42',
     'contentHash' => 
     array (
-      'css/mini-extract' => '5f4a53be05a5f1b87bdd',
-      'javascript' => 'bacc482fca3400caf285',
+      'css/mini-extract' => '0690ba7298c1b8a1437b',
+      'javascript' => '30a0d8d162375bc16db9',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'promos/dashboard',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'promos/dashboard',
     ),
     'dependencies' => 
     array (
       0 => '@ithemes/security.dashboard.api',
       1 => '@ithemes/security.dashboard.dashboard',
+      2 => '@ithemes/security.packages.data',
+      3 => 'lodash',
+      4 => 'react',
+      5 => 'react-dom',
+      6 => 'wp-api-fetch',
+      7 => 'wp-components',
+      8 => 'wp-compose',
+      9 => 'wp-data',
+      10 => 'wp-element',
+      11 => 'wp-i18n',
+      12 => 'wp-is-shallow-equal',
+      13 => 'wp-keycodes',
+      14 => 'wp-plugins',
+      15 => 'wp-primitives',
+      16 => 'wp-url',
+    ),
+  ),
+  'promos/settings' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'promos/settings.css',
+      1 => 'promos/settings.js',
+    ),
+    'hash' => 'd8aef5b0d21629ee165af0532af5d826',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => 'f1fdbd7ca82e57aeabf2',
+      'javascript' => '4003b8834f6b9e438f71',
+    ),
+    'vendors' => 
+    array (
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'promos/settings',
+    ),
+    'dependencies' => 
+    array (
+      0 => '@ithemes/security.packages.data',
+      1 => '@ithemes/security.pages.settings',
       2 => 'lodash',
       3 => 'react',
       4 => 'react-dom',
@@ -619,48 +739,6 @@
       15 => 'wp-url',
     ),
   ),
-  'promos/settings' => 
-  array (
-    'runtime' => false,
-    'files' => 
-    array (
-      0 => 'promos/settings.css',
-      1 => 'promos/settings.js',
-    ),
-    'hash' => '9aeff96d925a0d4ba929aee155714311',
-    'contentHash' => 
-    array (
-      'css/mini-extract' => '52948e6bc2fb9af4f90d',
-      'javascript' => '2b7fde48fba699b7b307',
-    ),
-    'vendors' => 
-    array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'promos/settings',
-    ),
-    'dependencies' => 
-    array (
-      0 => '@ithemes/security.pages.settings',
-      1 => 'lodash',
-      2 => 'react',
-      3 => 'react-dom',
-      4 => 'wp-api-fetch',
-      5 => 'wp-components',
-      6 => 'wp-compose',
-      7 => 'wp-data',
-      8 => 'wp-element',
-      9 => 'wp-i18n',
-      10 => 'wp-is-shallow-equal',
-      11 => 'wp-keycodes',
-      12 => 'wp-plugins',
-      13 => 'wp-primitives',
-      14 => 'wp-url',
-    ),
-  ),
   'runtime' => 
   array (
     'runtime' => true,
@@ -668,11 +746,11 @@
     array (
       0 => 'runtime.js',
     ),
-    'hash' => '0a3136d8b845198d174f51a49e7bcd7c',
+    'hash' => '97fdfedbb4f1a02ccf351e38967f98e4',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '2764a6f91ebd0d585467',
+      'javascript' => 'ed8779efccc4963f8c7e',
     ),
     'vendors' => 
     array (
@@ -689,39 +767,39 @@
       0 => 'site-scanner/dashboard.css',
       1 => 'site-scanner/dashboard.js',
     ),
-    'hash' => 'd1789338b3e44f00bb810e9209042f5c',
+    'hash' => '6f648a97c0b046f68f66cdf2602f7842',
     'contentHash' => 
     array (
-      'css/mini-extract' => 'ab7fab52fcdc0a9283b9',
-      'javascript' => 'd6972d6797b868aac98b',
+      'css/mini-extract' => '419280025062f84c8ce1',
+      'javascript' => 'f88c29711a6bf93a1f8b',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'site-scanner/dashboard',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'site-scanner/dashboard',
     ),
     'dependencies' => 
     array (
       0 => '@ithemes/security.dashboard.dashboard',
-      1 => 'lodash',
-      2 => 'react',
-      3 => 'react-dom',
-      4 => 'wp-api-fetch',
-      5 => 'wp-components',
-      6 => 'wp-compose',
-      7 => 'wp-data',
-      8 => 'wp-date',
-      9 => 'wp-element',
-      10 => 'wp-i18n',
-      11 => 'wp-is-shallow-equal',
-      12 => 'wp-keycodes',
-      13 => 'wp-plugins',
-      14 => 'wp-primitives',
-      15 => 'wp-url',
+      1 => '@ithemes/security.packages.data',
+      2 => 'lodash',
+      3 => 'react',
+      4 => 'react-dom',
+      5 => 'wp-api-fetch',
+      6 => 'wp-components',
+      7 => 'wp-compose',
+      8 => 'wp-data',
+      9 => 'wp-date',
+      10 => 'wp-element',
+      11 => 'wp-i18n',
+      12 => 'wp-is-shallow-equal',
+      13 => 'wp-keycodes',
+      14 => 'wp-plugins',
+      15 => 'wp-primitives',
+      16 => 'wp-url',
     ),
   ),
   'user-groups/api' => 
@@ -731,25 +809,26 @@
     array (
       0 => 'user-groups/api.js',
     ),
-    'hash' => '2a3b4e4d8b64700d858f5d8d8013f9aa',
+    'hash' => '3dd4622233311b3936a9abbf27bd6d91',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '8bce7ad94bf59ee86b1a',
+      'javascript' => '7dff5dcab0c2015e8b91',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
       1 => 'user-groups/api',
     ),
     'dependencies' => 
     array (
-      0 => 'lodash',
-      1 => 'wp-api-fetch',
-      2 => 'wp-data',
-      3 => 'wp-element',
-      4 => 'wp-i18n',
-      5 => 'wp-url',
+      0 => '@ithemes/security.packages.data',
+      1 => 'lodash',
+      2 => 'wp-api-fetch',
+      3 => 'wp-data',
+      4 => 'wp-element',
+      5 => 'wp-i18n',
+      6 => 'wp-url',
     ),
   ),
   'user-groups/settings' => 
@@ -760,43 +839,45 @@
       0 => 'user-groups/settings.css',
       1 => 'user-groups/settings.js',
     ),
-    'hash' => '499cb13de1221ffc7f095ec97e1fcd5d',
+    'hash' => 'ac51769c8ddab1509424e545456ff29f',
     'contentHash' => 
     array (
-      'css/mini-extract' => '0b1eb26b170e63ee4185',
-      'javascript' => '140589d29c100b285ac7',
+      'css/mini-extract' => '689e1829bdf9efc9b4de',
+      'javascript' => 'dc4fdf3112e777431aa5',
     ),
     'vendors' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f',
-      1 => 'backup/dashboard--settings',
-      2 => 'dashboard/dashboard--settings',
-      3 => 'vendors/dashboard/dashboard--settings',
-      4 => 'vendors/routing',
-      5 => 'vendors//user-groups--pages/settings',
-      6 => 'user-groups/settings',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21',
+      1 => 'vendors/dashboard/dashboard--settings--go-pro',
+      2 => 'dashboard/dashboard--settings--go-pro',
+      3 => 'vendors/routing',
+      4 => 'dashboard/dashboard--settings',
+      5 => 'vendors/dashboard/dashboard--settings',
+      6 => 'vendors//user-groups--pages/settings',
+      7 => 'user-groups/settings',
     ),
     'dependencies' => 
     array (
-      0 => '@ithemes/security.pages.settings',
-      1 => '@ithemes/security.user-groups.api',
-      2 => 'lodash',
-      3 => 'react',
-      4 => 'react-dom',
-      5 => 'wp-a11y',
-      6 => 'wp-api-fetch',
-      7 => 'wp-components',
-      8 => 'wp-compose',
-      9 => 'wp-data',
-      10 => 'wp-element',
-      11 => 'wp-hooks',
-      12 => 'wp-i18n',
-      13 => 'wp-is-shallow-equal',
-      14 => 'wp-keycodes',
-      15 => 'wp-notices',
-      16 => 'wp-plugins',
-      17 => 'wp-primitives',
-      18 => 'wp-url',
+      0 => '@ithemes/security.packages.data',
+      1 => '@ithemes/security.pages.settings',
+      2 => '@ithemes/security.user-groups.api',
+      3 => 'lodash',
+      4 => 'react',
+      5 => 'react-dom',
+      6 => 'wp-a11y',
+      7 => 'wp-api-fetch',
+      8 => 'wp-components',
+      9 => 'wp-compose',
+      10 => 'wp-data',
+      11 => 'wp-element',
+      12 => 'wp-hooks',
+      13 => 'wp-i18n',
+      14 => 'wp-is-shallow-equal',
+      15 => 'wp-keycodes',
+      16 => 'wp-notices',
+      17 => 'wp-plugins',
+      18 => 'wp-primitives',
+      19 => 'wp-url',
     ),
   ),
   'vendors//user-groups--pages/settings' => 
@@ -806,11 +887,11 @@
     array (
       0 => 'vendors//user-groups--pages/settings.js',
     ),
-    'hash' => 'f2a83dae7d7df9225fb266c1597e215f',
+    'hash' => '9e5b02d15f991e23e26f39a12ee7e7c5',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '200772a99dcb7c594c98',
+      'javascript' => 'c4ae2e9b13ea43f74ef7',
     ),
     'vendors' => 
     array (
@@ -819,18 +900,18 @@
     array (
     ),
   ),
-  'vendors/backup/dashboard--admin-notices-api--api----5f2e904f' => 
+  'vendors/backup/dashboard--admin-notices-api--api----f77e2e21' => 
   array (
     'runtime' => false,
     'files' => 
     array (
-      0 => 'vendors/backup/dashboard--admin-notices-api--api----5f2e904f.js',
+      0 => 'vendors/backup/dashboard--admin-notices-api--api----f77e2e21.js',
     ),
-    'hash' => '81c8e0f76e96197d1887ef9d8eb3d2d4',
+    'hash' => 'c472e73a62b2782157a90e03b764e892',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => 'ee293bcc2174cfbd7fd9',
+      'javascript' => 'fcdabe6b13afc22e28e9',
     ),
     'vendors' => 
     array (
@@ -847,11 +928,11 @@
       0 => 'vendors/dashboard/dashboard.css',
       1 => 'vendors/dashboard/dashboard.js',
     ),
-    'hash' => 'c8f2d4d3deb9e7dcc5e176d187938d64',
+    'hash' => '98929f03890e56df817bc7a44533e0ed',
     'contentHash' => 
     array (
-      'css/mini-extract' => '3b4edae0c833ef261111',
-      'javascript' => 'fe69f80661287fe892ef',
+      'css/mini-extract' => '6707aefcb707a4e9f260',
+      'javascript' => 'e2f4d9e18bdad0fa9247',
     ),
     'vendors' => 
     array (
@@ -867,11 +948,51 @@
     array (
       0 => 'vendors/dashboard/dashboard--settings.js',
     ),
-    'hash' => '6401cb9ac3f63d902815420f6c3fd4f7',
+    'hash' => '96c20dc70b9d8ca4e607030658fe3793',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '0394ef3663f5a0f72e2c',
+      'javascript' => '70128ccd7d8fb8ebf0dc',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  'vendors/dashboard/dashboard--settings--go-pro' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'vendors/dashboard/dashboard--settings--go-pro.js',
+    ),
+    'hash' => 'c67dba1c095ca34dd4298a08127ee123',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '31d6cfe0d16ae931b73c',
+      'javascript' => 'b6324c5f4738c6dc67c3',
+    ),
+    'vendors' => 
+    array (
+    ),
+    'dependencies' => 
+    array (
+    ),
+  ),
+  'vendors/pages/settings' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'vendors/pages/settings.js',
+    ),
+    'hash' => '779b9885490b1f050aee6578d361d6e7',
+    'contentHash' => 
+    array (
+      'css/mini-extract' => '31d6cfe0d16ae931b73c',
+      'javascript' => '6ff9306ea3196032db96',
     ),
     'vendors' => 
     array (
@@ -887,11 +1008,11 @@
     array (
       0 => 'vendors/recharts.js',
     ),
-    'hash' => '44a9e04b14ac77ab835069a2aea466dd',
+    'hash' => '859f87a4b7d86451f440f196ef5cc8fb',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '18cd52e9a37e9f282c8b',
+      'javascript' => 'fea5b533b21fc0549c4e',
     ),
     'vendors' => 
     array (
@@ -907,11 +1028,11 @@
     array (
       0 => 'vendors/routing.js',
     ),
-    'hash' => '20772c8582c367dad7c87bd6a5682b1a',
+    'hash' => '04e61eb3d5bfb0a3fc5413625984d32c',
     'contentHash' => 
     array (
       'css/mini-extract' => '31d6cfe0d16ae931b73c',
-      'javascript' => '08896d2312b312d5ad7f',
+      'javascript' => '816d441941dc9ed8b3fb',
     ),
     'vendors' => 
     array (

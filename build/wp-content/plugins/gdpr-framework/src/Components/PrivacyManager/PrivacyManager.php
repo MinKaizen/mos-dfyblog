@@ -17,7 +17,7 @@ class PrivacyManager
 
     public function registerAdminTab($tabs)
     {    
-        $tabs['privacy-manager'] = gdpr()->make(AdminTabPrivacyManager::class);
+        $tabs['privacy-manager'] = new AdminTabPrivacyManager();
         return $tabs;
     }
 }

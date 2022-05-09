@@ -125,7 +125,7 @@ export function failedDeleteDashboard( dashboardId, error ) {
  * Triggers additional actions as opposed to just saving the dashboard.
  *
  * @param {Object} dashboard Dashboard data.
- * @param {*} [context] Additional context about this request for use in subsequent actions.
+ * @param {*}      [context] Additional context about this request for use in subsequent actions.
  */
 export function* addDashboard( dashboard, context ) {
 	yield startAddDashboard( dashboard, context );
@@ -158,7 +158,7 @@ export function* addDashboard( dashboard, context ) {
 /**
  * Action triggered to save a dashboard.
  *
- * @param {Object} dashboard  Record to be saved.
+ * @param {Object} dashboard Record to be saved.
  *
  * @return {Object|Error} Updated record or error.
  */

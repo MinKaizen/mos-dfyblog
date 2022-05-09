@@ -16,7 +16,7 @@ import {
 } from '@ithemes/security-style-guide';
 import { TabPanel } from '@ithemes/security-components';
 import { useAsync } from '@ithemes/security-hocs';
-import { CORE_STORE_NAME } from '@ithemes/security-data';
+import { CORE_STORE_NAME } from '@ithemes/security.packages.data';
 import './style.scss';
 
 export default function App() {
@@ -87,12 +87,12 @@ function ProUpgrade() {
 				<Button
 					isPrimary
 					className="itsec-promo-pro-upgrade__button"
-					href="https://ithemes.com/security/"
+					href="https://ithem.es/go-security-pro-now"
 				>
 					{ __( 'Go Pro Now', 'better-wp-security' ) }
 				</Button>
 				<a
-					href="https://ithemes.com/security/why-go-pro/"
+					href="https://ithem.es/included-with-pro"
 					className="itsec-promo-pro-upgrade__details"
 				>
 					{ __( 'What’s included with Pro?', 'better-wp-security' ) }

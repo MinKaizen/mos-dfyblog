@@ -19,6 +19,7 @@ class Disclaimer extends InstallerStep implements InstallerStepInterface
 
     public function submit()
     {
-        gdpr('options')->set('plugin_disclaimer_accepted', 'yes');
+        global $gdpr;
+        $gdpr->Options->set('plugin_disclaimer_accepted', 'yes');
     }
 }

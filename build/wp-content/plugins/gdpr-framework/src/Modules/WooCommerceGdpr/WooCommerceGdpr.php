@@ -9,11 +9,12 @@ include_once(WC_ABSPATH . 'includes/class-wc-privacy-erasers.php');
 class WooCommerceGdpr
 {   
     public function __construct(DataSubjectManager $dataSubjectManager, ConsentManager $consentManager)
-    {  	
+    {
+        global $gdpr;
         $this->dataSubjectManager = $dataSubjectManager;
         $this->consentManager = $consentManager;
         
-        if (!gdpr('options')->get('enable_woo_compatibility'))
+        if (!$gdpr->Options->get('enable_woo_compatibility'))
         {
             return;
         }
@@ -24,12 +25,12 @@ class WooCommerceGdpr
         add_filter('gdpr/data-subject/data', [$this, 'getWoocommerceExportData'], 20, 2);
         add_action('gdpr/data-subject/delete', [$this, 'deleteWoocommerceEntries']);
         add_action('gdpr/data-subject/anonymize', [$this, 'anonymizeWoocommerceEntries']);
-        if (!gdpr('options')->get('disable_checkbox_woo_compatibility'))
+        if (!$gdpr->Options->get('disable_checkbox_woo_compatibility'))
         {
             add_action('woocommerce_review_order_before_submit', [$this, 'gdpr_woo_add_checkout_privacy_policy'], 9);
             add_action('woocommerce_checkout_process', [$this, 'gdpr_woo_not_approved_privacy']);
         }
-        if (!gdpr('options')->get('disable_register_checkbox_woo_compatibility'))
+        if (!$gdpr->Options->get('disable_register_checkbox_woo_compatibility'))
         {
             add_action( 'woocommerce_register_form', [$this,'gdpr_woo_add_checkout_privacy_policy'], 11 );
             add_filter( 'woocommerce_registration_errors', [$this,'gdprf_validate_privacy_registration'], 10, 3 );
@@ -129,8 +130,9 @@ class WooCommerceGdpr
     *   Add checkout FGDPR content
     */
     public function gdpr_woo_add_checkout_privacy_policy() 
-    {   
-        $policyPage = gdpr('options')->get('policy_page');
+    {
+        global $gdpr;
+        $policyPage = $gdpr->Options->get('policy_page');
         $policyPageUrl = get_permalink($policyPage);
         if(isset($policyPageUrl) && $policyPage != "0")
         {            
@@ -152,8 +154,9 @@ class WooCommerceGdpr
     *   Track consent and check for Privacy Policy consent.
     */
     public function gdpr_woo_not_approved_privacy()
-    {   
-        $policyPage = gdpr('options')->get('policy_page');
+    {
+        global $gdpr;
+        $policyPage = $gdpr->Options->get('policy_page');
         $policyPageUrl = get_permalink($policyPage);
         if ( ! (int) isset( $_POST['gdpr_woo_consent'] ) ) 
         {

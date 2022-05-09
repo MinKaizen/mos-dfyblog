@@ -120,6 +120,11 @@ class ITSEC_Core_Active {
 				}
 			}
 		}
+
+		wp_add_inline_script( 'itsec-packages-data', sprintf(
+			"wp.data.dispatch( 'ithemes-security/core' ).__unstableLoadInitialFeatureFlags( %s );",
+			wp_json_encode( ITSEC_Lib_Feature_Flags::get_enabled() )
+		) );
 	}
 
 	public function add_live_reload() {

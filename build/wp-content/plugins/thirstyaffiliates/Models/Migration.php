@@ -29,7 +29,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      *
      * @since 3.0.0
      * @access private
-     * @var Redirection
+     * @var Migration
      */
     private static $_instance;
 
@@ -38,7 +38,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      *
      * @since 3.0.0
      * @access private
-     * @var Redirection
+     * @var Abstract_Main_Plugin_Class
      */
     private $_main_plugin;
 
@@ -125,7 +125,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      * @param Abstract_Main_Plugin_Class $main_plugin      Main plugin object.
      * @param Plugin_Constants           $constants        Plugin constants object.
      * @param Helper_Functions           $helper_functions Helper functions object.
-     * @return Redirection
+     * @return Migration
      */
     public static function get_instance( Abstract_Main_Plugin_Class $main_plugin , Plugin_Constants $constants , Helper_Functions $helper_functions ) {
 
@@ -284,6 +284,8 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX Call.' , 'thirstyaffiliates' ) );
         elseif ( !$this->_helper_functions->current_user_authorized() )
             $response = array( 'status' => 'fail' , 'error_msg' => __(  'Unauthorized operation. Only authorized accounts can do data migration.' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_migrate_old_plugin_data', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         else {
 
             $this->migrate_old_plugin_data();
@@ -421,12 +423,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
 
         global $wpdb;
 
-        $query = "SELECT *
-                  FROM $wpdb->posts
-                  WHERE post_type = 'thirstylink'";
-
-        return $wpdb->get_results( $query );
-
+        return $wpdb->get_results( $wpdb->prepare(  "SELECT * FROM $wpdb->posts WHERE post_type = %s",  'thirstylink' ) );
     }
 
     /**
@@ -435,7 +432,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      * @since 3.0.0
      * @access public
      *
-     * @global WPDB $wpdb                Global $wpdb object.
+     * @global \wpdb $wpdb                Global $wpdb object.
      * @param int   $link_id             Affiliate link id.
      * @param array $old_link_meta       Old thirsty affiliate link meta.
      * @param array $old_link_meta_cache Old thirsty affiliate link meta. Passed by reference. Used to track down the new old meta data.
@@ -519,7 +516,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      * @since 3.0.0
      * @access public
      *
-     * @global WPDB $wpdb Global $wpdb object.
+     * @global \wpdb $wpdb Global $wpdb object.
      */
     private function _generate_link_meta_delete_sql() {
 
@@ -538,7 +535,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      * @since 3.0.0
      * @access public
      *
-     * @global WPDB $wpdb Global $wpdb object.
+     * @global \wpdb $wpdb Global $wpdb object.
      */
     public function migrate_link_meta() {
 
@@ -558,7 +555,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
             $old_link_meta = apply_filters( 'ta_migration_process_old_link_meta' , $old_link_meta , $affiliate_link );
 
             $query = $this->_generate_link_meta_insert_sql( $affiliate_link->ID , $old_link_meta , $old_link_meta_cache );
-            if ( $query && $wpdb->query( $query ) )
+            if ( $query && $wpdb->query( $query ) ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 update_post_meta( $affiliate_link->ID , 'thirstyData' , serialize( $old_link_meta_cache ) );
 
         }
@@ -681,11 +678,14 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
 
                     update_post_meta( $affiliate_link->ID , Plugin_Constants::META_DATA_PREFIX . 'image_ids' , $new_attachment_data );
 
-                    $wpdb->query( "UPDATE $wpdb->posts
-                                   SET post_parent = ''
-                                   WHERE ID IN ( " . implode( "," , array_map( 'intval' , $new_attachment_data ) ) . " )
-                                   AND post_type = 'attachment'" );
+                    $new_attachment_data = array_map( 'intval' , $new_attachment_data );
+                    $new_attachment_data_str = implode( ',' , $new_attachment_data );
 
+                    $wpdb->query( $wpdb->prepare(
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                        "UPDATE $wpdb->posts SET post_parent = '' WHERE ID IN ( $new_attachment_data_str ) AND post_type = %s", 
+                        'attachment' ) 
+                    );
                 }
 
             }
@@ -778,7 +778,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
         if ( get_option( Plugin_Constants::MIGRATION_COMPLETE_FLAG ) === 'no' ) { ?>
 
             <div class="notice notice-warning">
-                <p><?php _e( '<b>ThirstyAffiliates is currently migrating your old affiliate link data to the new data model.<br>Please hold off making changes to your affiliate links. Please refresh the page and if this message has disappeared, the migration is complete.</b>' , 'thirstyaffiliates' ); ?></p>
+                <p><b><?php esc_html_e( 'ThirstyAffiliates is currently migrating your old affiliate link data to the new data model.<br>Please hold off making changes to your affiliate links. Please refresh the page and if this message has disappeared, the migration is complete.' , 'thirstyaffiliates' ); ?></b></p>
             </div>
 
         <?php }
@@ -811,14 +811,14 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
 
             global $wpdb;
 
-            $affiliate_link_ids_str = implode( "," , array_map( 'intval' , $affiliate_link_ids ) );
+            $affiliate_link_ids = array_map( 'intval' , $affiliate_link_ids );
+            $affiliate_link_ids_str = implode( ',' , $affiliate_link_ids );
 
-            $query = "UPDATE $wpdb->postmeta
-                        SET meta_value = REPLACE( REPLACE( meta_value , '&amp;amp;' , '&' ) , '&amp;' , '&' )
-                        WHERE meta_key = '_ta_destination_url'
-                        AND post_id IN ( $affiliate_link_ids_str )";
-
-            $wpdb->query( $query );
+            $wpdb->query( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "UPDATE $wpdb->postmeta SET meta_value = REPLACE( REPLACE( meta_value , '&amp;amp;' , '&' ) , '&amp;' , '&' ) WHERE post_id IN ( $affiliate_link_ids_str ) AND meta_key = %s ", 
+                '_ta_destination_url' ) 
+            );
 
         }
 
@@ -838,7 +838,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Activatable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Activatable_Interface
      */
     public function activate() {
 
@@ -853,7 +853,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Initiable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Initiable_Interface
      */
     public function initialize() {
 
@@ -866,7 +866,7 @@ class Migration implements Model_Interface , Activatable_Interface , Initiable_I
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Model_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Model_Interface
      */
     public function run() {
 

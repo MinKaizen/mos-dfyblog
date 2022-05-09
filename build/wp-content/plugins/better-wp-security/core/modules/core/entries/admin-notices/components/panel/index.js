@@ -8,7 +8,8 @@ import { get, size } from 'lodash';
  */
 import { __ } from '@wordpress/i18n';
 import { Button, FormToggle } from '@wordpress/components';
-import { compose, withState } from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
+import { useState } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 
 /**
@@ -48,9 +49,9 @@ function Panel( {
 	mutedHighlights,
 	mutedHighlightUpdatesInFlight,
 	updateMutedHighlight,
-	isConfiguring,
-	setState,
 } ) {
+	const [ isConfiguring, setIsConfiguring ] = useState( false );
+
 	return (
 		<div
 			className={ classnames( 'itsec-admin-notice-panel', {
@@ -62,7 +63,7 @@ function Panel( {
 				label={ __( 'Configure', 'better-wp-security' ) }
 				className="itsec-admin-notice-panel__configure-trigger"
 				style={ { opacity: size( mutedHighlights ) > 0 ? 1 : 0 } }
-				onClick={ () => setState( { isConfiguring: ! isConfiguring } ) }
+				onClick={ () => setIsConfiguring( ! isConfiguring ) }
 			/>
 			<header className="itsec-admin-notice-panel__header">
 				<h3>{ __( 'Security Admin Messages', 'better-wp-security' ) }</h3>
@@ -120,7 +121,6 @@ function Panel( {
 }
 
 export default compose( [
-	withState( { isConfiguring: false, checked: {} } ),
 	withSelect( ( select ) => ( {
 		mutedHighlights: select(
 			'ithemes-security/admin-notices'

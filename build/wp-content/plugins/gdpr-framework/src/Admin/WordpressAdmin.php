@@ -15,12 +15,9 @@ class WordpressAdmin
     {
         $this->adminPage = $adminPage;
 
-        // Register the AdminTabGeneral class in our container
-        gdpr()->bind(AdminTabGeneral::class);
-
         // Allow turning off helpers
         if (apply_filters('gdpr/admin/helpers/enabled', true)) {
-            gdpr()->make(AdminHelper::class);
+            new AdminHelper();
         }
 
         $this->setup();
@@ -81,7 +78,8 @@ class WordpressAdmin
      */
     public function registerAdminTabGeneral($tabs)
     {
-        $tabs['general'] = gdpr(AdminTabGeneral::class);
+        global $gdpr;
+        $tabs['general'] = $gdpr->AdminTabGeneral;
 
         return $tabs;
     }
@@ -91,12 +89,13 @@ class WordpressAdmin
      */
     public function enqueue()
     {
+        global $gdpr;
         /**
          * General admin styles
          */
         wp_enqueue_style(
             'gdpr-admin',
-            gdpr('config')->get('plugin.url') . 'assets/gdpr-admin.css'
+            $gdpr->PluginUrl . 'assets/gdpr-admin.css'
         );
         
         
@@ -109,7 +108,7 @@ class WordpressAdmin
             wp_enqueue_style('wp-jquery-ui-dialog');
             wp_enqueue_script(
                 'gdpr-admin',
-                gdpr('config')->get('plugin.url') . 'assets/gdpr-admin.js',
+                $gdpr->PluginUrl . 'assets/gdpr-admin.js',
                 ['jquery-ui-dialog']
             );
 
@@ -118,7 +117,7 @@ class WordpressAdmin
              */
             wp_enqueue_script(
                 'jquery-repeater',
-                gdpr('config')->get('plugin.url') . 'assets/jquery.repeater.min.js',
+                $gdpr->PluginUrl . 'assets/jquery.repeater.min.js',
                 ['jquery']
             );
             
@@ -131,25 +130,25 @@ class WordpressAdmin
 
             wp_enqueue_style(
                 'select2css',
-                gdpr('config')->get('plugin.url') . 'assets/select2-4.0.5.css'
+                $gdpr->PluginUrl . 'assets/select2-4.0.5.css'
             );
     
             wp_enqueue_script(
                 'select2',
-                gdpr('config')->get('plugin.url') . 'assets/select2-4.0.3.js',
+                $gdpr->PluginUrl . 'assets/select2-4.0.3.js',
                 ['jquery']
             );
             
             wp_enqueue_script(
                 'conditional-show',
-                gdpr('config')->get('plugin.url') . 'assets/conditional-show.js',
+                $gdpr->PluginUrl . 'assets/conditional-show.js',
                 ['jquery']
             );
             /**
              * Color Picker
              */
-            wp_enqueue_script( 'iris',gdpr('config')->get('plugin.url') .'assets/iris.min.js' );
-            wp_enqueue_script( 'iris-init',gdpr('config')->get('plugin.url') .'assets/iris-init.js' );
+            wp_enqueue_script( 'iris',$gdpr->PluginUrl .'assets/iris.min.js' );
+            wp_enqueue_script( 'iris-init',$gdpr->PluginUrl .'assets/iris-init.js' );
         }
     }
 
@@ -158,11 +157,12 @@ class WordpressAdmin
      */
     public function registerPostStates($postStates, $post)
     {
-        if (gdpr('options')->get('policy_page') == $post->ID) {
+        global $gdpr;
+        if ($gdpr->Options->get('policy_page') == $post->ID) {
             $postStates['gdpr_policy_page'] = _x('Privacy Policy Page', '(Admin)', 'gdpr-framework');
         }
 
-        if (gdpr('options')->get('tools_page') == $post->ID) {
+        if ($gdpr->Options->get('tools_page') == $post->ID) {
             $postStates['gdpr_tools_page'] = _x('Privacy Tools Page', '(Admin)', 'gdpr-framework');
         }
 

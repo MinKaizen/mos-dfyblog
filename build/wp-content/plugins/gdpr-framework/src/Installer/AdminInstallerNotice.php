@@ -9,7 +9,7 @@ class AdminInstallerNotice extends AdminNotice
     public function render()
     {
         if (!$this->template) {
-            trigger_error('Template not set for installer step admin notice!', E_USER_ERROR);
+            return;
         }
 
         echo gdpr('view')->render('admin/notices/header-step');

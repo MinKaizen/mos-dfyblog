@@ -32,7 +32,7 @@ import {
 	Markup,
 	Spinner,
 } from '@ithemes/security-components';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import {
 	HelpFill,
 	PageHeader,

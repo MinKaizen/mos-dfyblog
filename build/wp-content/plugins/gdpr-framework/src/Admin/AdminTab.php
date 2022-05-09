@@ -95,6 +95,7 @@ abstract class AdminTab implements AdminTabInterface
      */
     public function renderContents()
     {
+        global $gdpr;
         $tabs = array("general", "cookie-popup", "consent", "privacy-policy", "do-not-sell", "support");
         ob_start();
 
@@ -166,7 +167,7 @@ abstract class AdminTab implements AdminTabInterface
                             <div style="clear:both; margin-top: 2px;"></div>
                             <div>
                                 <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
-                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                    <img src="<?=$gdpr->PluginUrl?>/assets/images/tick.png" />
                                 </div>
                                 <p style="margin-top:0px;">Custom Consent Text</p>
                             </div>
@@ -174,7 +175,7 @@ abstract class AdminTab implements AdminTabInterface
                             <div style="clear:both; margin-top: 2px;"></div>
                             <div>
                                 <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
-                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                    <img src="<?=$gdpr->PluginUrl?>/assets/images/tick.png" />
                                 </div>
                                 <p style="margin-top:0px;">Data Rectification</p>
                             </div>
@@ -182,7 +183,7 @@ abstract class AdminTab implements AdminTabInterface
                             <div style="clear:both; margin-top: 2px;"></div>
                             <div>
                                 <div style="float:left; vertical-align:middle; height:24px; margin-right:5px; margin-top:-3px;">
-                                    <img src="<?=gdpr('config')->get('plugin.url')?>/assets/images/tick.png" />
+                                    <img src="<?=$gdpr->PluginUrl?>/assets/images/tick.png" />
                                 </div>
                                 <p style="margin-top:0px;">Custom relative URLs for the Privacy Policy and other files</p>
                             </div>

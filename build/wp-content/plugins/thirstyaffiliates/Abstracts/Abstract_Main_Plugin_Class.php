@@ -74,6 +74,18 @@ abstract class Abstract_Main_Plugin_Class {
     }
 
     /**
+     * Retrieves a Model object.
+     *
+     * @since 3.10
+     * @access public
+     *
+     * @param Model_Interface $model Regular model.
+     */
+    public function get_model( $class_name ) {
+        return $this->__all_models[ $class_name ];
+    }
+
+    /**
      * Add a "regular model" to the main plugin class "public models" array.
      *
      * @since 3.0.0

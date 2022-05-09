@@ -12,7 +12,7 @@ import { useCallback } from '@wordpress/element';
  */
 import { RjsfFieldFill } from '@ithemes/security-rjsf-theme';
 import { useAsync } from '@ithemes/security-hocs';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import './style.scss';
 
 function useDetectedIp() {

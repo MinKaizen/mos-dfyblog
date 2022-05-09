@@ -211,6 +211,11 @@ __( 'Redirection', 'better-wp-security' );
 __( 'Advanced', 'better-wp-security' );
 # END MODULE: hide-backend
 
+# BEGIN MODULE: malware-scheduling
+__( 'Site Scan Scheduling', 'better-wp-security' );
+__( 'Protect your site with automated site scans. When this feature is enabled, the site will be automatically scanned twice a day. If a problem is found, an email is sent to select users.', 'better-wp-security' );
+# END MODULE: malware-scheduling
+
 # BEGIN MODULE: network-brute-force
 __( 'Network Brute Force', 'better-wp-security' );
 __( 'Join a network of sites that reports and protects against bad actors on the internet.', 'better-wp-security' );

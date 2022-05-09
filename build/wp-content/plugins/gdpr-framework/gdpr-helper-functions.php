@@ -1,114 +1,167 @@
 <?php 
 
-add_action( "wp_ajax_add_consent_accept_cookies", "add_consent_accept_cookies" );
-add_action( "wp_ajax_nopriv_add_consent_accept_cookies", "add_consent_accept_cookies" );
-add_action( "wp_ajax_add_consent_deny_cookies", "add_consent_deny_cookies" );
-add_action( "wp_ajax_nopriv_add_consent_deny_cookies", "add_consent_deny_cookies" );
-
-
+add_action( "wp_ajax_gdpr_add_consent_accept_cookies", "gdpr_add_consent_accept_cookies" );
+add_action( "wp_ajax_nopriv_gdpr_add_consent_accept_cookies", "gdpr_add_consent_accept_cookies" );
+add_action( "wp_ajax_gdpr_add_consent_deny_cookies", "gdpr_add_consent_deny_cookies" );
+add_action( "wp_ajax_nopriv_gdpr_add_consent_deny_cookies", "gdpr_add_consent_deny_cookies" );
 
 /**
  * ajax function on accept cookie button
  */
-function add_consent_accept_cookies(){
-	$referer = $_SERVER['HTTP_REFERER'];
-	$address = $_SERVER['SERVER_NAME'];
-	if($referer){
-		if (strpos($address, $referer) !== 0) {
-		global $wpdb;
-		$tableName = $wpdb->prefix . 'gdpr_consent';
-		$current_user = wp_get_current_user();
-		$user_email = sanitize_email($current_user->user_email);
-		if($user_email=="" && isset($_COOKIE['gdpr_key'])){
-			$email = explode("|",$_COOKIE['gdpr_key']);
-			$user_email = sanitize_email($email['0']);
-		}
-		
-		$wpdb->insert( $tableName, [
-			'email'      => $user_email,
-			'version'    => 1,
-			'consent'    => 'gdpr_cookie_consent',
-			'status'     => 1,
-			'updated_at' => current_time( 'mysql' ),
-			'ip'         => sanitize_text_field($_POST['userip']),
-		] );
-		do_action('gdpr_consent_accept_cookies');
-		wp_die(); // ajax call must die to avoid trailing 0 in your response
-		}else{
-			echo "Error !!!";
-			wp_die();
-		}
-	}else{
-		echo "ERROR !!";
-		wp_die();		
-	}
+function gdpr_add_consent_accept_cookies()
+{
+    $referer = $_SERVER['HTTP_REFERER'];
+    $address = $_SERVER['SERVER_NAME'];
+    if ($referer) {
+        if (strpos($address, $referer) !== 0) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'gdpr_consent';
+            $current_user = wp_get_current_user();
+            $user_email = sanitize_email($current_user->user_email);
+            if ($user_email=="" && isset($_COOKIE['gdpr_key'])) {
+                $email = explode("|",$_COOKIE['gdpr_key']);
+                $user_email = sanitize_email($email['0']);
+            }
+            
+            if (!empty($user_email)) {
+                $future_date = '8999-12-31 23:59:59';
+                $consent = 'gdpr_cookie_consent';
+
+                $n = count(
+                            $wpdb->get_results(
+                                $wpdb->prepare(
+                                    "SELECT * FROM {$table_name} WHERE email = %s AND consent = %s;",
+                                    $user_email,
+                                    $consent
+                                )
+                            )
+                        );
+
+                if ($n > 0) {
+                    $wpdb->update(
+                        $table_name,
+                        [
+                            'status'      => 1,
+                            'updated_at'  => current_time( 'mysql' ),
+                            'ip'          => $_SERVER['REMOTE_ADDR'],
+                            'valid_until' => $future_date,
+                        ],
+                        [
+                            'email'   => $user_email,
+                            'consent' => $consent,
+                        ]
+                    );
+                } else {
+                    $wpdb->insert(
+                        $table_name,
+                        array(
+                            'email'      => $user_email,
+                            'version'    => 1,
+                            'consent'    => $consent,
+                            'status'     => 1,
+                            'updated_at' => current_time( 'mysql' ),
+                            'ip'         => $_SERVER['REMOTE_ADDR'],
+                            'valid_until' => $future_date,
+                        )
+                    );
+                }
+                setcookie('cookieconsent_result', 'accept', time()+60*60*24*365, '/');
+                do_action('gdpr_consent_accept_cookies');
+            }
+            wp_die(); // ajax call must die to avoid trailing 0 in your response
+        } else {
+            echo "Error !!!";
+            wp_die();
+        }
+    } else {
+        echo "ERROR !!";
+        wp_die();
+    }
 }
 
 /**
  * ajax function on deny cookie button
  */
-function add_consent_deny_cookies(){
-	$referer = $_SERVER['HTTP_REFERER'];
-	$address = $_SERVER['SERVER_NAME'];
-	if($referer){
-		if (strpos($address, $referer) !== 0) {
-			do_action('consent_deny_cookies');
-			wp_die();
-		}else{
-			echo "Error !!!";
-			wp_die();
-		}
-	}else{
-		echo "ERROR !!";
-		wp_die();		
-	}
-}
-
-/**
- * Load dependencies
- */
-if (!class_exists('\Codelight\GDPR\Container')) 
+function gdpr_add_consent_deny_cookies()
 {
-    if (!file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
-		$gdpr_error(
-			_x(
-				'You appear to be running a development version of GDPR. You must run <code>composer install</code> from the plugin directory.',
-				'(Admin)',
-				'gdpr-framework'
-			),
-			_x(
-				'Autoloader not found.',
-				'(Admin)',
-				'gdpr-framework'
-			)
-		);
-	}
-	require_once $composer;
-}
+    $referer = $_SERVER['HTTP_REFERER'];
+    $address = $_SERVER['SERVER_NAME'];
+    if ($referer){
+        if (strpos($address, $referer) !== 0) {
+            global $wpdb;
+            $table_name    = $wpdb->prefix . 'gdpr_consent';
+            $current_user = wp_get_current_user();
+            $user_email   = sanitize_email( $current_user->user_email );
+            if ( '' == $user_email && isset( $_COOKIE['gdpr_key'] ) ) {
+                $email      = explode( '|', sanitize_text_field( wp_unslash( $_COOKIE['gdpr_key'] ) ) );
+                $user_email = sanitize_email( $email['0'] );
+            }
 
-if (!class_exists('\Data443\gdpr\framework\Illuminate\Container\Container')) 
-{
-    $gdpr_error(
-        _x(
-            'You appear to be running a development version of GDPR. You must run <code>"composer build-with-prefix"</code> from the plugin directory.',
-            '(Admin)',
-            'gdpr-framework'
-        ),
-        _x(
-            'Modified Vendor Namespace not found.',
-            '(Admin)',
-            'gdpr-framework'
-        )
-    );
+            if (!empty($user_email)) {
+                $future_date = '7999-12-31 23:59:59';
+                $consent = 'gdpr_cookie_consent';
+    
+                $n = count(
+                            $wpdb->get_results(
+                                $wpdb->prepare(
+                                    "SELECT * FROM {$table_name} WHERE email = %s AND consent = %s;",
+                                    $user_email,
+                                    $consent
+                                )
+                            )
+                        );
+    
+                if ($n > 0) {
+                    $wpdb->update(
+                        $table_name,
+                        [
+                            'version'     => 1,
+                            'status'      => 0,
+                            'updated_at'  => current_time( 'mysql' ),
+                            'ip'          => $_SERVER['REMOTE_ADDR'],
+                            'valid_until' => $future_date,
+                        ],
+                        [
+                            'email'   => $user_email,
+                            'consent' => $consent,
+                        ]
+                    );
+                } else {
+                    $wpdb->insert(
+                        $table_name,
+                        array(
+                            'email'      => $user_email,
+                            'version'    => 1,
+                            'consent'    => $consent,
+                            'status'     => 0,
+                            'updated_at' => current_time( 'mysql' ),
+                            'ip'         => $_SERVER['REMOTE_ADDR'],
+                            'valid_until' => $future_date,
+                        )
+                    );
+                }
+                setcookie('cookieconsent_result', 'decline', time()+60*60*24*365, '/');
+                do_action('gdpr_consent_deny_cookies');
+            }
+            wp_die();
+        } else {
+            echo "Error !!!";
+            wp_die();
+        }
+    } else {
+        echo "ERROR !!";
+        wp_die();
+    }
 }
 
 function popup_gdpr()
 {
-	wp_enqueue_script( 'gdpr-framework-cookieconsent-min-js', gdpr('config')->get('plugin.url') .'assets/cookieconsent.min.js' );
+	global $gdpr;
+	wp_enqueue_script( 'gdpr-framework-cookieconsent-min-js', $gdpr->PluginUrl .'assets/cookieconsent.min.js' );
 	
-	wp_enqueue_style( 'gdpr-framework-cookieconsent-css',gdpr('config')->get('plugin.url') .'assets/cookieconsent.min.css');
+	wp_enqueue_style( 'gdpr-framework-cookieconsent-css',$gdpr->PluginUrl .'assets/cookieconsent.min.css');
 
-	wp_register_script( 'gdpr-framework-cookieconsent-js', gdpr('config')->get('plugin.url') . 'assets/ajax-cookieconsent.js', array(), false, true );
+	wp_register_script( 'gdpr-framework-cookieconsent-js', $gdpr->PluginUrl . 'assets/ajax-cookieconsent.js', array(), false, true );
 
 	$gdpr_policy_page_id = get_option('gdpr_policy_page');
 	if($gdpr_policy_page_id)
@@ -238,8 +291,7 @@ function popup_gdpr()
 	$get_gdpr_data = array('gdpr_url'=>$gdpr_policy_page_url,'gdpr_message'=>$gdpr_message,'gdpr_dismiss'=>$gdpr_dismiss,'gdpr_allow'=>$gdpr_allow,'gdpr_header'=>$gdpr_header,'gdpr_link'=>$gdpr_link,'gdpr_popup_position'=>$position,'gdpr_popup_type'=>$type,'gdpr_popup_static'=>$static,'gdpr_popup_background'=>$gdpr_popup_background,'gdpr_popup_text'=>$gdpr_popup_text,'gdpr_button_background'=>$gdpr_button_background,'gdpr_button_text'=>$gdpr_button_text,'gdpr_button_border'=>$gdpr_button_border,'gdpr_popup_theme'=>$gdpr_popup_theme,'gdpr_hide'=>$gdpr_hide,'gdpr_popup'=>$gdpr_policy_popup,'policy'=>$policy_text,'ajaxurl' => admin_url( 'admin-ajax.php' ),'gdpr_link_target' => $gdpr_link_target);
 	
 	wp_localize_script( 'gdpr-framework-cookieconsent-js', 'gdpr_policy_page', $get_gdpr_data );
-	wp_enqueue_script( 'gdpr-framework-cookieconsent-js', gdpr('config')->get('plugin.url') . 'assets/ajax-cookieconsent.js');
-	
+	wp_enqueue_script( 'gdpr-framework-cookieconsent-js', $gdpr->PluginUrl . 'assets/ajax-cookieconsent.js');
 }
 /**
  * Cookie acceptance Popup
@@ -267,9 +319,10 @@ if($enabled_gdpf_cookie_popup)
 add_filter('plugin_action_links_gdpr-framework/gdpr-framework.php', 'gdpr_plugin_links');
 
 function gdpr_plugin_links($links)
-{	
-	$url = gdpr('helpers')->getAdminUrl();
-	$premium = gdpr('helpers')->premiumStore();
+{	global $gdpr;
+
+	$url = $gdpr->Helpers->getAdminUrl();
+	$premium = $gdpr->Helpers->premiumStore();
 	$settings = array();
 	$settings[] = "<a href='$url'>" . __('Settings', 'gdpr-framework' ) . '</a>';
 	$settings[] = "<a href='$premium' target='_blank'>" . __('PREMIUM', 'gdpr-framework' ) . '</a>';

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { isEmpty, reduce, zipObject, pickBy } from 'lodash';
+import { reduce, zipObject } from 'lodash';
 import Ajv from 'ajv';
 
 /**
@@ -9,13 +9,11 @@ import Ajv from 'ajv';
  */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
-import { useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { ONBOARD_STORE_NAME } from '@ithemes/security.pages.settings';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
 import { STORE_NAME as SEARCH_STORE_NAME } from '@ithemes/security-search';
 import { useSingletonEffect } from '@ithemes/security-hocs';
 
@@ -32,106 +30,14 @@ function getAjv() {
 
 export function useSettingsDefinitions( filters = {} ) {
 	const ajv = getAjv();
-	const { modules, activeModules, allSettings } = useSelect( ( select ) => ( {
-		modules: select( MODULES_STORE_NAME ).getEditedModules(),
-		activeModules: select( MODULES_STORE_NAME ).getActiveModules(),
-		allSettings: select(
-			MODULES_STORE_NAME
-		).__unstableGetAllEditedSettings(),
-	} ) );
-	const filter = ( module ) =>
-		! filters.module || filters.module === module.id;
 
-	const getPassReqGroups = () =>
-		Object.fromEntries(
-			modules
-				.filter(
-					( module ) => ! isEmpty( module.password_requirements )
-				)
-				.flatMap( ( module ) =>
-					Object.entries( module.password_requirements )
-						.filter( ( [ , definition ] ) =>
-							definition.hasOwnProperty( 'user-group' )
-						)
-						.map( ( [ requirement, definition ] ) => [
-							`requirement_settings.${ requirement }.group`,
-							{
-								title: definition.title || module.title,
-								description:
-									definition.description ||
-									module.description,
-							},
-						] )
-				)
-		);
-
-	return useMemo(
-		() =>
-			modules.reduce( ( definitions, module ) => {
-				if ( module.status.selected !== 'active' ) {
-					return definitions;
-				}
-
-				if ( ! filter( module ) ) {
-					return definitions;
-				}
-
-				if (
-					module.id !== 'password-requirements' &&
-					isEmpty( module.user_groups )
-				) {
-					return definitions;
-				}
-
-				const settings = pickBy(
-					module.id === 'password-requirements'
-						? getPassReqGroups()
-						: module.user_groups,
-					( definition ) => {
-						if ( ! definition.conditional ) {
-							return true;
-						}
-
-						if ( definition.conditional[ 'active-modules' ] ) {
-							for ( const activeModule of definition.conditional[
-								'active-modules'
-							] ) {
-								if (
-									! activeModules.includes( activeModule )
-								) {
-									return false;
-								}
-							}
-						}
-
-						if ( definition.conditional.settings ) {
-							const validate = ajv.compile(
-								definition.conditional.settings
-							);
-
-							if ( ! validate( allSettings[ module.id ] ) ) {
-								return false;
-							}
-						}
-
-						return true;
-					}
-				);
-
-				if ( isEmpty( settings ) ) {
-					return definitions;
-				}
-
-				definitions.push( {
-					id: module.id,
-					title: module.title,
-					description: module.description,
-					settings,
-				} );
-
-				return definitions;
-			}, [] ),
-		[ modules ]
+	return useSelect(
+		( select ) =>
+			select( 'ithemes-security/user-groups' ).getSettingDefinitions(
+				ajv,
+				filters
+			),
+		[ ajv, filters ]
 	);
 }
 
@@ -312,45 +218,42 @@ export function useSearchProviders() {
 			__( 'User Group Settings', 'better-wp-security' ),
 			25,
 			( { registry, evaluate, results } ) => {
-				const modules = registry
-					.select( MODULES_STORE_NAME )
-					.getEditedModules();
+				const definitions = registry
+					.select( 'ithemes-security/user-groups' )
+					.getSettingDefinitions( getAjv() );
 
-				return modules.reduce( ( total, module ) => {
-					if (
-						module.status.selected !== 'active' ||
-						! module.settings?.interactive?.length
-					) {
-						return total;
-					}
+				return definitions.reduce(
+					( total, module ) =>
+						reduce(
+							module.settings,
+							( count, config, group ) => {
+								if (
+									! evaluate.stringMatch( config.title ) &&
+									! evaluate.stringMatch(
+										config.description
+									) &&
+									! evaluate.keywordMatch( config.keywords )
+								) {
+									return count;
+								}
 
-					return reduce(
-						module.user_groups,
-						( count, config, group ) => {
-							if (
-								! evaluate.stringMatch( config.title ) &&
-								! evaluate.stringMatch( config.description ) &&
-								! evaluate.keywordMatch( config.keywords )
-							) {
-								return count;
-							}
+								results.groups[ module.id ] ??= {
+									title: module.title,
+									items: [],
+								};
 
-							results.groups[ module.id ] ??= {
-								title: module.title,
-								items: [],
-							};
+								results.groups[ module.id ].items.push( {
+									title: config.title,
+									description: config.description,
+									route: `/settings/user-groups?module=${ module.id }#${ module.id }/${ group }`,
+								} );
 
-							results.groups[ module.id ].items.push( {
-								title: config.title,
-								description: config.description,
-								route: `/settings/user-groups?module=${ module.id }#${ module.id }/${ group }`,
-							} );
-
-							return count++;
-						},
-						total
-					);
-				}, 0 );
+								return count++;
+							},
+							total
+						),
+					0
+				);
 			}
 		);
 

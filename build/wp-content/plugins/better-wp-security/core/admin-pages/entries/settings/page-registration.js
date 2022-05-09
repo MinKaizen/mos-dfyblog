@@ -18,6 +18,12 @@ import {
 	useMemo,
 } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
+import { useSelect } from '@wordpress/data';
+
+/**
+ * Internal dependencies
+ */
+import { CORE_STORE_NAME } from '@ithemes/security.packages.data';
 
 const Context = createContext( {
 	pages: [],
@@ -91,6 +97,8 @@ export function Page( {
 	icon,
 	roots = [ 'settings' ],
 	priority = 90,
+	location = 'primary',
+	featureFlag,
 	ignore,
 	children,
 } ) {
@@ -103,6 +111,8 @@ export function Page( {
 			icon,
 			roots,
 			priority,
+			location,
+			featureFlag,
 			ignore,
 			render: children,
 		} );
@@ -118,7 +128,7 @@ export function Page( {
 /**
  * Register child pages.
  *
- * @param {Object} props Props.
+ * @param {Object}                 props       Props.
  * @param {Array<{title, id, to}>} props.pages The pages to register.
  * @return {null} No component rendered.
  */
@@ -137,12 +147,21 @@ export function ChildPages( props ) {
 	return null;
 }
 
-export function usePages( root ) {
+export function usePages( { root, location } = {} ) {
+	const { featureFlags } = useSelect(
+		( select ) => ( {
+			featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
+		} ),
+		[]
+	);
 	const { root: matchedRoot } = useParams();
 	const { pages } = useContext( Context );
 
-	return pages.filter( ( page ) =>
-		page.roots.includes( root || matchedRoot )
+	return pages.filter(
+		( page ) =>
+			page.roots.includes( root || matchedRoot ) &&
+			( ! location || page.location === location ) &&
+			( ! page.featureFlag || featureFlags.includes( page.featureFlag ) )
 	);
 }
 

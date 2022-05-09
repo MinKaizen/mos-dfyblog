@@ -30,7 +30,7 @@ export default function WelcomePage( { onDismiss } ) {
 					'better-wp-security'
 				) }
 				subtitle={ __(
-					'The next steps will guide you through the setup process so the most important security featured are enabled for your site.',
+					'The next steps will guide you through the setup process so the most important security features are enabled for your site.',
 					'better-wp-security'
 				) }
 				breadcrumbs={ false }

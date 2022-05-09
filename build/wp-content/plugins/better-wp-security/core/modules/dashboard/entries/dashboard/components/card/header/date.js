@@ -7,7 +7,7 @@ import memize from 'memize';
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import {
 	Button,
 	Dashicon,
@@ -15,7 +15,7 @@ import {
 	SelectControl,
 	TextControl,
 } from '@wordpress/components';
-import { compose, withState } from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import { dateI18n, format } from '@wordpress/date';
@@ -79,13 +79,12 @@ const MAX = format( 'Y-m-d' );
 function Date( {
 	queryArgs,
 	config,
-	isOpen,
-	periodOption,
-	start,
-	end,
-	setState,
 	update,
 } ) {
+	const [ isOpen, setIsOpen ] = useState( false );
+	const [ start, setStart ] = useState( undefined );
+	const [ end, setEnd ] = useState( undefined );
+	let [ periodOption, setPeriodOption ] = useState( undefined );
 	const period = getPeriod( queryArgs, config );
 	const periodLabel = getPeriodLabel( period );
 	periodOption = periodOption || ( isString( period ) ? period : 'custom' );
@@ -102,13 +101,13 @@ function Date( {
 		}
 
 		update( { ...queryArgs, period: newPeriod } );
-		setState( { isOpen: false } );
+		setIsOpen( false );
 	};
 
 	return (
 		<div className="itsec-card-header-date">
 			<Button
-				onClick={ () => setState( { isOpen: ! isOpen } ) }
+				onClick={ () => setIsOpen( ! isOpen ) }
 				title={ periodLabel }
 				aria-expanded={ isOpen }
 				aria-label={ sprintf(
@@ -128,13 +127,13 @@ function Date( {
 			{ isOpen && (
 				<Modal
 					title={ __( 'Change Date Period', 'better-wp-security' ) }
-					onRequestClose={ () => setState( { isOpen: false } ) }
+					onRequestClose={ () => setIsOpen( false ) }
 				>
 					<SelectControl
 						options={ getDateOptions() }
 						value={ periodOption }
 						onChange={ ( newPeriod ) =>
-							setState( { periodOption: newPeriod } )
+							setPeriodOption( newPeriod )
 						}
 					/>
 					{ periodOption === 'custom' && (
@@ -145,7 +144,7 @@ function Date( {
 								max={ MAX }
 								value={ start }
 								onChange={ ( newStart ) =>
-									setState( { start: newStart } )
+									setStart( newStart )
 								}
 								label={ __( 'Start Date', 'better-wp-security' ) }
 								placeholder="YYYY-MM-DD"
@@ -156,7 +155,7 @@ function Date( {
 								max={ MAX }
 								value={ end }
 								onChange={ ( newEnd ) =>
-									setState( { end: newEnd } )
+									setEnd( newEnd )
 								}
 								label={ __( 'End Date', 'better-wp-security' ) }
 								placeholder="YYYY-MM-DD"
@@ -187,10 +186,4 @@ export default compose( [
 			);
 		},
 	} ) ),
-	withState( {
-		isOpen: false,
-		periodOption: undefined,
-		start: undefined,
-		end: undefined,
-	} ),
 ] )( Date );

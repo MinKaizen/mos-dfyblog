@@ -9,7 +9,7 @@ import { useDispatch } from '@wordpress/data';
  * Internal dependencies
  */
 import { RjsfFieldFill } from '@ithemes/security-rjsf-theme';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import './style.scss';
 
 function ResetApiKey() {

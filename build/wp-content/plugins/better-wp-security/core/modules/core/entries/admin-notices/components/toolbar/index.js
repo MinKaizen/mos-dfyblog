@@ -6,11 +6,10 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Popover, Button } from '@wordpress/components';
-import { compose, withState } from '@wordpress/compose';
-import { withSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -18,7 +17,13 @@ import { withSelect } from '@wordpress/data';
 import Panel from '../panel';
 import './style.scss';
 
-function Toolbar( { notices, noticesLoaded, isToggled, setState } ) {
+export default function Toolbar() {
+	const [ isToggled, setIsToggled ] = useState( false );
+
+	const { notices, noticesLoaded } = useSelect( ( select ) => ( {
+		notices: select( 'ithemes-security/admin-notices' ).getNotices(),
+		noticesLoaded: select( 'ithemes-security/admin-notices' ).areNoticesLoaded(),
+	} ) );
 	return (
 		<Fragment>
 			<Button
@@ -27,7 +32,7 @@ function Toolbar( { notices, noticesLoaded, isToggled, setState } ) {
 					'itsec-admin-notices-toolbar--has-notices':
 						notices.length > 0,
 				} ) }
-				onClick={ () => setState( { isToggled: ! isToggled } ) }
+				onClick={ () => setIsToggled( ! isToggled ) }
 				aria-expanded={ isToggled }
 			>
 				<span className="it-icon-itsec" />
@@ -50,26 +55,16 @@ function Toolbar( { notices, noticesLoaded, isToggled, setState } ) {
 					focusOnMount="container"
 					position="bottom center"
 					headerTitle={ __( 'Security', 'better-wp-security' ) }
-					onClose={ () => setState( { isToggled: false } ) }
-					onFocusOutside={ () => setState( { isToggled: false } ) }
+					onClose={ () => setIsToggled( false ) }
+					onFocusOutside={ () => setIsToggled( false ) }
 				>
 					<Panel
 						notices={ notices }
 						loaded={ noticesLoaded }
-						close={ () => setState( { isToggled: false } ) }
+						close={ () => setIsToggled( false ) }
 					/>
 				</Popover>
 			) }
 		</Fragment>
 	);
 }
-
-export default compose( [
-	withSelect( ( select ) => ( {
-		notices: select( 'ithemes-security/admin-notices' ).getNotices(),
-		noticesLoaded: select(
-			'ithemes-security/admin-notices'
-		).areNoticesLoaded(),
-	} ) ),
-	withState( { isToggled: false } ),
-] )( Toolbar );

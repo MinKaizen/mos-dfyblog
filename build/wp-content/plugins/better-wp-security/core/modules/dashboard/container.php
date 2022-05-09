@@ -4,7 +4,7 @@ use iThemesSecurity\User_Groups\Matcher;
 use Pimple\Container;
 
 return static function ( Container $c ) {
-	$c['ITSEC_Dashboard'] = static function ( Container $c ) {
+	$c[ ITSEC_Dashboard::class ] = static function ( Container $c ) {
 		return new ITSEC_Dashboard( $c[ Matcher::class ] );
 	};
 
@@ -44,5 +44,11 @@ return static function ( Container $c ) {
 		}
 
 		return $cards;
+	} );
+
+	ITSEC_Lib::extend_if_able( $c, 'import-export.sources', function ( $sources, $c ) {
+		$sources[] = $c[ ITSEC_Dashboard::class ];
+
+		return $sources;
 	} );
 };

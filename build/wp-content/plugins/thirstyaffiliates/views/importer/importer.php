@@ -4,14 +4,14 @@
 
     <div class="ta-blur">
 
-        <h3><?php _e( 'STEP 1 - select your CSV file:' , 'thirstyaffiliates' ); ?></h3>
+        <h3><?php esc_html_e( 'STEP 1 - select your CSV file:' , 'thirstyaffiliates' ); ?></h3>
 
         <p>
-            <?php _e( 'This tool lets you upload a properly formatted CSV file containing a list of affiliate links. These links will be bulk imported for you directly into ThirstyAffiliates.' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'This tool lets you upload a properly formatted CSV file containing a list of affiliate links. These links will be bulk imported for you directly into ThirstyAffiliates.' , 'thirstyaffiliates' ); ?>
         </p>
 
         <p>
-            <?php _e( 'Any categories you specify in your import file that are not found in the system will be created as the links are imported' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'Any categories you specify in your import file that are not found in the system will be created as the links are imported' , 'thirstyaffiliates' ); ?>
         </p>
 
         <form class="tap-round-box" id="tap_upload_csv_form" enctype="multipart/form-data" method="post">

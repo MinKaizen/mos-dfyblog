@@ -74,6 +74,17 @@ export function getSiteInfo( state ) {
 	return state.siteInfo;
 }
 
-export const getFeatureFlags = createRegistrySelector( ( select ) => () =>
-	select( MODULES_STORE_NAME ).getSetting( 'feature-flags', 'enabled' ) || []
+export const getFeatureFlags = createRegistrySelector(
+	( select ) => ( state ) => {
+		const setting = select( MODULES_STORE_NAME ).getSetting(
+			'feature-flags',
+			'enabled'
+		);
+
+		return setting || state.featureFlags;
+	}
 );
+
+export function getBatchMaxItems( state ) {
+	return state.batchMaxItems;
+}

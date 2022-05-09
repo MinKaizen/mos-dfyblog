@@ -17,6 +17,8 @@ return static function ( Container $c ) {
 		return new ITSEC_Lib_Upgrader();
 	};
 
+	$c[ \ITSEC_Modules::class ] = \ITSEC_Modules::get_instance();
+
 	$c[ Actor\Multi_Actor_Factory::class ] = static function ( Container $c ) {
 		return new Actor\Multi_Actor_Factory( ...$c['actor.factories'] );
 	};
@@ -37,6 +39,16 @@ return static function ( Container $c ) {
 	};
 
 	$c['dashboard.cards'] = static function () {
+		return [];
+	};
+
+	$c['import-export.sources'] = static function ( Container $c ) {
+		return [
+			$c[ \ITSEC_Modules::class ],
+		];
+	};
+
+	$c['rest.controllers'] = static function() {
 		return [];
 	};
 

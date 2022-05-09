@@ -151,6 +151,14 @@ final class Module_Config {
 		return $this->get_config()['feature-flags'] ?? [];
 	}
 
+	public function get_import_settings(): array {
+		return $this->get_config()['import-export']['import-settings'] ?? [];
+	}
+
+	public function get_export_excluded_settings(): array {
+		return $this->get_config()['import-export']['exclude-settings'] ?? [];
+	}
+
 	/**
 	 * Translates user-facing strings and returns a new
 	 * config instance with those translations applied.

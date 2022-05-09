@@ -1,4 +1,4 @@
-/* global ajaxurl */
+/* global ajaxurl, ta_affiliate_link_page_params */
 import $ from "jquery";
 
 /**
@@ -28,6 +28,7 @@ export default function link_insert_scanner() {
 
         $.post( ajaxurl , {
             action  : "ta_link_inserted_scanner",
+            _ajax_nonce: ta_affiliate_link_page_params.link_inserted_scanner_nonce,
             link_id : link_id
         }, function( data ) {
 

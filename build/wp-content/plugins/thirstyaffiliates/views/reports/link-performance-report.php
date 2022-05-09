@@ -5,22 +5,22 @@
         <ul>
             <?php foreach ( $range_nav as $nrange => $label ) : ?>
                 <li<?php echo ( $nrange == $current_range ) ? ' class="current"' : ''; ?>>
-                    <a href="<?php echo admin_url( 'edit.php?post_type=thirstylink&page=thirsty-reports&range=' . $nrange ); ?>">
-                        <?php echo $label; ?>
+                    <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=thirstylink&page=thirsty-reports&range=' . $nrange ) ); ?>">
+                        <?php echo esc_html( $label ); ?>
                     </a>
                 </li>
             <?php endforeach; ?>
 
             <li class="custom-range">
-                <span><?php _e( 'Custom' , 'thirstyaffiliates' ); ?></span>
+                <span><?php esc_html_e( 'Custom' , 'thirstyaffiliates' ); ?></span>
                 <form id="custom-date-range" method="GET">
-                    <input type="hidden" name="post_type" value="<?php echo $cpt_slug; ?>">
+                    <input type="hidden" name="post_type" value="<?php echo esc_attr( $cpt_slug ); ?>">
                     <input type="hidden" name="page" value="thirsty-reports">
                     <input type="hidden" name="range" value="custom">
                     <input type="text" placeholder="yyyy-mm-dd" value="<?php echo esc_attr( $start_date ); ?>" name="start_date" class="range_datepicker from" required>
                     <span>&mdash;</span>
                     <input type="text" placeholder="yyyy-mm-dd" value="<?php echo esc_attr( $end_date ); ?>" name="end_date" class="range_datepicker to" required>
-                    <button type="submit" class="button"><?php _e( 'Go' , 'thirstyaffiliates' ); ?></button>
+                    <button type="submit" class="button"><?php esc_html_e( 'Go' , 'thirstyaffiliates' ); ?></button>
                 </form>
             </li>
 
@@ -36,16 +36,16 @@
 
             <ul class="chart-legend">
                 <li style="border-color: #3498db">
-                    <?php _e( 'General' , 'thirstyaffiliates' ); ?>
+                    <?php esc_html_e( 'General' , 'thirstyaffiliates' ); ?>
                     <em class="count"></em>
-                    <span><?php _e( 'All links' , 'thirstyaffiliates' ); ?></span>
+                    <span><?php esc_html_e( 'All links' , 'thirstyaffiliates' ); ?></span>
                 </li>
             </ul>
 
             <?php do_action( 'ta_after_stats_reporting_chart_legend' ); ?>
 
             <div class="add-legend">
-                <label for="add-report-data"><?php _e( 'Fetch report for specific link:' , 'thirstyaffiliates' ); ?></label>
+                <label for="add-report-data"><?php esc_html_e( 'Fetch report for specific link:' , 'thirstyaffiliates' ); ?></label>
                 <div class="input-wrap">
                     <input type="text" id="add-report-data" placeholder="<?php esc_attr_e( 'Search affiliate link' , 'thirstyaffiliates' ); ?>"
                         data-range="<?php echo esc_attr( $current_range ); ?>"
@@ -59,7 +59,7 @@
                     <input type="text" class="color-field" id="link-report-color" value="#e74c3c">
                 </div>
 
-                <button type="button" class="button-primary" id="fetch-link-report"><?php _e( 'Fetch Report' , 'thirstyaffiliates' ); ?></button>
+                <button type="button" class="button-primary" id="fetch-link-report"><?php esc_html_e( 'Fetch Report' , 'thirstyaffiliates' ); ?></button>
             </div>
 
             <?php do_action( 'ta_stats_reporting_chart_sidebar' ); ?>
@@ -77,11 +77,11 @@
 <script type="text/javascript">
     var report_data = { 'click_counts' :[] },
         report_details = {
-            label       : '<?php echo _e( 'General' , 'thirstyaffiliates' ); ?>',
-            label       : '<?php echo _e( 'All links' , 'thirstyaffiliates' ); ?>',
+            label       : '<?php esc_html_e( 'General' , 'thirstyaffiliates' ); ?>',
+            label       : '<?php esc_html_e( 'All links' , 'thirstyaffiliates' ); ?>',
             timeformat  : '<?php echo ( $range[ 'type' ] == 'year' ) ? '%b' : '%d %b'; ?>',
             minTickSize : [ 1 , "<?php echo ( $range[ 'type' ] == 'year' ) ? 'month' : 'day'; ?>" ],
-            clicksLabel : '<?php _e( 'Clicks: ' , 'thirstyaffiliates' ); ?>',
+            clicksLabel : '<?php esc_html_e( 'Clicks: ' , 'thirstyaffiliates' ); ?>',
             totalClicks : ''
         },
         main_chart;

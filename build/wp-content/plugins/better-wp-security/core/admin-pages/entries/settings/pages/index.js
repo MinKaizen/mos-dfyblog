@@ -29,7 +29,7 @@ export default function Pages() {
 				title={ __( 'Features', 'better-wp-security' ) }
 				icon="shield"
 				priority={ 5 }
-				roots={ [ 'onboard', 'settings' ] }
+				roots={ [ 'onboard', 'settings', 'import' ] }
 			>
 				{ () => <Modules /> }
 			</Page>
@@ -38,7 +38,7 @@ export default function Pages() {
 				title={ __( 'Configure', 'better-wp-security' ) }
 				icon="admin-settings"
 				priority={ 15 }
-				roots={ [ 'onboard', 'settings' ] }
+				roots={ [ 'onboard', 'settings', 'import' ] }
 				ignore={ [ '/advanced/' ] }
 			>
 				{ () => <Configure /> }
@@ -47,14 +47,16 @@ export default function Pages() {
 				id="secure-site"
 				title={ __( 'Secure Site', 'better-wp-security' ) }
 				priority={ 100 }
-				roots={ [ 'onboard' ] }
+				roots={ [ 'onboard', 'import' ] }
 			>
 				{ () => <SecureSite /> }
 			</Page>
 			<Page
 				id="tools"
 				title={ __( 'Tools', 'better-wp-security' ) }
-				priority={ false }
+				icon="admin-tools"
+				priority={ 80 }
+				location="advanced"
 				roots={ [ 'settings' ] }
 			>
 				{ () => <Tools /> }
@@ -65,3 +67,4 @@ export default function Pages() {
 
 export { default as Onboard } from './onboard';
 export { default as Settings } from './settings';
+export { default as Import } from './import';

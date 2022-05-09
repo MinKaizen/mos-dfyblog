@@ -40,7 +40,7 @@ export default function MultiGroupSelector() {
 		[ groupId ]
 	);
 
-	if ( 'onboard' === root ) {
+	if ( 'settings' !== root ) {
 		return null;
 	}
 

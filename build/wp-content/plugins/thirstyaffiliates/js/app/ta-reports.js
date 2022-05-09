@@ -327,7 +327,12 @@ jQuery( document ).ready( function($){
                         // add new legend
                         $chart_sidebar.find( 'ul li.single-link' ).remove();
                         $chart_sidebar.find( 'ul.chart-legend' )
-                            .append( '<li class="single-link" style="border-color:#e74c3c;">' + response.label + '<em class="count">' + response.total_clicks + '</em><span>' + response.slug + '</span></li>' );
+                            .append(
+                                $( '<li class="single-link" style="border-color:#e74c3c;">' )
+                                    .text( response.label )
+                                    .append( $( '<em class="count">' ).text( response.total_clicks ) )
+                                    .append( $( '<span>' ).text( response.slug ) )
+                            );
 
                         // redraw the graph
                         thirstyReports.series = [];

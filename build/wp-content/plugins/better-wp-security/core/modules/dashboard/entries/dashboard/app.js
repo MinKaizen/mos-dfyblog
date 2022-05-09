@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { ThemeProvider } from '@emotion/react';
+
+/**
  * WordPress dependencies
  */
 import { NoticeList, SlotFillProvider, Popover } from '@wordpress/components';
@@ -9,10 +14,15 @@ import { PluginArea } from '@wordpress/plugins';
 import '@wordpress/notices';
 
 /**
+ * iThemes dependencies
+ */
+import { defaultTheme } from '@ithemes/ui';
+
+/**
  * Internal dependencies
  */
 import { BelowToolbarSlot } from '@ithemes/security.dashboard.api';
-import '@ithemes/security-data';
+import '@ithemes/security.packages.data';
 import { useEventListener } from '@ithemes/security-hocs';
 import { useRegisterCards } from './cards';
 import AdminBar from './components/admin-bar';
@@ -83,23 +93,25 @@ export default function App( { context } ) {
 	}
 
 	return (
-		<SlotFillProvider>
-			<ConfigContext.Provider value={ context }>
-				<div className={ `itsec-dashboard itsec-app-page--${ page }` }>
-					<Popover.Slot />
-					<NoticeList
-						notices={ notices }
-						onRemove={ ( noticeId ) =>
-							removeNotice( noticeId, 'ithemes-security' )
-						}
-					/>
-					<Toolbar dashboardId={ dashboardId } />
-					<BelowToolbarSlot fillProps={ { page, dashboardId } } />
-					<AdminBar dashboardId={ dashboardId } />
-					<Page page={ page } dashboardId={ dashboardId } />
-				</div>
-				<PluginArea />
-			</ConfigContext.Provider>
-		</SlotFillProvider>
+		<ThemeProvider theme={ defaultTheme }>
+			<SlotFillProvider>
+				<ConfigContext.Provider value={ context }>
+					<div className={ `itsec-dashboard itsec-app-page--${ page }` }>
+						<Popover.Slot />
+						<NoticeList
+							notices={ notices }
+							onRemove={ ( noticeId ) =>
+								removeNotice( noticeId, 'ithemes-security' )
+							}
+						/>
+						<Toolbar dashboardId={ dashboardId } />
+						<BelowToolbarSlot fillProps={ { page, dashboardId } } />
+						<AdminBar dashboardId={ dashboardId } />
+						<Page page={ page } dashboardId={ dashboardId } />
+					</div>
+					<PluginArea />
+				</ConfigContext.Provider>
+			</SlotFillProvider>
+		</ThemeProvider>
 	);
 }

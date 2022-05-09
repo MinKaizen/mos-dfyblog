@@ -20,14 +20,18 @@ export default function import_init() {
 
             vex.dialog.alert( import_export_var.please_input_settings_string );
             import_button.removeAttr( "disabled" );
-            spinner.css( "visibility" , "hidden" );     
+            spinner.css( "visibility" , "hidden" );
 
         } else {
 
             $.ajax( {
                 url      : ajaxurl,
                 type     : "POST",
-                data     : { action : "ta_import_settings" , ta_settings_string : settings_string },
+                data     : {
+                    action: "ta_import_settings",
+                    _ajax_nonce: import_export_var.import_settings_nonce,
+                    ta_settings_string: settings_string
+                },
                 dataType : "json"
             } )
             .done( function( data , text_status , jqxhr ) {

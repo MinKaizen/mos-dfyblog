@@ -9,7 +9,7 @@ class PrivacySafe {
 	}
 
 	public function registerAdminTab( $tabs ) {
-		 $tabs['privacy-safe'] = gdpr()->make( AdminTabPrivacySafe::class );
+		 $tabs['privacy-safe'] = new AdminTabPrivacySafe();
 		return $tabs;
 	}
 }

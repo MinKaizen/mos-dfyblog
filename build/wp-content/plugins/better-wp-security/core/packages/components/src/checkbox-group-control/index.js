@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { omit, isArray } from 'lodash';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -16,6 +17,7 @@ export default function CheckboxGroupControl( {
 	help,
 	disabled,
 	readOnly,
+	className,
 } ) {
 	let isChecked, update;
 
@@ -26,8 +28,8 @@ export default function CheckboxGroupControl( {
 				checked
 					? [ ...value, option.value ]
 					: value.filter(
-							( maybeValue ) => maybeValue !== option.value
-					  )
+						( maybeValue ) => maybeValue !== option.value
+					)
 			);
 	} else {
 		isChecked = ( option ) => value[ option.value ] || false;
@@ -36,7 +38,9 @@ export default function CheckboxGroupControl( {
 	}
 
 	return (
-		<fieldset className="components-base-control">
+		<fieldset
+			className={ classnames( 'components-base-control', className ) }
+		>
 			<div className="components-base-control__field">
 				<legend className="components-base-control__label">
 					{ label }
@@ -44,20 +48,26 @@ export default function CheckboxGroupControl( {
 				{ help && (
 					<p className="components-base-control__help">{ help }</p>
 				) }
-				{ options.map( ( option ) => (
-					<CheckboxControl
-						{ ...omit( option, [
-							'value',
-							'disabled',
-							'readOnly',
-						] ) }
-						key={ option.value }
-						checked={ isChecked( option ) }
-						onChange={ update( option ) }
-						disabled={ disabled || option.disabled }
-						readOnly={ readOnly || option.readOnly }
-					/>
-				) ) }
+				<div className="itsec-components-checkbox-group-control__options">
+					{ options.map( ( option ) => (
+						<CheckboxControl
+							{ ...omit( option, [
+								'value',
+								'disabled',
+								'readOnly',
+							] ) }
+							key={ option.value }
+							checked={ isChecked( option ) }
+							onChange={ update( option ) }
+							disabled={ disabled || option.disabled }
+							readOnly={ readOnly || option.readOnly }
+							className={
+								isChecked( option ) &&
+								'itsec-components-checkbox-group-control__option--is-checked'
+							}
+						/>
+					) ) }
+				</div>
 			</div>
 		</fieldset>
 	);

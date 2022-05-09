@@ -158,5 +158,19 @@
   },
   "onboard-settings": [
     "default_recipients"
-  ]
+  ],
+  "import-export": {
+    "import-settings": [
+      "from_email",
+      "default_recipients"
+    ],
+    "exclude-settings": [
+      "last_sent",
+      "resend_at",
+      "data",
+      "last_mail_error",
+      "default_recipients.user_list.*",
+      "notifications.*.user_list.*"
+    ]
+  }
 }

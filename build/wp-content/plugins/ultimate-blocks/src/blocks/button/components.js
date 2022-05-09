@@ -15,7 +15,7 @@ const {
 	InspectorControls,
 	URLInput,
 	RichText,
-	PanelColorSettings,
+	ColorPalette,
 } = wp.blockEditor || wp.editor;
 const {
 	PanelBody,
@@ -25,7 +25,7 @@ const {
 	RangeControl,
 	Dropdown,
 	CheckboxControl,
-	SelectControl,
+	RadioControl,
 	Popover,
 	ToolbarGroup,
 	ToolbarButton,
@@ -36,7 +36,7 @@ const { loadPromise, models } = wp.api;
 
 export const allIcons = Object.assign(fas, fab);
 
-export const iconSize = { small: 25, medium: 30, large: 35, larger: 40 };
+export const presetIconSize = { small: 25, medium: 30, large: 35, larger: 40 };
 
 export const defaultButtonProps = {
 	buttonText: "Button Text",
@@ -46,16 +46,28 @@ export const defaultButtonProps = {
 	buttonHoverColor: "#313131",
 	buttonTextColor: "#ffffff",
 	buttonTextHoverColor: "#ffffff",
-	buttonRounded: false,
-	buttonRadius: 60,
-	buttonRadiusUnit: "px",
+	buttonRounded: true,
+	buttonRadius: 10, //retained for compatibility
+	buttonRadiusUnit: "px", //retained for compatibility
+
+	topLeftRadius: 10,
+	topLeftRadiusUnit: "px",
+	topRightRadius: 10,
+	topRightRadiusUnit: "px",
+	bottomLeftRadius: 10,
+	bottomLeftRadiusUnit: "px",
+	bottomRightRadius: 10,
+	bottomRightRadiusUnit: "px",
+
 	chosenIcon: "",
 	iconPosition: "left",
+	iconSize: 0,
+	iconUnit: "px",
 	buttonIsTransparent: false,
 	addNofollow: true,
 	openInNewTab: true,
 	addSponsored: false,
-	buttonWidth: "fixed",
+	buttonWidth: "flex",
 };
 
 export const blockControls = (props) => {
@@ -113,28 +125,52 @@ export const inspectorControls = (props) => {
 		20
 	);
 
-	const makeNormalColorPanels = () => [
-		{
-			value: buttons[activeButtonIndex].buttonColor,
-			onChange: (colorValue) =>
-				setAttributes({
-					buttons: [
-						...buttons.slice(0, activeButtonIndex),
-						Object.assign({}, buttons[activeButtonIndex], {
-							buttonColor: colorValue,
-						}),
-						...buttons.slice(activeButtonIndex + 1),
-					],
-				}),
+	const normalColorPanels = buttons.length && (
+		<>
+			<p>
+				{__("Button Color", "ultimate-blocks")}
+				{buttons[activeButtonIndex].buttonColor && (
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+						style={{
+							background: buttons[activeButtonIndex].buttonColor,
+						}}
+					/>
+				)}
+			</p>
+			<ColorPalette
+				value={buttons[activeButtonIndex].buttonColor}
+				onChange={(colorValue) =>
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonColor: colorValue,
+							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					})
+				}
+			/>
 
-			label: __("Button Color"),
-		},
-		...[
-			buttons[activeButtonIndex].buttonIsTransparent
-				? []
-				: {
-						value: buttons[activeButtonIndex].buttonTextColor,
-						onChange: (colorValue) =>
+			{!buttons[activeButtonIndex].buttonIsTransparent && (
+				<>
+					<p>
+						{__("Button Text Color", "ultimate-blocks")}
+						{buttons[activeButtonIndex].buttonTextColor && (
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+								style={{
+									background: buttons[activeButtonIndex].buttonTextColor,
+								}}
+							/>
+						)}
+					</p>
+					<ColorPalette
+						value={buttons[activeButtonIndex].buttonTextColor}
+						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
@@ -143,34 +179,60 @@ export const inspectorControls = (props) => {
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
+							})
+						}
+					/>
+				</>
+			)}
+		</>
+	);
+
+	const hoverColorPanels = buttons.length && (
+		<>
+			<p>
+				{__("Button Color", "ultimate-blocks")}
+				{buttons[activeButtonIndex].buttonHoverColor && (
+					<span
+						class="component-color-indicator"
+						aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+						style={{
+							background: buttons[activeButtonIndex].buttonHoverColor,
+						}}
+					/>
+				)}
+			</p>
+			<ColorPalette
+				value={buttons[activeButtonIndex].buttonHoverColor}
+				onChange={(colorValue) =>
+					setAttributes({
+						buttons: [
+							...buttons.slice(0, activeButtonIndex),
+							Object.assign({}, buttons[activeButtonIndex], {
+								buttonHoverColor: colorValue,
 							}),
+							...buttons.slice(activeButtonIndex + 1),
+						],
+					})
+				}
+			/>
 
-						label: __("Button Text Color"),
-				  },
-		],
-	];
-	const makeHoverColorPanels = () => [
-		{
-			value: buttons[activeButtonIndex].buttonHoverColor,
-			onChange: (colorValue) =>
-				setAttributes({
-					buttons: [
-						...buttons.slice(0, activeButtonIndex),
-						Object.assign({}, buttons[activeButtonIndex], {
-							buttonHoverColor: colorValue,
-						}),
-						...buttons.slice(activeButtonIndex + 1),
-					],
-				}),
-
-			label: __("Button Color"),
-		},
-		...[
-			buttons[activeButtonIndex].buttonIsTransparent
-				? []
-				: {
-						value: buttons[activeButtonIndex].buttonTextHoverColor,
-						onChange: (colorValue) =>
+			{!buttons[activeButtonIndex].buttonIsTransparent && (
+				<>
+					<p>
+						{__("Button Text Color", "ultimate-blocks")}
+						{buttons[activeButtonIndex].buttonTextHoverColor && (
+							<span
+								class="component-color-indicator"
+								aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+								style={{
+									background: buttons[activeButtonIndex].buttonTextHoverColor,
+								}}
+							/>
+						)}
+					</p>
+					<ColorPalette
+						value={buttons[activeButtonIndex].buttonTextHoverColor}
+						onChange={(colorValue) =>
 							setAttributes({
 								buttons: [
 									...buttons.slice(0, activeButtonIndex),
@@ -179,12 +241,13 @@ export const inspectorControls = (props) => {
 									}),
 									...buttons.slice(activeButtonIndex + 1),
 								],
-							}),
-
-						label: __("Button Text Color"),
-				  },
-		],
-	];
+							})
+						}
+					/>
+				</>
+			)}
+		</>
+	);
 
 	return (
 		buttons.length > 0 && (
@@ -241,7 +304,7 @@ export const inspectorControls = (props) => {
 						</ButtonGroup>
 					</div>
 				</PanelBody>
-				<PanelBody title={__("Button Style", "ultimate-blocks")}>
+				<PanelBody title={__("Border Settings", "ultimate-blocks")}>
 					<ToggleControl
 						label={__("Rounded", "ultimate-blocks")}
 						checked={buttons[activeButtonIndex].buttonRounded}
@@ -257,7 +320,9 @@ export const inspectorControls = (props) => {
 							})
 						}
 					/>
-					{buttons[activeButtonIndex].buttonRounded && (
+				</PanelBody>
+				{buttons[activeButtonIndex].buttonRounded && (
+					<PanelBody title={__("Button Radius", "ultimate-blocks")}>
 						<div id="ub-button-radius-panel">
 							<RangeControl
 								label={__("Button Radius")}
@@ -305,24 +370,8 @@ export const inspectorControls = (props) => {
 								))}
 							</ButtonGroup>
 						</div>
-					)}
-					<ToggleControl
-						label={__("Transparent", "ultimate-blocks")}
-						checked={buttons[activeButtonIndex].buttonIsTransparent}
-						onChange={() =>
-							setAttributes({
-								buttons: [
-									...buttons.slice(0, activeButtonIndex),
-									Object.assign({}, buttons[activeButtonIndex], {
-										buttonIsTransparent: !buttons[activeButtonIndex]
-											.buttonIsTransparent,
-									}),
-									...buttons.slice(activeButtonIndex + 1),
-								],
-							})
-						}
-					/>
-				</PanelBody>
+					</PanelBody>
+				)}
 				<PanelBody title={__("Button Icon", "ultimate-blocks")}>
 					<div className="ub-button-grid">
 						<p>{__("Selected icon", "ultimate-blocks")}</p>
@@ -436,58 +485,71 @@ export const inspectorControls = (props) => {
 								)}
 							/>
 						</div>
-						<p>{__("Icon position", "ultimate-blocks")}</p>
-						<SelectControl
-							className="ub-button-grid-selector"
-							value={buttons[activeButtonIndex].iconPosition}
-							options={[
-								{
-									label: __("Left", "ultimate-blocks"),
-									value: "left",
-								},
-								{
-									label: __("Right", "ultimate-blocks"),
-									value: "right",
-								},
-							]}
-							onChange={(pos) =>
-								setAttributes({
-									buttons: [
-										...buttons.slice(0, activeButtonIndex),
-										Object.assign({}, buttons[activeButtonIndex], {
-											iconPosition: pos,
-										}),
-										...buttons.slice(activeButtonIndex + 1),
-									],
-								})
-							}
-						/>
 					</div>
+					<RadioControl
+						className="ub-button-icon-position"
+						label={__("Icon position")}
+						selected={buttons[activeButtonIndex].iconPosition}
+						options={[
+							{
+								label: __("Left", "ultimate-blocks"),
+								value: "left",
+							},
+							{
+								label: __("Right", "ultimate-blocks"),
+								value: "right",
+							},
+						]}
+						onChange={(pos) =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										iconPosition: pos,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							})
+						}
+					/>
 				</PanelBody>
-				<TabPanel
-					tabs={[
-						{
-							name: "buttoncolor",
-							title: __("Normal"),
-						},
-						{
-							name: "buttonhovercolor",
-							title: __("Hover"),
-						},
-					]}
+				<PanelBody
+					title={__("Button Colors Revamped", "ultimate-blocks")}
+					initialOpen={true}
 				>
-					{(tab) => (
-						<PanelColorSettings
-							title={__("Button Colors", "ultimate-blocks")}
-							initialOpen={true}
-							colorSettings={
-								tab.name === "buttoncolor"
-									? makeNormalColorPanels()
-									: makeHoverColorPanels()
-							}
-						/>
-					)}
-				</TabPanel>
+					<ToggleControl
+						label={__("Transparent", "ultimate-blocks")}
+						checked={buttons[activeButtonIndex].buttonIsTransparent}
+						onChange={() =>
+							setAttributes({
+								buttons: [
+									...buttons.slice(0, activeButtonIndex),
+									Object.assign({}, buttons[activeButtonIndex], {
+										buttonIsTransparent:
+											!buttons[activeButtonIndex].buttonIsTransparent,
+									}),
+									...buttons.slice(activeButtonIndex + 1),
+								],
+							})
+						}
+					/>
+					<TabPanel
+						tabs={[
+							{
+								name: "buttoncolor",
+								title: __("Normal"),
+							},
+							{
+								name: "buttonhovercolor",
+								title: __("Hover"),
+							},
+						]}
+					>
+						{(tab) =>
+							tab.name === "buttoncolor" ? normalColorPanels : hoverColorPanels
+						}
+					</TabPanel>
+				</PanelBody>
 			</InspectorControls>
 		)
 	);
@@ -679,7 +741,7 @@ export const editorDisplay = (props) => {
 									? b.buttonColor
 									: b.buttonTextColor || "inherit",
 							borderRadius: b.buttonRounded
-								? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
+								? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
 								: "0",
 							borderStyle: b.buttonIsTransparent ? "solid" : "none",
 							borderColor: b.buttonIsTransparent
@@ -707,7 +769,7 @@ export const editorDisplay = (props) => {
 									<div className="ub-button-icon-holder">
 										{generateIcon(
 											allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-											iconSize[b.size]
+											presetIconSize[b.size]
 										)}
 									</div>
 								)}
@@ -774,6 +836,7 @@ export class EditorComponent extends Component {
 			hasApiAccess: false,
 			isWaiting: true,
 			tempRecentIcons: [],
+			currentCorner: "all",
 		};
 	}
 
@@ -833,12 +896,8 @@ export class EditorComponent extends Component {
 	}
 
 	updateIconList() {
-		const {
-			availableIcons,
-			recentSelection,
-			selectionTime,
-			iconChoices,
-		} = this.state;
+		const { availableIcons, recentSelection, selectionTime, iconChoices } =
+			this.state;
 		const prevIconMatch = iconChoices
 			.map((i) => i.name)
 			.indexOf(recentSelection);
@@ -944,6 +1003,34 @@ export class EditorComponent extends Component {
 					}),
 				],
 			});
+		} else {
+			let newButtons = JSON.parse(JSON.stringify(buttons));
+			let cornersNotSet = false;
+
+			newButtons.forEach((b) => {
+				if (!b.hasOwnProperty("topLeftRadius")) {
+					if (!cornersNotSet) {
+						cornersNotSet = true;
+					}
+
+					b.topLeftRadius = b.buttonRadius;
+					b.topRightRadius = b.buttonRadius;
+					b.bottomLeftRadius = b.buttonRadius;
+					b.bottomRightRadius = b.buttonRadius;
+
+					b.topLeftRadiusUnit = b.buttonRadiusUnit;
+					b.topRightRadiusUnit = b.buttonRadiusUnit;
+					b.bottomLeftRadiusUnit = b.buttonRadiusUnit;
+					b.bottomRightRadiusUnit = b.buttonRadiusUnit;
+
+					b.iconSize = 0;
+					b.iconUnit = "px";
+				}
+			});
+
+			if (cornersNotSet) {
+				setAttributes({ buttons: JSON.parse(JSON.stringify(newButtons)) });
+			}
 		}
 	}
 
@@ -977,6 +1064,7 @@ export class EditorComponent extends Component {
 			iconSearchResultsPage,
 			recentSelection,
 			hasApiAccess,
+			currentCorner,
 		} = this.state;
 
 		if (blockID === "") {
@@ -1018,28 +1106,52 @@ export class EditorComponent extends Component {
 			20
 		);
 
-		const makeNormalColorPanels = () => [
-			{
-				value: buttons[activeButtonIndex].buttonColor,
-				onChange: (colorValue) =>
-					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
-					}),
+		const normalColorPanels = buttons.length && (
+			<>
+				<p>
+					{__("Button Color", "ultimate-blocks")}
+					{buttons[activeButtonIndex].buttonColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttons[activeButtonIndex].buttonColor})`}
+							style={{
+								background: buttons[activeButtonIndex].buttonColor,
+							}}
+						/>
+					)}
+				</p>
+				<ColorPalette
+					value={buttons[activeButtonIndex].buttonColor}
+					onChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonColor: colorValue,
+								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+				/>
 
-				label: __("Button Color"),
-			},
-			...[
-				buttons[activeButtonIndex].buttonIsTransparent
-					? []
-					: {
-							value: buttons[activeButtonIndex].buttonTextColor,
-							onChange: (colorValue) =>
+				{!buttons[activeButtonIndex].buttonIsTransparent && (
+					<>
+						<p>
+							{__("Button Text Color", "ultimate-blocks")}
+							{buttons[activeButtonIndex].buttonTextColor && (
+								<span
+									class="component-color-indicator"
+									aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextColor})`}
+									style={{
+										background: buttons[activeButtonIndex].buttonTextColor,
+									}}
+								/>
+							)}
+						</p>
+						<ColorPalette
+							value={buttons[activeButtonIndex].buttonTextColor}
+							onChange={(colorValue) =>
 								setAttributes({
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
@@ -1048,34 +1160,60 @@ export class EditorComponent extends Component {
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
+								})
+							}
+						/>
+					</>
+				)}
+			</>
+		);
+
+		const hoverColorPanels = buttons.length && (
+			<>
+				<p>
+					{__("Button Color", "ultimate-blocks")}
+					{buttons[activeButtonIndex].buttonHoverColor && (
+						<span
+							class="component-color-indicator"
+							aria-label={`(Color: ${buttons[activeButtonIndex].buttonHoverColor})`}
+							style={{
+								background: buttons[activeButtonIndex].buttonHoverColor,
+							}}
+						/>
+					)}
+				</p>
+				<ColorPalette
+					value={buttons[activeButtonIndex].buttonHoverColor}
+					onChange={(colorValue) =>
+						setAttributes({
+							buttons: [
+								...buttons.slice(0, activeButtonIndex),
+								Object.assign({}, buttons[activeButtonIndex], {
+									buttonHoverColor: colorValue,
 								}),
+								...buttons.slice(activeButtonIndex + 1),
+							],
+						})
+					}
+				/>
 
-							label: __("Button Text Color"),
-					  },
-			],
-		];
-		const makeHoverColorPanels = () => [
-			{
-				value: buttons[activeButtonIndex].buttonHoverColor,
-				onChange: (colorValue) =>
-					setAttributes({
-						buttons: [
-							...buttons.slice(0, activeButtonIndex),
-							Object.assign({}, buttons[activeButtonIndex], {
-								buttonHoverColor: colorValue,
-							}),
-							...buttons.slice(activeButtonIndex + 1),
-						],
-					}),
-
-				label: __("Button Color"),
-			},
-			...[
-				buttons[activeButtonIndex].buttonIsTransparent
-					? []
-					: {
-							value: buttons[activeButtonIndex].buttonTextHoverColor,
-							onChange: (colorValue) =>
+				{!buttons[activeButtonIndex].buttonIsTransparent && (
+					<>
+						<p>
+							{__("Button Text Color", "ultimate-blocks")}
+							{buttons[activeButtonIndex].buttonTextHoverColor && (
+								<span
+									class="component-color-indicator"
+									aria-label={`(Color: ${buttons[activeButtonIndex].buttonTextHoverColor})`}
+									style={{
+										background: buttons[activeButtonIndex].buttonTextHoverColor,
+									}}
+								/>
+							)}
+						</p>
+						<ColorPalette
+							value={buttons[activeButtonIndex].buttonTextHoverColor}
+							onChange={(colorValue) =>
 								setAttributes({
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
@@ -1084,12 +1222,13 @@ export class EditorComponent extends Component {
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
-								}),
-
-							label: __("Button Text Color"),
-					  },
-			],
-		];
+								})
+							}
+						/>
+					</>
+				)}
+			</>
+		);
 
 		return [
 			isSelected && (
@@ -1162,11 +1301,11 @@ export class EditorComponent extends Component {
 							</ButtonGroup>
 						</div>
 					</PanelBody>
-					<PanelBody title={__("Button Style", "ultimate-blocks")}>
+					<PanelBody title={__("Border Settings", "ultimate-blocks")}>
 						<ToggleControl
 							label={__("Rounded", "ultimate-blocks")}
 							checked={buttons[activeButtonIndex].buttonRounded}
-							onChange={() =>
+							onChange={() => {
 								setAttributes({
 									buttons: [
 										...buttons.slice(0, activeButtonIndex),
@@ -1175,74 +1314,346 @@ export class EditorComponent extends Component {
 										}),
 										...buttons.slice(activeButtonIndex + 1),
 									],
-								})
-							}
+								});
+								this.setState({ currentCorner: "all" });
+							}}
 						/>
 						{buttons[activeButtonIndex].buttonRounded && (
-							<div id="ub-button-radius-panel">
-								<RangeControl
-									label={__("Button Radius")}
-									value={buttons[activeButtonIndex].buttonRadius}
-									onChange={(value) =>
-										setAttributes({
-											buttons: [
-												...buttons.slice(0, activeButtonIndex),
-												Object.assign({}, buttons[activeButtonIndex], {
-													buttonRadius: value,
-												}),
-												...buttons.slice(activeButtonIndex + 1),
-											],
-										})
-									}
-									min={1}
-									max={100}
-								/>
-								<ButtonGroup
-									aria-label={__("Button Radius Unit", "ultimate-blocks")}
-								>
-									{["px", "%"].map((b) => (
-										<Button
-											isLarge
-											isPrimary={
-												buttons[activeButtonIndex].buttonRadiusUnit === b
-											}
-											aria-pressed={
-												buttons[activeButtonIndex].buttonRadiusUnit === b
-											}
-											onClick={() =>
+							<>
+								<div className="ub-indicator-grid">
+									{/* FIRST ROW */}
+									<div
+										className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-right-border"
+										style={{
+											borderTop: `2px solid ${
+												currentCorner === "topleft" ? "blue" : "black"
+											}`,
+											borderLeft: `2px solid ${
+												currentCorner === "topleft" ? "blue" : "black"
+											}`,
+										}}
+										onClick={() => this.setState({ currentCorner: "topleft" })}
+									/>
+									<div className="ub-indicator-grid-cell" />
+									<div
+										className="ub-indicator-grid-cell ub-indicator-grid-bottom-border ub-indicator-grid-left-border"
+										style={{
+											borderTop: `2px solid ${
+												currentCorner === "topright" ? "blue" : "black"
+											}`,
+											borderRight: `2px solid ${
+												currentCorner === "topright" ? "blue" : "black"
+											}`,
+										}}
+										onClick={() => this.setState({ currentCorner: "topright" })}
+									></div>
+									{/* SECOND ROW */}
+									<div className="ub-indicator-grid-cell" />
+									<div
+										className="ub-indicator-grid-cell"
+										style={{
+											border: `2px solid ${
+												currentCorner === "all" ? "blue" : "black"
+											}`,
+										}}
+										onClick={() => {
+											if (currentCorner !== "all") {
+												let commonRadius = 0;
+												let commonUnit = "px";
+
+												switch (currentCorner) {
+													case "topleft":
+														commonRadius =
+															buttons[activeButtonIndex].topLeftRadius;
+														commonUnit =
+															buttons[activeButtonIndex].topLeftRadiusUnit;
+														break;
+													case "topright":
+														commonRadius =
+															buttons[activeButtonIndex].topRightRadius;
+														commonUnit =
+															buttons[activeButtonIndex].topRightRadiusUnit;
+														break;
+													case "bottomleft":
+														commonRadius =
+															buttons[activeButtonIndex].bottomLeftRadius;
+														commonUnit =
+															buttons[activeButtonIndex].bottomLeftRadiusUnit;
+														break;
+													case "bottomright":
+														commonRadius =
+															buttons[activeButtonIndex].bottomRightRadius;
+														commonUnit =
+															buttons[activeButtonIndex].bottomLeftRadiusUnit;
+														break;
+												}
+
 												setAttributes({
 													buttons: [
 														...buttons.slice(0, activeButtonIndex),
 														Object.assign({}, buttons[activeButtonIndex], {
-															buttonRadiusUnit: b,
+															topLeftRadius: commonRadius,
+															topRightRadius: commonRadius,
+															bottomLeftRadius: commonRadius,
+															bottomRightRadius: commonRadius,
+															topLeftRadiusUnit: commonUnit,
+															topRightRadiusUnit: commonUnit,
+															bottomLeftRadiusUnit: commonUnit,
+															bottomRightRadiusUnit: commonUnit,
 														}),
 														...buttons.slice(activeButtonIndex + 1),
 													],
-												})
+												});
 											}
-										>
-											{b}
-										</Button>
-									))}
-								</ButtonGroup>
-							</div>
+
+											this.setState({ currentCorner: "all" });
+										}}
+									></div>
+									<div className="ub-indicator-grid-cell" />
+									{/* THIRD ROW */}
+									<div
+										className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-right-border"
+										style={{
+											borderBottom: `2px solid ${
+												currentCorner === "bottomleft" ? "blue" : "black"
+											}`,
+											borderLeft: `2px solid ${
+												currentCorner === "bottomleft" ? "blue" : "black"
+											}`,
+										}}
+										onClick={() =>
+											this.setState({ currentCorner: "bottomleft" })
+										}
+									/>
+									<div className="ub-indicator-grid-cell" />
+									<div
+										className="ub-indicator-grid-cell ub-indicator-grid-top-border ub-indicator-grid-left-border"
+										style={{
+											borderBottom: `2px solid ${
+												currentCorner === "bottomright" ? "blue" : "black"
+											}`,
+											borderRight: `2px solid ${
+												currentCorner === "bottomright" ? "blue" : "black"
+											}`,
+										}}
+										onClick={() =>
+											this.setState({ currentCorner: "bottomright" })
+										}
+									></div>
+								</div>
+								<div id="ub-button-radius-panel">
+									<RangeControl
+										label={__("Button Radius")}
+										value={
+											currentCorner === "topleft"
+												? buttons[activeButtonIndex].topLeftRadius
+												: currentCorner === "topright"
+												? buttons[activeButtonIndex].topRightRadius
+												: currentCorner === "bottomleft"
+												? buttons[activeButtonIndex].bottomLeftRadius
+												: buttons[activeButtonIndex].bottomRightRadius
+										}
+										onChange={(value) => {
+											switch (currentCorner) {
+												case "topleft":
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																topLeftRadius: value,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+													break;
+												case "topright":
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																topRightRadius: value,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+													break;
+												case "bottomleft":
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																bottomLeftRadius: value,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+													break;
+												case "bottomright":
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																bottomRightRadius: value,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+													break;
+												default:
+												case "all":
+													setAttributes({
+														buttons: [
+															...buttons.slice(0, activeButtonIndex),
+															Object.assign({}, buttons[activeButtonIndex], {
+																buttonRadius: value,
+																topLeftRadius: value,
+																topRightRadius: value,
+																bottomLeftRadius: value,
+																bottomRightRadius: value,
+															}),
+															...buttons.slice(activeButtonIndex + 1),
+														],
+													});
+													break;
+											}
+										}}
+										min={1}
+										max={100}
+										step={
+											(currentCorner === "topleft"
+												? buttons[activeButtonIndex].topLeftRadiusUnit
+												: currentCorner === "topright"
+												? buttons[activeButtonIndex].topRightRadiusUnit
+												: currentCorner === "bottomleft"
+												? buttons[activeButtonIndex].bottomLeftRadiusUnit
+												: buttons[activeButtonIndex].bottomRightRadiusUnit) ===
+											"em"
+												? 0.1
+												: 1
+										}
+									/>
+									<ButtonGroup
+										aria-label={__("Button Radius Unit", "ultimate-blocks")}
+									>
+										{["px", "%", "em"].map((b) => (
+											<Button
+												isLarge
+												isPrimary={
+													currentCorner === "topleft"
+														? buttons[activeButtonIndex].topLeftRadiusUnit === b
+														: currentCorner === "topright"
+														? buttons[activeButtonIndex].topRightRadiusUnit ===
+														  b
+														: currentCorner === "bottomleft"
+														? buttons[activeButtonIndex]
+																.bottomLeftRadiusUnit === b
+														: buttons[activeButtonIndex]
+																.bottomRightRadiusUnit === b
+												}
+												aria-pressed={
+													currentCorner === "topleft"
+														? buttons[activeButtonIndex].topLeftRadiusUnit === b
+														: currentCorner === "topright"
+														? buttons[activeButtonIndex].topRightRadiusUnit ===
+														  b
+														: currentCorner === "bottomleft"
+														? buttons[activeButtonIndex]
+																.bottomLeftRadiusUnit === b
+														: buttons[activeButtonIndex]
+																.bottomRightRadiusUnit === b
+												}
+												onClick={() => {
+													switch (currentCorner) {
+														case "topleft":
+															setAttributes({
+																buttons: [
+																	...buttons.slice(0, activeButtonIndex),
+																	Object.assign(
+																		{},
+																		buttons[activeButtonIndex],
+																		{
+																			topLeftRadiusUnit: b,
+																		}
+																	),
+																	...buttons.slice(activeButtonIndex + 1),
+																],
+															});
+															break;
+														case "topright":
+															setAttributes({
+																buttons: [
+																	...buttons.slice(0, activeButtonIndex),
+																	Object.assign(
+																		{},
+																		buttons[activeButtonIndex],
+																		{
+																			topRightRadiusUnit: b,
+																		}
+																	),
+																	...buttons.slice(activeButtonIndex + 1),
+																],
+															});
+															break;
+														case "bottomleft":
+															setAttributes({
+																buttons: [
+																	...buttons.slice(0, activeButtonIndex),
+																	Object.assign(
+																		{},
+																		buttons[activeButtonIndex],
+																		{
+																			bottomLeftRadiusUnit: b,
+																		}
+																	),
+																	...buttons.slice(activeButtonIndex + 1),
+																],
+															});
+															break;
+														case "bottomright":
+															setAttributes({
+																buttons: [
+																	...buttons.slice(0, activeButtonIndex),
+																	Object.assign(
+																		{},
+																		buttons[activeButtonIndex],
+																		{
+																			bottomRightRadiusUnit: b,
+																		}
+																	),
+																	...buttons.slice(activeButtonIndex + 1),
+																],
+															});
+															break;
+														default:
+														case "all":
+															setAttributes({
+																buttons: [
+																	...buttons.slice(0, activeButtonIndex),
+																	Object.assign(
+																		{},
+																		buttons[activeButtonIndex],
+																		{
+																			buttonRadiusUnit: b,
+																			topLeftRadiusUnit: b,
+																			topRightRadiusUnit: b,
+																			bottomLeftRadiusUnit: b,
+																			bottomRightRadiusUnit: b,
+																		}
+																	),
+																	...buttons.slice(activeButtonIndex + 1),
+																],
+															});
+															break;
+													}
+												}}
+											>
+												{b}
+											</Button>
+										))}
+									</ButtonGroup>
+								</div>
+							</>
 						)}
-						<ToggleControl
-							label={__("Transparent", "ultimate-blocks")}
-							checked={buttons[activeButtonIndex].buttonIsTransparent}
-							onChange={() =>
-								setAttributes({
-									buttons: [
-										...buttons.slice(0, activeButtonIndex),
-										Object.assign({}, buttons[activeButtonIndex], {
-											buttonIsTransparent: !buttons[activeButtonIndex]
-												.buttonIsTransparent,
-										}),
-										...buttons.slice(activeButtonIndex + 1),
-									],
-								})
-							}
-						/>
 					</PanelBody>
 					<PanelBody title={__("Button Icon", "ultimate-blocks")}>
 						<div className="ub-button-grid">
@@ -1374,58 +1785,155 @@ export class EditorComponent extends Component {
 									}}
 								/>
 							</div>
-							<p>{__("Icon position", "ultimate-blocks")}</p>
-							<SelectControl
-								className="ub-button-grid-selector"
-								value={buttons[activeButtonIndex].iconPosition}
-								options={[
-									{
-										label: __("Left", "ultimate-blocks"),
-										value: "left",
-									},
-									{
-										label: __("Right", "ultimate-blocks"),
-										value: "right",
-									},
-								]}
-								onChange={(pos) =>
-									setAttributes({
-										buttons: [
-											...buttons.slice(0, activeButtonIndex),
-											Object.assign({}, buttons[activeButtonIndex], {
-												iconPosition: pos,
-											}),
-											...buttons.slice(activeButtonIndex + 1),
-										],
-									})
-								}
-							/>
 						</div>
-					</PanelBody>
-					<TabPanel
-						tabs={[
-							{
-								name: "buttoncolor",
-								title: __("Normal"),
-							},
-							{
-								name: "buttonhovercolor",
-								title: __("Hover"),
-							},
-						]}
-					>
-						{(tab) => (
-							<PanelColorSettings
-								title={__("Button Colors", "ultimate-blocks")}
-								initialOpen={true}
-								colorSettings={
-									tab.name === "buttoncolor"
-										? makeNormalColorPanels()
-										: makeHoverColorPanels()
-								}
-							/>
+						<RadioControl
+							className="ub-button-icon-position"
+							label={__("Icon position")}
+							selected={buttons[activeButtonIndex].iconPosition}
+							options={[
+								{
+									label: __("Left", "ultimate-blocks"),
+									value: "left",
+								},
+								{
+									label: __("Right", "ultimate-blocks"),
+									value: "right",
+								},
+							]}
+							onChange={(pos) =>
+								setAttributes({
+									buttons: [
+										...buttons.slice(0, activeButtonIndex),
+										Object.assign({}, buttons[activeButtonIndex], {
+											iconPosition: pos,
+										}),
+										...buttons.slice(activeButtonIndex + 1),
+									],
+								})
+							}
+						/>
+						{buttons[activeButtonIndex].chosenIcon !== "" && (
+							<>
+								<ToggleControl
+									label={__("Change icon size", "ultimate-blocks")}
+									checked={buttons[activeButtonIndex].iconSize > 0}
+									onChange={(isOn) => {
+										let newAttributes = { iconUnit: "px" };
+
+										if (isOn) {
+											newAttributes = Object.assign({}, newAttributes, {
+												iconSize:
+													presetIconSize[buttons[activeButtonIndex].size],
+											});
+										} else {
+											newAttributes = Object.assign({}, newAttributes, {
+												iconSize: 0,
+											});
+										}
+
+										setAttributes({
+											buttons: [
+												...buttons.slice(0, activeButtonIndex),
+												Object.assign(
+													{},
+													buttons[activeButtonIndex],
+													newAttributes
+												),
+												...buttons.slice(activeButtonIndex + 1),
+											],
+										});
+									}}
+								/>
+								{buttons[activeButtonIndex].iconSize > 0 && (
+									<div id="ub-button-radius-panel">
+										<RangeControl
+											label={__("Icon size")}
+											value={buttons[activeButtonIndex].iconSize}
+											step={
+												buttons[activeButtonIndex].iconUnit === "em" ? 0.1 : 1
+											}
+											onChange={(value) =>
+												setAttributes({
+													buttons: [
+														...buttons.slice(0, activeButtonIndex),
+														Object.assign({}, buttons[activeButtonIndex], {
+															iconSize: value,
+														}),
+														...buttons.slice(activeButtonIndex + 1),
+													],
+												})
+											}
+										/>
+										<ButtonGroup
+											aria-label={__("Button Size Unit", "ultimate-blocks")}
+										>
+											{["px", "em"].map((b) => (
+												<Button
+													isLarge
+													isPrimary={b === buttons[activeButtonIndex].iconUnit}
+													aria-pressed={
+														b === buttons[activeButtonIndex].iconUnit
+													}
+													onClick={() =>
+														setAttributes({
+															buttons: [
+																...buttons.slice(0, activeButtonIndex),
+																Object.assign({}, buttons[activeButtonIndex], {
+																	iconUnit: b,
+																}),
+																...buttons.slice(activeButtonIndex + 1),
+															],
+														})
+													}
+												>
+													{b}
+												</Button>
+											))}
+										</ButtonGroup>
+									</div>
+								)}
+							</>
 						)}
-					</TabPanel>
+					</PanelBody>
+					<PanelBody
+						title={__("Button Colors", "ultimate-blocks")}
+						initialOpen={true}
+					>
+						<ToggleControl
+							label={__("Transparent", "ultimate-blocks")}
+							checked={buttons[activeButtonIndex].buttonIsTransparent}
+							onChange={() =>
+								setAttributes({
+									buttons: [
+										...buttons.slice(0, activeButtonIndex),
+										Object.assign({}, buttons[activeButtonIndex], {
+											buttonIsTransparent:
+												!buttons[activeButtonIndex].buttonIsTransparent,
+										}),
+										...buttons.slice(activeButtonIndex + 1),
+									],
+								})
+							}
+						/>
+						<TabPanel
+							tabs={[
+								{
+									name: "buttoncolor",
+									title: __("Normal"),
+								},
+								{
+									name: "buttonhovercolor",
+									title: __("Hover"),
+								},
+							]}
+						>
+							{(tab) =>
+								tab.name === "buttoncolor"
+									? normalColorPanels
+									: hoverColorPanels
+							}
+						</TabPanel>
+					</PanelBody>
 				</InspectorControls>
 			),
 			<div className={`ub-buttons align-button-${align}`}>
@@ -1483,7 +1991,24 @@ export class EditorComponent extends Component {
 										? b.buttonColor
 										: b.buttonTextColor || "inherit",
 								borderRadius: b.buttonRounded
-									? `${b.buttonRadius || 60}${b.buttonRadiusUnit || "px"}`
+									? [
+											...new Set([
+												b.topLeftRadius,
+												b.topRightRadius,
+												b.bottomLeftRadius,
+												b.bottomRightRadius,
+											]),
+									  ].length === 1 &&
+									  [
+											...new Set([
+												b.topLeftRadiusUnit,
+												b.topRightRadiusUnit,
+												b.bottomLeftRadiusUnit,
+												b.bottomRightRadiusUnit,
+											]),
+									  ].length === 1
+										? `${b.buttonRadius || 10}${b.buttonRadiusUnit || "px"}`
+										: `${b.topLeftRadius}${b.topLeftRadiusUnit} ${b.topRightRadius}${b.topRightRadiusUnit} ${b.bottomRightRadius}${b.bottomRightRadiusUnit} ${b.bottomLeftRadius}${b.bottomLeftRadiusUnit}`
 									: "0",
 								borderStyle: b.buttonIsTransparent ? "solid" : "none",
 								borderColor: b.buttonIsTransparent
@@ -1511,7 +2036,8 @@ export class EditorComponent extends Component {
 										<div className="ub-button-icon-holder">
 											{generateIcon(
 												allIcons[`fa${dashesToCamelcase(b.chosenIcon)}`],
-												iconSize[b.size]
+												b.iconSize || presetIconSize[b.size],
+												b.iconUnit || "px"
 											)}
 										</div>
 									)}

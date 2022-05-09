@@ -52,6 +52,7 @@ class DataSubjectAuthenticator
      */
     public function identify()
     {
+        global $gdpr;
         // Do not attempt to identify logged in users
         if (is_user_logged_in()) {
             return;
@@ -59,7 +60,7 @@ class DataSubjectAuthenticator
 
         if (isset($_REQUEST['gdpr_key']) && isset($_REQUEST['email'])) { 
             $gdpr_email = sanitize_email($_REQUEST['email']);
-            $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+            $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
 			$privacyToolsPageUrl = apply_filters('privacy_tools_gdprf_page_url',$privacyToolsPageUrl);
 			
             if ($this->dataSubjectIdentificator->isKeyValid($gdpr_email, $_REQUEST['gdpr_key'])) {

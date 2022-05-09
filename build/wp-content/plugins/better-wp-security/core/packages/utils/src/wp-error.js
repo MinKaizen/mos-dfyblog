@@ -10,7 +10,7 @@ export default class WPError {
 	 *
 	 * @param {string} [code]
 	 * @param {string} [message]
-	 * @param {*} [data]
+	 * @param {*}      [data]
 	 */
 	constructor( code = undefined, message = undefined, data = undefined ) {
 		if ( ! code ) {

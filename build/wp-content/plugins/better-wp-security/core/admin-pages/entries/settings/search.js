@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { reduce } from 'lodash';
-
-/**
  * WordPress dependencies
  */
 import { useDispatch } from '@wordpress/data';
@@ -14,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useSingletonEffect } from '@ithemes/security-hocs';
 import { STORE_NAME } from '@ithemes/security-search';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { TOOLS_STORE_NAME } from './stores';
 
 export default function useSearchProviders() {
@@ -171,6 +166,10 @@ export default function useSearchProviders() {
 function getModuleRoute( module ) {
 	if ( module.type === 'custom' || module.type === 'tool' ) {
 		return;
+	}
+
+	if ( module.id === 'password-requirements' ) {
+		return '/settings/user-groups?module=password-requirements';
 	}
 
 	const featureLink = `/settings/modules/${ module.type }#${ module.id }`;

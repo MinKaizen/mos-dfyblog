@@ -35,14 +35,8 @@ class DataSubjectManager
         $email = sanitize_email($email);
         $user = get_user_by('email', $email);
 
-        return gdpr()->makeWith(
-            DataSubject::class,
-            [
-                'email'          => $email,
-                'user'           => $user ? $user : null,
-                'consentManager' => $this->consentManager,
-            ]
-        );
+        $dataSubject = new DataSubject($email, $user?$user:null, $this->consentManager);
+        return $dataSubject;
     }
 
      /**
@@ -68,14 +62,9 @@ class DataSubjectManager
             return false;
         }
 
-        return gdpr()->makeWith(
-            DataSubject::class,
-            [
-                'email'          => sanitize_email($user->user_email),
-                'user'           => $user,
-                'consentManager' => $this->consentManager,
-            ]
-        );
+        $email = sanitize_email($user->user_email);
+        $dataSubject = new DataSubject($email, $user, $this->consentManager);
+        return $dataSubject;
     }
 
     /**

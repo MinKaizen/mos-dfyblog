@@ -169,7 +169,8 @@ class InstallerRouter
 	 */
 	protected function setCurrentStep($slug)
 	{
-		gdpr('options')->set('installer_step', $slug);
+		global $gdpr;
+		$gdpr->Options->set('installer_step', $slug);
 	}
 
 	/**

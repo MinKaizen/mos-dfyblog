@@ -6,20 +6,29 @@ import { createLocation } from 'history';
 import { pickBy, get, set } from 'lodash';
 import Ajv from 'ajv';
 import classnames from 'classnames';
+import { JsonPointer } from 'json-ptr';
 
 /**
  * WordPress dependencies
  */
-import { createContext, useContext } from '@wordpress/element';
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+} from '@wordpress/element';
 import { useDispatch, useSelect, useRegistry } from '@wordpress/data';
 import { applyFilters } from '@wordpress/hooks';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { WPError } from '@ithemes/security-utils';
-import { CORE_STORE_NAME, MODULES_STORE_NAME } from '@ithemes/security-data';
+import {
+	CORE_STORE_NAME,
+	MODULES_STORE_NAME,
+} from '@ithemes/security.packages.data';
 
 export const ConfigContext = createContext( {
 	serverType: '',
@@ -34,8 +43,10 @@ export function useConfigContext() {
 export function useNavigateTo() {
 	const history = useHistory();
 
-	return ( route, mode = 'push' ) =>
-		history[ mode ]( createLocation( route ) );
+	return useCallback(
+		( route, mode = 'push' ) => history[ mode ]( createLocation( route ) ),
+		[ history ]
+	);
 }
 
 /**
@@ -57,7 +68,7 @@ export function useChildPath() {
 /**
  * Grabs a global instance of Ajv.
  *
- * @return {Ajv} The ajv instance.
+ * @return {Ajv.Ajv} The ajv instance.
  */
 export function getAjv() {
 	if ( ! getAjv.instance ) {
@@ -65,6 +76,14 @@ export function getAjv() {
 		getAjv.instance.addMetaSchema(
 			require( 'ajv/lib/refs/json-schema-draft-04.json' )
 		);
+		getAjv.instance.addFormat( 'html', {
+			type: 'string',
+			validate() {
+				// Validating HTML isn't something we can realistically do.
+				// We accept everything and can then kses it on the server.
+				return true;
+			},
+		} );
 	}
 
 	return getAjv.instance;
@@ -81,7 +100,7 @@ const isConditionalSettingActive = ( definition, module, context ) => {
 
 	if (
 		definition[ 'server-type' ] &&
-		definition[ 'server-type' ] !== serverType
+		! definition[ 'server-type' ].includes( serverType )
 	) {
 		return false;
 	}
@@ -124,10 +143,10 @@ const isConditionalSettingActive = ( definition, module, context ) => {
 	 * This hook can only be used to turn a conditional setting inactive,
 	 * if it is inactive due to other conditional rules, this filter won't run.
 	 *
-	 * @param {boolean} isActive Whether the setting is active.
-	 * @param {Object} module The module definition.
-	 * @param {Object} definition The conditional setting definition.
-	 * @param {Object} context Context used to determine whether the setting is active.
+	 * @param {boolean} isActive   Whether the setting is active.
+	 * @param {Object}  module     The module definition.
+	 * @param {Object}  definition The conditional setting definition.
+	 * @param {Object}  context    Context used to determine whether the setting is active.
 	 */
 	return applyFilters(
 		'ithemes-security.settings.isConditionalSettingActive',
@@ -141,14 +160,14 @@ const isConditionalSettingActive = ( definition, module, context ) => {
 /**
  * Makes a settings schema conditional based on the module definition.
  *
- * @param {Object} module The module definition.
- * @param {Object} context The context used to evaluate the conditional settings.
- * @param {string} context.serverType The web server type.
- * @param {string} context.installType The ITSEC installation type.
+ * @param {Object}        module                The module definition.
+ * @param {Object}        context               The context used to evaluate the conditional settings.
+ * @param {string}        context.serverType    The web server type.
+ * @param {string}        context.installType   The ITSEC installation type.
  * @param {Array<string>} context.activeModules The list of active modules.
- * @param {Array<string>} context.featureFlags The list of feature flags.
- * @param {Object} context.settings The module's setting value.
- * @param {Object} context.registry The @wordpress/data registry.
+ * @param {Array<string>} context.featureFlags  The list of feature flags.
+ * @param {Object}        context.settings      The module's setting value.
+ * @param {Object}        context.registry      The @wordpress/data registry.
  *
  * @return {Object} The settings schema.
  */
@@ -215,10 +234,13 @@ export function makeConditionalSettingsSchema( module, context ) {
 export function useConditionalSchema( module, settings ) {
 	const { serverType, installType } = useConfigContext();
 	const registry = useRegistry();
-	const { activeModules, featureFlags } = useSelect( ( select ) => ( {
-		activeModules: select( MODULES_STORE_NAME ).getActiveModules(),
-		featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
-	} ) );
+	const { activeModules, featureFlags } = useSelect(
+		( select ) => ( {
+			activeModules: select( MODULES_STORE_NAME ).getActiveModules(),
+			featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
+		} ),
+		[]
+	);
 	const context = {
 		serverType,
 		installType,
@@ -228,19 +250,25 @@ export function useConditionalSchema( module, settings ) {
 		featureFlags,
 	};
 
+	if ( ! module ) {
+		return null;
+	}
+
 	return makeConditionalSettingsSchema( module, context );
 }
 
 /**
  * A hook to allow for convenient editing of module settings.
  *
- * @param {Object} module The module definition.
+ * @param {Object}                            module         The module definition.
  * @param {function(Object, string): boolean} [filterFields] An optional function to filter the included settings.
  * @return {{schema: Object, uiSchema: Object, setFormData: Function, formData: Object}} The settings form components.
  */
 export function useSettingsForm( module, filterFields ) {
-	const formData = useSelect( ( select ) =>
-		select( MODULES_STORE_NAME ).getEditedSettings( module.id )
+	const formData = useSelect(
+		( select ) =>
+			select( MODULES_STORE_NAME ).getEditedSettings( module.id ),
+		[ module.id ]
 	);
 	const { editSettings } = useDispatch( MODULES_STORE_NAME );
 	const conditionalSchema = useConditionalSchema( module, formData );
@@ -262,6 +290,68 @@ export function useSettingsForm( module, filterFields ) {
 		formData,
 		setFormData,
 	};
+}
+
+export function useModuleSchemaValidator( moduleId ) {
+	const ajv = getAjv();
+	const { module, settings } = useSelect(
+		( select ) => ( {
+			module: select( MODULES_STORE_NAME ).getModule( moduleId ),
+			settings: select( MODULES_STORE_NAME ).getEditedSettings(
+				moduleId
+			),
+		} ),
+		[ moduleId ]
+	);
+	const conditionalSchema = useConditionalSchema( module, settings );
+	const noOpTrue = useCallback( () => true );
+
+	const compiled = useMemo( () => {
+		if ( ! conditionalSchema ) {
+			return noOpTrue;
+		}
+
+		return ajv.compile( conditionalSchema );
+	}, [ conditionalSchema ] );
+
+	return useCallback( () => {
+		if ( compiled( settings ) ) {
+			return true;
+		}
+
+		return {
+			errors: compiled.errors,
+			errorText: convertSchemaErrorToText(
+				compiled.errors,
+				moduleId,
+				conditionalSchema
+			),
+		};
+	}, [ compiled, settings ] );
+}
+
+function convertSchemaErrorToText( errors, moduleId, schema ) {
+	const text = [];
+
+	for ( const { message, schemaPath, dataPath } of errors ) {
+		let ptr = JsonPointer.create( schemaPath );
+		let parent = ptr.parent( schema );
+
+		while ( parent && ! parent.title ) {
+			ptr = JsonPointer.create(
+				ptr.path.slice( 0, ptr.path.length - 1 )
+			);
+			parent = ptr.parent( schema );
+		}
+
+		if ( parent?.title ) {
+			text.push( `${ parent.title } ${ message }.` );
+		} else {
+			text.push( `${ moduleId }${ dataPath } ${ message }.` );
+		}
+	}
+
+	return text;
 }
 
 /**
@@ -294,32 +384,59 @@ export function getModuleTypes() {
 	];
 }
 
-/**
- * Checks if a module's requirements are met.
- *
- * @param {Object} module The module definition.
- * @param {string} mode The mode to check for. Either 'activate' or 'run'.
- * @return {WPError} An empty error object if all requirements are met.
- */
-export function validateModuleRequirements( module, mode ) {
-	const error = new WPError();
+export function useModuleRequirementsValidator() {
+	const { featureFlags } = useSelect(
+		( select ) => ( {
+			featureFlags: select( CORE_STORE_NAME ).getFeatureFlags(),
+		} ),
+		[]
+	);
 
-	if ( ! module.requirements ) {
-		return error;
-	}
+	return useCallback(
+		( module, mode ) => {
+			const error = new WPError();
 
-	const isForMode = ( requirement ) =>
-		requirement.validate === mode || mode === 'activate';
+			if ( ! module.requirements ) {
+				return error;
+			}
 
-	if (
-		module.requirements.ssl &&
-		isForMode( module.requirements.ssl ) &&
-		document.location.protocol !== 'https:'
-	) {
-		error.add( 'ssl', __( 'Your site must support SSL.', 'better-wp-security' ) );
-	}
+			const isForMode = ( requirement ) =>
+				requirement.validate === mode || mode === 'activate';
 
-	return error;
+			if (
+				module.requirements.ssl &&
+				isForMode( module.requirements.ssl ) &&
+				document.location.protocol !== 'https:'
+			) {
+				error.add( 'ssl', __( 'Your site must support SSL.', 'better-wp-security' ) );
+			}
+
+			if (
+				module.requirements[ 'feature-flags' ] &&
+				isForMode( module.requirements[ 'feature-flags' ] )
+			) {
+				for ( const flag of module.requirements[ 'feature-flags' ]
+					.flags ) {
+					if ( ! featureFlags.includes( flag ) ) {
+						error.add(
+							'feature-flags',
+							sprintf(
+								/* translators: The name of the feature. */
+								__(
+									"The '%s' feature flag must be enabled.",
+									'better-wp-security'
+								),
+								flag
+							)
+						);
+					}
+				}
+			}
+
+			return error;
+		},
+		[ featureFlags ]
+	);
 }
 
 /**
@@ -327,9 +444,9 @@ export function validateModuleRequirements( module, mode ) {
  *
  * This method mutates the object.
  *
- * @param {Object} object The object to modify.
- * @param {Array<string>} path The path at which to append it.
- * @param {string} className The class to append.
+ * @param {Object}        object    The object to modify.
+ * @param {Array<string>} path      The path at which to append it.
+ * @param {string}        className The class to append.
  * @return {Object} The object.
  */
 export function appendClassNameAtPath( object, path, className ) {

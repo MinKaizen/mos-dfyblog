@@ -4,7 +4,7 @@ function DynamicPublicPathPlugin( propertyName ) {
 	this.propertyName = propertyName;
 }
 
-DynamicPublicPathPlugin.prototype.apply = function ( compiler ) {
+DynamicPublicPathPlugin.prototype.apply = function( compiler ) {
 	compiler.hooks.thisCompilation.tap(
 		'dynamic-public-path',
 		( compilation ) => {
@@ -12,7 +12,7 @@ DynamicPublicPathPlugin.prototype.apply = function ( compiler ) {
 				'dynamic-public-path',
 				( loaderContext ) => {
 					const entryFiles = [];
-					Object.values( compiler.options.entry ).forEach( function (
+					Object.values( compiler.options.entry ).forEach( function(
 						entry
 					) {
 						entryFiles.push(

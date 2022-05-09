@@ -23,7 +23,7 @@ import { controls } from '@wordpress/data';
  */
 import { castWPError } from '@ithemes/security-utils';
 import { ONBOARD_STORE_NAME } from '@ithemes/security.pages.settings';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { createNotice } from './controls';
 
 export function* editGroup( id, edit ) {
@@ -116,6 +116,10 @@ export function* saveGroups( groups = true ) {
 		'ithemes-security/user-groups-editor',
 		'getLocalGroupIds'
 	);
+	const markedForDeletion = yield controls.select(
+		'ithemes-security/user-groups-editor',
+		'getGroupsMarkedForDeletion'
+	);
 
 	if ( groups === true ) {
 		groups = [
@@ -125,6 +129,7 @@ export function* saveGroups( groups = true ) {
 					'getDirtyGroups'
 				) ),
 				...localGroups,
+				...markedForDeletion,
 			] ),
 		];
 	} else if ( isString( groups ) ) {
@@ -137,6 +142,7 @@ export function* saveGroups( groups = true ) {
 
 	const update = [];
 	const create = [];
+	const toDelete = [];
 
 	for ( const group of groups ) {
 		const edits = yield controls.select(
@@ -145,7 +151,9 @@ export function* saveGroups( groups = true ) {
 			group
 		);
 
-		if ( localGroups.includes( group ) ) {
+		if ( markedForDeletion.includes( group ) ) {
+			toDelete.push( group );
+		} else if ( localGroups.includes( group ) ) {
 			create.push( { ...edits, id: group } );
 		} else {
 			update.push( {
@@ -158,7 +166,7 @@ export function* saveGroups( groups = true ) {
 	const saved = yield controls.dispatch(
 		'ithemes-security/user-groups',
 		'saveGroups',
-		{ create, update }
+		{ create, update, delete: toDelete }
 	);
 
 	if ( saved instanceof Error ) {
@@ -198,6 +206,13 @@ export function resetEdits( id ) {
 export function resetAllEdits() {
 	return {
 		type: RESET_ALL_EDITS,
+	};
+}
+
+export function markGroupForDeletion( id ) {
+	return {
+		type: MARK_GROUP_FOR_DELETION,
+		id,
 	};
 }
 
@@ -259,7 +274,7 @@ export function* editGroupSetting( id, module, setting, value ) {
 
 	if ( isEqual( current, value ) ) {
 		yield { type: RESET_GROUP_SETTING, id, module, setting };
-	} else
+	} else {
 		yield {
 			type: EDIT_GROUP_SETTING,
 			id,
@@ -267,6 +282,7 @@ export function* editGroupSetting( id, module, setting, value ) {
 			setting,
 			value,
 		};
+	}
 }
 
 export function* saveGroupSettings( id ) {
@@ -658,6 +674,8 @@ export const RESET_ALL_EDITS = 'RESET_ALL_EDITS';
 export const CREATE_LOCAL_GROUP = 'CREATE_LOCAL_GROUP';
 export const DELETE_LOCAL_GROUP = 'DELETE_LOCAL_GROUP';
 export const DELETE_LOCAL_GROUPS = 'DELETE_LOCAL_GROUPS';
+
+export const MARK_GROUP_FOR_DELETION = 'MARK_GROUP_FOR_DELETION';
 
 export const START_SAVE_GROUP = 'START_SAVE_GROUP';
 export const FINISH_SAVE_GROUP = 'FINISH_SAVE_GROUP';

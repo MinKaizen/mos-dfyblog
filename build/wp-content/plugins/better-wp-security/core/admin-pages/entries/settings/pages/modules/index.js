@@ -41,7 +41,7 @@ import {
 	Markup,
 } from '@ithemes/security-components';
 import { withNavigate } from '@ithemes/security-hocs';
-import { MODULES_STORE_NAME } from '@ithemes/security-data';
+import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import {
 	Breadcrumbs,
 	HelpFill,
@@ -50,7 +50,7 @@ import {
 } from '../../components';
 import { useNavigation, ChildPages } from '../../page-registration';
 import {
-	validateModuleRequirements,
+	useModuleRequirementsValidator,
 	getModuleTypes,
 	useNavigateTo,
 } from '../../utils';
@@ -59,8 +59,13 @@ import './style.scss';
 export default function Modules() {
 	const { url, path } = useRouteMatch();
 	const { root } = useParams();
-	const modules = useSelect( ( select ) =>
-		select( MODULES_STORE_NAME ).getEditedModules()
+	const validateModuleRequirements = useModuleRequirementsValidator();
+	const { modules, dirty } = useSelect(
+		( select ) => ( {
+			modules: select( MODULES_STORE_NAME ).getEditedModules(),
+			dirty: select( MODULES_STORE_NAME ).getDirtyModules(),
+		} ),
+		[]
 	);
 	const tabs = getModuleTypes()
 		.map( ( { slug, label } ) => ( {
@@ -71,7 +76,9 @@ export default function Modules() {
 					( module ) =>
 						module.type === slug &&
 						module.status.default !== 'always-active' &&
-						( root !== 'onboard' || module.onboard ) &&
+						( root === 'settings' ||
+							module.onboard ||
+							( root === 'import' && dirty.includes( slug ) ) ) &&
 						( module.status.selected === 'active' ||
 							! validateModuleRequirements(
 								module,
@@ -84,7 +91,7 @@ export default function Modules() {
 		.filter(
 			( tab ) =>
 				tab.modules.length > 0 &&
-				( root !== 'onboard' || tab.name !== 'advanced' )
+				( root === 'settings' || tab.name !== 'advanced' )
 		);
 	const help = __(
 		'Features is the home base of iThemes Security. Enabling a security feature will unlock the related User Group, Configure, and Notification settings. Disabling a security feature will hide the related options throughout the plugin.',
@@ -113,7 +120,7 @@ export default function Modules() {
 							help={ help }
 						/>
 						<ModuleTabPanel base={ url } tabs={ tabs } />
-						{ root === 'onboard' && <Navigation /> }
+						{ root !== 'settings' && <Navigation /> }
 						<HelpPage help={ help } />
 					</Route>
 					<Redirect to={ `${ url }/${ tabs[ 0 ].name }` } />
@@ -174,7 +181,7 @@ function ModuleTab( { modules } ) {
 function ModuleGrid( { modules } ) {
 	const { root } = useParams();
 	const statusToggle =
-		root === 'onboard' ? StatusToggleOnboard : StatusToggleSettings;
+		root === 'settings' ? StatusToggleSettings : StatusToggleOnboard;
 
 	return (
 		<div className="itsec-modules">
@@ -201,7 +208,7 @@ function Module( { module, statusToggle: StatusToggle } ) {
 	const apiError = useSelect( ( select ) =>
 		select( MODULES_STORE_NAME ).getError( module.id )
 	);
-	const validRequirements = validateModuleRequirements( module, 'run' );
+	const validRequirements = useModuleRequirementsValidator()( module, 'run' );
 
 	return (
 		<Card
@@ -212,36 +219,36 @@ function Module( { module, statusToggle: StatusToggle } ) {
 		>
 			<CardBody className="itsec-module__body">
 				<h3>{ module.title }</h3>
-				{ root !== 'onboard' &&
+				{ root === 'settings' &&
 					module.status.selected === 'active' &&
 					! validRequirements.hasErrors() && (
-						<>
-							{ module.settings?.interactive.length > 0 && (
-								<Tooltip text={ __( 'Edit Settings', 'better-wp-security' ) }>
-									<Link
-										className="itsec-module__settings"
-										to={ `/settings/configure/${ module.type }/${ module.id }` }
-									>
-										<VisuallyHidden>
-											{ __( 'Edit Settings', 'better-wp-security' ) }
-										</VisuallyHidden>
-									</Link>
-								</Tooltip>
-							) }
-							{ ! isEmpty( module.user_groups ) && (
+					<>
+						{ module.settings?.interactive.length > 0 && (
+							<Tooltip text={ __( 'Edit Settings', 'better-wp-security' ) }>
 								<Link
-									className="itsec-module__user-groups"
-									to={ `/settings/user-groups?module=${ module.id }` }
+									className="itsec-module__settings"
+									to={ `/settings/configure/${ module.type }/${ module.id }` }
 								>
-									{ sprintf(
-										/* translators: 1. The number of user groups. */
-										__( 'User Groups (%d)', 'better-wp-security' ),
-										size( module.user_groups )
-									) }
+									<VisuallyHidden>
+										{ __( 'Edit Settings', 'better-wp-security' ) }
+									</VisuallyHidden>
 								</Link>
-							) }
-						</>
-					) }
+							</Tooltip>
+						) }
+						{ ! isEmpty( module.user_groups ) && (
+							<Link
+								className="itsec-module__user-groups"
+								to={ `/settings/user-groups?module=${ module.id }` }
+							>
+								{ sprintf(
+									/* translators: 1. The number of user groups. */
+									__( 'User Groups (%d)', 'better-wp-security' ),
+									size( module.user_groups )
+								) }
+							</Link>
+						) }
+					</>
+				) }
 				<Markup
 					content={ module.description }
 					tagName="p"

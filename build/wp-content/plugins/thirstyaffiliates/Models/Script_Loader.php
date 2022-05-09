@@ -110,7 +110,7 @@ class Script_Loader implements Model_Interface {
      * @since 3.4.0 Moved the code to load scripts for the wp editor to its own function.
      * @access public
      *
-     * @global WP_Post $post WP_Post object of the current screen.
+     * @global \WP_Post $post WP_Post object of the current screen.
      *
      * @param string $handle Unique identifier of the current backend page.
      */
@@ -122,15 +122,7 @@ class Script_Loader implements Model_Interface {
 
         $post_type = get_post_type();
         if ( !$post_type && isset( $_GET[ 'post_type' ] ) )
-            $post_type = $_GET[ 'post_type' ];
-
-        $review_request_response = get_option( Plugin_Constants::REVIEW_REQUEST_RESPONSE );
-
-        // Show review request popup
-        if ( is_admin() && current_user_can( 'manage_options' ) && $post_type === Plugin_Constants::AFFILIATE_LINKS_CPT && get_option( Plugin_Constants::SHOW_REQUEST_REVIEW ) === 'yes' && ( $review_request_response === 'review-later' || empty( $review_request_response ) ) ) {
-
-            wp_enqueue_script( 'review-request' , $this->_constants->JS_ROOT_URL() . 'app/ta-review-request.js' , array( 'jquery' ) , Plugin_Constants::VERSION , true );
-        }
+            $post_type = sanitize_text_field( wp_unslash( $_GET[ 'post_type' ] ) );
 
         // Link picker styles and scripts.
         if ( is_admin() && current_user_can( 'edit_posts' ) && ! in_array( $screen->base , array( 'customize' ) ) ) {
@@ -165,7 +157,8 @@ class Script_Loader implements Model_Interface {
                 wp_localize_script( 'ta_import_export_js' , 'import_export_var' , array(
                     'please_input_settings_string' => __( 'Please input settings string' , 'thirstyaffiliates' ),
                     'settings_string_copied'       => __( 'Settings string copied' , 'thirstyaffiliates' ),
-                    'failed_copy_settings_string'  => __( 'Failed to copy settings string' , 'thirstyaffiliates' )
+                    'failed_copy_settings_string'  => __( 'Failed to copy settings string' , 'thirstyaffiliates' ),
+                    'import_settings_nonce' => wp_create_nonce( 'ta_import_settings' ),
                 ) );
 
             } elseif ( isset( $_GET[ 'tab' ] ) && $_GET[ 'tab' ] === 'ta_help_settings' ) {
@@ -177,7 +170,8 @@ class Script_Loader implements Model_Interface {
                 wp_enqueue_script( 'ta_migration_js' , $this->_constants->JS_ROOT_URL() . 'app/migration/dist/migration.js' , array() , true );
                 wp_localize_script( 'ta_migration_js' , 'migration_var' , array(
                     'i18n_migration_failed' => __( 'Failed to do data migration' , 'thirstyaffiliates' ),
-                    'i18n_confirm_migration' => __( 'Are you sure you want to migrate your ThirstyAffiliates data to version 3 format?' , 'thirstyaffiliates' )
+                    'i18n_confirm_migration' => __( 'Are you sure you want to migrate your ThirstyAffiliates data to version 3 format?' , 'thirstyaffiliates' ),
+                    'migration_nonce' => wp_create_nonce( 'ta_migrate_old_plugin_data' )
                 ) );
 
             }
@@ -196,9 +190,17 @@ class Script_Loader implements Model_Interface {
             wp_enqueue_script( 'jquery_tiptip' , $this->_constants->JS_ROOT_URL() . 'lib/jquery-tiptip/jquery.tipTip.min.js' , array() , Plugin_Constants::VERSION , true );
             wp_enqueue_script( 'ta_affiliate-link-page_js' , $this->_constants->JS_ROOT_URL() . 'app/affiliate_link_page/dist/affiliate-link-page.js' , array() , Plugin_Constants::VERSION , true );
 
+            wp_localize_script( 'ta_affiliate-link-page_js', 'ta_affiliate_link_page_params', array(
+                'insert_external_image_nonce' => wp_create_nonce( 'ta_insert_external_image' ),
+                'add_attachments_nonce' => wp_create_nonce( 'ta_add_attachments_to_affiliate_link' ),
+                'remove_attachments_nonce' => wp_create_nonce( 'ta_remove_attachments_from_affiliate_link' ),
+                'get_category_slug_nonce' => wp_create_nonce( 'ta_get_category_slug' ),
+                'link_inserted_scanner_nonce' => wp_create_nonce( 'ta_link_inserted_scanner' ),
+            ) );
+
         } elseif ( $screen->id == 'thirstylink_page_thirsty-reports' ) {
 
-            wp_enqueue_style( 'jquery-ui-styles' , '//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css' , array() , '1.11.4', 'all' );
+            wp_enqueue_style( 'jquery-ui-styles' , $this->_constants->CSS_ROOT_URL() . 'lib/jquery-ui/jquery-ui.min.css' , array() , '1.11.4', 'all' );
             wp_enqueue_style( 'ta_reports_css' , $this->_constants->CSS_ROOT_URL() . 'admin/ta-reports.css' , array( 'jquery-ui-styles' ) , Plugin_Constants::VERSION , 'all' );
 
             wp_enqueue_script( 'jquery-ui-core' );
@@ -346,20 +348,25 @@ class Script_Loader implements Model_Interface {
             return;
         }
 
+        $thirstyaff_notifications = ThirstyAffiliates()->get_model( 'Notifications' );
+        $notifications_count = $thirstyaff_notifications->get_count();
+
         printf(
             '<div id="caseproof-flyout">
                 <div id="caseproof-flyout-items">
                     %1$s
                 </div>
-                <a href="#" class="caseproof-flyout-button caseproof-flyout-head">
+                <a href="#" id="caseproofFlyoutButton" class="caseproof-flyout-button caseproof-flyout-head">
+                    %5$s
                     <div class="caseproof-flyout-label">%2$s</div>
                     <img src="%3$s" alt="%2$s" data-active="%4$s" />
                 </a>
             </div>',
-            $this->get_items_html(),
+            $this->get_items_html(), // phpcs:ignore WordPress.Security.EscapeOutput
             esc_attr__( 'See Quick Links', 'thirstyaffiliates' ),
             esc_url( $this->_constants->IMAGES_ROOT_URL() . 'admin-flyout.svg' ),
-            esc_url( $this->_constants->IMAGES_ROOT_URL() . 'admin-flyout.svg' )
+            esc_url( $this->_constants->IMAGES_ROOT_URL() . 'admin-flyout.svg' ),
+            $notifications_count > 0 ? '<span id="thirstyaffAdminNotificationsBadge" class="thirstyaff-notifications-count">' . esc_html( $notifications_count ) . '</span>' : ''
         );
     }
 
@@ -376,18 +383,19 @@ class Script_Loader implements Model_Interface {
         $items_html = '';
 
         foreach ( $items as $item_key => $item ) {
-            $items_html .= sprintf(
-                '<a href="%1$s" target="_blank" rel="noopener noreferrer" class="caseproof-flyout-button caseproof-flyout-item caseproof-flyout-item-%2$d"%5$s%6$s>
-                    <div class="caseproof-flyout-label">%3$s</div>
-                    %4$s
-                </a>',
-                esc_url( $item['url'] ),
-                (int) $item_key,
-                esc_html( $item['title'] ),
-                $item['icon'],
-                ! empty( $item['bgcolor'] ) ? ' style="background-color: ' . esc_attr( $item['bgcolor'] ) . '"' : '',
-                ! empty( $item['hover_bgcolor'] ) ? ' onMouseOver="this.style.backgroundColor=\'' . esc_attr( $item['hover_bgcolor'] ) . '\'" onMouseOut="this.style.backgroundColor=\'' . esc_attr( $item['bgcolor'] ) . '\'"' : ''
-            );
+          $items_html .= sprintf(
+            '<a id="%1$s" href="%2$s" target="_blank" rel="noopener noreferrer" class="caseproof-flyout-button caseproof-flyout-item caseproof-flyout-item-%3$d"%6$s%7$s>
+              <div class="caseproof-flyout-label">%4$s</div>
+              %5$s
+            </a>',
+            ! empty( $item['id'] ) ? esc_attr( $item['id'] ) : '',
+            esc_url( $item['url'] ),
+            (int) $item_key,
+            wp_kses_post( $item['title'] ),
+            $item['icon'],
+            ! empty( $item['bgcolor'] ) ? ' style="background-color: ' . esc_attr( $item['bgcolor'] ) . '"' : '',
+            ! empty( $item['hover_bgcolor'] ) ? ' onMouseOver="this.style.backgroundColor=\'' . esc_attr( $item['hover_bgcolor'] ) . '\'" onMouseOut="this.style.backgroundColor=\'' . esc_attr( $item['bgcolor'] ) . '\'"' : ''
+          );
         }
 
         return $items_html;
@@ -399,6 +407,10 @@ class Script_Loader implements Model_Interface {
      * @since 1.5.7
      */
     private function menu_items() {
+
+        $thirstyaff_notifications = ThirstyAffiliates()->get_model( 'Notifications' );
+        $notifications_count = $thirstyaff_notifications->get_count();
+        $notifications_count_text = $notifications_count > 0 ? sprintf( '(%s)', $notifications_count ) : '';
 
         $items = array(
             array(
@@ -422,6 +434,14 @@ class Script_Loader implements Model_Interface {
                 'bgcolor' => '#008871',
                 'hover_bgcolor' => '#38AD9C',
             ),
+            array(
+              'id' => 'thirstyaffAdminNotifications',
+              'title' => esc_html__( 'Notifications ', 'thirstyaffiliates' ) . '<span id="thirstyaffNotificationsCount"> ' . $notifications_count_text . ' </span>',
+              'url'   => '#',
+              'icon'  => '<svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.6944 6.5625C21.8981 6.85417 22 7.18229 22 7.54687V12.25C22 12.7361 21.8218 13.1493 21.4653 13.4896C21.1088 13.8299 20.6759 14 20.1667 14H1.83333C1.32407 14 0.891204 13.8299 0.534722 13.4896C0.178241 13.1493 0 12.7361 0 12.25V7.54687C0 7.18229 0.101852 6.85417 0.305556 6.5625L4.35417 0.765625C4.45602 0.644097 4.58333 0.522569 4.73611 0.401042C4.91435 0.279514 5.10532 0.182292 5.30903 0.109375C5.51273 0.0364583 5.7037 0 5.88194 0H16.1181C16.3981 0 16.6782 0.0850694 16.9583 0.255208C17.2639 0.401042 17.4931 0.571181 17.6458 0.765625L21.6944 6.5625ZM6.1875 2.33333L2.94097 7H7.63889L8.86111 9.33333H13.1389L14.3611 7H19.059L15.8125 2.33333H6.1875Z" fill="#ffffff"></path></svg>',
+              'bgcolor' => '#008871',
+              'hover_bgcolor' => '#38AD9C'
+            )
         );
 
         return $items;

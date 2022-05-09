@@ -1,6 +1,7 @@
 <?php
 
 namespace Codelight\GDPR\Components\AdvancedIntegration;
+
 /**
  * Handles putting together and rendering the privacy policy page
  *
@@ -17,7 +18,7 @@ class AdvancedIntegration
 
     public function registerAdminTab($tabs)
     {    
-        $tabs['advanced-integration'] = gdpr()->make(AdminTabAdvancedIntegration::class);
+        $tabs['advanced-integration'] = new AdminTabAdvancedIntegration();
         return $tabs;
     }
 }

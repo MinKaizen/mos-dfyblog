@@ -7,70 +7,66 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The GDPR Framework 1.0\n"
 "Report-Msgid-Bugs-To: gdpr@codelight.eu\n"
-"POT-Creation-Date: 2021-10-28 11:20-0400\n"
-"PO-Revision-Date: 2021-10-28 11:58-0400\n"
+"POT-Creation-Date: 2022-04-18 11:06-0400\n"
+"PO-Revision-Date: 2022-04-18 11:34-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: gdpr-framework.php:110
+#: gdpr-framework.php:111
+msgid "First Name"
+msgstr "Imię"
+
+#: gdpr-framework.php:112
+msgid "Last Name"
+msgstr "Nazwisko"
+
+#: gdpr-framework.php:113
+msgid "Email"
+msgstr "Email"
+
+#: gdpr-framework.php:140
 #, fuzzy
 msgctxt "(Admin)"
 msgid "WordPress GDPR &rsaquo; Error"
 msgstr "WordPress RODO › Błąd"
 
-#: gdpr-framework.php:121
+#: gdpr-framework.php:151
 #, fuzzy
 msgctxt "(Admin)"
 msgid "You must be using PHP 5.6.0 or greater."
 msgstr "Musisz używać PHP 5.6.0 lub nowszego."
 
-#: gdpr-framework.php:122
+#: gdpr-framework.php:152
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Invalid PHP version"
 msgstr "Nieprawidłowa wersja PHP"
 
-#: gdpr-framework.php:132
+#: gdpr-framework.php:162
 #, fuzzy
 msgctxt "(Admin)"
 msgid "You must be using WordPress 4.3.0 or greater."
 msgstr "Musisz używać WordPress 4.3.0 lub nowszego."
 
-#: gdpr-framework.php:133
+#: gdpr-framework.php:163
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Invalid WordPress version"
 msgstr "Nieprawidłowa wersja WordPress"
 
-#: gdpr-framework.php:204
+#: gdpr-framework.php:236
 msgctxt "(Admin)"
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: gdpr-helper-functions.php:75
-#, fuzzy
-msgctxt "(Admin)"
-msgid ""
-"You appear to be running a development version of GDPR. You must run "
-"<code>composer install</code> from the plugin directory."
-msgstr ""
-"Wygląda na to, że korzystasz z rozwojowej wersji RODO. Musisz uruchomić "
-"<code>composer install</code> z katalogu wtyczek."
-
-#: gdpr-helper-functions.php:80
-#, fuzzy
-msgctxt "(Admin)"
-msgid "Autoloader not found."
-msgstr "Nie znaleziono automatycznego ładowania."
-
-#: gdpr-helper-functions.php:126
+#: gdpr-helper-functions.php:195
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website."
@@ -78,37 +74,37 @@ msgstr ""
 "Ta strona używa plików cookies w celu zapewnienia Ci jak najlepszych wrażeń "
 "oraz funkcjonalności."
 
-#: gdpr-helper-functions.php:139
+#: gdpr-helper-functions.php:208
 msgid "Decline"
 msgstr "Odrzuć"
 
-#: gdpr-helper-functions.php:152
+#: gdpr-helper-functions.php:221
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: gdpr-helper-functions.php:165
+#: gdpr-helper-functions.php:234
 msgid "Learn more"
 msgstr "Dowiedz się więcej"
 
-#: gdpr-helper-functions.php:220
+#: gdpr-helper-functions.php:289
 msgid "Cookie Policy"
 msgstr "Polityka Cookies"
 
-#: gdpr-helper-functions.php:258
+#: gdpr-helper-functions.php:327
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: gdpr-helper-functions.php:259
+#: gdpr-helper-functions.php:328
 msgid "PREMIUM"
 msgstr "Premium"
 
-#: src/Admin/AdminTab.php:195
+#: src/Admin/AdminTab.php:208
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:114
 msgctxt "(Admin)"
 msgid "Save"
 msgstr "Zapisz"
 
-#: src/Admin/AdminTab.php:231
+#: src/Admin/AdminTab.php:244
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Policy generated!"
@@ -119,218 +115,224 @@ msgctxt "(Admin)"
 msgid "General"
 msgstr "Ogólne"
 
-#: src/Admin/AdminTabGeneral.php:55
+#: src/Admin/AdminTabGeneral.php:56
 msgctxt "(Admin)"
 msgid "General Settings"
 msgstr "Ustawienia główne"
 
-#: src/Admin/AdminTabGeneral.php:60
+#: src/Admin/AdminTabGeneral.php:61
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Privacy Tools"
 msgstr "Włączanie narzędzi ochrony prywatności"
 
-#: src/Admin/AdminTabGeneral.php:67
+#: src/Admin/AdminTabGeneral.php:68
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Term and Conditions"
 msgstr "Włącz warunki i postanowienia"
 
-#: src/Admin/AdminTabGeneral.php:74
+#: src/Admin/AdminTabGeneral.php:75
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Comment Checkbox"
 msgstr "Pole wyboru Wyłącz komentarz"
 
-#: src/Admin/AdminTabGeneral.php:81
+#: src/Admin/AdminTabGeneral.php:82
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Register Form Checkbox"
 msgstr "Pole wyboru Wyłącz formularz rejestracyjny"
 
-#: src/Admin/AdminTabGeneral.php:91
+#: src/Admin/AdminTabGeneral.php:92
 msgctxt "(Admin)"
 msgid "Email Setting"
 msgstr "Ustawienia poczty e-mail"
 
-#: src/Admin/AdminTabGeneral.php:96
+#: src/Admin/AdminTabGeneral.php:97
 msgctxt "(Admin)"
 msgid "From Name"
 msgstr "Imię i nazwisko nadawcy"
 
-#: src/Admin/AdminTabGeneral.php:103
+#: src/Admin/AdminTabGeneral.php:104
 msgctxt "(Admin)"
 msgid "From Email"
 msgstr "Adres email nadawcy"
 
-#: src/Admin/AdminTabGeneral.php:112
+#: src/Admin/AdminTabGeneral.php:113
 msgctxt "(Admin)"
 msgid "Pages"
 msgstr "Strony"
 
-#: src/Admin/AdminTabGeneral.php:117 src/Admin/WordpressAdmin.php:166
+#: src/Admin/AdminTabGeneral.php:118 src/Admin/WordpressAdmin.php:166
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Tools Page"
 msgstr "Strona Narzędzia prywatności"
 
-#: src/Admin/AdminTabGeneral.php:124
+#: src/Admin/AdminTabGeneral.php:125
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Tools Custom URL"
 msgstr "Niestandardowy adres URL narzędzi prywatności"
 
-#: src/Admin/AdminTabGeneral.php:131 src/Admin/WordpressAdmin.php:162
+#: src/Admin/AdminTabGeneral.php:132 src/Admin/WordpressAdmin.php:162
 msgctxt "(Admin)"
 msgid "Privacy Policy Page"
 msgstr "Strona Polityki Prywatności"
 
-#: src/Admin/AdminTabGeneral.php:138
+#: src/Admin/AdminTabGeneral.php:139
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Policy Custom URL"
 msgstr "Polityka prywatności Niestandardowy adres URL"
 
-#: src/Admin/AdminTabGeneral.php:145
+#: src/Admin/AdminTabGeneral.php:146
 msgctxt "(Admin)"
 msgid "Terms & Conditions Page"
 msgstr "Strona Zasad i Warunków"
 
-#: src/Admin/AdminTabGeneral.php:152
+#: src/Admin/AdminTabGeneral.php:153
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Terms & Conditions Custom URL"
 msgstr "Warunki i postanowienia Niestandardowy adres URL"
 
-#: src/Admin/AdminTabGeneral.php:162
+#: src/Admin/AdminTabGeneral.php:163
 #, fuzzy
 msgctxt "(Admin)"
 msgid "View & Export Data"
 msgstr "Wyświetlanie i eksportowanie danych"
 
-#: src/Admin/AdminTabGeneral.php:167
+#: src/Admin/AdminTabGeneral.php:168
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Export action"
 msgstr "Akcja eksportu"
 
-#: src/Admin/AdminTabGeneral.php:174 src/Admin/AdminTabGeneral.php:213
+#: src/Admin/AdminTabGeneral.php:175 src/Admin/AdminTabGeneral.php:221
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Email to notify"
 msgstr "Wyślij wiadomość e-mail do powiadomienia"
 
-#: src/Admin/AdminTabGeneral.php:185
+#: src/Admin/AdminTabGeneral.php:183
+#, fuzzy
+msgctxt "(Admin)"
+msgid "Unknown Data Subject Message"
+msgstr "Nieznana wiadomość o osobie, której dane dotyczą"
+
+#: src/Admin/AdminTabGeneral.php:193
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Delete & Anonymize Data"
 msgstr "Usuwanie i anonimizje danych"
 
-#: src/Admin/AdminTabGeneral.php:190
+#: src/Admin/AdminTabGeneral.php:198
 msgctxt "(Admin)"
 msgid "Delete action"
 msgstr "Akcja usuwania"
 
-#: src/Admin/AdminTabGeneral.php:197
+#: src/Admin/AdminTabGeneral.php:205
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Delete or reassign content?"
 msgstr "Usunąć lub ponownie przypisać zawartość?"
 
-#: src/Admin/AdminTabGeneral.php:205
+#: src/Admin/AdminTabGeneral.php:213
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Reassign content to"
 msgstr "Ponowne przypisywanie zawartości do"
 
-#: src/Admin/AdminTabGeneral.php:225
+#: src/Admin/AdminTabGeneral.php:233
 msgctxt "(Admin)"
 msgid "Styling"
 msgstr "Styl"
 
-#: src/Admin/AdminTabGeneral.php:230
+#: src/Admin/AdminTabGeneral.php:238
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable basic styling on Privacy Tools page"
 msgstr "Włączanie podstawowych stylów na stronie Narzędzia prywatności"
 
-#: src/Admin/AdminTabGeneral.php:242
+#: src/Admin/AdminTabGeneral.php:250
 msgctxt "(Admin)"
 msgid "Compatibility"
 msgstr "Zgodność"
 
-#: src/Admin/AdminTabGeneral.php:247
+#: src/Admin/AdminTabGeneral.php:255
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable automatic theme compatibility"
 msgstr "Włączanie automatycznej zgodności motywów"
 
-#: src/Admin/AdminTabGeneral.php:259
+#: src/Admin/AdminTabGeneral.php:267
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Woocommerce Integration"
 msgstr "Integracja Woocommerce"
 
-#: src/Admin/AdminTabGeneral.php:264
+#: src/Admin/AdminTabGeneral.php:272
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable WooCommerce Compatibility"
 msgstr "Włącz zgodność z WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:271
+#: src/Admin/AdminTabGeneral.php:279
 #: views/admin/general/woo-disable_checkbox.php:10
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Privacy Checkbox"
 msgstr "Pole wyboru Wyłącz prywatność WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:278
+#: src/Admin/AdminTabGeneral.php:286
 #: views/admin/general/woo-disable_register_checkbox.php:9
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Register Privacy Checkbox"
 msgstr "Pole wyboru Wyłącz prywatność rejestru WooCommerce"
 
-#: src/Admin/AdminTabGeneral.php:290
+#: src/Admin/AdminTabGeneral.php:298
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Easy Digital Download Integration"
 msgstr "Łatwa integracja z pobieraniem cyfrowym"
 
-#: src/Admin/AdminTabGeneral.php:295
+#: src/Admin/AdminTabGeneral.php:303
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Enable EDD Compatibility"
 msgstr "Włącz zgodność z EDD"
 
-#: src/Admin/AdminTabGeneral.php:322
-#: src/Components/CookiePopup/AdminTabCookiePopup.php:181
+#: src/Admin/AdminTabGeneral.php:333
+#: src/Components/CookiePopup/AdminTabCookiePopup.php:184
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Comments"
 msgstr "Wyłącz pole wyboru dla komentarzy"
 
-#: src/Admin/AdminTabGeneral.php:330
-#: src/Components/CookiePopup/AdminTabCookiePopup.php:188
+#: src/Admin/AdminTabGeneral.php:342
+#: src/Components/CookiePopup/AdminTabCookiePopup.php:192
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Register Form"
 msgstr "Wyłącz pole wyboru dla formularza rejestracyjnego"
 
-#: src/Admin/AdminTabGeneral.php:408 src/Admin/AdminTabGeneral.php:424
-#: src/Admin/AdminTabGeneral.php:449 src/Admin/AdminTabGeneral.php:506
+#: src/Admin/AdminTabGeneral.php:431 src/Admin/AdminTabGeneral.php:448
+#: src/Admin/AdminTabGeneral.php:476 src/Admin/AdminTabGeneral.php:552
 #: views/installer/steps/configuration-settings.php:62
 msgctxt "(Admin)"
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Wybierz &mdash;"
 
-#: src/Admin/WordpressAdmin.php:68
+#: src/Admin/WordpressAdmin.php:65
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy & GDPR Settings"
 msgstr "Ustawienia prywatności i RODO"
 
-#: src/Admin/WordpressAdmin.php:69 views/installer/welcome-notice.php:6
+#: src/Admin/WordpressAdmin.php:66 views/installer/welcome-notice.php:6
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Data443 GDPR"
@@ -401,14 +403,15 @@ msgstr ""
 "Włącz tę funkcję, aby umożliwić użytkownikom przesłanie terminu na to, ile "
 "miesięcy wyrażają zgodę na ich comenty i rejestrację."
 
-#: src/Components/Consent/ConsentManager.php:53
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:144
+#: src/Components/Consent/ConsentManager.php:55
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:146
 #, php-format
 msgid "I accept the %sPrivacy Policy%s"
 msgstr "Akceptuję zasady %sPolityki prywatności%s"
 
-#: src/Components/Consent/ConsentManager.php:57
-#: src/Components/Consent/ConsentManager.php:78
+#: src/Components/Consent/ConsentManager.php:59
+#: src/Components/Consent/ConsentManager.php:103
+#: src/Components/Consent/ConsentManager.php:111
 #, fuzzy
 msgctxt "(Admin)"
 msgid ""
@@ -418,17 +421,45 @@ msgstr ""
 "Zgoda ta nie jest domyślnie widoczna. Jeśli ktoś chce go wycofać, powinien "
 "po prostu poprosić o usunięcie wszystkich swoich danych."
 
-#: src/Components/Consent/ConsentManager.php:74
+#: src/Components/Consent/ConsentManager.php:70
+#, fuzzy
+msgid "Do Not Sell My Data"
+msgstr "Nie sprzedawaj moich danych"
+
+#: src/Components/Consent/ConsentManager.php:72
+#, fuzzy
+msgctxt "(Admin)"
+msgid "I do not consent to having my information sold by "
+msgstr "Nie wyrażam zgody na sprzedaż moich danych przez "
+
+#: src/Components/Consent/ConsentManager.php:79
+#, fuzzy
+msgid "Receive Communications from "
+msgstr "Wyrażam zgodę na otrzymywanie innych wiadomości od "
+
+#: src/Components/Consent/ConsentManager.php:81
+#, fuzzy
+msgctxt "(Admin)"
+msgid "I agree to receive other communications from "
+msgstr "Wyrażam zgodę na otrzymywanie innych wiadomości od "
+
+#: src/Components/Consent/ConsentManager.php:99
 #, php-format
 msgid "I accept the %sTerms & Conditions%s"
 msgstr "Akceptuję %sRegulamin%s"
 
-#: src/Components/Consent/ConsentManager.php:87
+#: src/Components/Consent/ConsentManager.php:110
+#, fuzzy
+msgctxt "(Admin)"
+msgid "Site Cookie Consent"
+msgstr "Zgoda na pliki cookie witryny"
+
+#: src/Components/Consent/ConsentManager.php:120
 msgctxt "(Admin)"
 msgid "Woocommerce Policy Consent"
 msgstr "Zgoda na politykę prywatności Woocommerce"
 
-#: src/Components/Consent/ConsentManager.php:88
+#: src/Components/Consent/ConsentManager.php:121
 msgctxt "(Admin)"
 msgid ""
 "This consent is visible by default on woocommerce checkout page. If someone "
@@ -438,7 +469,7 @@ msgstr ""
 "ktoś chce ją wycofać, powinien po prostu poprosić o usunięcie wszystkich "
 "swoich danych."
 
-#: src/Components/Consent/ConsentManager.php:389
+#: src/Components/Consent/ConsentManager.php:404
 #, fuzzy
 msgid "Consent Information"
 msgstr "Informacje o zgodzie"
@@ -603,13 +634,12 @@ msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:71
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Company information"
 msgstr "Informacje o firmie"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:76
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:223
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:224
 msgctxt "(Admin)"
 msgid "Company Name"
 msgstr "Nazwa firmy"
@@ -626,21 +656,21 @@ msgid "Company Location"
 msgstr "Lokalizacja firmy"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:107
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:259
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:263
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Name"
 msgstr "Imię i nazwisko przedstawiciela"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:114
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:266
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:271
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Email"
 msgstr "Kontakt z przedstawicielem e-mail"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:121
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:273
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:279
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Phone"
@@ -653,21 +683,21 @@ msgid "Data Protection Authority"
 msgstr "Organ Ochrony Danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:143
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:302
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:309
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Website"
 msgstr "Strona internetowa urzędu ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:150
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:309
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:317
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Email"
 msgstr "Adres e-mail organu ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:157
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:316
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:325
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Phone"
@@ -699,54 +729,54 @@ msgid "Data Protection Officer Email"
 msgstr "Adres e-mail inspektora ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:204
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:347
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:360
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Delete Text"
 msgstr "Usuń tekst"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:230
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:232
 msgctxt "(Admin)"
 msgid "Contact Email"
 msgstr "E-mail kontaktowy"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:249
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:252
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact"
 msgstr "Przedstawiciel Kontakt"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:252
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:255
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Knowledge base: Do I need to appoint an EU-based representative?"
 msgstr "Baza wiedzy: Czy muszę wyznaczyć przedstawiciela z siedzibą w UE?"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:289
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:295
 #, fuzzy, php-format
 msgctxt "(Admin)"
 msgid "See the %slist of contacts here%s."
 msgstr "Zobacz %slistę kontaktów tutaj%s."
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:333
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:344
 #, fuzzy
 msgctxt "(Admin)"
 msgid "DPO Name"
 msgstr "Nazwa IOD"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:340
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:352
 msgctxt "(Admin)"
 msgid "DPO Email"
 msgstr "E-mail IOD"
 
-#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:422
+#: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:436
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Save & Generate Policy"
 msgstr "Zapisz i wygeneruj politykę"
 
-#: src/Components/PrivacyPolicy/PrivacyPolicy.php:81
-#: src/Installer/Installer.php:309 src/Installer/Steps/PolicySettings.php:210
+#: src/Components/PrivacyPolicy/PrivacyPolicy.php:86
+#: src/Installer/Installer.php:316 src/Installer/Steps/PolicySettings.php:214
 #: views/themes/storefront/footer.php:3
 #: views/themes/twentyseventeen/footer.php:3
 #: views/themes/twentysixteen/footer.php:4
@@ -835,21 +865,21 @@ msgid "Embed the shortcode provided to display your privacy safe seal."
 msgstr ""
 "Umieść podany krótki kod, aby wyświetlić pieczęć bezpieczeństwa prywatności."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:22
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:55
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:23
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:57
 #, fuzzy
 msgid "This page is currently disabled."
 msgstr "Ta strona jest obecnie wyłączona."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:26
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:59
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:27
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:61
 #, fuzzy
 msgid "Please configure the Privacy Tools page in the admin interface."
 msgstr "Skonfiguruj stronę Narzędzia prywatności w interfejsie administratora."
 
-#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:42
-#: src/Installer/Installer.php:318
-#: src/Installer/Steps/ConfigurationPages.php:65
+#: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:43
+#: src/Installer/Installer.php:325
+#: src/Installer/Steps/ConfigurationPages.php:67
 #: views/themes/storefront/footer.php:7
 #: views/themes/twentyseventeen/footer.php:7
 #: views/themes/twentysixteen/footer.php:9
@@ -864,22 +894,22 @@ msgid "Support"
 msgstr "Wsparcie"
 
 #: src/Components/WordpressUser/Controllers/DashboardDataPageController.php:54
-#: views/privacy-tools/notices.php:19
+#: views/privacy-tools/notices.php:20
 #, fuzzy
 msgid "We have received your request and will reply within 30 days."
 msgstr "Otrzymaliśmy Twoją prośbę i odpowiemy w ciągu 30 dni."
 
 #: src/Components/WordpressUser/Controllers/DashboardDataPageController.php:59
-#: views/privacy-tools/notices.php:15
+#: views/privacy-tools/notices.php:16
 msgid "Consent withdrawn."
 msgstr "Zgoda wycofana."
 
-#: src/Components/WordpressUser/RegistrationForm.php:56
+#: src/Components/WordpressUser/RegistrationForm.php:58
 msgid "<strong>ERROR</strong>: You must accept the terms and conditions."
 msgstr "<strong>BŁĄD</strong>: Musisz zaakceptować Regulamin."
 
-#: src/Components/WordpressUser/WordpressUser.php:63
 #: src/Components/WordpressUser/WordpressUser.php:64
+#: src/Components/WordpressUser/WordpressUser.php:65
 #: views/modules/wordpress-user/dashboard/data-page/header.php:2
 #, fuzzy
 msgctxt "(Admin)"
@@ -893,21 +923,21 @@ msgctxt "(Admin)"
 msgid "Data Subjects"
 msgstr "Osoby, których dane dotyczą"
 
-#: src/DataSubject/DataRepository.php:143
+#: src/DataSubject/DataRepository.php:146
 msgid "Data exported"
 msgstr "Dane eksportowane"
 
-#: src/DataSubject/DataRepository.php:158
+#: src/DataSubject/DataRepository.php:162
 #, fuzzy
 msgid "Data export request"
 msgstr "Żądanie eksportu danych"
 
-#: src/DataSubject/DataRepository.php:171
+#: src/DataSubject/DataRepository.php:176
 #, fuzzy
 msgid "Data removed"
 msgstr "Usunięto dane"
 
-#: src/DataSubject/DataRepository.php:186
+#: src/DataSubject/DataRepository.php:192
 #, fuzzy
 msgid "Data removal request"
 msgstr "Żądanie usunięcia danych"
@@ -918,1417 +948,1417 @@ msgstr "Żądanie usunięcia danych"
 msgid "Your personal data on"
 msgstr "Twoje dane osobowe na"
 
-#: src/Helpers.php:27
+#: src/Helpers.php:28
 msgctxt "(Admin)"
 msgid "Austria"
 msgstr "Austria"
 
-#: src/Helpers.php:28
+#: src/Helpers.php:29
 msgctxt "(Admin)"
 msgid "Belgium"
 msgstr "Belgia"
 
-#: src/Helpers.php:29
+#: src/Helpers.php:30
 msgctxt "(Admin)"
 msgid "Bulgaria"
 msgstr "Bułgaria"
 
-#: src/Helpers.php:30
+#: src/Helpers.php:31
 msgctxt "(Admin)"
 msgid "Croatia"
 msgstr "Chorwacja"
 
-#: src/Helpers.php:31
+#: src/Helpers.php:32
 msgctxt "(Admin)"
 msgid "Cyprus"
 msgstr "Cypr"
 
-#: src/Helpers.php:32
+#: src/Helpers.php:33
 msgctxt "(Admin)"
 msgid "Czech Republic"
 msgstr "Czechy"
 
-#: src/Helpers.php:33
+#: src/Helpers.php:34
 msgctxt "(Admin)"
 msgid "Denmark"
 msgstr "Dania"
 
-#: src/Helpers.php:34
+#: src/Helpers.php:35
 msgctxt "(Admin)"
 msgid "Estonia"
 msgstr "Estonia"
 
-#: src/Helpers.php:35
+#: src/Helpers.php:36
 msgctxt "(Admin)"
 msgid "Finland"
 msgstr "Finlandia"
 
-#: src/Helpers.php:36
+#: src/Helpers.php:37
 msgctxt "(Admin)"
 msgid "France"
 msgstr "Francja"
 
-#: src/Helpers.php:37
+#: src/Helpers.php:38
 msgctxt "(Admin)"
 msgid "Germany"
 msgstr "Niemcy"
 
-#: src/Helpers.php:38
+#: src/Helpers.php:39
 msgctxt "(Admin)"
 msgid "Greece"
 msgstr "Grecja"
 
-#: src/Helpers.php:39
+#: src/Helpers.php:40
 msgctxt "(Admin)"
 msgid "Hungary"
 msgstr "Węgry"
 
-#: src/Helpers.php:40
+#: src/Helpers.php:41
 msgctxt "(Admin)"
 msgid "Ireland"
 msgstr "Irlandia"
 
-#: src/Helpers.php:41
+#: src/Helpers.php:42
 msgctxt "(Admin)"
 msgid "Italy"
 msgstr "Włochy"
 
-#: src/Helpers.php:42
+#: src/Helpers.php:43
 msgctxt "(Admin)"
 msgid "Latvia"
 msgstr "Łotwa"
 
-#: src/Helpers.php:43
+#: src/Helpers.php:44
 msgctxt "(Admin)"
 msgid "Lithuania"
 msgstr "Litwa"
 
-#: src/Helpers.php:44
+#: src/Helpers.php:45
 msgctxt "(Admin)"
 msgid "Luxembourg"
 msgstr "Luksemburg"
 
-#: src/Helpers.php:45
+#: src/Helpers.php:46
 msgctxt "(Admin)"
 msgid "Malta"
 msgstr "Malta"
 
-#: src/Helpers.php:46
+#: src/Helpers.php:47
 msgctxt "(Admin)"
 msgid "Netherlands"
 msgstr "Holandia"
 
-#: src/Helpers.php:47
+#: src/Helpers.php:48
 msgctxt "(Admin)"
 msgid "Poland"
 msgstr "Polska"
 
-#: src/Helpers.php:48
+#: src/Helpers.php:49
 msgctxt "(Admin)"
 msgid "Portugal"
 msgstr "Portugalia"
 
-#: src/Helpers.php:49
+#: src/Helpers.php:50
 msgctxt "(Admin)"
 msgid "Romania"
 msgstr "Rumunia"
 
-#: src/Helpers.php:50
+#: src/Helpers.php:51
 msgctxt "(Admin)"
 msgid "Slovakia"
 msgstr "Słowacja"
 
-#: src/Helpers.php:51
+#: src/Helpers.php:52
 msgctxt "(Admin)"
 msgid "Slovenia"
 msgstr "Słowenia"
 
-#: src/Helpers.php:52
+#: src/Helpers.php:53
 msgctxt "(Admin)"
 msgid "Spain"
 msgstr "Hiszpania"
 
-#: src/Helpers.php:53
+#: src/Helpers.php:54
 msgctxt "(Admin)"
 msgid "Sweden"
 msgstr "Szwecja"
 
-#: src/Helpers.php:54
+#: src/Helpers.php:55
 msgctxt "(Admin)"
 msgid "United Kingdom"
 msgstr "Wielka Brytania"
 
-#: src/Helpers.php:56
+#: src/Helpers.php:57
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Afghanistan "
 msgstr "Afganistan "
 
-#: src/Helpers.php:57
+#: src/Helpers.php:58
 msgctxt "(Admin)"
 msgid "Åland Islands"
 msgstr "Wyspy alandzkie"
 
-#: src/Helpers.php:58
+#: src/Helpers.php:59
 msgctxt "(Admin)"
 msgid "Albania"
 msgstr "Albania"
 
-#: src/Helpers.php:59
+#: src/Helpers.php:60
 msgctxt "(Admin)"
 msgid "Algeria"
 msgstr "Algieria"
 
-#: src/Helpers.php:60
+#: src/Helpers.php:61
 #, fuzzy
 msgctxt "(Admin)"
 msgid "American Samoa  "
 msgstr "Samoa Amerykańskie  "
 
-#: src/Helpers.php:61
+#: src/Helpers.php:62
 msgctxt "(Admin)"
 msgid "Andorra"
 msgstr "Andora"
 
-#: src/Helpers.php:62
+#: src/Helpers.php:63
 msgctxt "(Admin)"
 msgid "Angola"
 msgstr "Angola"
 
-#: src/Helpers.php:63
+#: src/Helpers.php:64
 msgctxt "(Admin)"
 msgid "Anguilla"
 msgstr "Anguilla"
 
-#: src/Helpers.php:64
+#: src/Helpers.php:65
 msgctxt "(Admin)"
 msgid "Antarctica"
 msgstr "Antarktyda"
 
-#: src/Helpers.php:65
+#: src/Helpers.php:66
 msgctxt "(Admin)"
 msgid "Antigua and Barbuda"
 msgstr "Antigua i Barbuda"
 
-#: src/Helpers.php:66
+#: src/Helpers.php:67
 msgctxt "(Admin)"
 msgid "Argentina"
 msgstr "Argentyna"
 
-#: src/Helpers.php:67
+#: src/Helpers.php:68
 msgctxt "(Admin)"
 msgid "Armenia"
 msgstr "Armenia"
 
-#: src/Helpers.php:68
+#: src/Helpers.php:69
 msgctxt "(Admin)"
 msgid "Aruba"
 msgstr "Aruba"
 
-#: src/Helpers.php:69
+#: src/Helpers.php:70
 msgctxt "(Admin)"
 msgid "Australia"
 msgstr "Australia"
 
-#: src/Helpers.php:70
+#: src/Helpers.php:71
 msgctxt "(Admin)"
 msgid "Azerbaijan"
 msgstr "Azerbejdżan"
 
-#: src/Helpers.php:71
+#: src/Helpers.php:72
 msgctxt "(Admin)"
 msgid "Bahrain"
 msgstr "Bahrajn"
 
-#: src/Helpers.php:72
+#: src/Helpers.php:73
 msgctxt "(Admin)"
 msgid "Bahamas"
 msgstr "Bahamy"
 
-#: src/Helpers.php:73
+#: src/Helpers.php:74
 msgctxt "(Admin)"
 msgid "Bangladesh"
 msgstr "Bangladesz"
 
-#: src/Helpers.php:74
+#: src/Helpers.php:75
 msgctxt "(Admin)"
 msgid "Barbados"
 msgstr "Barbados"
 
-#: src/Helpers.php:75
+#: src/Helpers.php:76
 msgctxt "(Admin)"
 msgid "Belarus"
 msgstr "Białoruś"
 
-#: src/Helpers.php:76
+#: src/Helpers.php:77
 msgctxt "(Admin)"
 msgid "Belize"
 msgstr "Belize"
 
-#: src/Helpers.php:77
+#: src/Helpers.php:78
 msgctxt "(Admin)"
 msgid "Benin"
 msgstr "Benin"
 
-#: src/Helpers.php:78
+#: src/Helpers.php:79
 msgctxt "(Admin)"
 msgid "Bermuda"
 msgstr "Bermudy"
 
-#: src/Helpers.php:79
+#: src/Helpers.php:80
 msgctxt "(Admin)"
 msgid "Bhutan"
 msgstr "Bhutan"
 
-#: src/Helpers.php:80
+#: src/Helpers.php:81
 msgctxt "(Admin)"
 msgid "Bolivia, Plurinational State of"
 msgstr "Bolívia, mnohonárodný štát"
 
-#: src/Helpers.php:81
+#: src/Helpers.php:82
 msgctxt "(Admin)"
 msgid "Bonaire, Sint Eustatius and Saba"
 msgstr "Bonaire, St Eustatius i Saba"
 
-#: src/Helpers.php:82
+#: src/Helpers.php:83
 msgctxt "(Admin)"
 msgid "Bosnia and Herzegovina"
 msgstr "Bośnia i Hercegowina"
 
-#: src/Helpers.php:83
+#: src/Helpers.php:84
 msgctxt "(Admin)"
 msgid "Botswana"
 msgstr "Botswana"
 
-#: src/Helpers.php:84
+#: src/Helpers.php:85
 msgctxt "(Admin)"
 msgid "Bouvet Island"
 msgstr "Wyspy Bouvet"
 
-#: src/Helpers.php:85
+#: src/Helpers.php:86
 msgctxt "(Admin)"
 msgid "Brazil"
 msgstr "Brazylia"
 
-#: src/Helpers.php:86
+#: src/Helpers.php:87
 msgctxt "(Admin)"
 msgid "British Indian Ocean Territory"
 msgstr "Brytyjskie Terytorium Oceanu Indyjskiego"
 
-#: src/Helpers.php:87
+#: src/Helpers.php:88
 msgctxt "(Admin)"
 msgid "Brunei Darussalam"
 msgstr "Brunei Darussalam"
 
-#: src/Helpers.php:88
+#: src/Helpers.php:89
 msgctxt "(Admin)"
 msgid "Burkina Faso"
 msgstr "Burkina Faso"
 
-#: src/Helpers.php:89
+#: src/Helpers.php:90
 msgctxt "(Admin)"
 msgid "Burundi"
 msgstr "Burundi"
 
-#: src/Helpers.php:90
+#: src/Helpers.php:91
 msgctxt "(Admin)"
 msgid "Cambodia"
 msgstr "Kambodża"
 
-#: src/Helpers.php:91
+#: src/Helpers.php:92
 msgctxt "(Admin)"
 msgid "Cameroon"
 msgstr "Kamerun"
 
-#: src/Helpers.php:92
+#: src/Helpers.php:93
 msgctxt "(Admin)"
 msgid "Canada"
 msgstr "Kanada"
 
-#: src/Helpers.php:93
+#: src/Helpers.php:94
 msgctxt "(Admin)"
 msgid "Cape Verde"
 msgstr "Republika Zielonego Przylądka"
 
-#: src/Helpers.php:94
+#: src/Helpers.php:95
 msgctxt "(Admin)"
 msgid "Cayman Islands"
 msgstr "Kajmany"
 
-#: src/Helpers.php:95
+#: src/Helpers.php:96
 msgctxt "(Admin)"
 msgid "Central African Republic"
 msgstr "Republika Afryki Śrofkowej"
 
-#: src/Helpers.php:96
+#: src/Helpers.php:97
 msgctxt "(Admin)"
 msgid "Chad"
 msgstr "Czad"
 
-#: src/Helpers.php:97
+#: src/Helpers.php:98
 msgctxt "(Admin)"
 msgid "Chile"
 msgstr "Chile"
 
-#: src/Helpers.php:98
+#: src/Helpers.php:99
 msgctxt "(Admin)"
 msgid "China"
 msgstr "Chiny"
 
-#: src/Helpers.php:99
+#: src/Helpers.php:100
 msgctxt "(Admin)"
 msgid "Christmas Island"
 msgstr "Wyspa Bożego Narodzenia"
 
-#: src/Helpers.php:100
+#: src/Helpers.php:101
 msgctxt "(Admin)"
 msgid "Cocos (Keeling) Islands"
 msgstr "Wyspy Kokosowe"
 
-#: src/Helpers.php:101
+#: src/Helpers.php:102
 msgctxt "(Admin)"
 msgid "Colombia"
 msgstr "Kolumbia"
 
-#: src/Helpers.php:102
+#: src/Helpers.php:103
 msgctxt "(Admin)"
 msgid "Comoros"
 msgstr "Komory"
 
-#: src/Helpers.php:103
+#: src/Helpers.php:104
 msgctxt "(Admin)"
 msgid "Congo"
 msgstr "Kongo"
 
-#: src/Helpers.php:104
+#: src/Helpers.php:105
 msgctxt "(Admin)"
 msgid "Congo, the Democratic Republic of the"
 msgstr "Demokratyczna Republika Konga"
 
-#: src/Helpers.php:105
+#: src/Helpers.php:106
 msgctxt "(Admin)"
 msgid "Cook Islands"
 msgstr "Wyspy Cooka"
 
-#: src/Helpers.php:106
+#: src/Helpers.php:107
 msgctxt "(Admin)"
 msgid "Costa Rica"
 msgstr "Kostaryka"
 
-#: src/Helpers.php:107
+#: src/Helpers.php:108
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Côte dIvoire"
 msgstr "Wybrzeże Kości Słoniowej"
 
-#: src/Helpers.php:108
+#: src/Helpers.php:109
 msgctxt "(Admin)"
 msgid "Cuba"
 msgstr "Kuba"
 
-#: src/Helpers.php:109
+#: src/Helpers.php:110
 msgctxt "(Admin)"
 msgid "Curaçao"
 msgstr "Curaçao"
 
-#: src/Helpers.php:110
+#: src/Helpers.php:111
 msgctxt "(Admin)"
 msgid "Djibouti"
 msgstr "Dżibuti"
 
-#: src/Helpers.php:111
+#: src/Helpers.php:112
 msgctxt "(Admin)"
 msgid "Dominica"
 msgstr "Dominika"
 
-#: src/Helpers.php:112
+#: src/Helpers.php:113
 msgctxt "(Admin)"
 msgid "Dominican Republic"
 msgstr "Dominikana"
 
-#: src/Helpers.php:113
+#: src/Helpers.php:114
 msgctxt "(Admin)"
 msgid "Ecuador"
 msgstr "Ekwador"
 
-#: src/Helpers.php:114
+#: src/Helpers.php:115
 msgctxt "(Admin)"
 msgid "Egypt"
 msgstr "Egipt"
 
-#: src/Helpers.php:115
+#: src/Helpers.php:116
 msgctxt "(Admin)"
 msgid "El Salvador"
 msgstr "Salwador"
 
-#: src/Helpers.php:116
+#: src/Helpers.php:117
 msgctxt "(Admin)"
 msgid "Equatorial Guinea"
 msgstr "Gwinea Równikowa"
 
-#: src/Helpers.php:117
+#: src/Helpers.php:118
 msgctxt "(Admin)"
 msgid "Eritrea"
 msgstr "Erytrea"
 
-#: src/Helpers.php:118
+#: src/Helpers.php:119
 msgctxt "(Admin)"
 msgid "Ethiopia"
 msgstr "Etiopia"
 
-#: src/Helpers.php:119
+#: src/Helpers.php:120
 msgctxt "(Admin)"
 msgid "Falkland Islands (Malvinas)"
 msgstr "Falklandy (Malwiny)"
 
-#: src/Helpers.php:120
+#: src/Helpers.php:121
 msgctxt "(Admin)"
 msgid "Faroe Islands"
 msgstr "Wyspy Owcze"
 
-#: src/Helpers.php:121
+#: src/Helpers.php:122
 msgctxt "(Admin)"
 msgid "Fiji"
 msgstr "Fidżi"
 
-#: src/Helpers.php:122
+#: src/Helpers.php:123
 msgctxt "(Admin)"
 msgid "French Guiana"
 msgstr "Gujana Francuska"
 
-#: src/Helpers.php:123
+#: src/Helpers.php:124
 msgctxt "(Admin)"
 msgid "French Polynesia"
 msgstr "Polinezja Francuska"
 
-#: src/Helpers.php:124
+#: src/Helpers.php:125
 msgctxt "(Admin)"
 msgid "French Southern Territories"
 msgstr "Francuskie Terytoria Południowe"
 
-#: src/Helpers.php:125
+#: src/Helpers.php:126
 msgctxt "(Admin)"
 msgid "Gabon"
 msgstr "Gabon"
 
-#: src/Helpers.php:126
+#: src/Helpers.php:127
 msgctxt "(Admin)"
 msgid "Gambia"
 msgstr "Gambia"
 
-#: src/Helpers.php:127
+#: src/Helpers.php:128
 msgctxt "(Admin)"
 msgid "Georgia"
 msgstr "Gruzja"
 
-#: src/Helpers.php:128
+#: src/Helpers.php:129
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Georgia "
 msgstr "Gruzja"
 
-#: src/Helpers.php:129
+#: src/Helpers.php:130
 msgctxt "(Admin)"
 msgid "Ghana"
 msgstr "Ghana"
 
-#: src/Helpers.php:130
+#: src/Helpers.php:131
 msgctxt "(Admin)"
 msgid "Gibraltar"
 msgstr "Gibraltar"
 
-#: src/Helpers.php:131
+#: src/Helpers.php:132
 msgctxt "(Admin)"
 msgid "Greenland"
 msgstr "Grenlandia"
 
-#: src/Helpers.php:132
+#: src/Helpers.php:133
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Grenada "
 msgstr "Grenada "
 
-#: src/Helpers.php:133
+#: src/Helpers.php:134
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guadeloupe  "
 msgstr "Gwadelupa  "
 
-#: src/Helpers.php:134
+#: src/Helpers.php:135
 msgctxt "(Admin)"
 msgid "Guam"
 msgstr "Guam"
 
-#: src/Helpers.php:135
+#: src/Helpers.php:136
 msgctxt "(Admin)"
 msgid "Guatemala"
 msgstr "Gwatemala"
 
-#: src/Helpers.php:136
+#: src/Helpers.php:137
 msgctxt "(Admin)"
 msgid "Guernsey"
 msgstr "Guernsey"
 
-#: src/Helpers.php:137
+#: src/Helpers.php:138
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea  "
 msgstr "Gwinea  "
 
-#: src/Helpers.php:138
+#: src/Helpers.php:139
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea-Bissau   "
 msgstr "Gwinea Bissau   "
 
-#: src/Helpers.php:139
+#: src/Helpers.php:140
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Guyana  "
 msgstr "Gujana  "
 
-#: src/Helpers.php:140
+#: src/Helpers.php:141
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Haiti   "
 msgstr "Haiti   "
 
-#: src/Helpers.php:141
+#: src/Helpers.php:142
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Heard Island and McDonald Islands   "
 msgstr "Wyspy Heard i McDonalda   "
 
-#: src/Helpers.php:142
+#: src/Helpers.php:143
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Holy See (Vatican City State)   "
 msgstr "Stolica Apostolska (Państwo Watykańskie)   "
 
-#: src/Helpers.php:143
+#: src/Helpers.php:144
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Honduras    "
 msgstr "Honduras    "
 
-#: src/Helpers.php:144
+#: src/Helpers.php:145
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Hong Kong   "
 msgstr "Hongkong   "
 
-#: src/Helpers.php:145
+#: src/Helpers.php:146
 #, fuzzy
 msgctxt "(Admin)"
 msgid "India   "
 msgstr "Indie   "
 
-#: src/Helpers.php:146
+#: src/Helpers.php:147
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Indonesia   "
 msgstr "Indonezja   "
 
-#: src/Helpers.php:147
+#: src/Helpers.php:148
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Iran, Islamic Republic of   "
 msgstr "Iran, Islamska Republika   "
 
-#: src/Helpers.php:148
+#: src/Helpers.php:149
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Iraq    "
 msgstr "Irak    "
 
-#: src/Helpers.php:149
+#: src/Helpers.php:150
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Isle of Man "
 msgstr "Wyspa Man "
 
-#: src/Helpers.php:150
+#: src/Helpers.php:151
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Israel  "
 msgstr "Izrael  "
 
-#: src/Helpers.php:151
+#: src/Helpers.php:152
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jamaica "
 msgstr "Jamajka "
 
-#: src/Helpers.php:152
+#: src/Helpers.php:153
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Japan   "
 msgstr "Japonia   "
 
-#: src/Helpers.php:153
+#: src/Helpers.php:154
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jersey  "
 msgstr "Jersey  "
 
-#: src/Helpers.php:154
+#: src/Helpers.php:155
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Jordan  "
 msgstr "Jordania  "
 
-#: src/Helpers.php:155
+#: src/Helpers.php:156
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kazakhstan  "
 msgstr "Kazachstan  "
 
-#: src/Helpers.php:156
+#: src/Helpers.php:157
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kenya   "
 msgstr "Kenia   "
 
-#: src/Helpers.php:157
+#: src/Helpers.php:158
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kiribati    "
 msgstr "Kiribati    "
 
-#: src/Helpers.php:158
+#: src/Helpers.php:159
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Democratic Peoples Republic of   "
 msgstr "Korea, Republika Ludowo-Demokratyczna   "
 
-#: src/Helpers.php:159
+#: src/Helpers.php:160
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Republic of  "
 msgstr "Korea Południowa, Republika  "
 
-#: src/Helpers.php:160
+#: src/Helpers.php:161
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kuwait  "
 msgstr "Kuwejt  "
 
-#: src/Helpers.php:161
+#: src/Helpers.php:162
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Kyrgyzstan  "
 msgstr "Kirgistan  "
 
-#: src/Helpers.php:162
+#: src/Helpers.php:163
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lao Peoples Democratic Republic "
 msgstr "Laotańska Republika Ludowo-Demokratyczna "
 
-#: src/Helpers.php:163
+#: src/Helpers.php:164
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lebanon "
 msgstr "Liban "
 
-#: src/Helpers.php:164
+#: src/Helpers.php:165
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Lesotho "
 msgstr "Lesotho "
 
-#: src/Helpers.php:165
+#: src/Helpers.php:166
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Liberia "
 msgstr "Liberia "
 
-#: src/Helpers.php:166
+#: src/Helpers.php:167
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Libya   "
 msgstr "Libia   "
 
-#: src/Helpers.php:167
+#: src/Helpers.php:168
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Macao   "
 msgstr "Makau   "
 
-#: src/Helpers.php:168
+#: src/Helpers.php:169
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Macedonia, the Former Yugoslav Republic of  "
 msgstr "Macedonia, Była Jugosłowiańska Republika  "
 
-#: src/Helpers.php:169
+#: src/Helpers.php:170
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Madagascar  "
 msgstr "Madagaskar  "
 
-#: src/Helpers.php:170
+#: src/Helpers.php:171
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Malawi  "
 msgstr "Malawi  "
 
-#: src/Helpers.php:171
+#: src/Helpers.php:172
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Malaysia    "
 msgstr "Malezja    "
 
-#: src/Helpers.php:172
+#: src/Helpers.php:173
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Maldives    "
 msgstr "Malediwy    "
 
-#: src/Helpers.php:173
+#: src/Helpers.php:174
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mali    "
 msgstr "Mali    "
 
-#: src/Helpers.php:174
+#: src/Helpers.php:175
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Marshall Islands    "
 msgstr "Wyspy Marshalla    "
 
-#: src/Helpers.php:175
+#: src/Helpers.php:176
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Martinique  "
 msgstr "Martynika  "
 
-#: src/Helpers.php:176
+#: src/Helpers.php:177
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritania  "
 msgstr "Mauretania  "
 
-#: src/Helpers.php:177
+#: src/Helpers.php:178
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritius   "
 msgstr "Mauritius   "
 
-#: src/Helpers.php:178
+#: src/Helpers.php:179
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mayotte "
 msgstr "Majotta "
 
-#: src/Helpers.php:179
+#: src/Helpers.php:180
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mexico  "
 msgstr "Meksyk  "
 
-#: src/Helpers.php:180
+#: src/Helpers.php:181
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Micronesia, Federated States of "
 msgstr "Mikronezja, Sfederowane Stany "
 
-#: src/Helpers.php:181
+#: src/Helpers.php:182
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Moldova, Republic of    "
 msgstr "Mołdawia, Republika    "
 
-#: src/Helpers.php:182
+#: src/Helpers.php:183
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Monaco  "
 msgstr "Monako  "
 
-#: src/Helpers.php:183
+#: src/Helpers.php:184
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mongolia    "
 msgstr "Mongolia    "
 
-#: src/Helpers.php:184
+#: src/Helpers.php:185
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Montenegro  "
 msgstr "Czarnogóra  "
 
-#: src/Helpers.php:185
+#: src/Helpers.php:186
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Montserrat  "
 msgstr "Montserrat  "
 
-#: src/Helpers.php:186
+#: src/Helpers.php:187
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Morocco "
 msgstr "Maroko "
 
-#: src/Helpers.php:187
+#: src/Helpers.php:188
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Mozambique  "
 msgstr "Mozambik  "
 
-#: src/Helpers.php:188
+#: src/Helpers.php:189
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Myanmar "
 msgstr "Myanmar "
 
-#: src/Helpers.php:189
+#: src/Helpers.php:190
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Namibia "
 msgstr "Namibia "
 
-#: src/Helpers.php:190
+#: src/Helpers.php:191
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nauru   "
 msgstr "Nauru   "
 
-#: src/Helpers.php:191
+#: src/Helpers.php:192
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nepal   "
 msgstr "Nepal   "
 
-#: src/Helpers.php:192
+#: src/Helpers.php:193
 #, fuzzy
 msgctxt "(Admin)"
 msgid "New Caledonia   "
 msgstr "Nowa Kaledonia   "
 
-#: src/Helpers.php:193
+#: src/Helpers.php:194
 #, fuzzy
 msgctxt "(Admin)"
 msgid "New Zealand "
 msgstr "Nowa Zelandia "
 
-#: src/Helpers.php:194
+#: src/Helpers.php:195
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nicaragua   "
 msgstr "Nikaragua   "
 
-#: src/Helpers.php:195
+#: src/Helpers.php:196
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Niger   "
 msgstr "Niger   "
 
-#: src/Helpers.php:196
+#: src/Helpers.php:197
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Nigeria "
 msgstr "Nigeria "
 
-#: src/Helpers.php:197
+#: src/Helpers.php:198
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Niue    "
 msgstr "Niue    "
 
-#: src/Helpers.php:198
+#: src/Helpers.php:199
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Norfolk Island  "
 msgstr "Wyspa norfolk  "
 
-#: src/Helpers.php:199
+#: src/Helpers.php:200
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Northern Mariana Islands    "
 msgstr "Mariany Północne    "
 
-#: src/Helpers.php:200
+#: src/Helpers.php:201
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Oman    "
 msgstr "Oman    "
 
-#: src/Helpers.php:201
+#: src/Helpers.php:202
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Pakistan    "
 msgstr "Pakistan    "
 
-#: src/Helpers.php:202
+#: src/Helpers.php:203
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Palau   "
 msgstr "Palau   "
 
-#: src/Helpers.php:203
+#: src/Helpers.php:204
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Palestine, State of "
 msgstr "Palestyna, Państwo "
 
-#: src/Helpers.php:204
+#: src/Helpers.php:205
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Panama  "
 msgstr "Panama  "
 
-#: src/Helpers.php:205
+#: src/Helpers.php:206
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Papua New Guinea    "
 msgstr "Papua-Nowa Gwinea    "
 
-#: src/Helpers.php:206
+#: src/Helpers.php:207
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Paraguay    "
 msgstr "Paragwaj    "
 
-#: src/Helpers.php:207
+#: src/Helpers.php:208
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Peru    "
 msgstr "Peru    "
 
-#: src/Helpers.php:208
+#: src/Helpers.php:209
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Philippines "
 msgstr "Filipiny "
 
-#: src/Helpers.php:209
+#: src/Helpers.php:210
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Pitcairn    "
 msgstr "Pitcairn •    "
 
-#: src/Helpers.php:210
+#: src/Helpers.php:211
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Puerto Rico "
 msgstr "Portoryko "
 
-#: src/Helpers.php:211
+#: src/Helpers.php:212
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Qatar   "
 msgstr "Katar   "
 
-#: src/Helpers.php:212
+#: src/Helpers.php:213
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Réunion "
 msgstr "Reunion "
 
-#: src/Helpers.php:213
+#: src/Helpers.php:214
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Russian Federation  "
 msgstr "Federacja Rosyjska  "
 
-#: src/Helpers.php:214
+#: src/Helpers.php:215
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Rwanda  "
 msgstr "Rwanda  "
 
-#: src/Helpers.php:215
+#: src/Helpers.php:216
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Barthélemy    "
 msgstr "Św Barthélemy    "
 
-#: src/Helpers.php:216
+#: src/Helpers.php:217
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Helena, Ascension and Tristan da Cunha    "
 msgstr "Święta Helena, Wniebowstąpienie i Tristan da Cunha    "
 
-#: src/Helpers.php:217
+#: src/Helpers.php:218
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Kitts and Nevis   "
 msgstr "Saint Kitts i Nevis   "
 
-#: src/Helpers.php:218
+#: src/Helpers.php:219
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Lucia "
 msgstr "Saint Lucia "
 
-#: src/Helpers.php:219
+#: src/Helpers.php:220
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Martin (French part)  "
 msgstr "Saint Martin (część francuska)  "
 
-#: src/Helpers.php:220
+#: src/Helpers.php:221
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Pierre and Miquelon   "
 msgstr "Saint Pierre i Miquelon   "
 
-#: src/Helpers.php:221
+#: src/Helpers.php:222
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Vincent and the Grenadines    "
 msgstr "Saint Vincent i Grenadyny    "
 
-#: src/Helpers.php:222
+#: src/Helpers.php:223
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Samoa   "
 msgstr "Samoa   "
 
-#: src/Helpers.php:223
+#: src/Helpers.php:224
 #, fuzzy
 msgctxt "(Admin)"
 msgid "San Marino  "
 msgstr "San Marino  "
 
-#: src/Helpers.php:224
+#: src/Helpers.php:225
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sao Tome and Principe   "
 msgstr "Książęca   "
 
-#: src/Helpers.php:225
+#: src/Helpers.php:226
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Saudi Arabia    "
 msgstr "Arabia Saudyjska    "
 
-#: src/Helpers.php:226
+#: src/Helpers.php:227
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Senegal "
 msgstr "Senegal "
 
-#: src/Helpers.php:227
+#: src/Helpers.php:228
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Serbia  "
 msgstr "Serbia  "
 
-#: src/Helpers.php:228
+#: src/Helpers.php:229
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Seychelles  "
 msgstr "Seszele  "
 
-#: src/Helpers.php:229
+#: src/Helpers.php:230
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sierra Leone    "
 msgstr "Sierra Leone    "
 
-#: src/Helpers.php:230
+#: src/Helpers.php:231
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Singapore   "
 msgstr "Singapur   "
 
-#: src/Helpers.php:231
+#: src/Helpers.php:232
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sint Maarten (Dutch part)   "
 msgstr "Sint Maarten (część holenderska)   "
 
-#: src/Helpers.php:232
+#: src/Helpers.php:233
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Solomon Islands "
 msgstr "Wyspy Salomona "
 
-#: src/Helpers.php:233
+#: src/Helpers.php:234
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Somalia "
 msgstr "Somalia "
 
-#: src/Helpers.php:234
+#: src/Helpers.php:235
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Africa    "
 msgstr "Republika Południowej Afryki    "
 
-#: src/Helpers.php:235
+#: src/Helpers.php:236
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Georgia and the South Sandwich Islands    "
 msgstr "Georgia Południowa i Sandwich Południowy    "
 
-#: src/Helpers.php:236
+#: src/Helpers.php:237
 #, fuzzy
 msgctxt "(Admin)"
 msgid "South Sudan "
 msgstr "Sudan Południowy "
 
-#: src/Helpers.php:237
+#: src/Helpers.php:238
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sri Lanka   "
 msgstr "Sri Lanka   "
 
-#: src/Helpers.php:238
+#: src/Helpers.php:239
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Sudan   "
 msgstr "Sudan   "
 
-#: src/Helpers.php:239
+#: src/Helpers.php:240
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Suriname    "
 msgstr "Surinam    "
 
-#: src/Helpers.php:240
+#: src/Helpers.php:241
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Svalbard and Jan Mayen  "
 msgstr "Svalbard i Jan Mayen  "
 
-#: src/Helpers.php:241
+#: src/Helpers.php:242
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Swaziland   "
 msgstr "Suazi   "
 
-#: src/Helpers.php:242
+#: src/Helpers.php:243
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Syrian Arab Republic    "
 msgstr "Syryjska Republika Arabska    "
 
-#: src/Helpers.php:243
+#: src/Helpers.php:244
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Taiwan   "
 msgstr "Tajwan   "
 
-#: src/Helpers.php:244
+#: src/Helpers.php:245
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tajikistan  "
 msgstr "Tadżykistan  "
 
-#: src/Helpers.php:245
+#: src/Helpers.php:246
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tanzania, United Republic of    "
 msgstr "Tanzania, Zjednoczona Republika    "
 
-#: src/Helpers.php:246
+#: src/Helpers.php:247
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Thailand    "
 msgstr "Tajlandia    "
 
-#: src/Helpers.php:247
+#: src/Helpers.php:248
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Timor-Leste "
 msgstr "Timor Wschodni "
 
-#: src/Helpers.php:248
+#: src/Helpers.php:249
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Togo    "
 msgstr "Togo    "
 
-#: src/Helpers.php:249
+#: src/Helpers.php:250
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tokelau "
 msgstr "Tokelau "
 
-#: src/Helpers.php:250
+#: src/Helpers.php:251
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tonga   "
 msgstr "Tonga   "
 
-#: src/Helpers.php:251
+#: src/Helpers.php:252
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Trinidad and Tobago "
 msgstr "Trynidad i Tobago "
 
-#: src/Helpers.php:252
+#: src/Helpers.php:253
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tunisia "
 msgstr "Tunezja "
 
-#: src/Helpers.php:253
+#: src/Helpers.php:254
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turkey  "
 msgstr "Turcja  "
 
-#: src/Helpers.php:254
+#: src/Helpers.php:255
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turkmenistan    "
 msgstr "Turkmenistan    "
 
-#: src/Helpers.php:255
+#: src/Helpers.php:256
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Turks and Caicos Islands    "
 msgstr "Wyspy Turks i Caicos    "
 
-#: src/Helpers.php:256
+#: src/Helpers.php:257
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Tuvalu  "
 msgstr "Tuvalu  "
 
-#: src/Helpers.php:257
+#: src/Helpers.php:258
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uganda  "
 msgstr "Uganda  "
 
-#: src/Helpers.php:258
+#: src/Helpers.php:259
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Ukraine "
 msgstr "Ukraina "
 
-#: src/Helpers.php:259
+#: src/Helpers.php:260
 #, fuzzy
 msgctxt "(Admin)"
 msgid "United Arab Emirates    "
 msgstr "Zjednoczone Emiraty Arabskie    "
 
-#: src/Helpers.php:260
+#: src/Helpers.php:261
 #, fuzzy
 msgctxt "(Admin)"
 msgid "United States Minor Outlying Islands    "
 msgstr "Dalekie Wyspy Mniejsze Stanów Zjednoczonych    "
 
-#: src/Helpers.php:261
+#: src/Helpers.php:262
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uruguay "
 msgstr "Urugwaj "
 
-#: src/Helpers.php:262
+#: src/Helpers.php:263
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Uzbekistan  "
 msgstr "Uzbekistan  "
 
-#: src/Helpers.php:263
+#: src/Helpers.php:264
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Vanuatu "
 msgstr "Vanuatu "
 
-#: src/Helpers.php:264
+#: src/Helpers.php:265
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Venezuela, Bolivarian Republic of   "
 msgstr "Wenezuela, Boliwariańska Republika   "
 
-#: src/Helpers.php:265
+#: src/Helpers.php:266
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Viet Nam    "
 msgstr "Wietnam    "
 
-#: src/Helpers.php:266
+#: src/Helpers.php:267
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, British "
 msgstr "Brytyjskie Wyspy Dziewicze "
 
-#: src/Helpers.php:267
+#: src/Helpers.php:268
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, U.S.    "
 msgstr "Wyspy Dziewicze Stanów Zjednoczonych    "
 
-#: src/Helpers.php:268
+#: src/Helpers.php:269
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Wallis and Futuna   "
 msgstr "Wallis i Futuna   "
 
-#: src/Helpers.php:269
+#: src/Helpers.php:270
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Western Sahara  "
 msgstr "Sahara Zachodnia  "
 
-#: src/Helpers.php:270
+#: src/Helpers.php:271
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Yemen   "
 msgstr "Jemen   "
 
-#: src/Helpers.php:271
+#: src/Helpers.php:272
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Zambia  "
 msgstr "Zambia  "
 
-#: src/Helpers.php:272
+#: src/Helpers.php:273
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Zimbabwe    "
 msgstr "Zimbabwe    "
 
-#: src/Helpers.php:287
+#: src/Helpers.php:288
 msgctxt "(Admin)"
 msgid "Iceland"
 msgstr "Islandia"
 
-#: src/Helpers.php:288
+#: src/Helpers.php:289
 msgctxt "(Admin)"
 msgid "Norway"
 msgstr "Norwegia"
 
-#: src/Helpers.php:289
+#: src/Helpers.php:290
 msgctxt "(Admin)"
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: src/Helpers.php:290
+#: src/Helpers.php:291
 msgctxt "(Admin)"
 msgid "Switzerland"
 msgstr "Szwajcaria"
 
-#: src/Helpers.php:291
+#: src/Helpers.php:292
 msgctxt "(Admin)"
 msgid "United States"
 msgstr "Stany Zjednoczone"
 
-#: src/Helpers.php:377
+#: src/Helpers.php:383
 msgid "An error has occurred. Please contact the site administrator."
 msgstr "Wystąpił błąd. Skontaktuj się z administratorem witryny."
 
-#: src/Installer/Installer.php:146
+#: src/Installer/Installer.php:145
 msgctxt "(Admin)"
 msgid "Setup Wizard"
 msgstr "Kreator konfiguracji"
 
-#: src/Installer/Steps/ConfigurationPages.php:23
-#: src/Installer/Steps/ConfigurationPages.php:33
-#: src/Installer/Steps/PolicySettings.php:23
-#: src/Installer/Steps/PolicySettings.php:48
+#: src/Installer/Steps/ConfigurationPages.php:24
+#: src/Installer/Steps/ConfigurationPages.php:34
+#: src/Installer/Steps/PolicySettings.php:24
+#: src/Installer/Steps/PolicySettings.php:49
 #, fuzzy
 msgctxt "(Admin)"
 msgid "&mdash; Create a new page &mdash;"
 msgstr "— Utwórz nową stronę —"
 
-#: src/Installer/Steps/PolicySettings.php:38
+#: src/Installer/Steps/PolicySettings.php:39
 #, fuzzy
 msgctxt "(Admin)"
 msgid ""
@@ -2369,45 +2399,45 @@ msgstr ""
 "indywidualnego formularza kontaktowego, zaznacz pole wyboru, aby uwzględnić "
 "dane do wyszukiwania w narzędziu Prywatność."
 
-#: src/Modules/EddGdpr/EddGdpr.php:47
+#: src/Modules/EddGdpr/EddGdpr.php:48
 #, fuzzy
 msgid "EDD Customer Information"
 msgstr "Informacje o klientach EDD"
 
-#: src/Modules/EddGdpr/EddGdpr.php:56
+#: src/Modules/EddGdpr/EddGdpr.php:57
 #, fuzzy
 msgid "EDD Order Information"
 msgstr "Informacje o zamówieniu EDD"
 
-#: src/Modules/EddGdpr/EddGdpr.php:65
+#: src/Modules/EddGdpr/EddGdpr.php:66
 #, fuzzy
 msgid "EDD File Downloads"
 msgstr "EDD Pobieranie plików"
 
-#: src/Modules/EddGdpr/EddGdpr.php:74
+#: src/Modules/EddGdpr/EddGdpr.php:75
 #, fuzzy
 msgid "EDD API Access Logs"
 msgstr "Dzienniki dostępu do interfejsu API EDD"
 
-#: src/Modules/NewsletterGdpr/NewsletterGdpr.php:79
+#: src/Modules/NewsletterGdpr/NewsletterGdpr.php:82
 #, fuzzy
 msgid "Newsletter Form submissions: "
 msgstr "Przesyłanie formularzy newslettera: "
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:46
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:47
 msgid "Customer Information"
 msgstr "Informacje o kliencie"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:53
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:54
 msgid "Order Information"
 msgstr "Informacje o zamówieniu"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:162
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:165
 #, fuzzy
 msgid "Please acknowledge the Privacy Policy"
 msgstr "Prosimy o zapoznanie się z Polityką Prywatności"
 
-#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:177
+#: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:180
 #, fuzzy
 msgid "Privacy Policy consent is required!"
 msgstr "Wymagana jest zgoda Polityki Prywatności!"
@@ -2847,6 +2877,16 @@ msgstr ""
 "Automatycznie dodawaj linki Do polityki prywatności i Narzędzi ochrony "
 "prywatności do stopki witryny."
 
+#: views/admin/general/unknown-user-message.php:6
+#, fuzzy
+msgctxt "(Admin)"
+msgid ""
+"This message is displayed if the email entered on the privacy tools page is "
+"not found."
+msgstr ""
+"Ten tekst zostanie wyświetlony osobom, których dane dotyczą, na stronie "
+"Narzędzia prywatności."
+
 #: views/admin/general/woo-compatibility.php:9
 #, fuzzy
 msgctxt "(Admin)"
@@ -2859,13 +2899,13 @@ msgctxt "(Admin)"
 msgid "Will work for WooCommerce Version 3.4.0 or later."
 msgstr "Będzie działać dla WooCommerce w wersji 3.4.0 lub nowszej."
 
-#: views/admin/notices/header-privacy-safe.php:4
+#: views/admin/notices/header-privacy-safe.php:5
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe By Data443"
 msgstr "Prywatność bezpieczna przez Data443"
 
-#: views/admin/notices/header.php:4 views/admin/settings-page.php:3
+#: views/admin/notices/header.php:5 views/admin/settings-page.php:3
 #, fuzzy
 msgctxt "(Admin)"
 msgid "The GDPR Framework By Data443"
@@ -2886,6 +2926,13 @@ msgid ""
 msgstr ""
 "Strona Polityki prywatności została utworzona, ale jest pusta. Na tej "
 "stronie można wygenerować szablon zasad."
+
+#: views/admin/notices/helper-autoinstall.php:6
+#, fuzzy, php-format
+#| msgid "I accept the %sPrivacy Policy%s"
+msgctxt "(Admin)"
+msgid "Read more about the %sPrivacy Policy%s"
+msgstr "Akceptuję zasady %sPolityki prywatności%s"
 
 #: views/admin/notices/helper-policy.php:2
 #, fuzzy
@@ -3120,30 +3167,30 @@ msgctxt "(Admin)"
 msgid "Support our development efforts! leave a %s5-star rating%s."
 msgstr "Wspieraj nasze wysiłki rozwojowe! pozostaw ocenę %s5 gwiazdek%s."
 
-#: views/admin/support/contents.php:5 views/installer/steps/finish.php:10
+#: views/admin/support/contents.php:5 views/installer/steps/finish.php:11
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Need more info?"
 msgstr "Potrzebujesz więcej informacji?"
 
-#: views/admin/support/contents.php:11 views/installer/steps/finish.php:16
+#: views/admin/support/contents.php:11 views/installer/steps/finish.php:17
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Site Owner's guide to GDPR"
 msgstr "Przewodnik właściciela witryny po RODO"
 
-#: views/admin/support/contents.php:14 views/installer/steps/finish.php:19
+#: views/admin/support/contents.php:14 views/installer/steps/finish.php:20
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Read the full guide on GDPR compliance."
 msgstr "Przeczytaj pełny przewodnik na temat zgodności z RODO."
 
-#: views/admin/support/contents.php:20 views/installer/steps/finish.php:25
+#: views/admin/support/contents.php:20 views/installer/steps/finish.php:26
 msgctxt "(Admin)"
 msgid "Knowledge base"
 msgstr "Baza wiedzy"
 
-#: views/admin/support/contents.php:23 views/installer/steps/finish.php:28
+#: views/admin/support/contents.php:23 views/installer/steps/finish.php:29
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Check out the knowledge base for common questions and answers."
@@ -3151,13 +3198,13 @@ msgstr ""
 "Zapoznaj się z bazą wiedzy, aby uzyskać odpowiedzi na często zadawane "
 "pytania i odpowiedzi."
 
-#: views/admin/support/contents.php:29 views/installer/steps/finish.php:34
+#: views/admin/support/contents.php:29 views/installer/steps/finish.php:35
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Developer's guide to GDPR"
 msgstr "Przewodnik programisty po RODO"
 
-#: views/admin/support/contents.php:32 views/installer/steps/finish.php:37
+#: views/admin/support/contents.php:32 views/installer/steps/finish.php:38
 #, fuzzy
 msgctxt "(Admin)"
 msgid "We have a thorough guide to help making custom sites compliant."
@@ -3165,18 +3212,18 @@ msgstr ""
 "Mamy dokładny przewodnik, który pomoże nam zapewnić zgodność "
 "niestandardowych witryn."
 
-#: views/admin/support/contents.php:40 views/installer/steps/finish.php:45
+#: views/admin/support/contents.php:40 views/installer/steps/finish.php:46
 msgctxt "(Admin)"
 msgid "Need help?"
 msgstr "Potrzebujesz pomocy?"
 
-#: views/admin/support/contents.php:46 views/installer/steps/finish.php:51
+#: views/admin/support/contents.php:46 views/installer/steps/finish.php:52
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Submit a support request"
 msgstr "Prześlij zgłoszenie do pomocy technicznej"
 
-#: views/admin/support/contents.php:49 views/installer/steps/finish.php:54
+#: views/admin/support/contents.php:49 views/installer/steps/finish.php:55
 #, fuzzy
 msgctxt "(Admin)"
 msgid ""
@@ -3186,13 +3233,13 @@ msgstr ""
 "Znalazłeś błąd lub masz pytanie dotyczące wtyczki? Prześlij prośbę o pomoc "
 "techniczną, a my zajmiemy się nią!"
 
-#: views/admin/support/contents.php:55 views/installer/steps/finish.php:60
+#: views/admin/support/contents.php:55 views/installer/steps/finish.php:61
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Request a consultation"
 msgstr "Poproś o konsultację"
 
-#: views/admin/support/contents.php:58 views/installer/steps/finish.php:63
+#: views/admin/support/contents.php:58 views/installer/steps/finish.php:64
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Need assistance in making your site compliant? We can help!"
@@ -3546,45 +3593,45 @@ msgstr "Zgody"
 msgid "Withdraw"
 msgstr "Wypłata"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:5
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:6
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:5
 #, fuzzy
 msgctxt "(Admin)"
 msgid "Delete this user and all data"
 msgstr "Usuń tego użytkownika i wszystkie dane"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:11
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:12
 msgctxt "(Admin)"
 msgid "Delete my data"
 msgstr "Usuń moje dane"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:15
-#: views/privacy-tools/form-delete.php:4 views/privacy-tools/form-delete.php:24
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:16
+#: views/privacy-tools/form-delete.php:6 views/privacy-tools/form-delete.php:26
 msgid "Delete all data we have gathered about you."
 msgstr "Usuń wszystkie zebrane przez nas dane na Twój temat."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:16
-#: views/privacy-tools/form-delete.php:5 views/privacy-tools/form-delete.php:25
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:17
+#: views/privacy-tools/form-delete.php:7 views/privacy-tools/form-delete.php:27
 #, fuzzy
 msgid "If you have a user account on our site, it will also be deleted."
 msgstr ""
 "Jeśli masz konto użytkownika na naszej stronie, zostanie ono również "
 "usunięte."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:17
-#: views/privacy-tools/form-delete.php:6 views/privacy-tools/form-delete.php:26
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:18
+#: views/privacy-tools/form-delete.php:8 views/privacy-tools/form-delete.php:28
 #, fuzzy
 msgid "Be careful - this action is permanent and CANNOT be undone."
 msgstr "Bądź ostrożny - ta akcja jest trwała i NIE MOŻNA jej cofnąć."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:19
-#: views/privacy-tools/form-delete.php:8
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:20
+#: views/privacy-tools/form-delete.php:10
 #, fuzzy
 msgid "Note Regarding Order:"
 msgstr "Uwaga dotycząca zamówienia:"
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:20
-#: views/privacy-tools/form-delete.php:9
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:21
+#: views/privacy-tools/form-delete.php:11
 #, fuzzy
 msgid ""
 "Your order with status Processing will not get deleted until status change."
@@ -3592,20 +3639,20 @@ msgstr ""
 "Twoje zamówienie ze statusem Przetwarzanie nie zostanie usunięte, dopóki "
 "status nie ulegnie zmianie."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:21
-#: views/privacy-tools/form-delete.php:10
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:22
+#: views/privacy-tools/form-delete.php:12
 msgid "Your order with status Completed will get anonymize."
 msgstr "Twoje zamówienie ze statusem Zakończone zostanie zanonimizowane."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:22
-#: views/privacy-tools/form-delete.php:11
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:23
+#: views/privacy-tools/form-delete.php:13
 #, fuzzy
 msgid "If you delete Completed order you can't apply for refund."
 msgstr ""
 "Jeśli usuniesz zrealizowane zamówienie, nie możesz ubiegać się o zwrot "
 "pieniędzy."
 
-#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:28
+#: views/modules/wordpress-user/dashboard/data-page/form-delete.php:29
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:23
 #, fuzzy
 msgctxt "(Admin)"
@@ -3736,13 +3783,13 @@ msgstr "Wyslij zapytanie"
 msgid "Consent types"
 msgstr "Rodzaje zgód"
 
-#: views/privacy-tools/form-delete.php:1
+#: views/privacy-tools/form-delete.php:3
 #: views/privacy-tools/notice-admin-role.php:1
 msgid "Delete my user and data"
 msgstr "Usuń użytkownika i dane"
 
-#: views/privacy-tools/form-delete.php:18
-#: views/privacy-tools/form-delete.php:30
+#: views/privacy-tools/form-delete.php:20
+#: views/privacy-tools/form-delete.php:32
 msgid "Delete my data"
 msgstr "Usuń moje dane"
 
@@ -3770,7 +3817,7 @@ msgctxt "(Admin)"
 msgid "Data deletion is disabled for administrative accounts."
 msgstr "Usuwanie danych jest wyłączone dla kont administracyjnych."
 
-#: views/privacy-tools/notices.php:3
+#: views/privacy-tools/notices.php:4
 msgid ""
 "We will send you an email with the link to access your data. Please check "
 "your spam folder as well!"
@@ -3778,16 +3825,16 @@ msgstr ""
 "Wyślemy Ci wiadomość e-mail z linkiem, aby uzyskać dostęp do Twoich danych. "
 "Proszę sprawdzić także folder ze spamem."
 
-#: views/privacy-tools/notices.php:7
+#: views/privacy-tools/notices.php:8
 msgid "The email you entered does not appear to be a valid email."
 msgstr "Wprowadzony adres e-mail nie jest prawidłowy"
 
-#: views/privacy-tools/notices.php:11
+#: views/privacy-tools/notices.php:12
 #, fuzzy
 msgid "Sorry - the link seems to have expired. Please try again!"
 msgstr "Przepraszamy - wydaje się, że link wygasł. Spróbuj ponownie!"
 
-#: views/privacy-tools/notices.php:23
+#: views/privacy-tools/notices.php:24
 #, fuzzy
 msgid "Your personal data has been removed!"
 msgstr "Twoje dane osobowe zostały usunięte!"
@@ -3824,3 +3871,17 @@ msgstr "Data443 RODO"
 #, fuzzy
 msgid "https://www.data443.com/"
 msgstr "https://www.data443.com/"
+
+#, fuzzy
+#~ msgctxt "(Admin)"
+#~ msgid ""
+#~ "You appear to be running a development version of GDPR. You must run "
+#~ "<code>composer install</code> from the plugin directory."
+#~ msgstr ""
+#~ "Wygląda na to, że korzystasz z rozwojowej wersji RODO. Musisz uruchomić "
+#~ "<code>composer install</code> z katalogu wtyczek."
+
+#, fuzzy
+#~ msgctxt "(Admin)"
+#~ msgid "Autoloader not found."
+#~ msgstr "Nie znaleziono automatycznego ładowania."

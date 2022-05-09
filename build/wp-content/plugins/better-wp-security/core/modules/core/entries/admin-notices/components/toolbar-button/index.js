@@ -17,7 +17,7 @@ import { useSelect } from '@wordpress/data';
 import Panel from '../panel';
 import './style.scss';
 
-export default function () {
+export default function() {
 	const [ isToggled, setIsToggled ] = useState( false );
 	const { notices, noticesLoaded } = useSelect(
 		( select ) => ( {
@@ -34,8 +34,8 @@ export default function () {
 			<ToolbarButton
 				aria-expanded={ isToggled }
 				onClick={ () => setIsToggled( ! isToggled ) }
-				icon="megaphone"
-				text={ __( 'Notifications', 'better-wp-security' ) }
+				icon="bell"
+				text={ __( 'Alerts', 'better-wp-security' ) }
 				className={ classnames(
 					'itsec-admin-bar-admin-notices__trigger',
 					{

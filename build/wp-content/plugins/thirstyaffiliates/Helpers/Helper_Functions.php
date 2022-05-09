@@ -120,7 +120,7 @@ class Helper_Functions {
      * @since 3.0.0
      * @access public
      *
-     * @param WP_User $user WP_User object.
+     * @param \WP_User $user WP_User object.
      * @return boolean True if authorized, False otherwise.
      */
     public function current_user_authorized( $user = null ) {
@@ -213,7 +213,7 @@ class Helper_Functions {
      * @since 3.0.0
      * @access public
      *
-     * @global WP_Roles $wp_roles Core class used to implement a user roles API.
+     * @global \WP_Roles $wp_roles Core class used to implement a user roles API.
      *
      * @return array Array of all site registered user roles. User role key as the key and value is user role text.
      */
@@ -221,25 +221,6 @@ class Helper_Functions {
 
         global $wp_roles;
         return $wp_roles->get_names();
-
-    }
-
-    /**
-     * Check validity of a save post action.
-     *
-     * @since 3.0.0
-     * @access private
-     *
-     * @param int    $post_id   Id of the coupon post.
-     * @param string $post_type Post type to check.
-     * @return bool True if valid save post action, False otherwise.
-     */
-    public function check_if_valid_save_post_action( $post_id , $post_type ) {
-
-        if ( get_post_type() != $post_type || empty( $_POST ) || wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) || !current_user_can( 'edit_page' , $post_id ) )
-            return false;
-        else
-            return true;
 
     }
 
@@ -254,17 +235,19 @@ class Helper_Functions {
      */
     public function get_user_ip_address() {
 
+        $ip = '';
+
         if ( get_option( 'ta_disable_ip_address_collection' ) === 'yes' ) {
-            return '';
+            return $ip;
         }
 
         if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
+            $ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
         } elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-            $ip = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+            $ip = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
             $ip = trim( $ip[0] );
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
+        } elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+            $ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
         }
 
         return apply_filters( 'ta_get_user_ip_address', $ip );
@@ -604,7 +587,8 @@ class Helper_Functions {
      */
     public function is_user_agent_bot() {
 
-        $user_agent = isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ? strtolower( $_SERVER[ 'HTTP_USER_AGENT' ] ) : '';
+        $user_agent = isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ? sanitize_text_field( wp_unslash( ( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) ) : '';
+        $user_agent = strtolower( $user_agent );
         $bots       = apply_filters( 'ta_useragent_bots_phrase_list' , $this->get_blocked_bots() );
         $pattern    = '/' . $bots . '/i';
 
@@ -624,9 +608,9 @@ class Helper_Functions {
         if ( isset( $_GET[ 'post_type' ] ) && $_GET[ 'post_type' ] == Plugin_Constants::AFFILIATE_LINKS_CPT ) {
 
             if ( isset( $_GET[ 'taxonomy' ] ) )
-                $screen_id = 'edit-' . $_GET[ 'taxonomy' ];
+                $screen_id = 'edit-' . sanitize_text_field( wp_unslash( $_GET[ 'taxonomy' ] ) );
             elseif ( isset( $_GET[ 'page' ] ) )
-                $screen_id = 'thirstylink_page_' . $_GET[ 'page' ];
+                $screen_id = 'thirstylink_page_' . sanitize_text_field( wp_unslash( $_GET[ 'page' ] ) );
             else
                 $screen_id = 'edit-thirstylink';
 
@@ -681,6 +665,23 @@ class Helper_Functions {
         $ini += strlen($start);
         $len = strpos($string, $end, $ini) - $ini;
         return substr($string, $ini, $len);
+    }
+
+    /**
+     * Get the capability required to access an admin interface.
+     *
+     * @param string $interface The key of the interface.
+     * @param string $default The default capability to return if the interface capability is not set.
+     * @return string
+     */
+    public function get_capability_for_interface( $interface, $default ) {
+        $option = $this->get_option( 'tap_plugin_visibility_admin_interfaces', array() );
+
+        if ( is_array( $option ) && ! empty( $option[ $interface ] ) ) {
+            return $option[ $interface ];
+        }
+
+        return $default;
     }
 
 }

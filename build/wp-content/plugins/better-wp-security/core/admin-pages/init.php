@@ -42,8 +42,8 @@ final class ITSEC_Admin_Page_Loader {
 			$page_refs[] = add_submenu_page( $parent, __( 'iThemes Security Logs', 'better-wp-security' ), __( 'Logs', 'better-wp-security' ), $capability, 'itsec-logs', array( $this, 'show_page' ) );
 		}
 
-		if ( ! ITSEC_Core::is_pro() ) {
-			$page_refs[] = add_submenu_page( $parent, '', '<span style="color:#2EA2CC">' . __( 'Go Pro', 'better-wp-security' ) . '</span>', $capability, 'itsec-go-pro', array( $this, 'show_page' ) );
+		if ( ! ITSEC_Core::is_pro() || ITSEC_Core::is_development() ) {
+			$page_refs[] = add_submenu_page( $parent, '', '<span style="color:#7ABEED">' . __( 'Get More Security', 'better-wp-security' ) . '</span>', $capability, 'itsec-go-pro', array( $this, 'show_page' ) );
 		}
 
 		if ( defined( 'ITSEC_DEBUG' ) && ITSEC_DEBUG ) {

@@ -13,7 +13,8 @@ class Helpers
 {
     public function supportUrl($url = '')
     {
-        return gdpr('config')->get('help.url') . $url;
+        global $gdpr;
+        return $gdpr->HelpUrl . $url;
     }
 
     /**
@@ -314,11 +315,13 @@ class Helpers
      */
     public function getDataProtectionAuthorityInfo($countryCode = null)
     {
+        global $gdpr;
+
         if (!$countryCode) {
-            $countryCode = gdpr('options')->get('company_location');
+            $countryCode = $gdpr->Options->get('company_location');
         }
 
-        $dpaData = require(gdpr('config')->get('plugin.path') . 'assets/data-protection-authorities.php');
+        $dpaData = require($gdpr->PluginPath  . 'assets/data-protection-authorities.php');
 
         if (isset($dpaData[$countryCode])) {
             return $dpaData[$countryCode];
@@ -332,7 +335,8 @@ class Helpers
      */
     public function getDataProtectionAuthorities()
     {
-        return require(gdpr('config')->get('plugin.path') . 'assets/data-protection-authorities.php');
+        global $gdpr;
+        return require($gdpr->PluginPath . 'assets/data-protection-authorities.php');
     }
 
     public function getAdminUrl($suffix = '')
@@ -352,11 +356,12 @@ class Helpers
 
     public function getPrivacyToolsPageUrl()
     {
-        if(gdpr('options')->get('custom_tools_page')){
-			$privacyToolsUrl = gdpr('options')->get('custom_tools_page');
+        global $gdpr;
+        if($gdpr->Options->get('custom_tools_page')){
+			$privacyToolsUrl = $gdpr->Options->get('custom_tools_page');
 			return $privacyToolsUrl;			
 		}else{
-			$toolsPageId = gdpr('options')->get('tools_page');
+			$toolsPageId = $gdpr->Options->get('tools_page');
         	return $toolsPageId ? get_permalink($toolsPageId) : '';
 		}		
 		
@@ -364,7 +369,8 @@ class Helpers
 
     public function getPrivacyPolicyPageUrl()
     {
-        $policyPageId = gdpr('options')->get('policy_page');
+        global $gdpr;
+        $policyPageId = $gdpr->Options->get('policy_page');
         $policyPageurl = get_permalink($policyPageId);
         add_filter( 'gdpr_custom_policy_link', 'gdprfPrivacyPolicyurl' );
         $policyPageurl = apply_filters( 'gdpr_custom_policy_link',$policyPageurl);

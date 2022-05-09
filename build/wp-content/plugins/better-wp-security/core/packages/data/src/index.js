@@ -26,8 +26,11 @@ registerStore( CORE_STORE_NAME, {
 } );
 
 export {
+	controls,
 	CORE_STORE_NAME,
 	BANS_STORE_NAME,
 	HELP_STORE_NAME,
 	MODULES_STORE_NAME,
 };
+
+export * from './controls';

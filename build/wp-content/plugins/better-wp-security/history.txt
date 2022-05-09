@@ -964,3 +964,21 @@
 	Bug Fix: When the Change Admin User tool is run, update any User Groups referencing the old user id.
 	Bug Fix: WordPress footer would appear in the middle of the logs page.
 	Bug Fix: Add missing translation strings file.
+8.1.0 - 2022-03-22 - Timothy Jacobs
+	Important: iThemes Security now requires WordPress 5.8 or later.
+	New Feature: Include the full iThemes Security Site Scanner in iThemes Security Free. Scheduled scans are disabled by default.
+	Tweak: Add new "Go Pro" page that includes an overview of features in iThemes Security Pro.
+	Bug Fix: Scroll to top of window when navigating.
+	Bug Fix: Allow searching for Password Requirements.
+	Bug Fix: Don't load WordPress and System Tweaks modules when the `ITSEC_DISABLE_MODULES` constant is enabled.
+	Bug Fix: Prevent incidentally loading the Two-Factor module when it is unregistered.
+	Bug Fix: Conditionally display the NGINX File Path setting.
+	Bug Fix: Allow saving Notifications when "default recipients must contain at least 1 item" error is present.
+	Bug Fix: Help styling on WordPress 5.9.
+	Bug Fix: Compatibility with plugins that expected a logged-in user during lockouts.
+8.1.1 - 2022-04-14 - Timothy Jacobs, Lisa Canini
+	Bug Fix: Error when visiting the Notifications page after activating a module with notifications for the first time.
+	Bug Fix: Update deprecated withState usages to useState.
+8.1.2 - 2022-04-26 - Timothy Jacobs, Lisa Canini
+	Tweak: Require a Title when creating a new Dashboard.
+	Bug Fix: Don't attempt to send a Site Scan notification for Clean scans preventing a fatal error after scheduled site scans.

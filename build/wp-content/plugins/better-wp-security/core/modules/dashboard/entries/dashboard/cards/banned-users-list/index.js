@@ -26,11 +26,12 @@ import './style.scss';
 function BannedUsers( { card, config, eqProps } ) {
 	const [ isCreating, setCreating ] = useState( false );
 	const [ isSaving, setSaving ] = useState( false );
-	const { schema } = useSelect( ( select ) => ( {
+	const { schema, isQuerying } = useSelect( ( select ) => ( {
 		schema: select( 'ithemes-security/core' ).getSchema(
 			'ithemes-security-ban'
 		),
-	} ) );
+		isQuerying: select( 'ithemes-security/bans' ).isQuerying( 'main' ),
+	} ), [] );
 	const {
 		createBan,
 		query,
@@ -59,7 +60,7 @@ function BannedUsers( { card, config, eqProps } ) {
 				/>
 				<Title card={ card } config={ config } />
 			</Header>
-			<Search query={ debouncedQuery } />
+			<Search query={ debouncedQuery } isQuerying={ isQuerying } />
 			<List
 				selected={ isCreating ? false : selected }
 				onSelect={ onSelect }

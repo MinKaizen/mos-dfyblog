@@ -192,7 +192,7 @@ export function failedQueryDashboardCard( cardId, error ) {
  *
  * @param {string} collectionEP
  * @param {Object} card
- * @param {*} [context] Additional context about this request for use in subsequent actions.
+ * @param {*}      [context]    Additional context about this request for use in subsequent actions.
  */
 export function* addDashboardCard( collectionEP, card, context ) {
 	yield startAddDashboardCard( collectionEP, card, context );

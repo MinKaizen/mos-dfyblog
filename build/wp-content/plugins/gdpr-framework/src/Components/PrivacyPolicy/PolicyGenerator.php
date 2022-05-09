@@ -14,30 +14,31 @@ class PolicyGenerator
 
     public function getData()
     {
-        $location = gdpr('options')->get('company_location');
+        global $gdpr;
+        $location = $gdpr->Options->get('company_location');
         $date = date(get_option('date_format'));
 
         return [
-            'companyName'     => gdpr('options')->get('company_name'),
+            'companyName'     => $gdpr->Options->get('company_name'),
             'companyLocation' => $location,
-            'contactEmail'    => gdpr('options')->get('contact_email') ?
-                gdpr('options')->get('contact_email') :
+            'contactEmail'    => $gdpr->Options->get('contact_email') ?
+                $gdpr->Options->get('contact_email') :
                 get_option('admin_email'),
 
             'hasRepresentative'          => gdpr('helpers')->countryNeedsRepresentative($location),
-            'representativeContactName'  => gdpr('options')->get('representative_contact_name'),
-            'representativeContactEmail' => gdpr('options')->get('representative_contact_email'),
-            'representativeContactPhone' => gdpr('options')->get('representative_contact_phone'),
+            'representativeContactName'  => $gdpr->Options->get('representative_contact_name'),
+            'representativeContactEmail' => $gdpr->Options->get('representative_contact_email'),
+            'representativeContactPhone' => $gdpr->Options->get('representative_contact_phone'),
 
-            'dpaWebsite' => gdpr('options')->get('dpa_website'),
-            'dpaEmail'   => gdpr('options')->get('dpa_email'),
-            'dpaPhone'   => gdpr('options')->get('dpa_phone'),
+            'dpaWebsite' => $gdpr->Options->get('dpa_website'),
+            'dpaEmail'   => $gdpr->Options->get('dpa_email'),
+            'dpaPhone'   => $gdpr->Options->get('dpa_phone'),
 
-            'hasDpo'   => gdpr('options')->get('has_dpo'),
-            'dpoName'  => gdpr('options')->get('dpo_name'),
-            'dpoEmail' => gdpr('options')->get('dpo_email'),
+            'hasDpo'   => $gdpr->Options->get('has_dpo'),
+            'dpoName'  => $gdpr->Options->get('dpo_name'),
+            'dpoEmail' => $gdpr->Options->get('dpo_email'),
 
-            'hasTerms' => gdpr('options')->get('terms_page'),
+            'hasTerms' => $gdpr->Options->get('terms_page'),
 
             'date' => $date,
         ];

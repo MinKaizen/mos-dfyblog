@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { apiFetch, createNotice } from '../controls';
+import { apiFetch, apiFetchBatch, createNotice } from '../controls';
 import { STORE_NAME } from './';
 
 export function* editModule( module, edit ) {
@@ -63,11 +63,7 @@ export function* saveModules( modules = true ) {
 
 	try {
 		yield { type: START_SAVING_MODULES, modules };
-		responses = yield apiFetch( {
-			path: '/batch/v1',
-			method: 'POST',
-			data: { requests },
-		} );
+		responses = yield apiFetchBatch( requests );
 	} catch ( error ) {
 		yield { type: FAILED_SAVING_MODULES, modules };
 		yield createNotice( 'error', error.message );
@@ -80,7 +76,7 @@ export function* saveModules( modules = true ) {
 
 	for ( let i = 0; i < requests.length; i++ ) {
 		const module = modules[ i ];
-		const response = responses.responses[ i ];
+		const response = responses[ i ];
 
 		if ( response.status >= 400 ) {
 			errors[ module ] = response.body;
@@ -98,7 +94,7 @@ export function* saveModules( modules = true ) {
 		yield { type: FINISH_SAVING_MODULES, modules: success };
 	}
 
-	return responses.responses;
+	return responses;
 }
 
 /**
@@ -160,14 +156,10 @@ export function* setModulesStatus( modules ) {
 		} ) ),
 	};
 
-	const responses = yield apiFetch( {
-		path: '/batch/v1',
-		method: 'POST',
-		data: batch,
-	} );
+	const responses = yield apiFetchBatch( batch );
 
-	for ( let i = 0; i < responses.responses.length; i++ ) {
-		const response = responses.responses[ i ];
+	for ( let i = 0; i < responses.length; i++ ) {
+		const response = responses[ i ];
 
 		if ( response.status >= 400 ) {
 			yield createNotice( 'error', response.body.message );
@@ -281,11 +273,7 @@ export function* saveSettings( modules = true ) {
 
 	try {
 		yield { type: START_SAVING_SETTINGS, modules };
-		responses = yield apiFetch( {
-			path: '/batch/v1',
-			method: 'POST',
-			data: { requests },
-		} );
+		responses = yield apiFetchBatch( requests );
 	} catch ( error ) {
 		yield { type: FAILED_SAVING_SETTINGS, modules };
 		yield createNotice( 'error', error.message );
@@ -298,7 +286,7 @@ export function* saveSettings( modules = true ) {
 
 	for ( let i = 0; i < requests.length; i++ ) {
 		const module = modules[ i ];
-		const response = responses.responses[ i ];
+		const response = responses[ i ];
 
 		if ( response.status >= 400 ) {
 			errors[ module ] = response.body;
@@ -319,7 +307,7 @@ export function* saveSettings( modules = true ) {
 		yield { type: FINISH_SAVING_SETTINGS, modules: success };
 	}
 
-	return responses.responses;
+	return responses;
 }
 
 export function* updateSettings( module, settings ) {

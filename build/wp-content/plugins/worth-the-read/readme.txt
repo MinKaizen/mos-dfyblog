@@ -2,8 +2,8 @@
 Contributors: brianmcculloh
 Tags: reading, length, progress, reading time, scroll, scroll progress, reading progress, read time estimate
 Requires at least: 3.8
-Tested up to: 5.9
-Stable tag: 1.9
+Tested up to: 5.9.3
+Stable tag: 1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,8 +51,11 @@ The plugin is as minimally distracting visually as it can be while still being e
 
 == Changelog ==
 
+= 1.10 =
+* Fixed: Resolved missing options files
+
 = 1.9 =
-* Verified to work with WordPress 5.9
+* Updated: Redux options framework from 3.6.18 to 4.3.12.7
 
 = 1.8 =
 * New Feature: Added new debugging mode to help troubleshoot javascript issues

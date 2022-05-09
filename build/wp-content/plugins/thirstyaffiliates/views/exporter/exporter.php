@@ -4,24 +4,24 @@
 
     <div class="ta-blur">
 
-        <h3><?php _e( 'STEP 1 - Export your links:' , 'thirstyaffiliates' ); ?></h3>
+        <h3><?php esc_html_e( 'STEP 1 - Export your links:' , 'thirstyaffiliates' ); ?></h3>
 
         <p>
-            <?php _e( 'This tool lets you export a properly formatted CSV file containing a list of all the affiliate links on this website. This CSV file will be compatible with the ThirstyAffiliates CSV Importer.' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'This tool lets you export a properly formatted CSV file containing a list of all the affiliate links on this website. This CSV file will be compatible with the ThirstyAffiliates CSV Importer.' , 'thirstyaffiliates' ); ?>
         </p>
 
         <p>
-            <?php _e( 'You can choose to only export the links from a specific category.' , 'thirstyaffiliates' ); ?>
+            <?php esc_html_e( 'You can choose to only export the links from a specific category.' , 'thirstyaffiliates' ); ?>
         </p>
 
         <form class="tap-round-box" id="tap_upload_csv_form" enctype="multipart/form-data" method="post">
 
             <p>
             <label for="export_category">
-                <?php _e( 'Category to export from:' , 'thirstyaffiliates' ); ?>
+                <?php esc_html_e( 'Category to export from:' , 'thirstyaffiliates' ); ?>
             </label>
             <select id="export_category">
-                <option value="all" selected="selected"><?php _e( '-- All Categories --' , 'thirstyaffiliates' ); ?></option>
+                <option value="all" selected="selected"><?php esc_html_e( '-- All Categories --' , 'thirstyaffiliates' ); ?></option>
             </select>
         </p>
 

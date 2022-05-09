@@ -46,6 +46,10 @@ abstract class ITSEC_Validator {
 		$this->settings          = $settings;
 		$this->previous_settings = ITSEC_Modules::get_settings( $this->get_id() );
 
+		$this->can_save = true;
+		$this->errors   = [];
+		$this->messages = [];
+
 		$this->sanitize_settings();
 
 		if ( $this->run_validate_matching_fields ) {

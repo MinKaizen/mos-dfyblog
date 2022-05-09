@@ -142,8 +142,8 @@ class Link_Fixer implements Model_Interface , Initiable_Interface {
         foreach( $links as $link ) {
 
             $href    = strtok( esc_url_raw( $link[ 'href' ] ) , '?' );
-            $class   = isset( $link[ 'class' ] ) ? sanitize_text_field( $link[ 'class' ] ) : '';
-            $key     = (int) sanitize_text_field( $link[ 'key' ] );
+            $class   = isset( $link[ 'class' ] ) ? sanitize_text_field( wp_unslash( $link[ 'class' ] ) ) : '';
+            $key     = (int) sanitize_text_field( wp_unslash( $link[ 'key' ] ) );
             $link_id = $this->url_to_affiliate_link_id( $href );
 
             $thirstylink = new Affiliate_Link( $link_id );
@@ -224,7 +224,7 @@ class Link_Fixer implements Model_Interface , Initiable_Interface {
         $slug = esc_sql( isset( $link_parts[ $key + 2 ] ) && $link_parts[ $key + 2 ] ? $link_parts[ $key + 2 ] : $link_parts[ $key + 1 ] );
 
         // fetch the ID based on the post type and slug.
-        $id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_type = '$cpt_slug' AND post_name = '$slug'" );
+        $id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_name = %s", $cpt_slug, $slug ) );
 
         return $id ? absint( $id ) : 0;
     }
@@ -243,7 +243,7 @@ class Link_Fixer implements Model_Interface , Initiable_Interface {
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
         else {
 
-            $links    = $_POST[ 'hrefs' ];
+            $links    = $_POST[ 'hrefs' ]; // phpcs:ignore
             $post_id  = isset( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
             $response = array(
                 'status' => 'success',

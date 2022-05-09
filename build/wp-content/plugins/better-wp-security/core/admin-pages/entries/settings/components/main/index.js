@@ -27,7 +27,7 @@ export default function Main( { children } ) {
 	const { hash } = location;
 	useEffect( () => {
 		ref.current?.focus();
-		ref.current?.scrollIntoView();
+		ref.current?.ownerDocument.body.scrollTo( 0, 0 );
 	}, [ location ] );
 
 	// Aside handling

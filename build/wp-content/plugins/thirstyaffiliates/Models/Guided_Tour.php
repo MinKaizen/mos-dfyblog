@@ -29,7 +29,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      *
      * @since 3.0.0
      * @access private
-     * @var Redirection
+     * @var Guided_Tour
      */
     private static $_instance;
 
@@ -38,7 +38,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      *
      * @since 3.0.0
      * @access private
-     * @var Redirection
+     * @var Abstract_Main_Plugin_Class
      */
     private $_main_plugin;
 
@@ -114,7 +114,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      * @param Abstract_Main_Plugin_Class $main_plugin      Main plugin object.
      * @param Plugin_Constants           $constants        Plugin constants object.
      * @param Helper_Functions           $helper_functions Helper functions object.
-     * @return Redirection
+     * @return Guided_Tour
      */
     public static function get_instance( Abstract_Main_Plugin_Class $main_plugin , Plugin_Constants $constants , Helper_Functions $helper_functions ) {
 
@@ -238,7 +238,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
             ),
             'thirstylink' => array(
                 'elem'  => '#menu-posts-thirstylink',
-                'html'  => __( '<h3> This concludes the guide. You are now ready to setup your first affiliate link!</h3>
+                'html'  => __( '<h3>This concludes the guide. You are now ready to set up your first affiliate link!</h3>
                                <p>We also have a Pro add-on for ThirstyAffiliates which contains lots of interesting features for affiliates like:</p>
                                <ul><li>Automatically link up your affiliate links to keywords in your blog</li>
                                <li>Get more detailed and advanced reports</li>
@@ -265,12 +265,12 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      * @since 3.0.0
      * @access public
      *
-     * @return array Current guide tour screen.
+     * @return array|void Current guide tour screen.
      */
     public function get_current_screen() {
 
         $screen    = get_current_screen();
-        $tab       = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : '';
+        $tab       = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( wp_unslash( $_GET[ 'tab' ] ) ) : '';
 
         if ( ! isset( $this->_screens[ $screen->id ] ) || empty( $this->_screens[ $screen->id ] ) )
             return;
@@ -311,6 +311,8 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( 'activate_plugins' ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
         elseif ( ! check_ajax_referer( 'ta-close-guided-tour' , 'nonce' , false ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         else {
@@ -332,7 +334,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      */
     private function set_guided_tour_status_open() {
 
-        if ( get_option( 'ta_guided_tour_status' ) )
+        if ( ! current_user_can('activate_plugins') || get_option( 'ta_guided_tour_status' ) )
             return;
 
         update_option( 'ta_guided_tour_status' , 'open' );
@@ -352,7 +354,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
      *
      * @since 3.0.0
      * @access public
-     * @implements ThirstyAffiliates\Interfaces\Activatable_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Activatable_Interface
      */
     public function activate() {
 
@@ -374,7 +376,7 @@ class Guided_Tour implements Model_Interface , Activatable_Interface , Initiable
     /**
      * Execute model.
      *
-     * @implements ThirstyAffiliates\Interfaces\Model_Interface
+     * @implements \ThirstyAffiliates\Interfaces\Model_Interface
      *
      * @since 3.0.0
      * @access public

@@ -142,8 +142,8 @@ export default function PieChart( { card, config } ) {
 							<td style={ { color: PRIMARYS[ i ] } }>
 								{ hasData
 									? ( ( datum.value / total ) * 100 ).toFixed(
-											0
-									  ) + '%'
+										0
+									) + '%'
 									: '—' }
 							</td>
 						</tr>

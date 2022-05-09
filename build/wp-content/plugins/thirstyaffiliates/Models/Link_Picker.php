@@ -149,7 +149,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         if ( ! $this->_helper_functions->is_page_builder_active() || ! current_user_can( 'edit_posts' ) )
             return;
-        
+
         add_filter( 'mce_external_plugins' , array( $this , 'load_thirsty_mce_plugin' ) , 99999 );
         add_filter( 'mce_buttons' , array( $this , 'register_mce_buttons' ) , 99 );
     }
@@ -197,7 +197,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
     /**
      * Register WP Editor style.
-     * 
+     *
      * @since 3.4.0
      * @access public
      */
@@ -208,7 +208,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
     /**
      * Register WP Editor style via mce_css filter (for frontend editors).
-     * 
+     *
      * @since 3.4.0
      * @access public
      */
@@ -240,7 +240,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
      * @param bool   $advanced        Boolean check if its advanced or not.
      * @param int    $post_id         ID of the post currently being edited.
      * @param string $result_markup   Search Affiliate Links result markup.
-     * @return Search Affiliate Links result markup
+     * @return string Search Affiliate Links result markup
      */
     public function search_affiliate_links_result_markup( $affiliate_links , $advance = false , $post_id = 0 ,  $result_markup = '' ) {
 
@@ -277,7 +277,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
                                 $images_markup .= '<span class="image"><img src="'. $image .'" width="75" height="75" data-imgid="' . $image . '" data-type="image"></span>';
                             else
                                 $images_markup .= '<span class="image">' . wp_get_attachment_image( $image , array( 75 , 75 ) , false , array( 'data-imgid' => $image , 'data-type' => 'image' ) ) . '</span>';
-                            
+
                         }
 
                         $images_markup .= '</span>';
@@ -296,12 +296,12 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
                                             data-rel="' . trim( esc_attr( $rel ) ) . '"
                                             data-target="' . esc_attr( $target ) . '"
                                             data-other-atts="' . $other_atts . '">
-                                            <span class="name">' . mb_strimwidth( $thirstylink->get_prop( 'name' ) , 0 , 44 , "..." ) . '</span>
-                                            <span class="slug">[' . mb_strimwidth( $thirstylink->get_prop( 'slug' ) , 0 , 35 , "..." ) . ']</span>
+                                            <span class="name">' . esc_html( mb_strimwidth( $thirstylink->get_prop( 'name' ) , 0 , 44 , "..." ) ) . '</span>
+                                            <span class="slug">[' . esc_html ( mb_strimwidth( $thirstylink->get_prop( 'slug' ) , 0 , 35 , "..." ) ) . ']</span>
                                             <span class="actions">
-                                                <button type="button" data-type="normal" class="button insert-link-button dashicons dashicons-admin-links" data-tip="' . __( 'Insert link' , 'thirstyaffiliates' ) . '"></button>
-                                                <button type="button" data-type="shortcode" class="button insert-shortcode-button dashicons dashicons-editor-code" data-tip="' . __( 'Insert shortcode' , 'thirstyaffiliates' ) . '"></button>
-                                                <button type="button" data-type="image" class="button insert-image-button dashicons dashicons-format-image" data-tip="' . __( 'Insert image' , 'thirstyaffiliates' ) . '"></button>
+                                                <button type="button" data-type="normal" class="button insert-link-button dashicons dashicons-admin-links" data-tip="' . esc_attr__( 'Insert link' , 'thirstyaffiliates' ) . '"></button>
+                                                <button type="button" data-type="shortcode" class="button insert-shortcode-button dashicons dashicons-editor-code" data-tip="' . esc_attr__( 'Insert shortcode' , 'thirstyaffiliates' ) . '"></button>
+                                                <button type="button" data-type="image" class="button insert-image-button dashicons dashicons-format-image" data-tip="' . esc_attr__( 'Insert image' , 'thirstyaffiliates' ) . '"></button>
                                             </span>
                                             ' . $images_markup . '
                                         </li>';
@@ -315,7 +315,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
                                            data-link-id="' . esc_attr( $thirstylink->get_id() ) . '"
                                            data-link-insertion-type="' . esc_attr( $this->_helper_functions->get_option( 'ta_link_insertion_type' , 'link' ) ) . '"
                                            data-other-atts="' . $other_atts . '">';
-                    $result_markup .= '<strong>' . $link_id . '</strong> : <span>' . $thirstylink->get_prop( 'name' ) . '</span></li>';
+                    $result_markup .= '<strong>' . $link_id . '</strong> : <span>' . esc_html( $thirstylink->get_prop( 'name' ) ) . '</span></li>';
 
                 }
 
@@ -338,17 +338,24 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( $this->_helper_functions->get_capability_for_interface('thirstylink_list', 'edit_posts') ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_POST[ 'keyword' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
-            $paged           = ( isset( $_POST[ 'paged' ] ) && $_POST[ 'paged' ] ) ? $_POST[ 'paged' ] : 1;
-            $category        = ( isset( $_POST[ 'category' ] ) && $_POST[ 'category' ] ) ? esc_attr( $_POST[ 'category' ] ) : '';
+            $paged           = ( isset( $_POST[ 'paged' ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ 'paged' ] ) ): 1;
+            $paged           = $paged  ? $paged  : 1;
+            $category        = ( isset( $_POST[ 'category' ] ) ) ?  sanitize_text_field( wp_unslash( $_POST[ 'category' ] ) ) : '';
+
+            //phpcs:ignore WordPress.Security
             $exclude         = ( isset( $_POST[ 'exclude' ] ) && is_array( $_POST[ 'exclude' ] ) && ! empty( $_POST[ 'exclude' ] ) ) ? $_POST[ 'exclude' ] : array();
-            $is_gutenberg    = isset( $_POST[ 'gutenberg' ] ) && $_POST[ 'gutenberg' ];
-            $with_images     = isset( $_POST[ 'with_images' ] ) && $_POST[ 'with_images' ];
-            $affiliate_links = $this->_helper_functions->search_affiliate_links_query( $_POST[ 'keyword' ] , $paged , $category , $exclude , $is_gutenberg , $with_images );
-            $advance         = ( isset( $_POST[ 'advance' ] ) && $_POST[ 'advance' ] ) ? true : false;
+            $exclude         = map_deep( $exclude,'intval');
+
+            $is_gutenberg    = isset( $_POST[ 'gutenberg' ] ) && $_POST[ 'gutenberg' ]; //phpcs:ignore WordPress.Security
+            $with_images     = isset( $_POST[ 'with_images' ] ) && $_POST[ 'with_images' ]; //phpcs:ignore WordPress.Security
+            $affiliate_links = $this->_helper_functions->search_affiliate_links_query( sanitize_text_field( wp_unslash( $_POST[ 'keyword' ] ) ), $paged , $category , $exclude , $is_gutenberg , $with_images );
+            $advance         = ( isset( $_POST[ 'advance' ] ) && $_POST[ 'advance' ] ) ? true : false; //phpcs:ignore WordPress.Security
             $post_id         = isset( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
 
             if ( $is_gutenberg ) {
@@ -357,7 +364,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
                 $result_markup = $this->search_affiliate_links_result_markup( $affiliate_links , $advance , $post_id );
                 $response      = array( 'status' => 'success' , 'search_query_markup' => $result_markup , 'count' => count( $affiliate_links ) );
             }
-            
+
         }
 
         @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
@@ -380,7 +387,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
         $post_id         = isset( $_REQUEST[ 'post_id' ] ) ? intval( $_REQUEST[ 'post_id' ] ) : 0;
         $affiliate_links = $this->_helper_functions->search_affiliate_links_query();
         $result_markup   = $this->search_affiliate_links_result_markup( $affiliate_links , true , $post_id );
-        $html_editor     = isset( $_REQUEST[ 'html_editor' ] ) ? sanitize_text_field( $_REQUEST[ 'html_editor' ] ) : false;
+        $html_editor     = isset( $_REQUEST[ 'html_editor' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'html_editor' ] ) ) : false;
 
         wp_enqueue_script('editor');
 		wp_dequeue_script('jquery-ui-core');
@@ -388,10 +395,14 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 		wp_dequeue_script('admin-scripts');
         wp_enqueue_style( 'jquery_tiptip' , $this->_constants->CSS_ROOT_URL() . 'lib/jquery-tiptip/jquery-tiptip.css' , array() , $this->_constants->VERSION() , 'all' );
         wp_enqueue_style( 'ta_advance_link_picker_css' , $this->_constants->JS_ROOT_URL() . 'app/advance_link_picker/dist/advance-link-picker.css' , array( 'dashicons' ) , $this->_constants->VERSION() , 'all' );
-        wp_enqueue_style( 'selectize' , $this->_constants->JS_ROOT_URL() . 'lib/selectize/selectize.default.css' , array() , Plugin_Constants::VERSION , 'all' );        
+        wp_enqueue_style( 'selectize' , $this->_constants->JS_ROOT_URL() . 'lib/selectize/selectize.default.css' , array() , Plugin_Constants::VERSION , 'all' );
         wp_enqueue_script( 'jquery_tiptip' , $this->_constants->JS_ROOT_URL() . 'lib/jquery-tiptip/jquery.tipTip.min.js' , array() , $this->_constants->VERSION() );
         wp_enqueue_script( 'ta_advance_link_picker_js' , $this->_constants->JS_ROOT_URL() . 'app/advance_link_picker/dist/advance-link-picker.js' , array( 'jquery_tiptip' ) , $this->_constants->VERSION() );
-        wp_enqueue_script( 'selectize' , $this->_constants->JS_ROOT_URL() . 'lib/selectize/selectize.min.js' , array() , Plugin_Constants::VERSION );        
+        wp_enqueue_script( 'selectize' , $this->_constants->JS_ROOT_URL() . 'lib/selectize/selectize.min.js' , array() , Plugin_Constants::VERSION );
+
+        wp_localize_script( 'ta_advance_link_picker_js', 'ta_advance_link_picker_js_params', array(
+            'get_image_markup_nonce' => wp_create_nonce( 'ta_get_image_markup' ),
+        ));
 
         include( $this->_constants->VIEWS_ROOT_PATH() . 'linkpicker/advance-link-picker.php' );
 
@@ -409,18 +420,22 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( apply_filters( 'ta_enable_advance_link_picker' , 'edit_posts' ) ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_get_image_markup', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_REQUEST[ 'imgid' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
-
+            // phpcs:ignore WordPress.Security
             if ( filter_var( $_REQUEST[ 'imgid' ] , FILTER_VALIDATE_URL ) ) {
 
-                $image_url = esc_url( $_REQUEST[ 'imgid' ] );
+                $image_url = esc_url( $_REQUEST[ 'imgid' ] ); // phpcs:ignore WordPress.Security
                 $image_markup = '<img src="' . $image_url . '">';
 
             } else {
 
-                $image_id     = (int) sanitize_text_field( $_REQUEST[ 'imgid' ] );
+                $image_id     = (int) sanitize_text_field( wp_unslash( $_REQUEST[ 'imgid' ] ) );
                 $image_markup = wp_get_attachment_image( $image_id , 'full' );
             }
 
@@ -456,11 +471,11 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         $post_id               = isset( $_REQUEST[ 'post_id' ] ) ? intval( $_REQUEST[ 'post_id' ] ) : 0;
         $redirect_types        = $this->_constants->REDIRECT_TYPES();
-        $selection             = sanitize_text_field( $_REQUEST[ 'selection' ] );
+        $selection             = isset( $_REQUEST[ 'selection' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'selection' ] ) ) : '';
         $default_redirect_type = get_option( 'ta_link_redirect_type' , '301' );
         $global_no_follow      = get_option( 'ta_no_follow' ) == 'yes' ? 'yes' : 'no';
         $global_new_window     = get_option( 'ta_new_window' ) == 'yes' ? 'yes' : 'no';
-        $html_editor           = isset( $_REQUEST[ 'html_editor' ] ) ? sanitize_text_field( $_REQUEST[ 'html_editor' ] ) : false;
+        $html_editor           = isset( $_REQUEST[ 'html_editor' ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ 'html_editor' ] ) ) : false;
         $categories            = get_terms( Plugin_Constants::AFFILIATE_LINKS_TAX , array(
             'hide_empty' => false,
         ) );
@@ -491,14 +506,20 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         $thirstylink = new Affiliate_Link();
 
-        // set Properties
-        $thirstylink->set_prop( 'name' , sanitize_text_field( $_POST[ 'ta_link_name' ] ) );
-        $thirstylink->set_prop( 'destination_url' , esc_url_raw( $_POST[ 'ta_destination_url' ] ) );
-        $thirstylink->set_prop( 'no_follow' , sanitize_text_field( $_POST[ 'ta_no_follow' ] ) );
-        $thirstylink->set_prop( 'new_window' , sanitize_text_field( $_POST[ 'ta_new_window' ] ) );
-        $thirstylink->set_prop( 'redirect_type' , sanitize_text_field( $_POST[ 'ta_redirect_type' ] ) );
+        $ta_link_name             = isset( $_POST[ 'ta_link_name' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'ta_link_name' ] ) ) : '';
+        $ta_destination_url       = isset( $_POST[ 'ta_destination_url' ] ) ? esc_url_raw( $_POST[ 'ta_destination_url' ] ) : ''; // phpcs:ignore WordPress.Security
+        $ta_no_follow             = isset( $_POST[ 'ta_no_follow' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'ta_no_follow' ] ) ) : '';
+        $ta_new_window            = isset( $_POST[ 'ta_new_window' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'ta_new_window' ] ) ) : '';
+        $ta_redirect_type         = isset( $_POST[ 'ta_redirect_type' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'ta_redirect_type' ] ) ) : '';
 
-        add_action( 'ta_save_quick_add_affiliate_link' , $thirstylink );
+        // set Properties
+        $thirstylink->set_prop( 'name' , $ta_link_name );
+        $thirstylink->set_prop( 'destination_url' , $ta_destination_url ); 
+        $thirstylink->set_prop( 'no_follow' , $ta_no_follow );
+        $thirstylink->set_prop( 'new_window' , $ta_new_window );
+        $thirstylink->set_prop( 'redirect_type' , $ta_redirect_type );
+
+        do_action( 'ta_save_quick_add_affiliate_link' , $thirstylink );
 
         // save affiliate link
         $thirstylink->save();
@@ -538,12 +559,16 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
         if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
+        elseif ( ! current_user_can( apply_filters( 'ta_enable_quick_add_affiliate_link' , 'publish_posts' ) ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'You do not have permission to do this' , 'thirstyaffiliates' ) );
+        elseif ( ! check_ajax_referer( 'ta_process_quick_add_affiliate_link', false, false ) )
+            $response = array( 'status' => 'fail' , 'error_msg' => __( 'Security Check Failed' , 'thirstyaffiliates' ) );
         elseif ( ! isset( $_REQUEST[ 'ta_link_name' ] ) || ! isset( $_REQUEST[ 'ta_destination_url' ] ) || ! isset( $_REQUEST[ 'ta_redirect_type' ] ) )
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Missing required post data' , 'thirstyaffiliates' ) );
         else {
 
             $thirstylink = $this->process_quick_add_affiliate_link();
-            $post_id     = isset( $_POST[ 'post_id' ] ) ? intval( sanitize_text_field( $_POST[ 'post_id' ] ) ) : 0;
+            $post_id     = isset( $_POST[ 'post_id' ] ) ? intval( sanitize_text_field( wp_unslash( $_POST[ 'post_id' ] ) ) ) : 0;
             $rel         = $thirstylink->is( 'no_follow' ) ? 'nofollow' : '';
             $target      = $thirstylink->is( 'new_window' ) ? '_blank' : '';
             $class       = ( get_option( 'ta_disable_thirsty_link_class' ) !== "yes" ) ? 'thirstylink' : '';
@@ -585,7 +610,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
     /**
      * AJAX display shortcode editor form.
-     * 
+     *
      * @since 3.4.0
      * @access public
      */
@@ -613,11 +638,11 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
 
     /**
      * Transform Gutenberg affiliate link <ta> tags to <a> tags.
-     * 
+     *
      * @since 3.6
      * @access public
      *
-     * @global WP_Post $post WP_Post object of currently loaded post.
+     * @global \WP_Post $post WP_Post object of currently loaded post.
      *
      * @param string $content WP_Post content.
      * @return string Filtered WP_Post content.
@@ -629,7 +654,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
         if ( isset( $matches[0] ) && ! empty( $matches[0] ) ) {
 
             $diff = 0;
-            
+
             foreach ( $matches[0] as $match ) {
 
                 $link_id = $this->_helper_functions->get_string_between( $match[0] , 'linkid="' , '"' );

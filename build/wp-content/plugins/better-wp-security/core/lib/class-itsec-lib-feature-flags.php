@@ -2,9 +2,6 @@
 
 class ITSEC_Lib_Feature_Flags {
 
-	/** @var bool */
-	private static $loaded = false;
-
 	/** @var array */
 	private static $flags = array();
 
@@ -86,8 +83,6 @@ class ITSEC_Lib_Feature_Flags {
 	 * @return array
 	 */
 	public static function get_registered_flags() {
-		self::load();
-
 		$flags = array();
 
 		foreach ( self::$flags as $flag => $_ ) {
@@ -249,8 +244,6 @@ class ITSEC_Lib_Feature_Flags {
 	 * @return array|null
 	 */
 	public static function get_flag_config( $flag ) {
-		self::load();
-
 		if ( ! isset( self::$flags[ $flag ] ) ) {
 			return null;
 		}
@@ -262,12 +255,5 @@ class ITSEC_Lib_Feature_Flags {
 		}
 
 		return $config;
-	}
-
-	private static function load() {
-		if ( ! self::$loaded ) {
-			ITSEC_Modules::load_module_file( 'feature-flags.php', ':active' );
-			self::$loaded = true;
-		}
 	}
 }

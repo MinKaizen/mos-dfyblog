@@ -35,7 +35,7 @@ export function isLocalGroup( state, id ) {
  * Gets the type of a matchable.
  *
  * @param {Object} state
- * @param {string} id The matchable id.
+ * @param {string} id    The matchable id.
  * @return string The matchable type.
  */
 export const getMatchableType = createRegistrySelector(
@@ -242,6 +242,10 @@ export const getEditedGroupsBySetting = createRegistrySelector(
 				moduleSettings
 			) ) {
 				for ( const [ setting, value ] of Object.entries( settings ) ) {
+					if ( ! clone[ module ]?.[ setting ] ) {
+						continue;
+					}
+
 					if ( value ) {
 						clone[ module ][ setting ].push( groupId );
 					} else {
@@ -271,7 +275,7 @@ export const getDirtyGroupSettings = createSelector(
 /**
  * Checks if a group has edits or edited settings.
  *
- * @param {Object} state The state object.
+ * @param {Object} state   The state object.
  * @param {string} groupId The group id to check.
  * @return {boolean} True if dirty.
  */
@@ -314,10 +318,10 @@ export function getBulkSettingEdit( state, module, setting ) {
 /**
  * Get the value for a bulk edited setting.
  *
- * @param {Object} state
+ * @param {Object}        state
  * @param {Array<Object>} groupIds
- * @param {string} module
- * @param {string} setting
+ * @param {string}        module
+ * @param {string}        setting
  * @return {null|boolean} The setting value.
  */
 export const getBulkSettingValue = createRegistrySelector(
@@ -351,7 +355,7 @@ export const getBulkSettingValue = createRegistrySelector(
 /**
  * Are bulk edits being saved.
  *
- * @param {Object} state The state object.
+ * @param {Object}        state    The state object.
  * @param {Array<string>} groupIds The list of group ids.
  * @return {boolean} True if saving.
  */
@@ -376,7 +380,7 @@ export const getAvailableGroups = createRegistrySelector( ( select ) => () => {
 } );
 
 const _toNavIds = memize(
-	( matchables, resolving, localGroups ) => {
+	( matchables, resolving, localGroups, toDelete ) => {
 		if ( resolving && ! matchables.length ) {
 			return null;
 		}
@@ -389,7 +393,8 @@ const _toNavIds = memize(
 		return userGroups
 			.map( ( matchable ) => matchable.id )
 			.concat( localGroups )
-			.concat( generic.map( ( matchable ) => matchable.id ) );
+			.concat( generic.map( ( matchable ) => matchable.id ) )
+			.filter( ( id ) => ! toDelete.includes( id ) );
 	},
 	{ maxSize: 1 }
 );
@@ -408,14 +413,27 @@ export const getMatchableNavIds = createRegistrySelector( ( select ) => () => {
 	const localGroups = select(
 		'ithemes-security/user-groups-editor'
 	).getLocalGroupIds();
+	const toDelete = select(
+		'ithemes-security/user-groups-editor'
+	).getGroupsMarkedForDeletion();
 
-	return _toNavIds( matchables, resolving, localGroups );
+	return _toNavIds( matchables, resolving, localGroups, toDelete );
 } );
+
+/**
+ * Gets the list of group ids that are marked to be deleted.
+ *
+ * @param {Object} state The state object.
+ * @return {Array<string>} List of group ids.
+ */
+export function getGroupsMarkedForDeletion( state ) {
+	return state.markedForDelete;
+}
 
 /**
  * Gets the last error associated with a group.
  *
- * @param {Object} state The state object.
+ * @param {Object} state   The state object.
  * @param {string} groupId The group id to check.
  * @return {Object|undefined} The error, if any.
  */

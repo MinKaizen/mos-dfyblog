@@ -27,7 +27,7 @@ const { Slot: ToolbarSlot, Fill: ToolbarFill } = createSlotFill( 'Toolbar' );
 
 export { ToolbarFill };
 
-export default function () {
+export default function() {
 	const { root } = useParams();
 	const dashboardUrl = useGlobalNavigationUrl( 'dashboard' );
 	const isSmall = useMediaQuery( '(max-width: 600px)' );
@@ -78,7 +78,7 @@ export default function () {
 							</>
 						) }
 						<ToolbarButton
-							icon="layout"
+							icon="shield-alt"
 							href={ dashboardUrl }
 							text={ __( 'Dashboard', 'better-wp-security' ) }
 						/>

@@ -40,6 +40,8 @@ export default function Notification( {
 	isDirty,
 	onSubmit,
 	onUndo,
+	saveLabel = __( 'Save All', 'better-wp-security' ),
+	allowCleanSave = false,
 	apiError,
 } ) {
 	const isEnabled = ! notification.optional || settings.enabled;
@@ -51,8 +53,8 @@ export default function Notification( {
 				description={ notification.l10n.description }
 			/>
 			<PrimaryForm
-				saveLabel={ __( 'Save All', 'better-wp-security' ) }
-				saveDisabled={ ! isDirty }
+				saveLabel={ saveLabel }
+				saveDisabled={ ! isDirty && ! allowCleanSave }
 				isSaving={ isSaving }
 				onSubmit={ onSubmit }
 				apiError={ apiError }
@@ -297,7 +299,7 @@ function Recipients( { notification, settings, onChange, usersAndRoles } ) {
 								'Select which users should be emailed.',
 								'better-wp-security'
 							) }
-							value={ settings.user_list }
+							value={ settings.user_list || [] }
 							onChange={ ( userList ) =>
 								onChange( { ...settings, user_list: userList } )
 							}

@@ -43,6 +43,10 @@ a.itsec-selectable-card {
         box-shadow: none;
         outline: none;
     }
+
+    .components-card {
+        border-color: $light-gray-500;
+    }
 }
 
 button.itsec-selectable-card {

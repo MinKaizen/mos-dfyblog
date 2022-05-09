@@ -17,9 +17,10 @@ class Consent extends InstallerStep implements InstallerStepInterface
 
     protected function renderContent()
     {
+        global $gdpr;
         $isRegistrationOpen = get_option('users_can_register');
         $isCommentsEnabled = class_exists('Disable_Comments') ? false : true;
-        $privacyToolsPageUrl = get_permalink(gdpr('options')->get('tools_page'));
+        $privacyToolsPageUrl = get_permalink($gdpr->Options->get('tools_page'));
         $hasGravityForms = class_exists('\GFForms');
         $hasCF7 = class_exists('\WPCF7');
         $hasFrm = class_exists('\FrmHooksController');
