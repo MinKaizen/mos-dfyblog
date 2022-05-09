@@ -94,7 +94,6 @@ function main() {
   # Activate wmdb
   msg "Activating wmdb..."
   wp plugin activate wp-migrate-db-pro
-  wp plugin activate wp-migrate-db-pro-cli
   wp migrate setting update license "$wmdb_license" --user=1
 
   # Change table prefix to wp_
@@ -126,7 +125,6 @@ function main() {
   # Remove plugins
   msg "Removing wmdb and wp-cli-rename-db-prefix"
   wp plugin deactivate --uninstall wp-migrate-db-pro
-  wp plugin deactivate --uninstall wp-migrate-db-pro-cli
   wp plugin deactivate --uninstall wp-cli-rename-db-prefix
 
   # Clear cache
