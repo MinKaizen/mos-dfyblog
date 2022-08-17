@@ -18,12 +18,12 @@
 <div class="form_row" style="display:block" > 
                 <div class="col_6">
                     <div class="form-group">
-                        <input type="text" class="form-control"  placeholder="First Name" id="donotsell_first_name" name="donotsell_first_name" value="<?= ($first_name !='') ? esc_html($first_name):''; ?>" required/>
+                        <input type="text" class="form-control"  placeholder=<?=__("First Name","gdpr-framework")?> id="donotsell_first_name" name="donotsell_first_name" value="<?= ($first_name !='') ? esc_html($first_name):''; ?>" required/>
                     </div>
                 </div>
                 <div class="col_6">
                     <div class="form-group">
-                        <input type="text" class="form-control"  placeholder="Last Name" id="donotsell_last_name" name="donotsell_last_name" value="<?= ($last_name !='') ? esc_html($last_name):''; ?>" required/>
+                        <input type="text" class="form-control"  placeholder=<?=__("Last Name","gdpr-framework")?> id="donotsell_last_name" name="donotsell_last_name" value="<?= ($last_name !='') ? esc_html($last_name):''; ?>" required/>
                         
                     </div>
                 </div>

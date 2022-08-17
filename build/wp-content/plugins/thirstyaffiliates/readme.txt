@@ -5,7 +5,7 @@ Tags: affiliate, link, affiliate link management, link cloaker, link redirect, s
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.9
-Stable tag: 3.10.6
+Stable tag: 3.10.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -158,6 +158,21 @@ See our [Knowledge Base](https://thirstyaffiliates.com/knowledge-base/?utm_sourc
 5. Settings page
 
 == Changelog ==
+
+= 3.10.11 =
+* Bug Fix: Security fixes
+
+= 3.10.10 =
+* Bug Fix: Security fixes
+
+= 3.10.9 =
+* Bug Fix: Security fixes
+
+= 3.10.8 =
+* Bug Fix: Security fixes
+
+= 3.10.7 =
+* Bug Fix: Fatal error on PHP versions lower than 7.3
 
 = 3.10.6 =
 * Bug Fix: Security fixes

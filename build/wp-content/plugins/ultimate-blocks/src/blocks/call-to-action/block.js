@@ -9,7 +9,12 @@ import {
 	updateFrom,
 } from "./oldVersions";
 
-import { blockControls, inspectorControls, editorDisplay } from "./components";
+import {
+	blockControls,
+	inspectorControls,
+	editorDisplay,
+	CallToAction,
+} from "./components";
 import { mergeRichTextArray, upgradeButtonLabel } from "../../common";
 
 const { __ } = wp.i18n;
@@ -17,7 +22,7 @@ const { registerBlockType, createBlock } = wp.blocks;
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 
 /**
  * Register: aa Gutenberg Block.
@@ -160,12 +165,13 @@ registerBlockType("ub/call-to-action", {
 			replaceBlock: (dispatch("core/block-editor") || dispatch("core/editor"))
 				.replaceBlock,
 		})),
-		withState({ editable: "" }),
 	])(function (props) {
 		const { isSelected, block, replaceBlock } = props;
 
+		const [editable, setEditable] = useState("");
+
 		return [
-			isSelected && blockControls(props),
+			isSelected && blockControls({ ...props, editable }),
 
 			isSelected && inspectorControls(props),
 
@@ -198,7 +204,7 @@ registerBlockType("ub/call-to-action", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, setEditable })}
 			</div>,
 		];
 	}),
@@ -312,7 +318,6 @@ registerBlockType("ub/call-to-action-block", {
 	],
 	attributes,
 	edit: compose([
-		withState({ editable: "" }),
 		withSelect((select, ownProps) => {
 			const { getBlock, getClientIdsWithDescendants } =
 				select("core/block-editor") || select("core/editor");
@@ -323,34 +328,6 @@ registerBlockType("ub/call-to-action-block", {
 				getClientIdsWithDescendants,
 			};
 		}),
-	])(function (props) {
-		const {
-			attributes: { blockID },
-			isSelected,
-			block,
-			getBlock,
-			getClientIdsWithDescendants,
-			setAttributes,
-		} = props;
-
-		if (
-			blockID === "" ||
-			getClientIdsWithDescendants().some(
-				(ID) =>
-					"blockID" in getBlock(ID).attributes &&
-					getBlock(ID).attributes.blockID === blockID
-			)
-		) {
-			setAttributes({ blockID: block.clientId });
-		}
-
-		return [
-			isSelected && blockControls(props),
-
-			isSelected && inspectorControls(props),
-
-			<div className={props.className}>{editorDisplay(props)}</div>,
-		];
-	}),
+	])(CallToAction),
 	save: () => null,
 });

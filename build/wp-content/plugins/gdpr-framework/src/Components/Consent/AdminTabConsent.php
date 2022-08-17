@@ -191,6 +191,8 @@ class AdminTabConsent extends AdminTab
      */
     public function getDefaultConsentInfo()
     {
+        // this is merely a one time initializtion, this string can be changed in the Admin Consent tab and is saved into the database with 
+        // the key of gdpr_consent_info
         return __('To use this website, you accepted our Privacy Policy. If you wish to withdraw your acceptance, please use the "Delete my data" button below.', 'gdpr-framework');
 	}
 	public function renderConsentUntil() {

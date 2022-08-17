@@ -2,8 +2,8 @@
 Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: blocks, gutenberg blocks, gutenberg, editor
 Requires at least: 5.0
-Tested up to: 5.9
-Stable tag: 2.4.15
+Tested up to: 6.0
+Stable tag: 2.5.2
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -131,6 +131,46 @@ That's it. You're done!
 3. Tabbed Content Block.
 
 == Changelog ==
+
+= 2.5.2 - July 25th, 2022 =
+
+* Table of Contents - Allow customizing text for show/hide button.
+* Styled List - Fix issue with selecting icon color with Astra's color palette.
+* Tabbed Content - Remove placeholder text from empty tab innerblocks.
+* Tabbed Content - Use tab number for default and placeholder tab name.
+* Tabbed Content - Add icons for tab layout selector buttons.
+* Other - Fix issue with initialization of PDF Embedder instances (and potentially other content embeds) within Content Filter, Content Toggle, Expand, and Tabbed Content.
+
+= 2.5.1 - June 27th, 2022 =
+
+* Fix: Icons missing issue in some blocks.
+
+= 2.5.0 - June 24th, 2022 =
+
+* Progress Bar - Copy settings controls to inspector.
+* Progress Bar - Match background bar height with main height.
+* Progress Bar - Set default value to 75.
+* Progress Bar - Add option to set background bar color.
+* Progress Bar - Allow resizing circular progress bar.
+* Advanced Heading - Add heading level selector to block toolbar.
+* Advanced Heading - Set default heading level to h2.
+* Advanced Heading - Automatically make paragraph block when adding empty new line from advanced heading, and a separate advanced heading block when pressing enter within advanced heading content.
+* Button - Remove minimum height from buttons while in editor.
+* Content Toggle - Fix attribute rendering in frontend.
+* Other - Update FontAwesome to 6.1.
+
+= 2.4.17 =
+
+* Compatibility with WordPress 6.0.
+* Content Toggle - Make turning on individualCollapse work properly when showOnlyOne is on.
+* Content Toggle - Force all content toggle panels to show when prevent collapse is enabled.
+* Expand - Prevent deletion of Expand Inner Portion block.
+* Tabbed Content - Prevent deletion of Tab inner block.
+* Other - Limit allowed media types for media inputs in Review, Styled Box, and Testimonial blocks to images.
+
+= 2.4.16 =
+
+* Button - Option to convert core buttons to Ultimate Blocks Buttons (Improved).
 
 = 2.4.15 =
 

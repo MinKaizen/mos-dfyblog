@@ -2,7 +2,7 @@
 
 <div class="scanned-inserted-status">
     <button id="inserted-link-scan-trigger" class="button-primary" type="button"><?php esc_html_e( 'Start Scan' , 'thirstyaffiliates' ); ?></button>
-    <span class="last-scanned"><?php echo wp_kses_post( $last_scanned_txt ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+    <span class="last-scanned"><?php echo wp_kses_post( $last_scanned_txt ); ?></span>
 </div>
 
 <div class="inserted-into-table">
@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php echo $inserted_into_rows_html; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+            <?php echo wp_kses_post( $inserted_into_rows_html ); ?>
         </tbody>
     </table>
 </div>

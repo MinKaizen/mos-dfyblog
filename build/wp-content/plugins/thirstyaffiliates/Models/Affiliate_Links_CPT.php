@@ -561,15 +561,15 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
         $inserted_to_str = implode( ',' , $inserted_to );
 
         // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $results = $wpdb->get_results( 
-            "SELECT ID , post_title , post_type FROM $wpdb->posts WHERE ID IN ( $inserted_to_str )",  
+        $results = $wpdb->get_results(
+            "SELECT ID , post_title , post_type FROM $wpdb->posts WHERE ID IN ( $inserted_to_str )"
         );
 
         ob_start();
         foreach ( $results as $object ) : ?>
             <tr>
                 <td class="id"><?php echo esc_html( $object->ID ); ?></td>
-                <td class="title"><?php echo mb_strimwidth( esc_html( $object->post_title ) , 0 , 60 , "..." ); // phpcs:ignore WordPress.Security.EscapeOutput  ?></td>
+                <td class="title"><?php echo esc_html( mb_strimwidth( $object->post_title , 0 , 60 , "..." ) ); ?></td>
                 <td class="post-type"><?php echo esc_html( $object->post_type ); ?></td>
                 <td class="actions">
                     <a class="view" href="<?php echo esc_url( get_permalink( $object->ID ) ); ?>" target="_blank"><span class="dashicons dashicons-admin-links"></span></a>
@@ -753,7 +753,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
 
         $post_type = get_post_type();
         if ( !$post_type && isset( $_GET[ 'post_type' ] ) )
-            $post_type = $_GET[ 'post_type' ]; // phpcs:ignore WordPress.Security
+            $post_type = sanitize_text_field( wp_unslash( $_GET[ 'post_type' ] ) );
 
         if ( ! is_admin() || $post_type !== Plugin_Constants::AFFILIATE_LINKS_CPT )
             return;
@@ -966,7 +966,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
             $response = array( 'status' => 'success' , 'category_slug' => $category->slug );
         }
 
-        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) ); 
+        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
         echo wp_json_encode( $response );
         wp_die();
     }
@@ -1003,7 +1003,7 @@ class Affiliate_Links_CPT implements Model_Interface , Initiable_Interface {
             );
         }
 
-        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) ); 
+        @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
         echo wp_json_encode( $response );
         wp_die();
     }

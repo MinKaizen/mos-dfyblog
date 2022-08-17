@@ -2,9 +2,9 @@
 Contributors: Data443
 Tags: gdpr, compliance, security, privacy, wordpress gdpr, eu privacy directive, eu cookie law, california privacy law, privacy law, general data protection, ccpa, gdpr law
 Requires at least: 4.7
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: trunk
+Stable tag: 2.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -117,6 +117,11 @@ We are also planning to add other important privacy-related features missing fro
 5. GDPR FRAMEWORK PRIVACY TOOL
 
 == Change log ==
+
+= 2.0.3 (7/27/2022) =
+
+* FRAM-343 Fix Translation problems with some Polish strings
+* FRAM-354 Fix a bug that affected the html download when YoastSEO plugin was active.
 
 = 2.0.2 (4/19/2022) =
 

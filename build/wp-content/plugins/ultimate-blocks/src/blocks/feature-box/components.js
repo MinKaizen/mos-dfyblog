@@ -23,7 +23,7 @@ export const blockControls = (props) => {
 	} = attributes;
 
 	const selectedTextAlignment = () => {
-		switch ("editable") {
+		switch (editable) {
 			case "title1":
 				return title1Align;
 			case "body1":
@@ -115,7 +115,7 @@ export const blockControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { isSelected, setState, setAttributes } = props;
+	const { isSelected, setEditable, setAttributes } = props;
 
 	const {
 		column,
@@ -155,7 +155,7 @@ export const editorDisplay = (props) => {
 									imgOneAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgOneID}
 							render={({ open }) => (
 								<Button
@@ -197,7 +197,7 @@ export const editorDisplay = (props) => {
 					value={columnOneTitle}
 					onChange={(value) => setAttributes({ columnOneTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "title1" })}
+					unstableOnFocus={() => setEditable("title1")}
 				/>
 				<RichText
 					tagName="p"
@@ -206,7 +206,7 @@ export const editorDisplay = (props) => {
 					value={columnOneBody}
 					onChange={(value) => setAttributes({ columnOneBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "body1" })}
+					unstableOnFocus={() => setEditable("body1")}
 				/>
 			</div>
 			<div className="ub_feature_2">
@@ -220,7 +220,7 @@ export const editorDisplay = (props) => {
 									imgTwoAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgTwoID}
 							render={({ open }) => (
 								<Button
@@ -262,7 +262,7 @@ export const editorDisplay = (props) => {
 					value={columnTwoTitle}
 					onChange={(value) => setAttributes({ columnTwoTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "title2" })}
+					unstableOnFocus={() => setEditable("title2")}
 				/>
 				<RichText
 					tagName="p"
@@ -271,7 +271,7 @@ export const editorDisplay = (props) => {
 					value={columnTwoBody}
 					onChange={(value) => setAttributes({ columnTwoBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "body2" })}
+					unstableOnFocus={() => setEditable("body2")}
 				/>
 			</div>
 			<div className="ub_feature_3">
@@ -285,7 +285,7 @@ export const editorDisplay = (props) => {
 									imgThreeAlt: img.alt,
 								})
 							}
-							type="image"
+							allowedTypes={["image"]}
 							value={imgThreeID}
 							render={({ open }) => (
 								<Button
@@ -327,7 +327,7 @@ export const editorDisplay = (props) => {
 					value={columnThreeTitle}
 					onChange={(value) => setAttributes({ columnThreeTitle: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "title3" })}
+					unstableOnFocus={() => setEditable("title3")}
 				/>
 				<RichText
 					tagName="p"
@@ -336,7 +336,7 @@ export const editorDisplay = (props) => {
 					value={columnThreeBody}
 					onChange={(value) => setAttributes({ columnThreeBody: value })}
 					keepPlaceholderOnFocus={true}
-					unstableOnFocus={() => setState({ editable: "body3" })}
+					unstableOnFocus={() => setEditable("body3")}
 				/>
 			</div>
 		</div>

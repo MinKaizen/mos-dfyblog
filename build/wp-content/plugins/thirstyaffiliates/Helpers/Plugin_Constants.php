@@ -27,7 +27,7 @@ class Plugin_Constants {
     // Plugin configuration constants
     const TOKEN               = 'ta';
     const INSTALLED_VERSION   = 'ta_installed_version';
-    const VERSION             = '3.10.6';
+    const VERSION             = '3.10.11';
     const TEXT_DOMAIN         = 'thirstyaffiliates';
     const THEME_TEMPLATE_PATH = 'thirstyaffiliates';
     const META_DATA_PREFIX    = '_ta_';

@@ -322,7 +322,7 @@ class Link_Picker implements Model_Interface , Initiable_Interface {
             }
 
         } else
-            $result_markup .= '<li class="no-links-found">' . __( 'No affiliate links found' , 'thirstyaffiliates' ) . '</li>';
+            $result_markup .= '<li class="no-links-found">' . esc_html__( 'No affiliate links found' , 'thirstyaffiliates' ) . '</li>';
 
         return $result_markup;
     }

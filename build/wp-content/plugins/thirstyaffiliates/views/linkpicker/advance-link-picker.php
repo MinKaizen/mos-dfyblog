@@ -29,7 +29,7 @@
 
         <div class="results-panel">
             <ul class="results-list" data-htmleditor="<?php echo esc_attr( $html_editor ); ?>">
-                <?php echo $result_markup; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+                <?php echo wp_kses_post( $result_markup ); ?>
             </ul>
             <a class="load-more-results" href="#">
                 <span class="spinner"><i style="background-image: url(<?php echo esc_url( $this->_constants->IMAGES_ROOT_URL() . 'spinner.gif' ); ?>)"></i> <?php esc_html_e( 'Fetching...' , 'thirstyaffiliates' ); ?></span>

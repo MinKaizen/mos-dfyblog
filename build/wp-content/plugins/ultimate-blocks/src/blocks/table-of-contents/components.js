@@ -668,6 +668,8 @@ export const inspectorControls = (props) => {
 		listColor,
 		listBackgroundColor,
 		numColumns,
+		showText,
+		hideText,
 	} = attributes;
 
 	const { updateBlockAttributes } =
@@ -753,6 +755,20 @@ export const inspectorControls = (props) => {
 				</PanelRow>
 				{allowToCHiding && (
 					<>
+						<PanelRow>
+							<TextControl
+								label={__("Show text")}
+								value={showText}
+								onChange={(showText) => setAttributes({ showText })}
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={__("Hide text")}
+								value={hideText}
+								onChange={(hideText) => setAttributes({ hideText })}
+							/>
+						</PanelRow>
 						<PanelRow>
 							<label htmlFor="ub_show_toc">{__("Initial Show")}</label>
 							<ToggleControl
@@ -974,7 +990,7 @@ export const blockControls = (props) => {
 };
 
 export const editorDisplay = (props) => {
-	const { setAttributes, setState, canRemoveItemFocus } = props;
+	const { setAttributes, canRemoveItemFocus, toggleCanRemoveItemFocus } = props;
 	const {
 		links,
 		title,
@@ -992,6 +1008,8 @@ export const editorDisplay = (props) => {
 		listBackgroundColor,
 		listIconColor,
 		blockID,
+		showText,
+		hideText,
 	} = props.attributes;
 
 	return (
@@ -1010,7 +1028,7 @@ export const editorDisplay = (props) => {
 					<RichText
 						placeholder={__("Optional title")}
 						className="ub_table-of-contents-title"
-						onFocus={() => setState({ canRemoveItemFocus: true })}
+						onFocus={() => toggleCanRemoveItemFocus(true)}
 						onChange={(text) => setAttributes({ title: text })}
 						value={title}
 						keepPlaceholderOnFocus={true}
@@ -1025,7 +1043,7 @@ export const editorDisplay = (props) => {
 								href="#"
 								onClick={() => setAttributes({ showList: !showList })}
 							>
-								{showList ? __("hide") : __("show")}
+								{showList ? hideText || __("hide") : showText || __("show")}
 							</a>
 							]
 						</div>
@@ -1042,7 +1060,7 @@ export const editorDisplay = (props) => {
 					allowToLatin={allowToLatin}
 					removeDiacritics={removeDiacritics}
 					canRemoveItemFocus={canRemoveItemFocus}
-					itemFocusRemoved={() => setState({ canRemoveItemFocus: false })}
+					itemFocusRemoved={() => toggleCanRemoveItemFocus(false)}
 					style={{ backgroundColor: listBackgroundColor }}
 				/>
 			)}

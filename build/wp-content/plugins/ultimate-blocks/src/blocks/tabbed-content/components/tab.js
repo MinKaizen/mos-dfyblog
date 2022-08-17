@@ -25,6 +25,7 @@ registerBlockType("ub/tab", {
 	supports: {
 		inserter: false,
 		reusable: false,
+		lock: false,
 	},
 	edit(props) {
 		return (
@@ -88,7 +89,7 @@ registerBlockType("ub/tab-block", {
 					template={[
 						[
 							"core/paragraph",
-							{ placeholder: __("Enter content for this tab") },
+							{ placeholder: " " }, //blank string still results into Wordpress displaying default placeholder
 						],
 					]}
 					renderAppender={() => <InnerBlocks.ButtonBlockAppender />}

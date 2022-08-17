@@ -3,7 +3,7 @@
  * Plugin Name: ThirstyAffiliates
  * Plugin URI: http://thirstyaffiliates.com/
  * Description: ThirstyAffiliates is a revolution in affiliate link management. Collect, collate and store your affiliate links for use in your posts and pages.
- * Version: 3.10.6
+ * Version: 3.10.11
  * Author: Caseproof
  * Author URI: https://caseproof.com/
  * Requires at least: 5.0
@@ -116,11 +116,6 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
             // Display notice that plugin dependency is not present.
             add_action( 'admin_notices' , array( $this , 'missing_plugin_dependencies_notice' ) );
 
-        } elseif ( $this->_check_plugin_dependency_version_requirements() !== true ) {
-
-            // Display notice that some dependent plugin did not meet the required version.
-            add_action( 'admin_notices' , array( $this , 'invalid_plugin_dependency_version_notice' ) );
-
         } else {
 
             // Lock 'n Load
@@ -164,43 +159,7 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
 
         $this->failed_dependencies = array();
 
-
-        // Sample below
-        /*
-        if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-
-            $this->failed_dependencies[] = array(
-                'plugin-key'       => 'woocommerce',
-                'plugin-name'      => 'WooCommerce', // We don't translate this coz this is the plugin name
-                'plugin-base-name' => 'woocommerce/woocommerce.php'
-            );
-
-        }
-        */
-
         return !empty( $this->failed_dependencies ) ? $this->failed_dependencies : true;
-
-    }
-
-    /**
-     * Check plugin dependency version requirements.
-     *
-     * @since 3.0.0
-     * @access private
-     *
-     * @return boolean True if plugin dependency version requirement is meet, False otherwise.
-     */
-    private function _check_plugin_dependency_version_requirements() {
-
-        // Sample below
-        /*
-        $teo_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/timed-email-offers/timed-email-offers.php' );
-
-        // TEOP 3.0.0 requires TEO 1.1.0
-        return version_compare( $teo_plugin_data[ 'Version' ] , '1.1.0' , ">=" );
-        */
-
-        return true;
 
     }
 
@@ -232,34 +191,12 @@ class ThirstyAffiliates extends Abstract_Main_Plugin_Class {
 
             <div class="error">
                 <p>
-                    <?php esc_html_e( '<b>ThirstyAffiliates</b> plugin missing dependency.<br/>' , 'thirstyaffiliates' ); ?>
-                    <?php echo $admin_notice_msg; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+                    <?php _e( '<b>ThirstyAffiliates</b> plugin missing dependency.<br/>' , 'thirstyaffiliates' ); ?>
+                    <?php echo wp_kses_post( $admin_notice_msg ); ?>
                 </p>
             </div>
 
         <?php }
-
-    }
-
-    /**
-     * Add notice to notify user that some plugin dependencies did not meet the required version for the current version of this plugin.
-     *
-     * @since 3.0.0
-     * @access public
-     */
-    public function invalid_plugin_dependency_version_notice() {
-
-        // Sample below
-        /*
-        $update_text = sprintf( __( '<a href="%1$s">Click here to update Timed Email Offers &rarr;</a>' , 'timed-email-offers-premium' ) , wp_nonce_url( 'update.php?action=upgrade-plugin&plugin=timed-email-offers' , 'upgrade-plugin_timed-email-offers' ) ); ?>
-
-        <div class="error">
-            <p><?php echo sprintf( __( 'Please ensure you have the latest version of <a href="%1$s" target="_blank">Timed Email Offers</a> plugin installed and activated.' , 'timed-email-offers-premium' ) , 'http://wordpress.org/plugins/timed-email-offers/' ); ?></p>
-            <p><?php echo $update_text; ?></p>
-        </div>
-
-        <?php
-        */
 
     }
 

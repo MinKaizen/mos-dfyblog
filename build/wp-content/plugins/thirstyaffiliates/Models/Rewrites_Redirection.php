@@ -378,14 +378,18 @@ class Rewrites_Redirection implements Model_Interface , Deactivatable_Interface 
 
         global $post;
 
-        $is_apache = strpos( $_SERVER[ 'SERVER_SOFTWARE' ] , 'Apache' ) !== false; // phpcs:ignore WordPress.Security
+        $server_software = isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '';
+        $is_apache = strpos( $server_software, 'Apache' ) !== false;
 
         if ( $is_apache || ! is_object( $post ) || $post->post_type !== Plugin_Constants::AFFILIATE_LINKS_CPT || ! $this->_helper_functions->is_user_agent_bot() )
             return;
 
-        $message = apply_filters( 'ta_blocked_bots_non_apache_message' , sprintf( __( "<h1>Forbidden</h1><p>You don't have permission to access %s on this server.</p>" , 'thirstyaffiliates' ) , $_SERVER[ 'REQUEST_URI' ] ) ); // phpcs:ignore WordPress.Security
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+        $message = apply_filters( 'ta_blocked_bots_non_apache_message' , sprintf( __( "<h1>Forbidden</h1><p>You don't have permission to access %s on this server.</p>" , 'thirstyaffiliates' ) , esc_html( $request_uri ) ) );
         header( 'HTTP/1.0 403 Forbidden' );
-        die( $message ); // phpcs:ignore WordPress.Security.EscapeOutput
+        echo wp_kses_post( $message );
+        exit;
+
     }
 
 

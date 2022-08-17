@@ -544,7 +544,7 @@ class Notifications implements Model_Interface {
 
     <script>
       jQuery(document).ready(function($) {
-        $('li.menu-icon-thirstylink .wp-menu-name').append(`<?php echo $output; ?>`);
+        $('li.menu-icon-thirstylink .wp-menu-name').append(`<?php echo wp_kses_post( $output ); ?>`);
       });
     </script>
 
@@ -740,7 +740,7 @@ class Notifications implements Model_Interface {
 
           <div class="thirstyaff-notifications-body">
             <div class="thirstyaff-notifications-messages">
-              <?php echo $notifications_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+              <?php echo wp_kses_post( $notifications_html ); ?>
             </div>
           </div>
 

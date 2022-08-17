@@ -243,7 +243,15 @@ class Link_Fixer implements Model_Interface , Initiable_Interface {
             $response = array( 'status' => 'fail' , 'error_msg' => __( 'Invalid AJAX call' , 'thirstyaffiliates' ) );
         else {
 
-            $links    = $_POST[ 'hrefs' ]; // phpcs:ignore
+            $links    = $_POST['hrefs']; // phpcs:ignore WordPress.Security
+            foreach ( $links as $key => $val ) {
+                if( is_array( $val ) ){
+                    $links[ $key ] = array_map( 'sanitize_text_field', $val );
+                }else{
+                    $links[ $key ] = sanitize_text_field( $val );
+                }
+            }
+
             $post_id  = isset( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
             $response = array(
                 'status' => 'success',

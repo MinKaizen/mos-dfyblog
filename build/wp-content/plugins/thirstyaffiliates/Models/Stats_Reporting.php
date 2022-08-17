@@ -521,7 +521,17 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
      */
     public function get_all_reports() {
 
-        return apply_filters( 'ta_register_reports' , array() );
+        $all_reports = apply_filters( 'ta_register_reports' , array() );
+
+        if( ! empty( $all_reports ) ) {
+            foreach( $all_reports as $tab_index => $report ) {
+                if( ! isset( $report[ 'content' ] ) || ! is_callable( $report[ 'content' ] ) ) {
+                    unset( $all_reports[ $tab_index ] );
+                }
+            }
+        }
+
+        return $all_reports;
     }
 
     /**
@@ -561,7 +571,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
             'name'    => __( 'Link Overview' , 'thirstyaffiliates' ),
             'title'   => __( 'Link Overview Report' , 'thirstyaffiliates' ),
             'desc'    => __( 'Total clicks on affiliate links over a given period.' , 'thirstyaffiliates' ),
-            'content' => function() { return $this->get_link_performance_report_content(); }
+            'content' => function() { $this->get_link_performance_report_content(); }
         );
 
         return $reports;
@@ -608,21 +618,24 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
 
         // fetch current section
         $current_report = $this->get_current_report();
-        $report_content = is_callable( $current_report[ 'content' ] ) ? $current_report[ 'content' ]() : $current_report[ 'content' ];
 
-        // skip if section data is empty
-        if ( empty( $current_report ) ) return; ?>
+        if ( isset( $current_report[ 'content' ] ) ) { ?>
+            <div class="ta-settings ta-settings-<?php echo esc_attr( $current_report[ 'tab' ] ); ?> wrap">
+                <?php $this->render_reports_nav(); ?>
 
-        <div class="ta-settings ta-settings-<?php echo esc_attr( $current_report[ 'tab' ] ); ?> wrap">
+                <h1><?php echo esc_html( $current_report[ 'title' ] ); ?></h1>
+                <p class="desc"><?php echo wp_kses_post( $current_report[ 'desc' ] ); ?></p>
 
-            <?php $this->render_reports_nav(); ?>
-
-            <h1><?php echo esc_html( $current_report[ 'title' ] ); ?></h1>
-            <p class="desc"><?php echo wp_kses_post( $current_report[ 'desc' ] ); ?></p>
-
-            <?php  echo $report_content;  // phpcs:ignore WordPress.Security.EscapeOutput ?>
-        </div>
-        <?php
+                <?php
+                // make sure TA Pro is updated
+                $res = $current_report[ 'content' ]();
+                if( ! empty( trim( $res ) ) ) {
+                    esc_html_e('Error loading report. Please ensure ThirstyAffiliates Pro is updated to the latest version. If the problem continues, please contact our support team.', 'thirstyaffiliates');
+                }
+                ?>
+            </div>
+            <?php
+        }
     }
 
     /**
@@ -680,10 +693,7 @@ class Stats_Reporting implements Model_Interface , Initiable_Interface , Activat
         // NOTE: when false, this needs to return an empty string as it is used for display.
         if ( $link_id ) $link_id = ( get_post_type( $link_id ) == $cpt_slug && get_post_status( $link_id ) == 'publish' ) ? $link_id : '';
 
-        ob_start();
         include( $this->_constants->VIEWS_ROOT_PATH() . 'reports/link-performance-report.php' );
-
-        return ob_get_clean();
     }
 
 

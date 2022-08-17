@@ -408,27 +408,29 @@ function ub_include_block_attribute_css() {
                     '}' . PHP_EOL;
                     break;
                 case 'ub/content-toggle-block':
-                    $attributes = array_merge($attributes,
-                        array_map(function($attribute){
-                            return $attribute['default'];
-                        }, $defaultValues['ub/content-toggle-panel-block']['attributes']),
-                        $block['innerBlocks'][0]['attrs']);
-                    $prefix = '#ub-content-toggle-' . $attributes['blockID'];
-                    $blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
-                        'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-title-wrap{' . PHP_EOL .
-                        'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL . 
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
-                        'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
-                        'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
-                    '}' . PHP_EOL .
-                    '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
-                        'color: ' . ($attributes['titleLinkColor'] ?: 'inherit') . ';' . PHP_EOL .
-                    '}';
+                    if($block['innerBlocks']){
+                        $attributes = array_merge($attributes,
+                            array_map(function($attribute){
+                                return $attribute['default'];
+                            }, $defaultValues['ub/content-toggle-panel-block']['attributes']),
+                            $block['innerBlocks'][0]['attrs']);
+                        $prefix = '#ub-content-toggle-' . $attributes['blockID'];
+                        $blockStylesheets .= $prefix . ' .wp-block-ub-content-toggle-accordion{' . PHP_EOL .
+                            'border-color: ' . $attributes['theme'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL . 
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-title-wrap{' . PHP_EOL .
+                            'background-color: ' . $attributes['theme'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL . 
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-title{' . PHP_EOL .
+                            'color: ' . ($attributes['titleColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        $prefix . ' .wp-block-ub-content-toggle-accordion-toggle-wrap{' . PHP_EOL .
+                            'color: ' . $attributes['toggleColor'] . ';' . PHP_EOL .
+                        '}' . PHP_EOL .
+                        '.ub-content-toggle-title-'. $attributes['blockID'] . ' > a{' . PHP_EOL .
+                            'color: ' . ($attributes['titleLinkColor'] ?: 'inherit') . ';' . PHP_EOL .
+                        '}';
+                    }
                     break;
                 case 'ub/countdown':
                     $prefix = '#ub_countdown_'. $attributes['blockID'];
@@ -633,17 +635,17 @@ function ub_include_block_attribute_css() {
                             'width: '.$attributes['percentage'].'%;' . PHP_EOL;
                     }
                     else{
-                        $circleRadius = 50 - ($attributes['barThickness'] + 3)/2;
+                        $circleRadius = 50 - ($attributes['barThickness'] + 3) / 2;
                         $circlePathLength = $circleRadius * M_PI * 2;
                         $blockStylesheets .= '#ub-progress-bar-'. $attributes['blockID'] . ' .ub_progress-bar-container{' . PHP_EOL .
-                            'height: 150px;' . PHP_EOL . 'width: 150px;' . PHP_EOL .
+                            'height: ' . $attributes['circleSize'] . 'px;' . PHP_EOL . 'width: ' . $attributes['circleSize'] . 'px;' . PHP_EOL .
                             ( in_array($attributes['detailAlign'], ['left', 'right']) ? 'float: ' . $attributes['detailAlign'] : 'margin: auto' ) . ';' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-trail{' . PHP_EOL . 
-                            'stroke-dasharray: '.$circlePathLength.'px,'.$circlePathLength.'px' . PHP_EOL . 
+                            'stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px' . PHP_EOL . 
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-circle-path{' . PHP_EOL .
-                            'stroke-dasharray: 0px, '.$circlePathLength.'px' . PHP_EOL .
+                            'stroke-dasharray: 0px, ' . $circlePathLength . 'px' . PHP_EOL .
                         '}' . PHP_EOL .
                         $prefix . ' .ub_progress-bar-label{' . PHP_EOL;                                
                     }
@@ -654,8 +656,8 @@ function ub_include_block_attribute_css() {
                         'visibility: visible;' . PHP_EOL .
                     '}' . PHP_EOL;
                     if($attributes['barType'] === 'linear'){
-                        $blockStylesheets .= $prefix. '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
-                            'stroke-dashoffset: ' . (100-$attributes['percentage']) . 'px';
+                        $blockStylesheets .= $prefix . '.ub_progress-bar-filled .ub_progress-bar-line-path{' . PHP_EOL .
+                            'stroke-dashoffset: ' . (100 - $attributes['percentage']) . 'px';
                     }
                     else{
                         $strokeArcLength = $circlePathLength * $attributes['percentage'] / 100;

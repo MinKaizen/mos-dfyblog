@@ -2148,10 +2148,17 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
 
         <div class="ta-upgrade-header" id="ta-upgrade-header">
             <span id="close-ta-upgrade-header">X</span>
-            <?php _e( 'You\'re using ThirstyAffiliates Lite. To unlock more features, consider <a href="https://thirstyaffiliates.com/pricing?utm_source=plugin_admin&utm_medium=link&utm_campaign=in_plugin&utm_content=upgrade_header">upgrading to Pro.</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+            <?php
+                printf(
+                    /* translators: %1$s: open link tag, %2$s: close link tag */
+                    esc_html__( 'You\'re using ThirstyAffiliates Lite. To unlock more features, consider %1$supgrading to Pro%2$s.', 'thirstyaffiliates' ),
+                    '<a href="https://thirstyaffiliates.com/pricing?utm_source=plugin_admin&utm_medium=link&utm_campaign=in_plugin&utm_content=upgrade_header">',
+                    '</a>'
+                );
+            ?>
         </div>
 
-        <div id="ta-admin-header"><img class="ta-logo" src="<?php echo esc_url( $this->_constants->IMAGES_ROOT_URL() . 'TA.svg' ); ?>" /></div>
+        <div id="ta-admin-header"><img class="ta-logo" src="<?php echo esc_url( $this->_constants->IMAGES_ROOT_URL() . 'TA.svg' ); ?>" alt="" /></div>
 
         <script>
             jQuery(document).ready(function($) {
@@ -2163,7 +2170,7 @@ class Settings implements Model_Interface , Activatable_Interface , Initiable_In
                         type: 'POST',
                         data: {
                             action: 'ta_dismiss_upgrade_header',
-                            _ajax_nonce: "<?php echo wp_create_nonce( 'ta_dismiss_upgrade_header' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>"
+                            _ajax_nonce: "<?php echo esc_js( wp_create_nonce( 'ta_dismiss_upgrade_header' ) ); ?>"
                         },
                     })
                     .done(function() {

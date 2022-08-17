@@ -1272,7 +1272,7 @@ $defaultValues = array(
             ),
             'percentage' => array(
                 'type' => 'number',
-                'default' => 25
+                'default' => -1
             ),
             'barType' => array(
                 'type' => 'string',
@@ -1290,9 +1290,17 @@ $defaultValues = array(
                 'type' => 'string',
                 'default' => '#2db7f5'
             ),
+            'barBackgroundColor' => array(
+                'type' => 'string',
+                'default' => '#d9d9d9'
+            ),
             'barThickness' => array(
                 'type' => 'number',
                 'default' => 1
+            ),
+            'circleSize' => array(
+                'type' => 'number',
+                'default' => 150
             ),
             'labelColor' => array(
                 'type' => 'string',
@@ -2073,7 +2081,15 @@ $defaultValues = array(
             'listIconColor' => array(
                 'type' => 'string',
                 'default' => ''
-            )
+            ),
+            'showText' => array(
+                'type' => 'string',
+                'default' => 'show'
+            ),
+            'hideText' => array(
+                'type' => 'string',
+                'default' => 'hide'
+            ),
         )
     ),
     'ub/testimonial' => array(

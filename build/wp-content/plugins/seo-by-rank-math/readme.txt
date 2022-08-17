@@ -2,12 +2,12 @@
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
-Tested up to: 5.9
+Tested up to: 6.0
 Requires at least: 5.6
 Requires PHP: 7.2
-Stable tag: 1.0.88.1
-License: GPL-2.0+
-License URI: https://www.gnu.org/licenses/gpl-2.0.txt
+Stable tag: 1.0.95.1
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
 Rank Math SEO is the Best WordPress SEO plugin combines the features of many SEO tools in a single package & helps you multiply your SEO traffic.
 
@@ -185,7 +185,7 @@ Even with significantly more features than other plugins, Rank Math SEO loads am
 ### Take a sneak peek into Rank Math SEO’s features ###
 
 #### Detailed Setup Tutorial ####
-[youtube https://www.youtube.com/watch?v=dTvZuMRzW4w]
+[youtube https://www.youtube.com/watch?v=cQLvCBVev3I]
 
 ### List of Best Rank Math SEO Features ###
 
@@ -580,23 +580,19 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.88.1 [May 04, 2022] =
-* Fixed: [GA4 Data stream](https://rankmath.com/kb/using-ga4/#datastream-and-country) dropdown was not showing any value even if it was working fine
+= 1.0.95 [Aug 11, 2022] =
+* Added: Site logo is now used as a fallback when the logo is not added in the [Local SEO settings](https://rankmath.com/kb/local-seo/#logo)
+* Added: The `contentUrl` property in `ImageObject`
+* Added: [New filter](https://rankmath.com/kb/filters-hooks-api-developer/#disable-keyword-suggestions) to disable the Focus keyword auto-suggestion
+* Improved: [SEO Analysis](https://rankmath.com/kb/seo-analysis/) will now include only the post types where the Rank Math metabox is enabled
+* Improved: CPT name will now be used in the [Breadcrumb](https://rankmath.com/kb/general-settings/#breadcrumbs) instead of Post type's Singular name
+* Fixed: [Content AI test](https://rankmath.com/kb/how-to-use-content-ai/#content-ai-results-overview) was not recognizing the uppercase keywords in the content
+* Fixed: Dependent [Modules](https://rankmath.com/kb/managing-modules/) were not getting deactivated after deactivating the main module
+* Fixed: [Links Per Sitemap](https://rankmath.com/kb/configure-sitemaps/#links-per-sitemap) option was not working properly on some setups
+* Fixed: [URL Inspection API](https://rankmath.com/kb/url-inspection-api-integration/) was not working on some sites where the site locale didn't match with the language code required by the URL Inspection API
+* Fixed: PHP warning on BuddyPress Members page when Schema module is active
 
-= 1.0.88 [May 04, 2022] =
-* Added: [HUGE!] Rank Math now supports [Google Analytics 4](https://rankmath.com/kb/using-ga4/)
-* Added: Option to create GA4 property with one click
-* Added: New option in [Database Tools](https://rankmath.com/kb/rank-math-status-and-tools/#fix-analytics-table-collations) to match the collations of all Analytics tables
-* Fixed: [Content AI](https://rankmath.com/kb/how-to-use-content-ai/) was not working on secondary language posts created using the WPML plugin
-* Fixed: [Search form on the Settings page](https://rankmath.com/kb/general-settings/) was showing irrelevant items in the dropdown 
-* Fixed: Both `index` & `noindex` options could be selected in the [Date Archive Robots settings](https://rankmath.com/kb/titles-and-meta/#date-robots-meta)
-* Fixed: Dashboard widget was showing 403 error to the Shop Manager user role
-* Fixed: Dashboard widget was showing an error when the site couldn't load the Blog posts from rankmath.com/blog/
-* Fixed: "Exclude this attachment from the Sitemap" option on the attachment details popup was showing to all the users
-* Fixed: [Content Analysis](https://rankmath.com/blog/divi-seo/) was also analyzing the global Header & Footer content added in the Divi's Theme Builder
-* Fixed: On Divi's frontend editor, the SEO modal was getting closed after clicking on the Schema generator button
-* Fixed: In [Easy Mode](https://rankmath.com/kb/switch-from-easy-to-advanced-mode/), [Instant Indexing](https://rankmath.com/kb/how-to-use-indexnow/#submit-urls-manually) settings were linked to the wrong page
-* Fixed: [Update data manually](https://rankmath.com/kb/general-settings/#analytics-database) option was not working well on some setups in the Analytics Module
-* Fixed: Invalid `%searchphrase%` variable was used as a default value on the Search page
+= 1.0.95.1 [Aug 12, 2022] =
+* Fixed: Public REST endpoints blocked via `.htaccess` file were accessible through [Headless](https://rankmath.com/kb/headless-cms-support/) endpoint, when that option was active (props to [Yeraisci](https://twitter.com/yeraisci_))
 
 Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

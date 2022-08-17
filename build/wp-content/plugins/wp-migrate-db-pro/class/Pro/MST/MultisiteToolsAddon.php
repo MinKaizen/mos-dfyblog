@@ -160,6 +160,7 @@ class MultisiteToolsAddon extends AddonAbstract
          * Media Files Hooks
          */
         add_filter('wpmdb_mf_local_uploads_folder', [$this->media_files_compat, 'filter_uploads_path_local'], 10, 2);
+        add_filter('wpmdb_mf_remote_uploads_source_folder', [$this->media_files_compat, 'filter_uploads_path_remote'], 10, 2);
         add_filter('wpmdb_mf_remote_uploads_folder', [$this->media_files_compat, 'filter_uploads_path_remote'], 10, 2);
         add_filter('wpmdb_mf_destination_file', [$this->media_files_compat, 'filter_media_destination'], 10, 2);
         add_filter('wpmdb_mf_destination_uploads', [$this->media_files_compat, 'filter_media_uploads'], 10, 2);
@@ -831,7 +832,8 @@ class MultisiteToolsAddon extends AddonAbstract
         }
 
         // During a MST migration we add a custom prefix to the global tables so that we can manipulate their data before use.
-        $old_prefix = ('push' === $state_data['type']) ? $state_data['site_details']['local']['prefix'] : $state_data['site_details']['remote']['prefix'];
+        $type       = isset($state_data['type']) ? $state_data['type'] : $intent;
+        $old_prefix = ('push' === $type) ? $state_data['site_details']['local']['prefix'] : $state_data['site_details']['remote']['prefix'];
         if (is_multisite() && $this->table_helper->table_is('', $table_name, 'global', $new_prefix, $blog_id, $old_prefix)) {
             $new_prefix .= 'wpmdbglobal_';
         }

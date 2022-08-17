@@ -26,15 +26,17 @@ import {
 import {
 	blockControls,
 	inspectorControls,
+	defaultButtonProps,
 	editorDisplay,
-	iconSize,
+	presetIconSize,
 	allIcons,
 	EditorComponent,
 } from "./components";
+import { useState } from "react";
 
 const { withDispatch, withSelect } = wp.data;
 
-const { withState, compose } = wp.compose;
+const { compose } = wp.compose;
 const { __ } = wp.i18n;
 const { registerBlockType, createBlock } = wp.blocks;
 
@@ -145,11 +147,6 @@ registerBlockType("ub/button-block", {
 		inserter: false, //this block is being phased out in favor of the PHP-rendered version
 	},
 	edit: compose([
-		withState({
-			isMouseHovered: false,
-			availableIcons: [],
-			iconSearchTerm: "",
-		}),
 		withSelect((select, ownProps) => ({
 			block: (select("core/block-editor") || select("core/editor")).getBlock(
 				ownProps.clientId
@@ -160,18 +157,72 @@ registerBlockType("ub/button-block", {
 				.replaceBlock,
 		})),
 	])(function (props) {
+		const { isSelected, block, replaceBlock, attributes, setAttributes } =
+			props;
+
+		const [isMouseHovered, toggleMouseHover] = useState(false);
+		const [availableIcons, setAvailableIcons] = useState([]);
+		const [iconSearchTerm, setIconSearchTerm] = useState("");
+		const [iconSearchResultsPage, setIconSearchResultsPage] = useState(0);
+		const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
+		const [hoveredButton, setHoveredButton] = useState(-1);
+		const [enableLinkInput, toggleLinkInput] = useState(false);
+
+		const stateVars = {
+			activeButtonIndex,
+			setActiveButtonIndex,
+			hoveredButton,
+			setHoveredButton,
+			enableLinkInput,
+			toggleLinkInput,
+			iconSearchResultsPage,
+			setIconSearchResultsPage,
+		};
+
 		const {
-			isSelected,
-			setState,
-			availableIcons,
-			block,
-			replaceBlock,
-			attributes,
-		} = props;
+			buttons,
+			buttonText,
+			url,
+			size,
+			buttonColor,
+			buttonHoverColor,
+			buttonTextColor,
+			buttonTextHoverColor,
+			buttonRounded,
+			chosenIcon,
+			iconPosition,
+			buttonIsTransparent,
+			addNofollow,
+			openInNewTab,
+			buttonWidth,
+		} = attributes;
 
 		if (availableIcons.length === 0) {
 			const iconList = Object.keys(allIcons).sort();
-			setState({ availableIcons: iconList.map((name) => allIcons[name]) });
+			setAvailableIcons(iconList.map((name) => allIcons[name]));
+		}
+
+		if (typeof buttons === "undefined") {
+			setAttributes({
+				buttons: [
+					Object.assign({}, defaultButtonProps, {
+						buttonText,
+						url,
+						size,
+						buttonColor,
+						buttonHoverColor,
+						buttonTextColor,
+						buttonTextHoverColor,
+						buttonRounded,
+						chosenIcon,
+						iconPosition,
+						buttonIsTransparent,
+						addNofollow,
+						openInNewTab,
+						buttonWidth,
+					}),
+				],
+			});
 		}
 
 		return [
@@ -196,7 +247,7 @@ registerBlockType("ub/button-block", {
 				>
 					{upgradeButtonLabel}
 				</button>
-				{editorDisplay(props)}
+				{editorDisplay({ ...props, ...stateVars })}
 			</div>,
 		];
 	}),
@@ -259,7 +310,7 @@ registerBlockType("ub/button-block", {
 								<span className="ub-button-icon-holder">
 									{generateIcon(
 										allIcons[`fa${dashesToCamelcase(chosenIcon)}`],
-										iconSize[size]
+										presetIconSize[size]
 									)}
 								</span>
 							)}
@@ -288,15 +339,135 @@ registerBlockType("ub/button", {
 		__("Ultimate Blocks", "ultimate-blocks"),
 	],
 	edit: withSelect((select, ownProps) => {
-		const { getBlock, getBlockRootClientId, getClientIdsWithDescendants } =
-			select("core/block-editor") || select("core/editor");
+		const {
+			getBlock,
+			getBlockRootClientId,
+			getClientIdsWithDescendants,
+			getBlocks,
+		} = select("core/block-editor") || select("core/editor");
 
 		return {
 			getBlock,
 			block: getBlock(ownProps.clientId),
 			parentID: getBlockRootClientId(ownProps.clientId),
 			getClientIdsWithDescendants,
+			getBlocks,
 		};
 	})(EditorComponent),
 	save: () => null,
+	transforms: {
+		from: [
+			{
+				type: "block",
+				blocks: ["core/buttons"],
+				transform: (_, innerBlocks) => {
+					const revisedDefaultProps = {
+						buttonText: "Button Text",
+						url: "",
+						size: "medium",
+						buttonColor: "#313131",
+						buttonHoverColor: "#313131",
+						buttonTextColor: "#ffffff",
+						buttonTextHoverColor: "#ffffff",
+						buttonRounded: false,
+						buttonRadius: 0, //retained for compatibility
+						buttonRadiusUnit: "px", //retained for compatibility
+
+						topLeftRadius: 0,
+						topLeftRadiusUnit: "px",
+						topRightRadius: 0,
+						topRightRadiusUnit: "px",
+						bottomLeftRadius: 0,
+						bottomLeftRadiusUnit: "px",
+						bottomRightRadius: 0,
+						bottomRightRadiusUnit: "px",
+
+						chosenIcon: "",
+						iconPosition: "left",
+						iconSize: 0,
+						iconUnit: "px",
+						buttonIsTransparent: false,
+						addNofollow: true,
+						openInNewTab: true,
+						addSponsored: false,
+						buttonWidth: "flex",
+					};
+
+					let newButtons = innerBlocks.map((ib) => {
+						const splitNumFromUnit = (str) => {
+							const [, ...arr] = str.match(/(\d*)([\s\S]*)/);
+							return [Number(arr[0]), arr[1]];
+						};
+
+						let radiusSettings = {};
+
+						if ("style" in ib.attributes && "border" in ib.attributes.style) {
+							const br = ib.attributes.style.border.radius;
+
+							if (typeof br === "string") {
+								const parsedRadius = splitNumFromUnit(br);
+
+								radiusSettings = Object.assign(radiusSettings, {
+									topLeftRadius: parsedRadius[0],
+									topLeftRadiusUnit: parsedRadius[1],
+									topRightRadius: parsedRadius[0],
+									topRightRadiusUnit: parsedRadius[1],
+									bottomLeftRadius: parsedRadius[0],
+									bottomLeftRadiusUnit: parsedRadius[1],
+									bottomRightRadius: parsedRadius[0],
+									bottomRightRadiusUnit: parsedRadius[1],
+
+									buttonRadius: parsedRadius[0],
+									buttonRadiusUnit: parsedRadius[1],
+								});
+							} else {
+								const topLeft = splitNumFromUnit(br.topLeft || "0px");
+								const topRight = splitNumFromUnit(br.topRight || "0px");
+								const bottomLeft = splitNumFromUnit(br.bottomLeft || "0px");
+								const bottomRight = splitNumFromUnit(br.bottomRight || "0px");
+
+								radiusSettings = Object.assign(radiusSettings, {
+									topLeftRadius: topLeft[0],
+									topLeftRadiusUnit: topLeft[1],
+									topRightRadius: topRight[0],
+									topRightRadiusUnit: topRight[1],
+									bottomLeftRadius: bottomLeft[0],
+									bottomLeftRadiusUnit: bottomLeft[1],
+									bottomRightRadius: bottomRight[0],
+									bottomRightRadiusUnit: bottomRight[1],
+								});
+							}
+						}
+
+						const oldButtonStyle = window.getComputedStyle(
+							document.querySelector(`#block-${ib.clientId}>div`)
+						);
+
+						const isUsingOutline =
+							"className" in ib.attributes &&
+							ib.attributes.className === "is-style-outline";
+
+						const buttonAttributes = Object.assign(
+							revisedDefaultProps,
+							{
+								buttonRounded: Object.keys(radiusSettings).length > 0,
+								buttonText: ib.attributes.text || "",
+								buttonColor: isUsingOutline
+									? oldButtonStyle.color
+									: oldButtonStyle.backgroundColor,
+								buttonTextColor: oldButtonStyle.color,
+								buttonIsTransparent: isUsingOutline,
+								url: ib.attributes.url,
+							},
+							radiusSettings
+						);
+
+						return JSON.parse(JSON.stringify(buttonAttributes)); //prevent old buttonAttributes values from overwriting new ones
+					});
+
+					return createBlock("ub/button", { buttons: newButtons });
+				},
+			},
+		],
+	},
 });

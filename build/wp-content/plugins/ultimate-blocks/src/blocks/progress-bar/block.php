@@ -10,7 +10,7 @@ function ub_render_progress_bar_block($attributes){
                             . 'L' . (100 - $barThickness / 2) . ',' . ($barThickness / 2);
         $chosenProgressBar = '<div class="' . $blockName . '-container" id="' . $blockID . '">
         <svg class="' . $blockName . '-line" viewBox="0 0 100 ' . $barThickness . '" preserveAspectRatio="none">
-            <path class="' . $blockName . '-line-trail" d="' . $progressBarPath . '" strokeWidth="1"/>
+            <path class="' . $blockName . '-line-trail" d="' . $progressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . $barThickness . '"/>
             <path class="' . $blockName . '-line-path" d="' . $progressBarPath . '" stroke="' . $barColor . '"
                 stroke-width="' . $barThickness . '"' . ($blockID === '' ? ' style="stroke-dashoffset:' .  (100 - $percentage) . 'px;"' : '') . '/>
         </svg>
@@ -24,10 +24,10 @@ function ub_render_progress_bar_block($attributes){
                             'a ' . $circleRadius . ',' . $circleRadius . ' 0 1 1 0,' . (2 * -$circleRadius);
         $strokeArcLength = $circlePathLength * $percentage / 100;
 
-        $chosenProgressBar = '<div class="' . $blockName.'-container" ' . ($blockID === '' ? 'style="height: 150px; width: 150px;"' : 'id="' . $blockID . '"') . '>
-        <svg class="' . $blockName . '-circle" height="150" width="150" viewBox = "0 0 100 100">
-            <path class="' . $blockName . '-circle-trail" d="' . $progressBarPath . '" strokeWidth="3"'.
-                ($blockID === '' ? ' style = "stroke-dasharray: ' . $circlePathLength.'px,' . $circlePathLength . 'px"':'') . '/>
+        $chosenProgressBar = '<div class="' . $blockName.'-container" ' . ($blockID === '' ? 'style="height: ' . $circleSize . 'px; width: ' . $circleSize . 'px;"' : 'id="' . $blockID . '"') . '>
+        <svg class="' . $blockName . '-circle" height="' . $circleSize . '" width="' . $circleSize . '" viewBox = "0 0 100 100">
+            <path class="' . $blockName . '-circle-trail" d="' . $progressBarPath . '" stroke="' . $barBackgroundColor . '" stroke-width="' . ($barThickness + 2) . '"'.
+                ($blockID === '' ? ' style = "stroke-dasharray: ' . $circlePathLength . 'px,' . $circlePathLength . 'px"':'') . '/>
             <path class="' . $blockName . '-circle-path" d="' . $progressBarPath . '" stroke="' . $barColor . '"
                 stroke-width="' . ($barThickness + 2) . '" stroke-linecap="butt"'.
                 ($blockID === '' ? ' style="stroke-dasharray: ' . $strokeArcLength . 'px, ' . $circlePathLength . 'px"':'').'/>

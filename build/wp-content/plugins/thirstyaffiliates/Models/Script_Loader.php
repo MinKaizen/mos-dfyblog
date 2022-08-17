@@ -362,7 +362,7 @@ class Script_Loader implements Model_Interface {
                     <img src="%3$s" alt="%2$s" data-active="%4$s" />
                 </a>
             </div>',
-            $this->get_items_html(), // phpcs:ignore WordPress.Security.EscapeOutput
+            $this->get_items_html(),
             esc_attr__( 'See Quick Links', 'thirstyaffiliates' ),
             esc_url( $this->_constants->IMAGES_ROOT_URL() . 'admin-flyout.svg' ),
             esc_url( $this->_constants->IMAGES_ROOT_URL() . 'admin-flyout.svg' ),

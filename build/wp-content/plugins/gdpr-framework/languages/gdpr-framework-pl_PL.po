@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: The GDPR Framework 1.0\n"
 "Report-Msgid-Bugs-To: gdpr@codelight.eu\n"
 "POT-Creation-Date: 2022-04-18 11:06-0400\n"
-"PO-Revision-Date: 2022-04-18 11:34-0400\n"
+"PO-Revision-Date: 2022-06-09 10:24-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
 "|| n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: gdpr-framework.php:111
 msgid "First Name"
@@ -32,31 +32,26 @@ msgid "Email"
 msgstr "Email"
 
 #: gdpr-framework.php:140
-#, fuzzy
 msgctxt "(Admin)"
 msgid "WordPress GDPR &rsaquo; Error"
-msgstr "WordPress RODO › Błąd"
+msgstr "WordPress GDPR › Błąd"
 
 #: gdpr-framework.php:151
-#, fuzzy
 msgctxt "(Admin)"
 msgid "You must be using PHP 5.6.0 or greater."
 msgstr "Musisz używać PHP 5.6.0 lub nowszego."
 
 #: gdpr-framework.php:152
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Invalid PHP version"
 msgstr "Nieprawidłowa wersja PHP"
 
 #: gdpr-framework.php:162
-#, fuzzy
 msgctxt "(Admin)"
 msgid "You must be using WordPress 4.3.0 or greater."
 msgstr "Musisz używać WordPress 4.3.0 lub nowszego."
 
 #: gdpr-framework.php:163
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Invalid WordPress version"
 msgstr "Nieprawidłowa wersja WordPress"
@@ -105,7 +100,6 @@ msgid "Save"
 msgstr "Zapisz"
 
 #: src/Admin/AdminTab.php:244
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Policy generated!"
 msgstr "Polityka wygenerowana!"
@@ -121,25 +115,21 @@ msgid "General Settings"
 msgstr "Ustawienia główne"
 
 #: src/Admin/AdminTabGeneral.php:61
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Privacy Tools"
 msgstr "Włączanie narzędzi ochrony prywatności"
 
 #: src/Admin/AdminTabGeneral.php:68
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Term and Conditions"
 msgstr "Włącz warunki i postanowienia"
 
 #: src/Admin/AdminTabGeneral.php:75
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Comment Checkbox"
 msgstr "Pole wyboru Wyłącz komentarz"
 
 #: src/Admin/AdminTabGeneral.php:82
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Register Form Checkbox"
 msgstr "Pole wyboru Wyłącz formularz rejestracyjny"
@@ -165,13 +155,11 @@ msgid "Pages"
 msgstr "Strony"
 
 #: src/Admin/AdminTabGeneral.php:118 src/Admin/WordpressAdmin.php:166
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Tools Page"
 msgstr "Strona Narzędzia prywatności"
 
 #: src/Admin/AdminTabGeneral.php:125
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Tools Custom URL"
 msgstr "Niestandardowy adres URL narzędzi prywatności"
@@ -182,7 +170,6 @@ msgid "Privacy Policy Page"
 msgstr "Strona Polityki Prywatności"
 
 #: src/Admin/AdminTabGeneral.php:139
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Policy Custom URL"
 msgstr "Polityka prywatności Niestandardowy adres URL"
@@ -193,37 +180,31 @@ msgid "Terms & Conditions Page"
 msgstr "Strona Zasad i Warunków"
 
 #: src/Admin/AdminTabGeneral.php:153
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Terms & Conditions Custom URL"
 msgstr "Warunki i postanowienia Niestandardowy adres URL"
 
 #: src/Admin/AdminTabGeneral.php:163
-#, fuzzy
 msgctxt "(Admin)"
 msgid "View & Export Data"
 msgstr "Wyświetlanie i eksportowanie danych"
 
 #: src/Admin/AdminTabGeneral.php:168
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Export action"
 msgstr "Akcja eksportu"
 
 #: src/Admin/AdminTabGeneral.php:175 src/Admin/AdminTabGeneral.php:221
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Email to notify"
 msgstr "Wyślij wiadomość e-mail do powiadomienia"
 
 #: src/Admin/AdminTabGeneral.php:183
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Unknown Data Subject Message"
 msgstr "Nieznana wiadomość o osobie, której dane dotyczą"
 
 #: src/Admin/AdminTabGeneral.php:193
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete & Anonymize Data"
 msgstr "Usuwanie i anonimizje danych"
@@ -234,13 +215,11 @@ msgid "Delete action"
 msgstr "Akcja usuwania"
 
 #: src/Admin/AdminTabGeneral.php:205
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete or reassign content?"
 msgstr "Usunąć lub ponownie przypisać zawartość?"
 
 #: src/Admin/AdminTabGeneral.php:213
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Reassign content to"
 msgstr "Ponowne przypisywanie zawartości do"
@@ -251,7 +230,6 @@ msgid "Styling"
 msgstr "Styl"
 
 #: src/Admin/AdminTabGeneral.php:238
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable basic styling on Privacy Tools page"
 msgstr "Włączanie podstawowych stylów na stronie Narzędzia prywatności"
@@ -262,59 +240,50 @@ msgid "Compatibility"
 msgstr "Zgodność"
 
 #: src/Admin/AdminTabGeneral.php:255
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable automatic theme compatibility"
 msgstr "Włączanie automatycznej zgodności motywów"
 
 #: src/Admin/AdminTabGeneral.php:267
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Woocommerce Integration"
 msgstr "Integracja Woocommerce"
 
 #: src/Admin/AdminTabGeneral.php:272
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable WooCommerce Compatibility"
 msgstr "Włącz zgodność z WooCommerce"
 
 #: src/Admin/AdminTabGeneral.php:279
 #: views/admin/general/woo-disable_checkbox.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Privacy Checkbox"
 msgstr "Pole wyboru Wyłącz prywatność WooCommerce"
 
 #: src/Admin/AdminTabGeneral.php:286
 #: views/admin/general/woo-disable_register_checkbox.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable WooCommerce Register Privacy Checkbox"
 msgstr "Pole wyboru Wyłącz prywatność rejestru WooCommerce"
 
 #: src/Admin/AdminTabGeneral.php:298
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Easy Digital Download Integration"
 msgstr "Łatwa integracja z pobieraniem cyfrowym"
 
 #: src/Admin/AdminTabGeneral.php:303
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable EDD Compatibility"
 msgstr "Włącz zgodność z EDD"
 
 #: src/Admin/AdminTabGeneral.php:333
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:184
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Comments"
 msgstr "Wyłącz pole wyboru dla komentarzy"
 
 #: src/Admin/AdminTabGeneral.php:342
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:192
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Disable Checkbox For Register Form"
 msgstr "Wyłącz pole wyboru dla formularza rejestracyjnego"
@@ -327,20 +296,17 @@ msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Wybierz &mdash;"
 
 #: src/Admin/WordpressAdmin.php:65
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy & GDPR Settings"
-msgstr "Ustawienia prywatności i RODO"
+msgstr "Ustawienia prywatności i GDPR"
 
 #: src/Admin/WordpressAdmin.php:66 views/installer/welcome-notice.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data443 GDPR"
-msgstr "Data443 RODO"
+msgstr "Data443 GDPR"
 
 #: src/Components/AdvancedIntegration/AdminTabAdvancedIntegration.php:17
 #: src/Components/AdvancedIntegration/AdminTabAdvancedIntegration.php:26
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Hound"
 msgstr "Ogar danych"
@@ -357,19 +323,16 @@ msgid "Additional Settings"
 msgstr "Dodatkowe ustawienia"
 
 #: src/Components/Consent/AdminTabConsent.php:60
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Display Consent Calendar"
 msgstr "Wyświetl kalendarz zgody"
 
 #: src/Components/Consent/AdminTabConsent.php:172
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Consent slug is a required field!"
 msgstr "Zgoda ślimaka jest wymaganym polem!"
 
 #: src/Components/Consent/AdminTabConsent.php:177
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "You may only use alphanumeric characters, dash and underscore in the consent "
@@ -379,13 +342,11 @@ msgstr ""
 "myślników i podkreśleń."
 
 #: src/Components/Consent/AdminTabConsent.php:182
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Consent title is a required field!"
 msgstr "Tytuł zgody jest polem wymaganym!"
 
 #: src/Components/Consent/AdminTabConsent.php:194
-#, fuzzy
 msgid ""
 "To use this website, you accepted our Privacy Policy. If you wish to "
 "withdraw your acceptance, please use the \"Delete my data\" button below."
@@ -395,7 +356,6 @@ msgstr ""
 "poniżej."
 
 #: src/Components/Consent/AdminTabConsent.php:197
-#, fuzzy
 msgid ""
 "Enable this feature to allow users to submit a time limit on how many months "
 "their consent is given for their coments and registration."
@@ -412,7 +372,6 @@ msgstr "Akceptuję zasady %sPolityki prywatności%s"
 #: src/Components/Consent/ConsentManager.php:59
 #: src/Components/Consent/ConsentManager.php:103
 #: src/Components/Consent/ConsentManager.php:111
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This consent is not visible by default. If someone wishes to withdraw it, "
@@ -422,23 +381,19 @@ msgstr ""
 "po prostu poprosić o usunięcie wszystkich swoich danych."
 
 #: src/Components/Consent/ConsentManager.php:70
-#, fuzzy
 msgid "Do Not Sell My Data"
 msgstr "Nie sprzedawaj moich danych"
 
 #: src/Components/Consent/ConsentManager.php:72
-#, fuzzy
 msgctxt "(Admin)"
 msgid "I do not consent to having my information sold by "
 msgstr "Nie wyrażam zgody na sprzedaż moich danych przez "
 
 #: src/Components/Consent/ConsentManager.php:79
-#, fuzzy
 msgid "Receive Communications from "
 msgstr "Wyrażam zgodę na otrzymywanie innych wiadomości od "
 
 #: src/Components/Consent/ConsentManager.php:81
-#, fuzzy
 msgctxt "(Admin)"
 msgid "I agree to receive other communications from "
 msgstr "Wyrażam zgodę na otrzymywanie innych wiadomości od "
@@ -449,7 +404,6 @@ msgid "I accept the %sTerms & Conditions%s"
 msgstr "Akceptuję %sRegulamin%s"
 
 #: src/Components/Consent/ConsentManager.php:110
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Site Cookie Consent"
 msgstr "Zgoda na pliki cookie witryny"
@@ -470,7 +424,6 @@ msgstr ""
 "swoich danych."
 
 #: src/Components/Consent/ConsentManager.php:404
-#, fuzzy
 msgid "Consent Information"
 msgstr "Informacje o zgodzie"
 
@@ -480,45 +433,38 @@ msgid "Cookie Popup"
 msgstr "Cookie Popup"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:44
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Popup Settings"
 msgstr "Ustawienia wyskakujących okienek cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:48
 #: views/admin/general/enable-popup.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Cookie Acceptance Popup"
 msgstr "Włącz wyskakujące okienko Akceptacja plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:54
 #: views/admin/general/enable-onetime-popup.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable One Time Cookie Acceptance Popup"
 msgstr "Włącz jednorazowe wyskakujące okienko akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:60
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Privacy policy on Popup"
 msgstr "Włącz Politykę prywatności w wyskakującym okienku"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:66
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Popup header"
 msgstr "Nagłówek wyskakującego okienka akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:72
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Popup Content"
 msgstr "Akceptacja plików cookie Zawartość popup"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:81
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Acceptance Popup Setting"
 msgstr "Ustawienie wyskakującego okienka akceptacji"
@@ -529,68 +475,57 @@ msgid "Popup Position"
 msgstr "Pozycja popupa"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:93
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Popup theme"
 msgstr "Motyw wyskakujący"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:100
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Popup Allow Text"
 msgstr "Wyskakujące okienko Zezwalaj na tekst"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:107
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Popup Dismiss Text"
 msgstr "Wyskakujące okienko Odrzuć tekst"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:114
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Popup Learn More Text"
 msgstr "Wyskakujące okienko Dowiedz się więcej o tekście"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:121
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance link target"
 msgstr "Cel linku akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:128
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Background Color"
 msgstr "Kolor tła akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:135
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Text Color"
 msgstr "Kolor tekstu akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:142
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Button Backgroung Color"
 msgstr "Przycisk akceptacji plików cookie Backgroung Color"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:149
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Button Color"
 msgstr "Kolor przycisku akceptacji plików cookie"
 
 #: src/Components/CookiePopup/AdminTabCookiePopup.php:156
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie Acceptance Border Color"
 msgstr "Kolor obramowania akceptacji plików cookie"
 
 #: src/Components/DoNotSell/AdminTabDoNotSell.php:17
 #: src/Components/DoNotSell/AdminTabDoNotSell.php:28
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Do Not Sell My Data"
 msgstr "Nie sprzedawaj moich danych"
@@ -603,25 +538,21 @@ msgstr "Shortcode"
 
 #: src/Components/DoNotSell/AdminTabDoNotSell.php:40
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:68
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Shortcode for PHP"
 msgstr "Shortcode dla PHP"
 
 #: src/Components/DoNotSell/AdminTabDoNotSell.php:46
-#, fuzzy
 msgctxt "(Admin)"
 msgid "View Requests"
 msgstr "Wyświetl prośby"
 
 #: src/Components/PrivacyManager/AdminTabPrivacyManager.php:17
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Global Privacy Manager"
 msgstr "Globalny menedżer prywatności"
 
 #: src/Components/PrivacyManager/AdminTabPrivacyManager.php:29
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Manager"
 msgstr "Menedżer prywatności"
@@ -650,87 +581,74 @@ msgid "Company Email"
 msgstr "Adres e-mail firmy"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:91
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Company Location"
 msgstr "Lokalizacja firmy"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:107
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:263
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Name"
 msgstr "Imię i nazwisko przedstawiciela"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:114
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:271
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Email"
 msgstr "Kontakt z przedstawicielem e-mail"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:121
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:279
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact Phone"
 msgstr "Przedstawiciel Kontakt Telefoniczny"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:137
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority"
 msgstr "Organ Ochrony Danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:143
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:309
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Website"
 msgstr "Strona internetowa urzędu ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:150
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:317
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Email"
 msgstr "Adres e-mail organu ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:157
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:325
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Authority Phone"
 msgstr "Telefon Urzędu Ochrony Danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:167
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:177
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Officer"
 msgstr "Inspektor ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:170
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Knowledge base: Do I need to appoint a Data Protection Officer?"
 msgstr "Baza wiedzy: Czy muszę wyznaczyć inspektora ochrony danych?"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:184
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Officer Name"
 msgstr "Imię i nazwisko inspektora ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:192
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Protection Officer Email"
 msgstr "Adres e-mail inspektora ochrony danych"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:204
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:360
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete Text"
 msgstr "Usuń tekst"
@@ -741,25 +659,22 @@ msgid "Contact Email"
 msgstr "E-mail kontaktowy"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:252
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Representative Contact"
 msgstr "Przedstawiciel Kontakt"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:255
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Knowledge base: Do I need to appoint an EU-based representative?"
 msgstr "Baza wiedzy: Czy muszę wyznaczyć przedstawiciela z siedzibą w UE?"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:295
-#, fuzzy, php-format
+#, php-format
 msgctxt "(Admin)"
 msgid "See the %slist of contacts here%s."
 msgstr "Zobacz %slistę kontaktów tutaj%s."
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:344
-#, fuzzy
 msgctxt "(Admin)"
 msgid "DPO Name"
 msgstr "Nazwa IOD"
@@ -770,7 +685,6 @@ msgid "DPO Email"
 msgstr "E-mail IOD"
 
 #: src/Components/PrivacyPolicy/AdminTabPrivacyPolicy.php:436
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Save & Generate Policy"
 msgstr "Zapisz i wygeneruj politykę"
@@ -784,49 +698,41 @@ msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:17
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe"
 msgstr "Bezpieczeństwo prywatności"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:33
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe by Data443"
 msgstr "Prywatność bezpieczna przez Data443"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:38
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Register for Privacy Safe"
 msgstr "Zarejestruj się, aby zapewnić prywatność"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:44
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe Settings"
 msgstr "Ustawienia sejfu prywatności"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:50
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Seal Code"
 msgstr "Kod pieczęci"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:56
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Image Code"
 msgstr "Kod obrazu"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:74
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Support Data443"
 msgstr "Wsparcie Data443"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:83
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Strengthen your reputation. The privacy safe seal assures your customers "
@@ -839,7 +745,6 @@ msgstr ""
 "Framework jest zainstalowana."
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:86
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Register now to activate your Privacy Safe seal. Visit the link below, "
@@ -859,7 +764,6 @@ msgid "Register Here"
 msgstr "Zarejestruj się tutaj"
 
 #: src/Components/PrivacySafe/AdminTabPrivacySafe.php:89
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Embed the shortcode provided to display your privacy safe seal."
 msgstr ""
@@ -867,13 +771,11 @@ msgstr ""
 
 #: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:23
 #: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:57
-#, fuzzy
 msgid "This page is currently disabled."
 msgstr "Ta strona jest obecnie wyłączona."
 
 #: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:27
 #: src/Components/PrivacyToolsPage/PrivacyToolsPageShortcode.php:61
-#, fuzzy
 msgid "Please configure the Privacy Tools page in the admin interface."
 msgstr "Skonfiguruj stronę Narzędzia prywatności w interfejsie administratora."
 
@@ -883,7 +785,6 @@ msgstr "Skonfiguruj stronę Narzędzia prywatności w interfejsie administratora
 #: views/themes/storefront/footer.php:7
 #: views/themes/twentyseventeen/footer.php:7
 #: views/themes/twentysixteen/footer.php:9
-#, fuzzy
 msgid "Privacy Tools"
 msgstr "Narzędzia prywatności"
 
@@ -895,7 +796,6 @@ msgstr "Wsparcie"
 
 #: src/Components/WordpressUser/Controllers/DashboardDataPageController.php:54
 #: views/privacy-tools/notices.php:20
-#, fuzzy
 msgid "We have received your request and will reply within 30 days."
 msgstr "Otrzymaliśmy Twoją prośbę i odpowiemy w ciągu 30 dni."
 
@@ -911,14 +811,12 @@ msgstr "<strong>BŁĄD</strong>: Musisz zaakceptować Regulamin."
 #: src/Components/WordpressUser/WordpressUser.php:64
 #: src/Components/WordpressUser/WordpressUser.php:65
 #: views/modules/wordpress-user/dashboard/data-page/header.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Tools"
 msgstr "Narzędzia prywatności"
 
 #: src/DataSubject/AdminTabDataSubject.php:27
 #: src/DataSubject/AdminTabDataSubject.php:41
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Subjects"
 msgstr "Osoby, których dane dotyczą"
@@ -928,23 +826,19 @@ msgid "Data exported"
 msgstr "Dane eksportowane"
 
 #: src/DataSubject/DataRepository.php:162
-#, fuzzy
 msgid "Data export request"
 msgstr "Żądanie eksportu danych"
 
 #: src/DataSubject/DataRepository.php:176
-#, fuzzy
 msgid "Data removed"
 msgstr "Usunięto dane"
 
 #: src/DataSubject/DataRepository.php:192
-#, fuzzy
 msgid "Data removal request"
 msgstr "Żądanie usunięcia danych"
 
 #: src/DataSubject/DataSubjectIdentificator.php:78
 #: src/DataSubject/DataSubjectIdentificator.php:96
-#, fuzzy
 msgid "Your personal data on"
 msgstr "Twoje dane osobowe na"
 
@@ -1089,7 +983,6 @@ msgid "United Kingdom"
 msgstr "Wielka Brytania"
 
 #: src/Helpers.php:57
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Afghanistan "
 msgstr "Afganistan "
@@ -1110,7 +1003,6 @@ msgid "Algeria"
 msgstr "Algieria"
 
 #: src/Helpers.php:61
-#, fuzzy
 msgctxt "(Admin)"
 msgid "American Samoa  "
 msgstr "Samoa Amerykańskie  "
@@ -1346,7 +1238,6 @@ msgid "Costa Rica"
 msgstr "Kostaryka"
 
 #: src/Helpers.php:108
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Côte dIvoire"
 msgstr "Wybrzeże Kości Słoniowej"
@@ -1452,10 +1343,9 @@ msgid "Georgia"
 msgstr "Gruzja"
 
 #: src/Helpers.php:129
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Georgia "
-msgstr "Gruzja"
+msgstr "Gruzja "
 
 #: src/Helpers.php:130
 msgctxt "(Admin)"
@@ -1473,13 +1363,11 @@ msgid "Greenland"
 msgstr "Grenlandia"
 
 #: src/Helpers.php:133
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Grenada "
 msgstr "Grenada "
 
 #: src/Helpers.php:134
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Guadeloupe  "
 msgstr "Gwadelupa  "
@@ -1500,817 +1388,681 @@ msgid "Guernsey"
 msgstr "Guernsey"
 
 #: src/Helpers.php:138
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea  "
 msgstr "Gwinea  "
 
 #: src/Helpers.php:139
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Guinea-Bissau   "
 msgstr "Gwinea Bissau   "
 
 #: src/Helpers.php:140
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Guyana  "
 msgstr "Gujana  "
 
 #: src/Helpers.php:141
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Haiti   "
 msgstr "Haiti   "
 
 #: src/Helpers.php:142
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Heard Island and McDonald Islands   "
 msgstr "Wyspy Heard i McDonalda   "
 
 #: src/Helpers.php:143
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Holy See (Vatican City State)   "
 msgstr "Stolica Apostolska (Państwo Watykańskie)   "
 
 #: src/Helpers.php:144
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Honduras    "
 msgstr "Honduras    "
 
 #: src/Helpers.php:145
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Hong Kong   "
 msgstr "Hongkong   "
 
 #: src/Helpers.php:146
-#, fuzzy
 msgctxt "(Admin)"
 msgid "India   "
 msgstr "Indie   "
 
 #: src/Helpers.php:147
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Indonesia   "
 msgstr "Indonezja   "
 
 #: src/Helpers.php:148
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Iran, Islamic Republic of   "
 msgstr "Iran, Islamska Republika   "
 
 #: src/Helpers.php:149
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Iraq    "
 msgstr "Irak    "
 
 #: src/Helpers.php:150
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Isle of Man "
 msgstr "Wyspa Man "
 
 #: src/Helpers.php:151
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Israel  "
 msgstr "Izrael  "
 
 #: src/Helpers.php:152
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Jamaica "
 msgstr "Jamajka "
 
 #: src/Helpers.php:153
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Japan   "
 msgstr "Japonia   "
 
 #: src/Helpers.php:154
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Jersey  "
 msgstr "Jersey  "
 
 #: src/Helpers.php:155
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Jordan  "
 msgstr "Jordania  "
 
 #: src/Helpers.php:156
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Kazakhstan  "
 msgstr "Kazachstan  "
 
 #: src/Helpers.php:157
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Kenya   "
 msgstr "Kenia   "
 
 #: src/Helpers.php:158
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Kiribati    "
 msgstr "Kiribati    "
 
 #: src/Helpers.php:159
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Democratic Peoples Republic of   "
 msgstr "Korea, Republika Ludowo-Demokratyczna   "
 
 #: src/Helpers.php:160
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Korea, Republic of  "
 msgstr "Korea Południowa, Republika  "
 
 #: src/Helpers.php:161
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Kuwait  "
 msgstr "Kuwejt  "
 
 #: src/Helpers.php:162
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Kyrgyzstan  "
 msgstr "Kirgistan  "
 
 #: src/Helpers.php:163
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Lao Peoples Democratic Republic "
 msgstr "Laotańska Republika Ludowo-Demokratyczna "
 
 #: src/Helpers.php:164
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Lebanon "
 msgstr "Liban "
 
 #: src/Helpers.php:165
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Lesotho "
 msgstr "Lesotho "
 
 #: src/Helpers.php:166
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Liberia "
 msgstr "Liberia "
 
 #: src/Helpers.php:167
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Libya   "
 msgstr "Libia   "
 
 #: src/Helpers.php:168
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Macao   "
 msgstr "Makau   "
 
 #: src/Helpers.php:169
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Macedonia, the Former Yugoslav Republic of  "
 msgstr "Macedonia, Była Jugosłowiańska Republika  "
 
 #: src/Helpers.php:170
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Madagascar  "
 msgstr "Madagaskar  "
 
 #: src/Helpers.php:171
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Malawi  "
 msgstr "Malawi  "
 
 #: src/Helpers.php:172
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Malaysia    "
 msgstr "Malezja    "
 
 #: src/Helpers.php:173
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Maldives    "
 msgstr "Malediwy    "
 
 #: src/Helpers.php:174
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mali    "
 msgstr "Mali    "
 
 #: src/Helpers.php:175
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Marshall Islands    "
 msgstr "Wyspy Marshalla    "
 
 #: src/Helpers.php:176
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Martinique  "
 msgstr "Martynika  "
 
 #: src/Helpers.php:177
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritania  "
 msgstr "Mauretania  "
 
 #: src/Helpers.php:178
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mauritius   "
 msgstr "Mauritius   "
 
 #: src/Helpers.php:179
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mayotte "
 msgstr "Majotta "
 
 #: src/Helpers.php:180
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mexico  "
 msgstr "Meksyk  "
 
 #: src/Helpers.php:181
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Micronesia, Federated States of "
 msgstr "Mikronezja, Sfederowane Stany "
 
 #: src/Helpers.php:182
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Moldova, Republic of    "
 msgstr "Mołdawia, Republika    "
 
 #: src/Helpers.php:183
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Monaco  "
 msgstr "Monako  "
 
 #: src/Helpers.php:184
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mongolia    "
 msgstr "Mongolia    "
 
 #: src/Helpers.php:185
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Montenegro  "
 msgstr "Czarnogóra  "
 
 #: src/Helpers.php:186
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Montserrat  "
 msgstr "Montserrat  "
 
 #: src/Helpers.php:187
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Morocco "
 msgstr "Maroko "
 
 #: src/Helpers.php:188
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Mozambique  "
 msgstr "Mozambik  "
 
 #: src/Helpers.php:189
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Myanmar "
 msgstr "Myanmar "
 
 #: src/Helpers.php:190
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Namibia "
 msgstr "Namibia "
 
 #: src/Helpers.php:191
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Nauru   "
 msgstr "Nauru   "
 
 #: src/Helpers.php:192
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Nepal   "
 msgstr "Nepal   "
 
 #: src/Helpers.php:193
-#, fuzzy
 msgctxt "(Admin)"
 msgid "New Caledonia   "
 msgstr "Nowa Kaledonia   "
 
 #: src/Helpers.php:194
-#, fuzzy
 msgctxt "(Admin)"
 msgid "New Zealand "
 msgstr "Nowa Zelandia "
 
 #: src/Helpers.php:195
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Nicaragua   "
 msgstr "Nikaragua   "
 
 #: src/Helpers.php:196
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Niger   "
 msgstr "Niger   "
 
 #: src/Helpers.php:197
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Nigeria "
 msgstr "Nigeria "
 
 #: src/Helpers.php:198
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Niue    "
 msgstr "Niue    "
 
 #: src/Helpers.php:199
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Norfolk Island  "
 msgstr "Wyspa norfolk  "
 
 #: src/Helpers.php:200
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Northern Mariana Islands    "
 msgstr "Mariany Północne    "
 
 #: src/Helpers.php:201
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Oman    "
 msgstr "Oman    "
 
 #: src/Helpers.php:202
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Pakistan    "
 msgstr "Pakistan    "
 
 #: src/Helpers.php:203
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Palau   "
 msgstr "Palau   "
 
 #: src/Helpers.php:204
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Palestine, State of "
 msgstr "Palestyna, Państwo "
 
 #: src/Helpers.php:205
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Panama  "
 msgstr "Panama  "
 
 #: src/Helpers.php:206
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Papua New Guinea    "
 msgstr "Papua-Nowa Gwinea    "
 
 #: src/Helpers.php:207
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Paraguay    "
 msgstr "Paragwaj    "
 
 #: src/Helpers.php:208
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Peru    "
 msgstr "Peru    "
 
 #: src/Helpers.php:209
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Philippines "
 msgstr "Filipiny "
 
 #: src/Helpers.php:210
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Pitcairn    "
 msgstr "Pitcairn •    "
 
 #: src/Helpers.php:211
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Puerto Rico "
 msgstr "Portoryko "
 
 #: src/Helpers.php:212
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Qatar   "
 msgstr "Katar   "
 
 #: src/Helpers.php:213
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Réunion "
 msgstr "Reunion "
 
 #: src/Helpers.php:214
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Russian Federation  "
 msgstr "Federacja Rosyjska  "
 
 #: src/Helpers.php:215
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Rwanda  "
 msgstr "Rwanda  "
 
 #: src/Helpers.php:216
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Barthélemy    "
 msgstr "Św Barthélemy    "
 
 #: src/Helpers.php:217
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Helena, Ascension and Tristan da Cunha    "
 msgstr "Święta Helena, Wniebowstąpienie i Tristan da Cunha    "
 
 #: src/Helpers.php:218
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Kitts and Nevis   "
 msgstr "Saint Kitts i Nevis   "
 
 #: src/Helpers.php:219
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Lucia "
 msgstr "Saint Lucia "
 
 #: src/Helpers.php:220
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Martin (French part)  "
 msgstr "Saint Martin (część francuska)  "
 
 #: src/Helpers.php:221
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Pierre and Miquelon   "
 msgstr "Saint Pierre i Miquelon   "
 
 #: src/Helpers.php:222
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saint Vincent and the Grenadines    "
 msgstr "Saint Vincent i Grenadyny    "
 
 #: src/Helpers.php:223
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Samoa   "
 msgstr "Samoa   "
 
 #: src/Helpers.php:224
-#, fuzzy
 msgctxt "(Admin)"
 msgid "San Marino  "
 msgstr "San Marino  "
 
 #: src/Helpers.php:225
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Sao Tome and Principe   "
 msgstr "Książęca   "
 
 #: src/Helpers.php:226
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Saudi Arabia    "
 msgstr "Arabia Saudyjska    "
 
 #: src/Helpers.php:227
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Senegal "
 msgstr "Senegal "
 
 #: src/Helpers.php:228
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Serbia  "
 msgstr "Serbia  "
 
 #: src/Helpers.php:229
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Seychelles  "
 msgstr "Seszele  "
 
 #: src/Helpers.php:230
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Sierra Leone    "
 msgstr "Sierra Leone    "
 
 #: src/Helpers.php:231
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Singapore   "
 msgstr "Singapur   "
 
 #: src/Helpers.php:232
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Sint Maarten (Dutch part)   "
 msgstr "Sint Maarten (część holenderska)   "
 
 #: src/Helpers.php:233
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Solomon Islands "
 msgstr "Wyspy Salomona "
 
 #: src/Helpers.php:234
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Somalia "
 msgstr "Somalia "
 
 #: src/Helpers.php:235
-#, fuzzy
 msgctxt "(Admin)"
 msgid "South Africa    "
 msgstr "Republika Południowej Afryki    "
 
 #: src/Helpers.php:236
-#, fuzzy
 msgctxt "(Admin)"
 msgid "South Georgia and the South Sandwich Islands    "
 msgstr "Georgia Południowa i Sandwich Południowy    "
 
 #: src/Helpers.php:237
-#, fuzzy
 msgctxt "(Admin)"
 msgid "South Sudan "
 msgstr "Sudan Południowy "
 
 #: src/Helpers.php:238
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Sri Lanka   "
 msgstr "Sri Lanka   "
 
 #: src/Helpers.php:239
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Sudan   "
 msgstr "Sudan   "
 
 #: src/Helpers.php:240
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Suriname    "
 msgstr "Surinam    "
 
 #: src/Helpers.php:241
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Svalbard and Jan Mayen  "
 msgstr "Svalbard i Jan Mayen  "
 
 #: src/Helpers.php:242
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Swaziland   "
 msgstr "Suazi   "
 
 #: src/Helpers.php:243
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Syrian Arab Republic    "
 msgstr "Syryjska Republika Arabska    "
 
 #: src/Helpers.php:244
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Taiwan   "
 msgstr "Tajwan   "
 
 #: src/Helpers.php:245
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tajikistan  "
 msgstr "Tadżykistan  "
 
 #: src/Helpers.php:246
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tanzania, United Republic of    "
 msgstr "Tanzania, Zjednoczona Republika    "
 
 #: src/Helpers.php:247
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Thailand    "
 msgstr "Tajlandia    "
 
 #: src/Helpers.php:248
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Timor-Leste "
 msgstr "Timor Wschodni "
 
 #: src/Helpers.php:249
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Togo    "
 msgstr "Togo    "
 
 #: src/Helpers.php:250
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tokelau "
 msgstr "Tokelau "
 
 #: src/Helpers.php:251
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tonga   "
 msgstr "Tonga   "
 
 #: src/Helpers.php:252
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Trinidad and Tobago "
 msgstr "Trynidad i Tobago "
 
 #: src/Helpers.php:253
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tunisia "
 msgstr "Tunezja "
 
 #: src/Helpers.php:254
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Turkey  "
 msgstr "Turcja  "
 
 #: src/Helpers.php:255
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Turkmenistan    "
 msgstr "Turkmenistan    "
 
 #: src/Helpers.php:256
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Turks and Caicos Islands    "
 msgstr "Wyspy Turks i Caicos    "
 
 #: src/Helpers.php:257
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Tuvalu  "
 msgstr "Tuvalu  "
 
 #: src/Helpers.php:258
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Uganda  "
 msgstr "Uganda  "
 
 #: src/Helpers.php:259
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Ukraine "
 msgstr "Ukraina "
 
 #: src/Helpers.php:260
-#, fuzzy
 msgctxt "(Admin)"
 msgid "United Arab Emirates    "
 msgstr "Zjednoczone Emiraty Arabskie    "
 
 #: src/Helpers.php:261
-#, fuzzy
 msgctxt "(Admin)"
 msgid "United States Minor Outlying Islands    "
 msgstr "Dalekie Wyspy Mniejsze Stanów Zjednoczonych    "
 
 #: src/Helpers.php:262
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Uruguay "
 msgstr "Urugwaj "
 
 #: src/Helpers.php:263
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Uzbekistan  "
 msgstr "Uzbekistan  "
 
 #: src/Helpers.php:264
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Vanuatu "
 msgstr "Vanuatu "
 
 #: src/Helpers.php:265
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Venezuela, Bolivarian Republic of   "
 msgstr "Wenezuela, Boliwariańska Republika   "
 
 #: src/Helpers.php:266
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Viet Nam    "
 msgstr "Wietnam    "
 
 #: src/Helpers.php:267
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, British "
 msgstr "Brytyjskie Wyspy Dziewicze "
 
 #: src/Helpers.php:268
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Virgin Islands, U.S.    "
 msgstr "Wyspy Dziewicze Stanów Zjednoczonych    "
 
 #: src/Helpers.php:269
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Wallis and Futuna   "
 msgstr "Wallis i Futuna   "
 
 #: src/Helpers.php:270
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Western Sahara  "
 msgstr "Sahara Zachodnia  "
 
 #: src/Helpers.php:271
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Yemen   "
 msgstr "Jemen   "
 
 #: src/Helpers.php:272
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Zambia  "
 msgstr "Zambia  "
 
 #: src/Helpers.php:273
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Zimbabwe    "
 msgstr "Zimbabwe    "
@@ -2353,20 +2105,17 @@ msgstr "Kreator konfiguracji"
 #: src/Installer/Steps/ConfigurationPages.php:34
 #: src/Installer/Steps/PolicySettings.php:24
 #: src/Installer/Steps/PolicySettings.php:49
-#, fuzzy
 msgctxt "(Admin)"
 msgid "&mdash; Create a new page &mdash;"
-msgstr "— Utwórz nową stronę —"
+msgstr "&mdash; Utwórz nową stronę &mdash;"
 
 #: src/Installer/Steps/PolicySettings.php:39
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "We have automatically selected your WooCommerce Terms & Conditions page."
 msgstr "Automatycznie wybraliśmy Twoją stronę Regulaminu WooCommerce."
 
 #: src/Modules/ContactForm7/ContactForm7.php:35
-#, fuzzy
 msgctxt "(Admin)"
 msgid "gdpr terms txt"
 msgstr "terminy rodo txt"
@@ -2377,50 +2126,42 @@ msgid "Privacy"
 msgstr "Prywatność"
 
 #: src/Modules/ContactForm7/Flamingo.php:67
-#, fuzzy
 msgid "Form submissions: "
 msgstr "Formularze: "
 
 #: src/Modules/ContactForm7/Flamingo.php:162
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Do you want form to be GDPR compliance."
-msgstr "Czy chcesz, aby formularz był zgodny z RODO."
+msgstr "Czy chcesz, aby formularz był zgodny z GDPR."
 
 #: src/Modules/ContactForm7/Flamingo.php:163
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "You have installed flamingo, To make this GDPR compliance in individual "
 "contact form's privacy tab check the checkbox for include data to be search "
 "on Privacy tool."
 msgstr ""
-"Zainstalowałeś flamingo, Aby zapewnić zgodność z RODO w zakładce prywatności "
+"Zainstalowałeś flamingo, Aby zapewnić zgodność z GDPR w zakładce prywatności "
 "indywidualnego formularza kontaktowego, zaznacz pole wyboru, aby uwzględnić "
 "dane do wyszukiwania w narzędziu Prywatność."
 
 #: src/Modules/EddGdpr/EddGdpr.php:48
-#, fuzzy
 msgid "EDD Customer Information"
 msgstr "Informacje o klientach EDD"
 
 #: src/Modules/EddGdpr/EddGdpr.php:57
-#, fuzzy
 msgid "EDD Order Information"
 msgstr "Informacje o zamówieniu EDD"
 
 #: src/Modules/EddGdpr/EddGdpr.php:66
-#, fuzzy
 msgid "EDD File Downloads"
 msgstr "EDD Pobieranie plików"
 
 #: src/Modules/EddGdpr/EddGdpr.php:75
-#, fuzzy
 msgid "EDD API Access Logs"
 msgstr "Dzienniki dostępu do interfejsu API EDD"
 
 #: src/Modules/NewsletterGdpr/NewsletterGdpr.php:82
-#, fuzzy
 msgid "Newsletter Form submissions: "
 msgstr "Przesyłanie formularzy newslettera: "
 
@@ -2433,12 +2174,10 @@ msgid "Order Information"
 msgstr "Informacje o zamówieniu"
 
 #: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:165
-#, fuzzy
 msgid "Please acknowledge the Privacy Policy"
 msgstr "Prosimy o zapoznanie się z Polityką Prywatności"
 
 #: src/Modules/WooCommerceGdpr/WooCommerceGdpr.php:180
-#, fuzzy
 msgid "Privacy Policy consent is required!"
 msgstr "Wymagana jest zgoda Polityki Prywatności!"
 
@@ -2448,19 +2187,16 @@ msgid "Nonce error for action \"%s\". Please go back and try again!"
 msgstr "\"%s\". Wróć i spróbuj ponownie!"
 
 #: src/Router.php:149
-#, fuzzy
 msgctxt "(Admin)"
 msgid "You do not have the required permissions to perform this action!"
 msgstr "Nie masz uprawnień wymaganych do wykonania tej akcji!"
 
 #: views/admin/consent.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Default consent types"
 msgstr "Domyślne typy zgód"
 
 #: views/admin/consent.php:4
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "These are the consent types that have been automatically registered by the "
@@ -2502,13 +2238,11 @@ msgid "Hidden"
 msgstr "Ukryty"
 
 #: views/admin/consent.php:29
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Custom consent types"
 msgstr "Niestandardowe typy zgód"
 
 #: views/admin/consent.php:30
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Here you can add custom consent types to track. They will not be used "
@@ -2519,16 +2253,14 @@ msgstr ""
 "nich."
 
 #: views/admin/consent.php:35
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Machine-readable slug"
 msgstr "Ślimak do odczytu maszynowego"
 
 #: views/admin/consent.php:44 views/admin/consent.php:69
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Visible?"
-msgstr "Widoczny"
+msgstr "Widoczny?"
 
 #: views/admin/consent.php:73
 msgctxt "(Admin)"
@@ -2536,19 +2268,16 @@ msgid "Remove"
 msgstr "Usuń"
 
 #: views/admin/consent.php:79
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Show Consent types"
 msgstr "Pokaż typy zgody"
 
 #: views/admin/consent.php:80
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Add consent type"
 msgstr "Dodaj typ zgody"
 
 #: views/admin/consent.php:81
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Hide consent types"
 msgstr "Ukryj typy zgód"
@@ -2559,7 +2288,6 @@ msgid "Additional info"
 msgstr "Dodatkowe informacje"
 
 #: views/admin/consent.php:97
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This text will be displayed to your data subjects on the Privacy Tools page."
@@ -2573,7 +2301,6 @@ msgid " "
 msgstr " "
 
 #: views/admin/data-subjects/search-form.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "On this page, you can find which data subjects personal data you are storing "
@@ -2583,7 +2310,6 @@ msgstr ""
 "przechowujesz, i pobrać, wyeksportować lub usunąć."
 
 #: views/admin/data-subjects/search-form.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Find data subject by email"
 msgstr "Znajdź osobę, której dane dotyczą, przez e-mail"
@@ -2604,31 +2330,26 @@ msgid "Username"
 msgstr "Nazwa użytkownika"
 
 #: views/admin/data-subjects/search-results.php:13
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data found."
-msgstr "Nie znaleziono danych!"
+msgstr "Znalezione dane."
 
 #: views/admin/data-subjects/search-results.php:14
-#, fuzzy
 msgctxt "(Admin)"
 msgid "is not a registered user."
 msgstr "nie jest zarejestrowanym użytkownikiem."
 
 #: views/admin/data-subjects/search-results.php:21
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Download data (html)"
 msgstr "Pobieranie danych (html)"
 
 #: views/admin/data-subjects/search-results.php:22
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Export data (json)"
 msgstr "Eksportowanie danych (json)"
 
 #: views/admin/data-subjects/search-results.php:26
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This user has admin capabilities. Deleting data via this interface is "
@@ -2638,7 +2359,6 @@ msgstr ""
 "pośrednictwem tego interfejsu jest wyłączone."
 
 #: views/admin/data-subjects/search-results.php:29
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Anonymize data"
 msgstr "Anonimizuj dane"
@@ -2655,32 +2375,27 @@ msgstr "Nie znaleziono danych!"
 
 #: views/admin/data-subjects/search-results.php:41
 #: views/modules/wordpress-user/dashboard/profile-page/table-consent.php:4
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Consents given"
 msgstr "Udzielone zgody"
 
 #: views/admin/data-subjects/search-results.php:54
-#, fuzzy
 msgctxt "(Admin)"
 msgid "No consents given!"
 msgstr "Brak zgód!"
 
 #: views/admin/general/custom-policy-url.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Leave blank if privacy policy page already selected"
 msgstr "Pozostaw puste, jeśli strona polityki prywatności jest już zaznaczona"
 
 #: views/admin/general/custom-terms-url.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Leave blank if terms and condition page already selected"
 msgstr ""
 "Pozostaw puste pole, jeśli strona warunków i postanowień jest już zaznaczona"
 
 #: views/admin/general/custom-tools-url.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Leave blank if privacy tools page already selected"
 msgstr "Pozostaw puste, jeśli strona narzędzi prywatności jest już zaznaczona"
@@ -2694,20 +2409,17 @@ msgstr "Adres e-mail"
 
 #: views/admin/general/delete-action-reassign.php:3
 #: views/installer/steps/configuration-settings.php:50
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete content"
 msgstr "Usuwanie zawartości"
 
 #: views/admin/general/delete-action-reassign.php:6
 #: views/installer/steps/configuration-settings.php:53
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Reassign content to a user"
 msgstr "Ponowne przypisywanie zawartości do użytkownika"
 
 #: views/admin/general/delete-action-reassign.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "If the user has submitted any content on your site, should it be deleted or "
@@ -2717,7 +2429,6 @@ msgstr ""
 "powinna ona zostać usunięta lub przypisana do innego użytkownika?"
 
 #: views/admin/general/description-data-page.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Select the page where users can go to control their data. This page must "
@@ -2727,7 +2438,6 @@ msgstr ""
 "musi zawierać krótki kod [gdpr_privacy_tools]."
 
 #: views/admin/general/description-delete-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "What should happen if a data subject requests deleting their data."
 msgstr ""
@@ -2735,7 +2445,6 @@ msgstr ""
 "swoich danych."
 
 #: views/admin/general/description-export-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "What should happen if a data subject requests viewing or exporting their "
@@ -2745,19 +2454,16 @@ msgstr ""
 "lub wyeksportowania swoich danych."
 
 #: views/admin/general/description-position-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Select position of the Popup"
 msgstr "Wybierz pozycję okna podręcznego"
 
 #: views/admin/general/description-terms-page.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Optional. Select the page which contains your Terms & Conditions"
 msgstr "Wybierz stronę, która będzie zawierać Twoją Politykę Prywatności"
 
 #: views/admin/general/description-theme-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Select theme of the Popup"
 msgstr "Wybierz motyw okna podręcznego"
@@ -2768,25 +2474,21 @@ msgid "."
 msgstr "."
 
 #: views/admin/general/edd-compatibility.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable EDD data on GDPR tool."
 msgstr "Włącz dane EDD w narzędziu GDPR."
 
 #: views/admin/general/edd-compatibility.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Will work for EDD Version 2.0.0 or later."
 msgstr "Będzie działać dla EDD w wersji 2.0.0 lub nowszej."
 
 #: views/admin/general/enable-policy-popup.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable Policy Link On Popup"
 msgstr "Włącz link do zasad w wyskakującym okienku"
 
 #: views/admin/general/enable-popup.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "<b>Note:</b> Need to add custom content <b>gdpr_cookie_consent</b> its "
@@ -2796,13 +2498,11 @@ msgstr ""
 "b> jest akceptowana w wyskakującym przycisku akceptuj."
 
 #: views/admin/general/enable-tac.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable the term and condition page."
 msgstr "Włącz stronę terminów i warunków."
 
 #: views/admin/general/enable.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable the view, export and forget functionality for users and visitors"
 msgstr ""
@@ -2810,7 +2510,6 @@ msgstr ""
 "odwiedzających"
 
 #: views/admin/general/enable.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Enable the Privacy Tools page on front-end and dashboard. This allows "
@@ -2841,7 +2540,6 @@ msgid "Decline"
 msgstr "Odrzuć"
 
 #: views/admin/general/enable_popup_header.php:7
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Leave blank if you don't want a header to get displayed."
 msgstr "Pozostaw puste, jeśli nie chcesz, aby nagłówek był wyświetlany."
@@ -2862,14 +2560,12 @@ msgid "Self"
 msgstr "Jednolity"
 
 #: views/admin/general/stylesheet.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable basic styling for Privacy Tools page."
-msgstr "Włączanie podstawowych stylów na stronie Narzędzia prywatności"
+msgstr "Włącz podstawowe style na stronie Narzędzia prywatności."
 
 #: views/admin/general/theme-compatibility.php:9
 #: views/installer/steps/integrations.php:21
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Automatically add Privacy Policy and Privacy Tools links to your site footer."
@@ -2878,7 +2574,6 @@ msgstr ""
 "prywatności do stopki witryny."
 
 #: views/admin/general/unknown-user-message.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This message is displayed if the email entered on the privacy tools page is "
@@ -2888,37 +2583,32 @@ msgstr ""
 "Narzędzia prywatności."
 
 #: views/admin/general/woo-compatibility.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enable WooCommerce data on GDPR tool."
-msgstr "Włącz dane WooCommerce w narzędziu RODO."
+msgstr "Włącz dane WooCommerce w narzędziu GDPR."
 
 #: views/admin/general/woo-compatibility.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Will work for WooCommerce Version 3.4.0 or later."
 msgstr "Będzie działać dla WooCommerce w wersji 3.4.0 lub nowszej."
 
 #: views/admin/notices/header-privacy-safe.php:5
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Privacy Safe By Data443"
 msgstr "Prywatność bezpieczna przez Data443"
 
 #: views/admin/notices/header.php:5 views/admin/settings-page.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid "The GDPR Framework By Data443"
-msgstr "Ramy RODO według Data443"
+msgstr "Ramy GDPR według Data443"
 
 #: views/admin/notices/help.php:3 views/admin/settings-page.php:39
-#, fuzzy, php-format
+#, php-format
 msgctxt "(Admin)"
 msgid "Need help? Take a look at our %sdocumentation%s."
-msgstr "Potrzebujesz pomocy? Spójrz na nasze %sdocumentation%."
+msgstr "Potrzebujesz pomocy? Spójrz na nasze %sdocumentation%s."
 
 #: views/admin/notices/helper-autoinstall.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "A Privacy Policy page has been created, but it is empty. You can generate a "
@@ -2928,14 +2618,12 @@ msgstr ""
 "stronie można wygenerować szablon zasad."
 
 #: views/admin/notices/helper-autoinstall.php:6
-#, fuzzy, php-format
-#| msgid "I accept the %sPrivacy Policy%s"
+#, php-format
 msgctxt "(Admin)"
 msgid "Read more about the %sPrivacy Policy%s"
 msgstr "Akceptuję zasady %sPolityki prywatności%s"
 
 #: views/admin/notices/helper-policy.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Heads up - your Privacy Policy still requires some attention. Find the "
@@ -2945,25 +2633,23 @@ msgstr ""
 "miejsca oznaczone [TODO] i zastąp je prawdziwą treścią!"
 
 #: views/admin/notices/helper-settings.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Heads up! The GDPR Framework is not properly configured, so it will not work "
 "just yet."
 msgstr ""
-"Głowa do góry! Ramy RODO nie są odpowiednio skonfigurowane, więc nie będą "
+"Głowa do góry! Ramy GDPR nie są odpowiednio skonfigurowane, więc nie będą "
 "jeszcze działać."
 
 #: views/admin/notices/helper-settings.php:4
-#, fuzzy, php-format
+#, php-format
 msgctxt "(Admin)"
 msgid "Go to %sTools > Data443 GDPR%s and make sure all fields are filled in."
 msgstr ""
-"Przejdź do %sTools > Data443 GDPR%s i upewnij się%s że wszystkie pola są "
+"Przejdź do %sTools > Data443 GDPR%s i upewnij się że wszystkie pola są "
 "wypełnione."
 
 #: views/admin/notices/helper-tools.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "The contents of this page should contain the [gdpr_privacy_tools] shortcode."
@@ -2971,29 +2657,25 @@ msgstr "Zawartość tej strony powinna zawierać krótki kod [gdpr_privacy_tools
 
 #: views/admin/privacy-manager/header.php:2
 #: views/admin/privacy-manager/header.php:21
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data443™ Global Privacy Manager"
 msgstr "Data443™ Globalny menedżer prywatności"
 
 #: views/admin/privacy-manager/header.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "ensures privacy regulation compliance, such as GDPR, CCPA, LGPD, etc, at the "
 "next level."
 msgstr ""
-"zapewnia zgodność z przepisami dotyczącymi prywatności, takimi jak RODO, "
+"zapewnia zgodność z przepisami dotyczącymi prywatności, takimi jak GDPR, "
 "CCPA, LGPD itp., Na następnym poziomie."
 
 #: views/admin/privacy-manager/header.php:4
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Includes the following features:"
 msgstr "Zawiera następujące funkcje:"
 
 #: views/admin/privacy-manager/header.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Available within minutes – designed to be deployed to your website over the "
@@ -3003,61 +2685,51 @@ msgstr ""
 "przez telefon za pomocą jednego linku!"
 
 #: views/admin/privacy-manager/header.php:7
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Fully branded Subject Access Request Form"
 msgstr "W pełni markowy formularz wniosku o dostęp do podmiotu"
 
 #: views/admin/privacy-manager/header.php:8
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Custom Workflow Engine"
 msgstr "Niestandardowy aparat przepływu pracy"
 
 #: views/admin/privacy-manager/header.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Cookie and Consent Management Tracking"
 msgstr "Śledzenie plików cookie i zarządzania zgodami"
 
 #: views/admin/privacy-manager/header.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Opt-in and Opt-out Management"
 msgstr "Zarządzanie opt-in i opt-out"
 
 #: views/admin/privacy-manager/header.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Do Not Sell Management Interface"
 msgstr "Nie sprzedawaj interfejsu zarządzania"
 
 #: views/admin/privacy-manager/header.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Full On Premise and In Cloud Data Discovery"
 msgstr "Pełne wykrywanie danych lokalnie i w chmurze"
 
 #: views/admin/privacy-manager/header.php:13
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Complete End to End Data Mapping"
 msgstr "Kompletne kompleksowe mapowanie danych"
 
 #: views/admin/privacy-manager/header.php:14
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Full Data Classification and Governance"
 msgstr "Pełna klasyfikacja danych i zarządzanie nimi"
 
 #: views/admin/privacy-manager/header.php:15
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data Deletion and Monitoring Compliance Management"
 msgstr "Usuwanie danych i monitorowanie zgodności z przepisami"
 
 #: views/admin/privacy-manager/header.php:16
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Data Stores instantly available: Windows NTFS, OneDrive, Dropbox, Office365, "
@@ -3069,7 +2741,6 @@ msgstr ""
 "MSSQL, PostGreSQL, Mongo"
 
 #: views/admin/privacy-manager/header.php:17
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Data Stores addons available: over 200 SaaS, On Premise databases & File "
@@ -3079,13 +2750,11 @@ msgstr ""
 "udziały plików"
 
 #: views/admin/privacy-manager/header.php:18
-#, fuzzy
 msgctxt "(Admin)"
 msgid "PowerBI and Dashboarding"
 msgstr "PowerBI i pulpit nawigacyjny"
 
 #: views/admin/privacy-manager/header.php:21
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "No matter where you are on your data privacy journey, the ultimate goal is "
@@ -3095,7 +2764,6 @@ msgstr ""
 "ostatecznym celem jest zgodność z przepisami."
 
 #: views/admin/privacy-manager/header.php:21
-#, fuzzy
 msgctxt "(Admin)"
 msgid "enables your organization to comply with all privacy regulations."
 msgstr ""
@@ -3103,13 +2771,11 @@ msgstr ""
 "prywatności."
 
 #: views/admin/privacy-policy/description-policy-page.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Select the page which will contain your Privacy Policy"
 msgstr "Wybierz stronę, która będzie zawierać Twoją Politykę Prywatności"
 
 #: views/admin/privacy-policy/generated.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Your Privacy Policy has been generated."
 msgstr "Twoja Polityka prywatności została wygenerowana."
@@ -3120,13 +2786,11 @@ msgid "&laquo; Back"
 msgstr "&laquo; Cofnij"
 
 #: views/admin/privacy-policy/has-dpo.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid "I have appointed a Data Protection Officer (DPO)"
 msgstr "Wyznaczyłem inspektora ochrony danych (IOD)"
 
 #: views/admin/privacy-policy/header.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This page allows you to generate a Privacy Policy based on the information "
@@ -3136,7 +2800,6 @@ msgstr ""
 "informacji wprowadzonych poniżej."
 
 #: views/admin/privacy-safe/enable-backlink.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "<b>Note:</b> We need your support. By selecting to support Data443, a small "
@@ -3150,40 +2813,36 @@ msgstr ""
 "był wyświetlany w Twojej witrynie."
 
 #: views/admin/settings-page.php:8
-#, fuzzy
 msgctxt "(Admin)"
 msgid "GDPR settings saved!"
-msgstr "Ustawienia RODO zapisane!"
+msgstr "Ustawienia GDPR zapisane!"
 
 #: views/admin/settings-page.php:31
-#, fuzzy, php-format
+#, php-format
 msgctxt "(Admin)"
 msgid "The GDPR Framework. Built with &#9829; by %sData443%s."
-msgstr "Ramy RODO. Zbudowany z ♥ przez %sData443%s."
+msgstr "Ramy GDPR. Zbudowany z ♥ przez %sData443%s."
 
 #: views/admin/settings-page.php:47
-#, fuzzy, php-format
+#, php-format
 msgctxt "(Admin)"
 msgid "Support our development efforts! leave a %s5-star rating%s."
 msgstr "Wspieraj nasze wysiłki rozwojowe! pozostaw ocenę %s5 gwiazdek%s."
 
 #: views/admin/support/contents.php:5 views/installer/steps/finish.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Need more info?"
 msgstr "Potrzebujesz więcej informacji?"
 
 #: views/admin/support/contents.php:11 views/installer/steps/finish.php:17
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Site Owner's guide to GDPR"
-msgstr "Przewodnik właściciela witryny po RODO"
+msgstr "Przewodnik właściciela witryny po GDPR"
 
 #: views/admin/support/contents.php:14 views/installer/steps/finish.php:20
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Read the full guide on GDPR compliance."
-msgstr "Przeczytaj pełny przewodnik na temat zgodności z RODO."
+msgstr "Przeczytaj pełny przewodnik na temat zgodności z GDPR."
 
 #: views/admin/support/contents.php:20 views/installer/steps/finish.php:26
 msgctxt "(Admin)"
@@ -3191,7 +2850,6 @@ msgid "Knowledge base"
 msgstr "Baza wiedzy"
 
 #: views/admin/support/contents.php:23 views/installer/steps/finish.php:29
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Check out the knowledge base for common questions and answers."
 msgstr ""
@@ -3199,13 +2857,11 @@ msgstr ""
 "pytania i odpowiedzi."
 
 #: views/admin/support/contents.php:29 views/installer/steps/finish.php:35
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Developer's guide to GDPR"
-msgstr "Przewodnik programisty po RODO"
+msgstr "Przewodnik programisty po GDPR"
 
 #: views/admin/support/contents.php:32 views/installer/steps/finish.php:38
-#, fuzzy
 msgctxt "(Admin)"
 msgid "We have a thorough guide to help making custom sites compliant."
 msgstr ""
@@ -3218,13 +2874,11 @@ msgid "Need help?"
 msgstr "Potrzebujesz pomocy?"
 
 #: views/admin/support/contents.php:46 views/installer/steps/finish.php:52
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Submit a support request"
 msgstr "Prześlij zgłoszenie do pomocy technicznej"
 
 #: views/admin/support/contents.php:49 views/installer/steps/finish.php:55
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Found a bug or have a question about the plugin? Submit a support request "
@@ -3234,25 +2888,21 @@ msgstr ""
 "techniczną, a my zajmiemy się nią!"
 
 #: views/admin/support/contents.php:55 views/installer/steps/finish.php:61
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Request a consultation"
 msgstr "Poproś o konsultację"
 
 #: views/admin/support/contents.php:58 views/installer/steps/finish.php:64
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Need assistance in making your site compliant? We can help!"
 msgstr "Potrzebujesz pomocy w dochowawczeniu swojej witryny? Możemy pomóc!"
 
 #: views/admin/wizard-buttons.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Restart setup wizard"
 msgstr "Kreator konfiguracji ponownego uruchamiania"
 
 #: views/email/action-export.php:8 views/email/action-forget.php:12
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This email is just for your information. You don't need to take any action"
@@ -3261,7 +2911,6 @@ msgstr ""
 "działań"
 
 #: views/email/action-forget.php:8
-#, fuzzy
 msgctxt "(Admin)"
 msgid "The data subject had a user account on your website."
 msgstr ""
@@ -3269,7 +2918,6 @@ msgstr ""
 "internetowej."
 
 #: views/email/identify-data-subject.php:2
-#, fuzzy
 msgid "Someone has requested access to your data on"
 msgstr "Ktoś poprosił o dostęp do Twoich danych w dniu"
 
@@ -3279,17 +2927,14 @@ msgstr ""
 "Jeśli to był błąd, po prostu zignoruj ten e-mail i nic się nie wydarzy."
 
 #: views/email/identify-data-subject.php:4
-#, fuzzy
 msgid "To manage your data, visit the following address:"
 msgstr "Aby zarządzać swoimi danymi, odwiedź następujący adres:"
 
 #: views/email/identify-data-subject.php:10
-#, fuzzy
 msgid "This link is valid for 15 minutes."
 msgstr "Ten link jest ważny przez 15 minut."
 
 #: views/email/no-data.php:2
-#, fuzzy
 msgid "Someone has requested information about your personal data on"
 msgstr "Ktoś poprosił o informacje o Twoich danych osobowych na"
 
@@ -3298,7 +2943,6 @@ msgid "None of your personal data is stored on"
 msgstr "Żadna z Twoich danych osobowych nie jest"
 
 #: views/email/no-data.php:5
-#, fuzzy
 msgid ""
 "If this was a mistake or you did not request this email, just ignore it and "
 "nothing will happen."
@@ -3307,73 +2951,61 @@ msgstr ""
 "nic się nie stanie."
 
 #: views/email/request-export.php:13 views/email/request-forget.php:13
-#, fuzzy
 msgctxt "(Admin)"
 msgid "As a reminder: according to GDPR, you have 30 days to comply."
-msgstr "Dla przypomnienia: zgodnie z RODO masz 30 dni na dostosowanie się."
+msgstr "Dla przypomnienia: zgodnie z GDPR masz 30 dni na dostosowanie się."
 
 #: views/global/delete-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically anonymize data"
 msgstr "Automatycznie anonimizuj dane"
 
 #: views/global/delete-action.php:5
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically delete data"
 msgstr "Automatyczne usuwanie danych"
 
 #: views/global/delete-action.php:9
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically anonymize data and notify me via email"
 msgstr "Automatycznie anonimizuj dane i powiadamiaj mnie e-mailem"
 
 #: views/global/delete-action.php:13
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically delete data and notify me via email"
 msgstr "Automatycznie usuwaj dane i powiadamiaj mnie e-mailem"
 
 #: views/global/delete-action.php:16 views/global/export-action.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Only notify me via email"
 msgstr "Powiadom mnie tylko przez e-mail"
 
 #: views/global/export-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically download data"
 msgstr "Automatyczne pobieranie danych"
 
 #: views/global/export-action.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Automatically download data and notify me via email"
 msgstr "Automatycznie pobieraj dane i powiadamiaj mnie e-mailem"
 
 #: views/global/position-action.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Banner bottom"
 msgstr "Baner dolny"
 
 #: views/global/position-action.php:5
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Floating left"
 msgstr "Pływający w lewo"
 
 #: views/global/position-action.php:8
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Floating Right"
 msgstr "Pływający w prawo"
 
 #: views/global/position-action.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Banner top"
 msgstr "Góra banera"
@@ -3389,25 +3021,21 @@ msgid "Classic"
 msgstr "Klasyczny"
 
 #: views/global/theme-action.php:8
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Edgeless"
 msgstr "Bez krawędzi"
 
 #: views/installer/continue-notice.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "The The GDPR Framework setup has not been finalized yet."
 msgstr "Konfiguracja GDPR Framework nie została jeszcze sfinalizowana."
 
 #: views/installer/continue-notice.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid "You can continue the setup at any time."
 msgstr "Konfigurację można kontynuować w dowolnym momencie."
 
 #: views/installer/continue-notice.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Continue the setup wizard"
 msgstr "Kontynuuj pracę kreatora instalacji"
@@ -3422,25 +3050,21 @@ msgid "Back"
 msgstr "Wstecz"
 
 #: views/installer/header.php:7
-#, fuzzy
 msgctxt "(Admin)"
 msgid "WordPress GDPR &rsaquo; Setup Wizard"
-msgstr "WordPress RODO › Kreator konfiguracji"
+msgstr "WordPress GDPR › Kreator konfiguracji"
 
 #: views/installer/header.php:23
-#, fuzzy
 msgctxt "(Admin)"
 msgid "The GDPR Framework"
-msgstr "Ramy RODO"
+msgstr "Ramy GDPR"
 
 #: views/installer/header.php:26
-#, fuzzy
 msgctxt "(Admin)"
 msgid "I need help"
 msgstr "Potrzebuję pomocy"
 
 #: views/installer/header.php:29
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Developer Docs"
 msgstr "Dokumenty dla programistów"
@@ -3451,7 +3075,6 @@ msgid "Configuration"
 msgstr "Konfiguracja"
 
 #: views/installer/header.php:46
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Forms & Consent"
 msgstr "Formularze i zgoda"
@@ -3462,7 +3085,6 @@ msgid "Integrations"
 msgstr "Integracje"
 
 #: views/installer/privacy-safe-notice.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Strengthen your reputation. Privacy safe gives your customers total control "
@@ -3489,7 +3111,6 @@ msgstr "Może później"
 
 #: views/installer/steps/configuration-settings.php:23
 #: views/installer/steps/configuration-settings.php:73
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Enter the email address to notify"
 msgstr "Wprowadź adres e-mail, aby powiadomić"
@@ -3500,19 +3121,16 @@ msgid "I accept"
 msgstr "Akceptuję"
 
 #: views/installer/welcome-notice.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "The GDPR Framework has not been set up yet. Would you like to do that?"
-msgstr "Konfiguracja GDPR Framework nie została jeszcze sfinalizowana."
+msgstr "Ramy RODO nie zostały jeszcze ustanowione. Chcesz to zrobić?"
 
 #: views/installer/welcome-notice.php:3
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Our setup wizard will guide you through the process."
 msgstr "Nasz kreator konfiguracji poprowadzi Cię przez ten proces."
 
 #: views/installer/welcome-notice.php:4
-#, fuzzy
 msgctxt "(Admin)"
 msgid "You can also configure the plugin manually by going to"
 msgstr "Możesz również skonfigurować wtyczkę ręcznie, przechodząc do"
@@ -3523,25 +3141,21 @@ msgid "Tools"
 msgstr "Narzędzia"
 
 #: views/installer/welcome-notice.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Run the setup wizard"
 msgstr "Uruchamianie kreatora instalacji"
 
 #: views/installer/welcome-notice.php:14
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Auto-install pages"
 msgstr "Automatyczne instalowanie stron"
 
 #: views/installer/welcome-notice.php:18
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Skip and install manually"
 msgstr "Pomiń i zainstaluj ręcznie"
 
 #: views/modules/contact-form-7/form-privacy-tab.php:10
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Include the entries of this form when downloading or deleting a data "
@@ -3551,7 +3165,6 @@ msgstr ""
 "której dane dotyczą."
 
 #: views/modules/contact-form-7/form-privacy-tab.php:18
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "Select the mail-tag of the sender's email field (for example, your-email)."
@@ -3560,7 +3173,6 @@ msgstr ""
 "adres e-mail)."
 
 #: views/modules/contact-form-7/generator-privacy.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "This tag generates the default text for Terms & Conditions and/or Privacy "
@@ -3580,7 +3192,6 @@ msgstr "Zgoda"
 
 #: views/modules/wordpress-user/dashboard/data-page/form-consent.php:6
 #: views/privacy-tools/form-consent.php:6
-#, fuzzy
 msgid "Here you can withdraw any consents you have given."
 msgstr "Tutaj możesz wycofać wszelkie udzielone zgody."
 
@@ -3595,7 +3206,6 @@ msgstr "Wypłata"
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:6
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:5
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete this user and all data"
 msgstr "Usuń tego użytkownika i wszystkie dane"
@@ -3612,7 +3222,6 @@ msgstr "Usuń wszystkie zebrane przez nas dane na Twój temat."
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:17
 #: views/privacy-tools/form-delete.php:7 views/privacy-tools/form-delete.php:27
-#, fuzzy
 msgid "If you have a user account on our site, it will also be deleted."
 msgstr ""
 "Jeśli masz konto użytkownika na naszej stronie, zostanie ono również "
@@ -3620,19 +3229,16 @@ msgstr ""
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:18
 #: views/privacy-tools/form-delete.php:8 views/privacy-tools/form-delete.php:28
-#, fuzzy
 msgid "Be careful - this action is permanent and CANNOT be undone."
 msgstr "Bądź ostrożny - ta akcja jest trwała i NIE MOŻNA jej cofnąć."
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:20
 #: views/privacy-tools/form-delete.php:10
-#, fuzzy
 msgid "Note Regarding Order:"
 msgstr "Uwaga dotycząca zamówienia:"
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:21
 #: views/privacy-tools/form-delete.php:11
-#, fuzzy
 msgid ""
 "Your order with status Processing will not get deleted until status change."
 msgstr ""
@@ -3646,7 +3252,6 @@ msgstr "Twoje zamówienie ze statusem Zakończone zostanie zanonimizowane."
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:23
 #: views/privacy-tools/form-delete.php:13
-#, fuzzy
 msgid "If you delete Completed order you can't apply for refund."
 msgstr ""
 "Jeśli usuniesz zrealizowane zamówienie, nie możesz ubiegać się o zwrot "
@@ -3654,7 +3259,6 @@ msgstr ""
 
 #: views/modules/wordpress-user/dashboard/data-page/form-delete.php:29
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:23
-#, fuzzy
 msgctxt "(Admin)"
 msgid ""
 "You seem to have an administrator or equivalent role, so deleting/"
@@ -3670,73 +3274,61 @@ msgstr "Pobierz Twoje  dane"
 
 #: views/modules/wordpress-user/dashboard/form-export.php:12
 #: views/privacy-tools/form-export.php:13
-#, fuzzy
 msgid "Download as table"
 msgstr "Pobierz jako tabelę"
 
 #: views/modules/wordpress-user/dashboard/form-export.php:15
 #: views/privacy-tools/form-export.php:22
-#, fuzzy
 msgid "Export as JSON"
 msgstr "Eksportowanie jako JSON"
 
 #: views/modules/wordpress-user/dashboard/form-export.php:19
 #: views/privacy-tools/form-export.php:4
-#, fuzzy
 msgid "You can download all your data formatted as a table for viewing."
 msgstr "Możesz pobrać wszystkie dane sformatowane jako tabela do przeglądania."
 
 #: views/modules/wordpress-user/dashboard/form-export.php:20
 #: views/privacy-tools/form-export.php:5
-#, fuzzy
 msgid "Alternatively, you can export it in machine-readable JSON format."
 msgstr ""
 "Alternatywnie można go wyeksportować w formacie JSON do odczytu maszynowego."
 
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:11
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Delete user and all data"
 msgstr "Usuń użytkownika i wszystkie dane"
 
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:14
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Anonymize user and all data"
 msgstr "Anonimizuj użytkownika i wszystkie dane"
 
 #: views/modules/wordpress-user/dashboard/profile-page/form-delete.php:18
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "Be careful - this action is permanent and CANNOT be undone."
 msgstr "Bądź ostrożny - ta akcja jest trwała i NIE MOŻNA jej cofnąć."
 
 #: views/modules/wordpress-user/dashboard/profile-page/header.php:2
-#, fuzzy
 msgctxt "(Admin)"
 msgid "GDPR Data"
-msgstr "Dane RODO"
+msgstr "Dane GDPR"
 
 #: views/modules/wordpress-user/dashboard/profile-page/header.php:6
-#, fuzzy
 msgctxt "(Admin)"
 msgid "This user has been anonymized."
 msgstr "Ten użytkownik został zanonimizowany."
 
 #: views/modules/wordpress-user/dashboard/profile-page/table-consent.php:17
-#, fuzzy
 msgctxt "(Admin)"
 msgid "No consents given"
 msgstr "Brak udzielonych zgód"
 
 #: views/modules/wordpress-user/dashboard/profile-page/user-logs.php:2
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "GDPR User logs"
-msgstr "RODO Dzienniki użytkowników"
+msgstr "GDPR Dzienniki użytkowników"
 
 #: views/modules/wordpress-user/dashboard/profile-page/user-logs.php:8
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "S.no"
 msgstr "S.no"
@@ -3747,30 +3339,25 @@ msgid "User ID"
 msgstr "Identyfikator użytkownika"
 
 #: views/modules/wordpress-user/dashboard/profile-page/user-logs.php:10
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "User logs"
 msgstr "Dzienniki użytkowników"
 
 #: views/modules/wordpress-user/dashboard/profile-page/user-logs.php:11
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "Updated date"
 msgstr "Data aktualizacji"
 
 #: views/modules/wordpress-user/dashboard/profile-page/user-logs.php:50
-#, fuzzy
 msgctxt "gdpr-framework"
 msgid "No User Logs"
 msgstr "Brak logów użytkownika"
 
 #: views/privacy-tools/donotsell.php:14
-#, fuzzy
 msgid "Do Not Sell Request"
 msgstr "Prośba o nie sprzedawaj"
 
 #: views/privacy-tools/donotsell.php:51
-#, fuzzy
 msgid "I agree to receive other communications from "
 msgstr "Wyrażam zgodę na otrzymywanie innych wiadomości od "
 
@@ -3794,7 +3381,6 @@ msgid "Delete my data"
 msgstr "Usuń moje dane"
 
 #: views/privacy-tools/form-identify.php:8
-#, fuzzy
 msgid "Back to front page"
 msgstr "Powrót do strony głównej"
 
@@ -3812,7 +3398,6 @@ msgid "Send email"
 msgstr "Wyślij email"
 
 #: views/privacy-tools/notice-admin-role.php:4
-#, fuzzy
 msgctxt "(Admin)"
 msgid "Data deletion is disabled for administrative accounts."
 msgstr "Usuwanie danych jest wyłączone dla kont administracyjnych."
@@ -3823,19 +3408,17 @@ msgid ""
 "your spam folder as well!"
 msgstr ""
 "Wyślemy Ci wiadomość e-mail z linkiem, aby uzyskać dostęp do Twoich danych. "
-"Proszę sprawdzić także folder ze spamem."
+"Proszę sprawdzić także folder ze spamem!"
 
 #: views/privacy-tools/notices.php:8
 msgid "The email you entered does not appear to be a valid email."
-msgstr "Wprowadzony adres e-mail nie jest prawidłowy"
+msgstr "Wprowadzony adres e-mail nie jest prawidłowy."
 
 #: views/privacy-tools/notices.php:12
-#, fuzzy
 msgid "Sorry - the link seems to have expired. Please try again!"
 msgstr "Przepraszamy - wydaje się, że link wygasł. Spróbuj ponownie!"
 
 #: views/privacy-tools/notices.php:24
-#, fuzzy
 msgid "Your personal data has been removed!"
 msgstr "Twoje dane osobowe zostały usunięte!"
 
@@ -3844,44 +3427,37 @@ msgid "You are identified as"
 msgstr "Jesteś zidentyfikowany jako"
 
 #. Plugin Name of the plugin/theme
-#, fuzzy
 msgid "The GDPR Framework"
-msgstr "Ramy RODO"
+msgstr "Ramy GDPR"
 
 #. Plugin URI of the plugin/theme
-#, fuzzy
 msgid "https://www.data443.com/gdpr-framework/"
 msgstr "https://www.data443.com/gdpr-framework/"
 
 #. Description of the plugin/theme
-#, fuzzy
 msgid ""
 "Tools to help make your website GDPR-compliant. Fully documented, extendable "
 "and developer-friendly."
 msgstr ""
-"Narzędzia, które pomogą Uczynić Twoją witrynę zgodną z RODO. W pełni "
+"Narzędzia, które pomogą Uczynić Twoją witrynę zgodną z GDPR. W pełni "
 "udokumentowane, rozszerzalne i przyjazne dla programistów."
 
 #. Author of the plugin/theme
-#, fuzzy
 msgid "Data443"
-msgstr "Data443 RODO"
+msgstr "Data443 GDPR"
 
 #. Author URI of the plugin/theme
-#, fuzzy
 msgid "https://www.data443.com/"
 msgstr "https://www.data443.com/"
 
-#, fuzzy
 #~ msgctxt "(Admin)"
 #~ msgid ""
 #~ "You appear to be running a development version of GDPR. You must run "
 #~ "<code>composer install</code> from the plugin directory."
 #~ msgstr ""
-#~ "Wygląda na to, że korzystasz z rozwojowej wersji RODO. Musisz uruchomić "
+#~ "Wygląda na to, że korzystasz z rozwojowej wersji GDPR. Musisz uruchomić "
 #~ "<code>composer install</code> z katalogu wtyczek."
 
-#, fuzzy
 #~ msgctxt "(Admin)"
 #~ msgid "Autoloader not found."
 #~ msgstr "Nie znaleziono automatycznego ładowania."

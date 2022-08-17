@@ -3,7 +3,7 @@
  * Plugin Name: Worth The Read
  * Plugin URI: http://www.welldonemarketing.com
  * Description: Adds read length progress bar to single posts and pages, as well as an optional reading time commitment label to post titles.
- * Version: 1.10
+ * Version: 1.12
  * Author: Well Done Marketing
  * Author URI: http://www.welldonemarketing.com
  * License: GPL2
@@ -397,7 +397,7 @@ function wtr_filter_title( $title, $post_id = NULL ) {
     global $post;
     if(is_object($post)) {
 	    if($post->ID == $post_id && in_the_loop()) {
-	    	if((is_singular($types) && !empty($types))) {
+	    	if((in_array('archives', $types) || is_singular($types)) && !empty($types)) {
 	    	    if($placement=='before-title') {
 	    	    	$title = wtr_time_commitment() . $title;
 	    	    	wtr_debug('wtr_time_commitment() placed before title');
@@ -432,13 +432,41 @@ function wtr_filter_content( $content ) {
 	}
 	$types = array_merge($types_builtin, $types_cpts, $types_cpts_manual);
 	$placement = $options['time-placement'];
-	if((is_singular($types) && !empty($types))) {
+	if(is_singular($types) && !empty($types)) {
 	    if($placement=='before-content') {
 	    	$content = wtr_time_commitment() . $content;
 	    	wtr_debug('wtr_time_commitment() placed before content');
 	    }
 	}
     return $content;
+}
+add_filter( 'get_the_excerpt', 'wtr_filter_excerpt', 10, 2);
+function wtr_filter_excerpt( $excerpt ) {
+	wtr_debug('wtr_filter_excerpt() called');
+	$options = get_option( 'wtr_settings' );
+	$types_builtin = is_array($options['time-display']) ? $options['time-display'] : array();
+	$types_cpts = array();
+	$types_cpts_manual = array();
+	if(isset($options['time-cpts'])) {
+		if(is_array($options['time-cpts'])) $types_cpts = $options['time-cpts'];
+	}
+	if(isset($options['time-cpts-manual'])) {
+		$val = preg_replace('/\s+/', '', $options['time-cpts-manual']);
+		if(strpos($val, ',') !== false) {
+			$types_cpts_manual = explode(',', $val);
+		} else {
+			$types_cpts_manual = array($val);
+		}
+	}
+	$types = array_merge($types_builtin, $types_cpts, $types_cpts_manual);
+	$placement = $options['time-placement'];
+	if(in_array('archives', $types) && !empty($types)) {
+	    if($placement=='before-content') {
+	    	$excerpt = wtr_time_commitment() . $excerpt;
+	    	wtr_debug('wtr_time_commitment() placed before excerpt');
+	    }
+	}
+    return $excerpt;
 }
 
 function wtr_time_commitment() {

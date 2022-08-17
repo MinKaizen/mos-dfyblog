@@ -6,9 +6,9 @@ $loader = require_once __DIR__.'/autoload.php';
 
 // Exposed functions. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#exposing-functions
-if (!function_exists('composerRequire50aeca807fe2421cb5f701184db50bbd')) {
-    function composerRequire50aeca807fe2421cb5f701184db50bbd() {
-        return \DeliciousBrains\WPMDB\Container\composerRequire50aeca807fe2421cb5f701184db50bbd(...func_get_args());
+if (!function_exists('composerRequiree6c61ebf6bebeb4e0bf56c61c529c83a')) {
+    function composerRequiree6c61ebf6bebeb4e0bf56c61c529c83a() {
+        return \DeliciousBrains\WPMDB\Container\composerRequiree6c61ebf6bebeb4e0bf56c61c529c83a(...func_get_args());
     }
 }
 

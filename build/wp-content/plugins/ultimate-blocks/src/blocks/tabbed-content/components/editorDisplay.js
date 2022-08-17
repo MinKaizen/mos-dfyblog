@@ -17,6 +17,7 @@ const { ToolbarGroup, ToolbarButton } = wp.components;
 export class OldTabHolder extends Component {
 	constructor(props) {
 		super(props);
+		this.state = { oldArrangement: "" };
 	}
 	render() {
 		const {
@@ -24,8 +25,6 @@ export class OldTabHolder extends Component {
 			attributes,
 			isSelected,
 			moveBlockToPosition,
-			oldArrangement,
-			setState,
 			updateBlockAttributes,
 			removeBlock,
 			selectedBlock,
@@ -33,6 +32,8 @@ export class OldTabHolder extends Component {
 			insertBlock,
 			replaceBlock,
 		} = this.props;
+
+		const { oldArrangement } = this.state;
 
 		const className = "wp-block-ub-tabbed-content";
 
@@ -182,7 +183,7 @@ export class OldTabHolder extends Component {
 					isActive: attributes.activeTab === i,
 				})
 			);
-			setState({ oldArrangement: newArrangement });
+			this.setState({ oldArrangement: newArrangement });
 		}
 
 		if (selectedBlock && selectedBlock.clientId !== this.props.block.clientId) {
@@ -298,6 +299,7 @@ export class TabHolder extends Component {
 		super(props);
 		this.state = {
 			index: -1,
+			oldArrangement: [],
 		};
 	}
 
@@ -329,8 +331,6 @@ export class TabHolder extends Component {
 			attributes,
 			isSelected,
 			moveBlockToPosition,
-			oldArrangement,
-			setState,
 			updateBlockAttributes,
 			removeBlock,
 			selectedBlock,
@@ -339,6 +339,8 @@ export class TabHolder extends Component {
 			getBlock,
 			getClientIdsWithDescendants,
 		} = this.props;
+
+		const { oldArrangement } = this.state;
 
 		let className = "wp-block-ub-tabbed-content";
 
@@ -398,7 +400,7 @@ export class TabHolder extends Component {
 				this.props.block.clientId
 			);
 			setAttributes({
-				tabsTitle: [...tabsTitle, "Tab Title"],
+				tabsTitle: [...tabsTitle, `Tab ${i + 1}`],
 				tabsTitleAlignment: [...tabsTitleAlignment, "left"],
 				activeTab: i,
 				tabsAnchor: useAnchors ? [...tabsAnchor, ""] : [],
@@ -454,7 +456,7 @@ export class TabHolder extends Component {
 								propz.isSelected
 							}
 							onChange={(content) => onChangeTitle(content, i)}
-							placeholder="Tab Title"
+							placeholder={`Tab ${i + 1}`}
 						/>
 						<div
 							className={`ub-tab-actions${
@@ -533,7 +535,7 @@ export class TabHolder extends Component {
 					isActive: attributes.activeTab === i,
 				})
 			);
-			setState({ oldArrangement: newArrangement });
+			this.setState({ oldArrangement: newArrangement });
 		}
 
 		if (selectedBlock && selectedBlock.clientId !== this.props.block.clientId) {
@@ -674,8 +676,6 @@ export class TabHolder extends Component {
 									],
 								});
 							}}
-							toggleTitle={showControls}
-							onAddTab={addTab}
 						/>
 					</div>
 					<div

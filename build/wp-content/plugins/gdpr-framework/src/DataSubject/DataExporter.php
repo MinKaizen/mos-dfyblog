@@ -109,10 +109,17 @@ class DataExporter
                 }
 
                 // In case of arrays, recurse
-                if (is_array($value)) {
+                if ( is_array( $value ) ) {
                     $output .= $this->formatAsTable($value, ($level + 1));
                 } else {
-                    $output .= esc_html($value);
+                    // check for an object
+                    if ( ! empty( $value->user_nicename ) ) {
+                        $output .= esc_html( $value->user_nicename );
+                    } elseif ( is_object( $value ) ) {
+                        $output .= esc_html( print_r( $value, true ) );
+                    } else {
+                        $output .= wp_kses_post( $value );
+                    }
                 }
                 $output .= "</td>";
 

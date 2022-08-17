@@ -225,12 +225,9 @@ class Marketing implements Model_Interface , Activatable_Interface , Initiable_I
                 type: 'POST',
                 data: {
                   action: 'ta_dismiss_review_prompt',
-                  _ajax_nonce: "<?php echo wp_create_nonce( 'ta_dismiss_review_prompt' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>",
+                  _ajax_nonce: "<?php echo esc_js( wp_create_nonce( 'ta_dismiss_review_prompt' ) ); ?>",
                   type: type
                 },
-              })
-              .done(function(data) {
-
               });
             }
 
@@ -347,7 +344,7 @@ class Marketing implements Model_Interface , Activatable_Interface , Initiable_I
             <h4><?php esc_html_e('Enable Enhanced Javascript Redirect','thirstyaffiliates'); ?></h4>
             <p><?php esc_html_e("ThirstyAffiliates version 3.2.5 introduces a new method of redirecting via javascript which will only run on your website's frontend.
                      We've added this so the plugin can provide more accurate tracking data of your affiliate link clicks.
-                     This feature is turned on automatically for <strong>new installs</strong>, but for this install we would like to give you the choice of enabling the feature or not.",'thirstyaffiliates'); ?>  
+                     This feature is turned on automatically for <strong>new installs</strong>, but for this install we would like to give you the choice of enabling the feature or not.",'thirstyaffiliates'); ?>
             </p>
             <p>
                 <button type="button" class="button-primary" id="ta_enable_js_redirect_trigger">
@@ -462,9 +459,9 @@ class Marketing implements Model_Interface , Activatable_Interface , Initiable_I
      */
     public function advanced_features_marketing_metabox_cb( $post ) {
 
-        $url = esc_url( 'https://thirstyaffiliates.com/pricing/?utm_source=Free%20Plugin&utm_medium=Pro&utm_campaign=Sidebar' );
-        $img = esc_url( $this->_constants->IMAGES_ROOT_URL() . 'sidebar.jpg' );
-        echo '<a href="' . $url . '" target="_blank"><img src="' . $img . '"></a>'; // phpcs:ignore WordPress.Security.EscapeOutput
+        $url = 'https://thirstyaffiliates.com/pricing/?utm_source=Free%20Plugin&utm_medium=Pro&utm_campaign=Sidebar';
+        $img = $this->_constants->IMAGES_ROOT_URL() . 'sidebar.jpg';
+        echo '<a href="' . esc_url( $url ) . '" target="_blank"><img src="' . esc_url( $img ) . '"></a>';
     }
 
     public function dismiss_review_prompt() {
