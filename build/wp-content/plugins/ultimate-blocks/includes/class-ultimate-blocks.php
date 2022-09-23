@@ -1,5 +1,7 @@
 <?php
 
+use Ultimate_Blocks\includes\Ultimate_Blocks_Version_Control;
+
 /**
  * The file that defines the core plugin class
  *
@@ -12,6 +14,7 @@
  * @package    ultimate_blocks
  * @subpackage ultimate_blocks/includes
  */
+
 
 /**
  * The core plugin class.
@@ -35,7 +38,7 @@ class Ultimate_Blocks {
 	 *
 	 * @since    1.0.2
 	 * @access   protected
-	 * @var      Ultimate_Blocks_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Ultimate_Blocks_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -105,7 +108,6 @@ class Ultimate_Blocks {
 		require_once ULTIMATE_BLOCKS_PATH . 'public/class-ultimate-blocks-public.php';
 
 		$this->loader = new Ultimate_Blocks_Loader();
-
 	}
 
 	/**
@@ -135,7 +137,7 @@ class Ultimate_Blocks {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Ultimate_Blocks_Admin();
-		$plugin_help = new Ultimate_Blocks_Help();
+		$plugin_help  = new Ultimate_Blocks_Help();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -156,12 +158,15 @@ class Ultimate_Blocks {
 
 		//Review Notice
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'UltimateBlocks_review_notice' );
-		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin, 'UltimateBlocks_hide_review_notify' );
+		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin,
+			'UltimateBlocks_hide_review_notify' );
 
+		// initialize version control manager
+		Ultimate_Blocks_Version_Control::init();
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
+	 * Register all the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
 	 * @since    1.0.2
@@ -188,8 +193,8 @@ class Ultimate_Blocks {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.2
 	 * @return    Ultimate_Blocks_Loader    Orchestrates the hooks of the plugin.
+	 * @since     1.0.2
 	 */
 	public function get_loader() {
 		return $this->loader;

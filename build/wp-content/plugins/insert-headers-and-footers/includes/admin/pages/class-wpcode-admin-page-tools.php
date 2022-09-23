@@ -616,7 +616,8 @@ class WPCode_Admin_Page_Tools extends WPCode_Admin_Page {
 				// We don't want to update existing snippets/posts.
 				unset( $snippet['id'] );
 			}
-			$new_snippet = new WPCode_Snippet( $snippet );
+			$snippet['code'] = wp_slash( $snippet['code'] );
+			$new_snippet     = new WPCode_Snippet( $snippet );
 			$new_snippet->save();
 		}
 

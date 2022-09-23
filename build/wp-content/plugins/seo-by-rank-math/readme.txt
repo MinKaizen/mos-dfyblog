@@ -4,8 +4,8 @@ Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
 Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
 Tested up to: 6.0
 Requires at least: 5.6
-Requires PHP: 7.2
-Stable tag: 1.0.95.1
+Requires PHP: 7.4
+Stable tag: 1.0.98.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -580,19 +580,28 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.95 [Aug 11, 2022] =
-* Added: Site logo is now used as a fallback when the logo is not added in the [Local SEO settings](https://rankmath.com/kb/local-seo/#logo)
-* Added: The `contentUrl` property in `ImageObject`
-* Added: [New filter](https://rankmath.com/kb/filters-hooks-api-developer/#disable-keyword-suggestions) to disable the Focus keyword auto-suggestion
-* Improved: [SEO Analysis](https://rankmath.com/kb/seo-analysis/) will now include only the post types where the Rank Math metabox is enabled
-* Improved: CPT name will now be used in the [Breadcrumb](https://rankmath.com/kb/general-settings/#breadcrumbs) instead of Post type's Singular name
-* Fixed: [Content AI test](https://rankmath.com/kb/how-to-use-content-ai/#content-ai-results-overview) was not recognizing the uppercase keywords in the content
-* Fixed: Dependent [Modules](https://rankmath.com/kb/managing-modules/) were not getting deactivated after deactivating the main module
-* Fixed: [Links Per Sitemap](https://rankmath.com/kb/configure-sitemaps/#links-per-sitemap) option was not working properly on some setups
-* Fixed: [URL Inspection API](https://rankmath.com/kb/url-inspection-api-integration/) was not working on some sites where the site locale didn't match with the language code required by the URL Inspection API
-* Fixed: PHP warning on BuddyPress Members page when Schema module is active
+= 1.0.98 [Sep 22, 2022] =
+* Added: New option into the [Recalculate the SEO score](https://rankmath.com/kb/rank-math-status-and-tools/#recalculate-seo-score-for-posts) tool to include/exclude posts that already have an SEO score
+* Added: New property `articleSection` in the [Article Schema](https://rankmath.com/kb/article-schema/)
+* Added: New constant `RANK_MATH_REGISTRATION_SKIP` to skip the invalid registration check for developers
+* Improved: Knowledge Base link management code in the plugin
+* Improved: Grouped all scheduled actions used in the plugin with the name `rank-math`
+* Improved: Several small UI changes
+* Fixed: Action Schedular notice appearing on some setups
+* Fixed: [Tool to Recalculate the SEO score](https://rankmath.com/kb/rank-math-status-and-tools/#recalculate-seo-score-for-posts) was not working well with focus keywords containing `diacritics`
+* Fixed: Link to the Help page was broken in the [Setup Wizard](https://rankmath.com/kb/how-to-setup/#ready)
+* Fixed: Disabling [Email reports](https://rankmath.com/kb/how-to-setup/#email-reports) from Setup Wizard was not working
+* Fixed: [Analytics Dashboard](https://rankmath.com/kb/analytics/#rank-math-analytics-dashboard) tab was showing an active state even after selecting other tab
+* Fixed: [Site Analytics](https://rankmath.com/kb/analytics/#site-analytics) page was crashing on some setups when PRO plugin is not active
 
-= 1.0.95.1 [Aug 12, 2022] =
-* Fixed: Public REST endpoints blocked via `.htaccess` file were accessible through [Headless](https://rankmath.com/kb/headless-cms-support/) endpoint, when that option was active (props to [Yeraisci](https://twitter.com/yeraisci_))
+= 1.0.98.1 [Sep 22, 2022] =
+* Fixed: Strict PHP 7.2 error. It is recommended to update the PHP version to at least 7.4.
+
+= 1.0.98.2 [Sep 24, 2022] =
+* Fixed: Clicking on the [Questions tab of Content AI](https://rankmath.com/kb/how-to-use-content-ai/#questions) was crashing the editor on some setups
+* Fixed: Button to open the Rank Math modal was not working in the [Divi's Frontend editor](https://rankmath.com/blog/divi-seo/) on some installations
+* Fixed: Error in console when [Frontend Stats Bar](https://rankmath.com/kb/analytics-stats-bar/#num-2-2-enable-stats) option was enabled
+
+**Note:** From the next update, we will stop supporting older versions.
 
 Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

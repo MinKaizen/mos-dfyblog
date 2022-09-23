@@ -207,7 +207,7 @@ abstract class WPCode_Auto_Insert_Type {
 		// so that they can be picked up by id later without having to query again.
 		$location_terms = $this->get_location_terms();
 		foreach ( $location_terms as $location_key => $location_term ) {
-			$term_id                         = $location_term->term_id;
+			$term_id                         = $location_term->term_taxonomy_id;
 			$this->snippets[ $location_key ] = array();
 			// Until we update to PHP 5.3 this is the easiest way to do this.
 			foreach ( $snippets as $snippet ) {

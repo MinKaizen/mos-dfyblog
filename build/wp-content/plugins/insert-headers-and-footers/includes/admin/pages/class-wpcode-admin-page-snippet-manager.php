@@ -825,6 +825,8 @@ class WPCode_Admin_Page_Snippet_Manager extends WPCode_Admin_Page {
 	public function set_code_type() {
 		if ( isset( $this->snippet ) ) {
 			$this->code_type = $this->snippet->get_code_type();
+		} else {
+			$this->code_type = apply_filters( 'wpcode_default_code_type', $this->code_type );
 		}
 	}
 

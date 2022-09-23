@@ -170,6 +170,14 @@ class PluginHelper
             $abs_path = WP_PLUGIN_DIR;
         }
 
+        if ('muplugins' === $stage) {
+            $abs_path = WPMU_PLUGIN_DIR;
+        }
+
+        if ('others' === $stage) {
+            $abs_path = WP_CONTENT_DIR;
+        }
+
         if ('themes' === $stage) {
             $abs_path = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR;
         }
@@ -306,16 +314,20 @@ class PluginHelper
     public function respond_to_post_file()
     {
         $key_rules = array(
-            'action'          => 'key',
-            'remote_state_id' => 'key',
-            'stage'           => 'string',
-            'intent'          => 'string',
-            'folders'         => 'array',
-            'theme_folders'   => 'array',
-            'themes_option'   => 'string',
-            'plugin_folders'  => 'array',
-            'plugins_option'  => 'string',
-            'sig'             => 'string',
+            'action'           => 'key',
+            'remote_state_id'  => 'key',
+            'stage'            => 'string',
+            'intent'           => 'string',
+            'folders'          => 'array',
+            'theme_folders'    => 'array',
+            'themes_option'    => 'string',
+            'plugin_folders'   => 'array',
+            'plugins_option'   => 'string',
+            'muplugin_folders' => 'array',
+            'muplugins_option' => 'string',
+            'other_folders'    => 'array',
+            'others_option'    => 'string',
+            'sig'              => 'string',
         );
 
         //Sending ALL local state data, probably too much data and should be paired down
@@ -377,9 +389,11 @@ class PluginHelper
      */
     public function remove_tmp_files($stage, $env = 'local')
     {
-        if (in_array($stage, ['themes', 'plugins'])) {
+        if (in_array($stage, ['themes', 'plugins', 'muplugins', 'others'])) {
             $this->transfer_util->remove_tmp_folder('themes');
             $this->transfer_util->remove_tmp_folder('plugins');
+            $this->transfer_util->remove_tmp_folder('muplugins');
+            $this->transfer_util->remove_tmp_folder('others');
         }
 
         if ($stage === 'media_files') {
@@ -409,6 +423,8 @@ class PluginHelper
         delete_site_option('wpmdb_folder_transfers_media_files_' . $id);
         delete_site_option('wpmdb_folder_transfers_themes_' . $id);
         delete_site_option('wpmdb_folder_transfers_plugins_' . $id);
+        delete_site_option('wpmdb_folder_transfers_muplugins_' . $id);
+        delete_site_option('wpmdb_folder_transfers_others_' . $id);
     }
 
     public function remove_chunk_data($id, $env)

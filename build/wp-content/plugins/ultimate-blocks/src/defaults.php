@@ -144,6 +144,18 @@ $defaultValues = array(
                 'type' => 'number',
                 'default' => 0,
             ),
+            'origHeight' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'origWidth' => array(
+                'type' => 'number',
+                'default' => 0,
+            ),
+            'autofit' => array(
+                'type' => 'boolean',
+                'default' => true,
+            ),
 
             //begin border attributes for each side
             'topBorderSize' => array(
@@ -216,7 +228,7 @@ $defaultValues = array(
                 'default' => 0
             ),
             //end corner attributes
-            
+
             'showInDesktop' => array(
                 'type' => 'boolean',
                 'default' => true
@@ -287,7 +299,7 @@ $defaultValues = array(
             ),
             'addNofollow' => array(
                 'type' => 'boolean',
-                'default'=> true
+                'default'=> false
             ),
             'openInNewTab' => array(
                 'type' => 'boolean',
@@ -645,6 +657,26 @@ $defaultValues = array(
             'toggleAlign'=> array(
                 'type' => 'string',
                 'default' => 'left'
+            ),
+            'allowScroll' => array(
+                'type' => 'boolean',
+                'default' => false
+            ),
+            'scrollOption' => array(
+                'type' => 'string',
+                'default' => 'auto' //other options: namedelement, fixedamount, off
+            ),
+            'scrollOffset' => array(
+                'type' => 'number',
+                'default' => 0
+            ),
+            'scrollTarget' => array(
+                'type' => 'string',
+                'default' => ''
+            ),
+            'scrollTargetType' => array(
+                'type' => 'string',
+                'default' => 'id' //other types: class, element
             )
         )
     ),
@@ -1960,7 +1992,7 @@ $defaultValues = array(
             'useAnchors' => array(
                 'type' => 'boolean',
                 'default' => false
-            ), 
+            ),
             'tabsTitleAlignment' => array(
                 'type' => 'array',
                 'default' => array(),

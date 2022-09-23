@@ -264,7 +264,6 @@ class JsonLD {
 	public function replace_variables( $schemas, $object = [], $data = [] ) {
 		$new_schemas = [];
 		$object      = empty( $object ) ? get_queried_object() : $object;
-
 		foreach ( $schemas as $key => $schema ) {
 			if ( 'metadata' === $key ) {
 				$new_schemas['isPrimary'] = ! empty( $schema['isPrimary'] );
@@ -290,7 +289,7 @@ class JsonLD {
 				$schema = '%modified(Y-m-d\TH:i:sP)%';
 			}
 
-			$new_schemas[ $key ] = Str::contains( '%', $schema ) ? Helper::replace_vars( $schema, $object ) : $schema;
+			$new_schemas[ $key ] = is_string( $schema ) && Str::contains( '%', $schema ) ? Helper::replace_vars( $schema, $object ) : $schema;
 			if ( '' === $new_schemas[ $key ] ) {
 				unset( $new_schemas[ $key ] );
 			}
@@ -312,7 +311,7 @@ class JsonLD {
 			return;
 		}
 
-		if ( empty( $schema['author'] ) || ! isset( $schema['author']['name'] ) || '%name%' !== $schema['author']['name'] ) {
+		if ( empty( $schema['author'] ) || ! isset( $schema['author']['name'] ) || ! in_array( $schema['author']['name'], [ '%name%', '%post_author%' ], true ) ) {
 			return;
 		}
 
@@ -349,10 +348,12 @@ class JsonLD {
 			$pre = $this->do_filter( $hook, false, $jsonld->parts, $data );
 			if ( false !== $pre ) {
 				$new_schemas[ $key ] = $this->do_filter( $hook . '_entity', $pre );
+				$new_schemas[ $key ] = $this->do_filter( 'snippet/rich_snippet_entity', $new_schemas[ $key ] );
 				continue;
 			}
 
 			$new_schemas[ $key ] = $this->do_filter( $hook . '_entity', $schema );
+			$new_schemas[ $key ] = $this->do_filter( 'snippet/rich_snippet_entity', $new_schemas[ $key ] );
 		}
 
 		return $new_schemas;
@@ -697,7 +698,13 @@ class JsonLD {
 			return $description;
 		}
 
-		$description = $product->get_short_description() ? $product->get_short_description() : $product->get_description();
+		$product_object = get_post( $product->get_id() );
+		$description    = Paper::get_from_options( 'pt_product_description', $product_object, '%excerpt%' );
+
+		if ( ! $description ) {
+			$description = $product->get_short_description() ? $product->get_short_description() : $product->get_description();
+		}
+
 		$description = $this->do_filter( 'product_description/apply_shortcode', false ) ? do_shortcode( $description ) : WordPress::strip_shortcodes( $description );
 		return wp_strip_all_tags( $description, true );
 	}
@@ -717,7 +724,10 @@ class JsonLD {
 			return $title;
 		}
 
-		return $product->get_name();
+		$product_object = get_post( $product->get_id() );
+
+		$title = Paper::get_from_options( 'pt_product_title', $product_object, '%title% %sep% %sitename%' );
+		return $title ? $title : $product->get_name();
 	}
 
 	/**

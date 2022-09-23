@@ -4,7 +4,7 @@ Tags: code, css, php, footer, functions, content, facebook pixel, footer code, f
 Requires at least: 4.6
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -284,6 +284,12 @@ Thank you
 Syed Balkhi
 
 == Changelog ==
+
+= 2.0.2 =
+* Tweak: Snippets used as shortcodes will no longer be executed if they are inactive.
+* Fix: Conditional logic rules for homepage were not working correctly in all scenarios.
+* Fix: Improved auto-insert location matching to avoid snippets not loading in some setups.
+* Fix: We improved the importer tools to avoid unslashing certain types of PHP code.
 
 = 2.0.1 =
 * Tweak: Auto-insert is now the default option when creating a new snippet.

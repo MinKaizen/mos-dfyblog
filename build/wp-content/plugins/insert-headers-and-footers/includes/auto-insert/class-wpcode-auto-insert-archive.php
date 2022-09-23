@@ -32,7 +32,7 @@ class WPCode_Auto_Insert_Archive extends WPCode_Auto_Insert_Type {
 	 * @return bool
 	 */
 	public function conditions() {
-		return is_archive();
+		return is_archive() || is_home();
 	}
 
 	/**

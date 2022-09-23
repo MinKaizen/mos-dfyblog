@@ -5,7 +5,7 @@
  * Description: Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
  * Author: Ultimate Blocks
  * Author URI: https://ultimateblocks.com/
- * Version: 2.5.2
+ * Version: 2.5.3
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: ultimate-blocks
@@ -42,6 +42,8 @@ define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
  * Plugin TextDomain
  */
 define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
+
+require_once trailingslashit(ULTIMATE_BLOCKS_PATH) . 'vendor/autoload.php';
 
 /**
  * Block Initializer.

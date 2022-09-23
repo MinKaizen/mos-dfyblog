@@ -631,6 +631,9 @@ class GFFormDisplay {
 		$page_number = RGForms::post( "gform_target_page_number_{$form['id']}" );
 		$page_number = ! is_numeric( $page_number ) ? 1 : $page_number;
 
+		// cast to an integer since page numbers can only be whole numbers
+		$page_number = absint( $page_number );
+
 		$direction = $page_number >= $current_page ? 1 : - 1;
 
 		//Finding next page that is not hidden by conditional logic
@@ -3775,7 +3778,9 @@ class GFFormDisplay {
 		 * @param string   $style           Holds the conditional logic display style. Deprecated in 1.9.4.4.
 		 * @param string   $field_content   The markup for the field content: label, description, inputs, etc.
 		 */
-		$field_container = gf_apply_filters( array( 'gform_field_container', $form_id, $field->id ), $field_container, $field, $form, $css_class, $style, $field_content );
+		if ( rgar( $field, 'type' ) !== 'submit' ) {
+			$field_container = gf_apply_filters( array( 'gform_field_container', $form_id, $field->id ), $field_container, $field, $form, $css_class, $style, $field_content );
+		}
 
 		$field_markup = str_replace( '{FIELD_CONTENT}', $field_content, $field_container );
 

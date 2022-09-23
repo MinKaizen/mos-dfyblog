@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPCode - Insert Headers, Footers, and Code Snippets
  * Plugin URI: https://www.wpcode.com/
- * Version: 2.0.1
+ * Version: 2.0.2
  * Requires at least: 4.6
  * Requires PHP: 5.5
  * Tested up to: 6.0

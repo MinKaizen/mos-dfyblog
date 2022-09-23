@@ -99,8 +99,12 @@ class ThemePluginFilesAddon extends AddonAbstract
         $this->accepted_fields = [
             'migrate_themes',
             'migrate_plugins',
+            'migrate_muplugins',
+            'migrate_others',
             'select_plugins',
+            'select_muplugins',
             'select_themes',
+            'select_others',
             'file_ignores',
         ];
 
@@ -168,14 +172,14 @@ class ThemePluginFilesAddon extends AddonAbstract
         $strings = [
             'themes'                 => __('Themes', 'wp-migrate-db'),
             'plugins'                => __('Plugins', 'wp-migrate-db'),
-            'theme_and_plugin_files' => __('Theme & Plugin Files', 'wp-migrate-db'),
+            'theme_and_plugin_files' => __('Themes & Plugins', 'wp-migrate-db'),
             'theme_active'           => __('(active)', 'wp-migrate-db'),
             'select_themes'          => __('Please select themes for migration.', 'wp-migrate-db'),
             'select_plugins'         => __('Please select plugins for migration.', 'wp-migrate-db'),
             'remote'                 => __('remote', 'wp-migrate-db'),
             'local'                  => __('local', 'wp-migrate-db'),
             'failed_to_transfer'     => __('Failed to transfer file.', 'wp-migrate-db'),
-            'file_transfer_error'    => __('Theme & Plugin Files Transfer Error', 'wp-migrate-db'),
+            'file_transfer_error'    => __('Themes & Plugins Transfer Error', 'wp-migrate-db'),
             'loading_transfer_queue' => __('Loading transfer queue', 'wp-migrate-db'),
             'current_transfer'       => __('Transferring: ', 'wp-migrate-db'),
             'cli_migrating_push'     => __('Uploading files', 'wp-migrate-db'),
@@ -223,10 +227,12 @@ class ThemePluginFilesAddon extends AddonAbstract
     public function diagnostic_info($diagnostic_info)
     {
         $diagnostic_info['themes-plugins'] = [
-            'Theme & Plugin Files',
+            'Themes & Plugins',
             'Transfer Bottleneck' => size_format($this->transfer_helpers->get_transfer_bottleneck()),
             'Themes Permissions'  => decoct(fileperms($this->filesystem->slash_one_direction(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'themes')) & 0777),
-            'Plugins Permissions' => decoct(fileperms($this->filesystem->slash_one_direction(WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'themes')) & 0777),
+            'Plugins Permissions' => decoct(fileperms($this->filesystem->slash_one_direction(WP_PLUGIN_DIR)) & 0777),
+            'Must-Use Plugins Permissions' => decoct(fileperms($this->filesystem->slash_one_direction(WPMU_PLUGIN_DIR)) & 0777),
+            'WP-Content Permissions'  => decoct(fileperms($this->filesystem->slash_one_direction(WP_CONTENT_DIR)) & 0777),
         ];
 
         return $diagnostic_info;
@@ -310,6 +316,90 @@ class ThemePluginFilesAddon extends AddonAbstract
     }
 
     /**
+     * Get must-use plugin files 
+     * @return array
+     */
+    public function get_local_muplugin_files()
+    {
+        $wpmu_plugin_dir = $this->filesystem->slash_one_direction(WPMU_PLUGIN_DIR);
+        $wpmu_plugin_tree = scandir($wpmu_plugin_dir);
+        $to_exclude = [
+            '.',
+            '..',
+            '.DS_Store',
+            'wp-migrate-db-pro-compatibility.php',
+            'index.php'
+        ];
+
+        return $this->prepare_files_list(
+            $wpmu_plugin_tree,
+            $to_exclude,
+            $this->filesystem->slash_one_direction(WPMU_PLUGIN_DIR)
+        );
+    }
+
+
+     /**
+     * Gets all wp-content files not included in other stages 
+     * @return array
+     */
+    public function get_local_other_files()
+    {
+        $wp_content_dir = $this->filesystem->slash_one_direction(WP_CONTENT_DIR);
+        $wp_content_tree = scandir($wp_content_dir);
+        $to_exclude = [
+            '.',
+            '..',
+            '.DS_Store',
+            'index.php',
+            'debug.log',
+            'plugins',
+            'mu-plugins',
+            'themes',
+            'uploads',
+            'upgrade'
+        ];
+
+        return $this->prepare_files_list(
+            $wp_content_tree, 
+            $to_exclude, 
+            $this->filesystem->slash_one_direction(WP_CONTENT_DIR)
+        );
+    }
+
+    /**
+     * Prepare files for select list
+     *
+     * @param array $files Total contents of directory
+     * @param array $to_exclude Files and directories to exclude
+     * @param array $base_path Path to directory
+     * @return array
+     **/
+    public function prepare_files_list($all_files, $to_exclude, $base_path) 
+    {
+        $files = array_diff($all_files, $to_exclude);
+        sort($files);
+        $formatted_files = [];
+        foreach ($files as $file) {
+            $path = $base_path . DIRECTORY_SEPARATOR . $file;
+            if (is_dir($path) && Util::is_empty_dir($path)) {
+                continue;
+            }
+            $formatted_files[$file] = [
+                [
+                    'name'     => $file,
+                    'path'     => $path,
+                ]
+            ];
+            
+        }
+
+        return $formatted_files;
+    }
+    
+
+
+    /**
      * @return array
      */
     // @TODO Refactor to use core version - used for Compatibility Mode
@@ -382,8 +472,11 @@ class ThemePluginFilesAddon extends AddonAbstract
 
         $site_details['plugins']                   = $this->filesystem->get_local_plugins();
         $site_details['plugins_path']              = $this->filesystem->slash_one_direction(WP_PLUGIN_DIR);
+        $site_details['muplugins']                 = $this->get_local_muplugin_files();
+        $site_details['muplugins_path']            = $this->filesystem->slash_one_direction(WPMU_PLUGIN_DIR);
         $site_details['themes']                    = $this->get_local_themes();
         $site_details['themes_path']               = $this->filesystem->slash_one_direction(WP_CONTENT_DIR) . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR;
+        $site_details['others']                    = $this->get_local_other_files();
         $site_details['content_dir']               = $this->filesystem->slash_one_direction(WP_CONTENT_DIR);
         $site_details['local_tmp_folder_check']    = $folder_writable;
         $site_details['local_tmp_folder_writable'] = $folder_writable['status'];
