@@ -120,6 +120,22 @@ class KB {
 		'breadcrumbs-install'             => 'https://rankmath.com/kb/breadcrumbs/?#add-breadcrumbs-theme',
 		'change-seo-score-backlink'       => 'https://rankmath.com/kb/filters-hooks-api-developer/?#change-seo-score-backlink',
 		'unable-to-encrypt'               => 'https://rankmath.com/kb/fix-automatic-update-unavailable-for-this-plugin/?#unable-to-encrypt',
+		'google-verification-kb'          => 'https://rankmath.com/kb/google-site-verification/',
+		'bing-verification-kb'            => 'https://rankmath.com/kb/verify-your-site-with-bing-webmaster-tools/',
+		'baidu-verification-kb'           => 'https://rankmath.com/kb/baidu-webmaster-tools-verification/',
+		'yandex-verification-kb'          => 'https://rankmath.com/kb/verifying-your-domain-with-yandex/',
+		'norton-verification-kb'          => 'https://rankmath.com/kb/verify-site-with-norton-safe-web/',
+		'pinterest-verification-kb'       => 'https://rankmath.com/kb/pinterest-site-verification/',
+
+		// SEO Analysis.
+		'analysis-site-tagline'           => 'https://rankmath.com/kb/seo-analysis/?#site-tagline-test',
+		'analysis-blog-public'            => 'https://rankmath.com/kb/seo-analysis/?#blog-public-test',
+		'analysis-permalink-structure'    => 'https://rankmath.com/kb/seo-analysis/?#permalink-structure-test',
+		'analysis-focus-keywords'         => 'https://rankmath.com/kb/seo-analysis/?#focus-keywords-test',
+		'analysis-post-titles'            => 'https://rankmath.com/kb/seo-analysis/?#post-titles-missing-focus-keywords-test',
+		'analysis-search-console'         => 'https://rankmath.com/kb/seo-analysis/?#search-console-test',
+		'analysis-sitemaps'               => 'https://rankmath.com/kb/seo-analysis/?#sitemaps-test',
+		'analysis-auto-update'            => 'https://rankmath.com/kb/seo-analysis/?#priority',
 
 		// Social Media.
 		'yt-link'                         => 'http://youtube.com/rankmath',

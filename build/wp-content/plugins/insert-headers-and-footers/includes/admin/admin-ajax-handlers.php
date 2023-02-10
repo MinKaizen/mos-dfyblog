@@ -120,8 +120,15 @@ function wpcode_save_generated_snippet() {
 
 	check_ajax_referer( 'wpcode_generate', 'nonce' );
 
+	// If the current user can't edit snippets they should not be trying this.
+	if ( ! current_user_can('wpcode_edit_snippets') ) {
+		wp_send_json_error();
+	}
+
 	$generator_type = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
 	$generator      = wpcode()->generator->get_type( $generator_type );
+	// If a snippet id is passed, let's attempt to update it.
+	$snippet_id = isset( $_POST['snippet_id'] ) ? absint( $_POST['snippet_id'] ) : '';
 
 	if ( ! $generator ) {
 		wp_send_json_error();
@@ -129,19 +136,31 @@ function wpcode_save_generated_snippet() {
 
 	$snippet_code = $generator->process_form_data( $_POST );
 
-	$new_snippet = new WPCode_Snippet(
-		array(
-			// Translators: this an auto-generated title for when a snippet is saved from the generator.
-			'title'          => sprintf( __( 'Generated Snippet %s', 'insert-headers-and-footers' ), $generator->get_title() ),
-			'code'           => $snippet_code,
-			'code_type'      => $generator->get_code_type(),
-			'tags'           => $generator->get_tags(),
-			'location'       => $generator->get_location(),
-			'generator'      => $generator->get_name(),
-			'generator_data' => $generator->get_generator_data(),
-			'auto_insert'    => $generator->get_auto_insert(),
-		)
+	$snippet_data = array(
+		// Translators: this an auto-generated title for when a snippet is saved from the generator.
+		'title'          => sprintf( __( 'Generated Snippet %s', 'insert-headers-and-footers' ), $generator->get_title() ),
+		'code'           => $snippet_code,
+		'code_type'      => $generator->get_code_type(),
+		'tags'           => $generator->get_tags(),
+		'location'       => $generator->get_location(),
+		'generator'      => $generator->get_name(),
+		'generator_data' => $generator->get_generator_data(),
+		'auto_insert'    => $generator->get_auto_insert(),
 	);
+
+	// If a snippet id is passed, let's attempt to update the snippet.
+	if ( ! empty( $snippet_id ) ) {
+		$snippet = new WPCode_Snippet($snippet_id);
+		// Let's make sure this is an id for a snippet.
+		if ( null !== $snippet->get_post_data() ) {
+			$snippet_data['id']     = $snippet_id;
+			$snippet_data['active'] = false;
+			// Don't change the title of an existing snippet.
+			unset( $snippet_data['title'] );
+		}
+	}
+
+	$new_snippet = new WPCode_Snippet( $snippet_data );
 
 	$new_snippet_id = $new_snippet->save();
 

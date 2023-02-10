@@ -22,7 +22,7 @@ $args = array(
     // This is where your data is stored in the database and also becomes your global variable name.
     'display_name'         => __( 'Worth The Read', 'worth-the-read' ),
     // Name that appears at the top of your panel
-    'display_version'      => '1.12',
+    'display_version'      => '1.13.2',
     // Version that appears at the top of your panel
     'menu_type'            => 'menu',
     //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
@@ -57,7 +57,7 @@ $args = array(
     //'disable_save_warn' => true,                    // Disable the save warning when a user changes a field
 
     // OPTIONAL -> Give you extra features
-    'page_priority'        => null,
+    'page_priority'        => 99,
     // Order where the menu appears in the admin area. If there is any conflict, something will not show. Warning.
     'page_parent'          => 'themes.php',
     // For a full list of options, visit: http://codex.wordpress.org/Function_Reference/add_submenu_page#Parameters
@@ -242,6 +242,7 @@ Redux::setSection( $opt_name, array(
             'id'       => 'progress-display',
             'type'     => 'button_set',
             'title'    => __( 'Display On', 'worth-the-read' ),
+            'subtitle' => __( 'You can disable these and display only on specific pages or posts below.', 'worth-the-read' ),
             'multi'    => true,
             'options'  => array(
                 'post' => 'Posts',
@@ -270,6 +271,34 @@ Redux::setSection( $opt_name, array(
             'title'    => __( 'Custom Post Types', 'worth-the-read' ),
             'subtitle' => __( 'Manually enter the slug of your custom post types if they were not detected above, in a comma-separated list.', 'worth-the-read' ),
             'desc'     => __( 'Example: "events, game_reviews, another_cpt_slug, as_many_as_you_want" (do not include the quotes)', 'worth-the-read' ),
+            'default'  => '',
+        ),
+        array(
+            'id'       => 'progress-posts-manual',
+            'type'     => 'select',
+            'multi'    => true,
+            'data'     => 'posts',
+            'args'     => array(
+                            'posts_per_page' => -1,
+                            'orderby'        => 'title',
+                            'order'          => 'ASC',
+                       ),
+            'title'    => __( 'Specific Posts', 'worth-the-read' ),
+            'subtitle' => __( 'Manually select posts to display the progress bar on.', 'worth-the-read' ),
+            'default'  => '',
+        ),
+        array(
+            'id'       => 'progress-pages-manual',
+            'type'     => 'select',
+            'multi'    => true,
+            'data'     => 'pages',
+            'args'     => array(
+                            'posts_per_page' => -1,
+                            'orderby'        => 'title',
+                            'order'          => 'ASC',
+                       ),
+            'title'    => __( 'Specific Pages', 'worth-the-read' ),
+            'subtitle' => __( 'Manually select pages to display the progress bar on.', 'worth-the-read' ),
             'default'  => '',
         ),
         array(
@@ -552,6 +581,34 @@ Redux::setSection( $opt_name, array(
             'title'    => __( 'Custom Post Types', 'worth-the-read' ),
             'subtitle' => __( 'Manually enter the slug of your custom post types if they were not detected above, in a comma-separated list.', 'worth-the-read' ),
             'desc'     => __( 'Example: "events, game_reviews, another_cpt_slug, as_many_as_you_want" (do not include the quotes)', 'worth-the-read' ),
+            'default'  => '',
+        ),
+        array(
+            'id'       => 'time-posts-manual',
+            'type'     => 'select',
+            'multi'    => true,
+            'data'     => 'posts',
+            'args'     => array(
+                            'posts_per_page' => -1,
+                            'orderby'        => 'title',
+                            'order'          => 'ASC',
+                       ),
+            'title'    => __( 'Specific Posts', 'worth-the-read' ),
+            'subtitle' => __( 'Manually select posts to display the reading time on.', 'worth-the-read' ),
+            'default'  => '',
+        ),
+        array(
+            'id'       => 'time-pages-manual',
+            'type'     => 'select',
+            'multi'    => true,
+            'data'     => 'pages',
+            'args'     => array(
+                            'posts_per_page' => -1,
+                            'orderby'        => 'title',
+                            'order'          => 'ASC',
+                       ),
+            'title'    => __( 'Specific Pages', 'worth-the-read' ),
+            'subtitle' => __( 'Manually select pages to display the reading time on.', 'worth-the-read' ),
             'default'  => '',
         ),
         array(

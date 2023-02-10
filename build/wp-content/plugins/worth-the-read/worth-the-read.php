@@ -3,7 +3,7 @@
  * Plugin Name: Worth The Read
  * Plugin URI: http://www.welldonemarketing.com
  * Description: Adds read length progress bar to single posts and pages, as well as an optional reading time commitment label to post titles.
- * Version: 1.12
+ * Version: 1.13.2
  * Author: Well Done Marketing
  * Author URI: http://www.welldonemarketing.com
  * License: GPL2
@@ -178,12 +178,27 @@ function wtr_wrap_content( $content ) {
 	}
 	$types = array_merge($types_builtin, $types_cpts, $types_cpts_manual);
 	// override with single post/page settings
+	$disable = false;
 	if(is_object($post)) {
 		$disable = get_post_meta($post->ID, 'wtr-disable-reading-progress', true);
-	} else {
-		$disable = false;
 	}
-	if ( !empty($types) && is_singular($types) && !$disable) {
+	// determine if progress bar should be displayed
+	$display = false;
+	if(!empty($types) && is_singular($types) && !$disable) {
+		$display = true;
+	} else {
+		// no general types are active, check for specific posts or pages
+		$posts_manual = is_array($options['progress-posts-manual']) ? $options['progress-posts-manual'] : array();
+		$pages_manual = is_array($options['progress-pages-manual']) ? $options['progress-pages-manual'] : array();
+		if(!empty($posts_manual) && is_single($posts_manual)) {
+			$display = true;
+		}
+		if(!empty($pages_manual) && is_page($pages_manual)) {
+			$display = true;
+		}
+	}
+	// display it
+	if ($display) {
 		$content = '<div id="wtr-content" 
 	    	data-bg="' . $bg . '" 
 	    	data-fg="' . $fg . '" 
@@ -397,7 +412,22 @@ function wtr_filter_title( $title, $post_id = NULL ) {
     global $post;
     if(is_object($post)) {
 	    if($post->ID == $post_id && in_the_loop()) {
-	    	if((in_array('archives', $types) || is_singular($types)) && !empty($types)) {
+			// determine if reading time should be displayed
+			$display = false;
+			if((in_array('archives', $types) || is_singular($types)) && !empty($types)) {
+				$display = true;
+			} else {
+				// no general types are active, check for specific posts or pages
+				$posts_manual = is_array($options['time-posts-manual']) ? $options['time-posts-manual'] : array();
+				$pages_manual = is_array($options['time-pages-manual']) ? $options['time-pages-manual'] : array();
+				if(!empty($posts_manual) && is_single($posts_manual)) {
+					$display = true;
+				}
+				if(!empty($pages_manual) && is_page($pages_manual)) {
+					$display = true;
+				}
+			}
+	    	if($display) {
 	    	    if($placement=='before-title') {
 	    	    	$title = wtr_time_commitment() . $title;
 	    	    	wtr_debug('wtr_time_commitment() placed before title');
@@ -432,7 +462,22 @@ function wtr_filter_content( $content ) {
 	}
 	$types = array_merge($types_builtin, $types_cpts, $types_cpts_manual);
 	$placement = $options['time-placement'];
+	// determine if reading time should be displayed
+	$display = false;
 	if(is_singular($types) && !empty($types)) {
+		$display = true;
+	} else {
+		// no general types are active, check for specific posts or pages
+		$posts_manual = is_array($options['time-posts-manual']) ? $options['time-posts-manual'] : array();
+		$pages_manual = is_array($options['time-pages-manual']) ? $options['time-pages-manual'] : array();
+		if(!empty($posts_manual) && is_single($posts_manual)) {
+			$display = true;
+		}
+		if(!empty($pages_manual) && is_page($pages_manual)) {
+			$display = true;
+		}
+	}
+	if($display) {
 	    if($placement=='before-content') {
 	    	$content = wtr_time_commitment() . $content;
 	    	wtr_debug('wtr_time_commitment() placed before content');
@@ -460,7 +505,22 @@ function wtr_filter_excerpt( $excerpt ) {
 	}
 	$types = array_merge($types_builtin, $types_cpts, $types_cpts_manual);
 	$placement = $options['time-placement'];
+	// determine if reading time should be displayed
+	$display = false;
 	if(in_array('archives', $types) && !empty($types)) {
+		$display = true;
+	} else {
+		// no general types are active, check for specific posts or pages
+		$posts_manual = is_array($options['time-posts-manual']) ? $options['time-posts-manual'] : array();
+		$pages_manual = is_array($options['time-pages-manual']) ? $options['time-pages-manual'] : array();
+		if(!empty($posts_manual) && is_single($posts_manual)) {
+			$display = true;
+		}
+		if(!empty($pages_manual) && is_page($pages_manual)) {
+			$display = true;
+		}
+	}
+	if($display) {
 	    if($placement=='before-content') {
 	    	$excerpt = wtr_time_commitment() . $excerpt;
 	    	wtr_debug('wtr_time_commitment() placed before excerpt');

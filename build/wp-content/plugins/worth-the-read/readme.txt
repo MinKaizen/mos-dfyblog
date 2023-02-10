@@ -2,8 +2,8 @@
 Contributors: brianmcculloh
 Tags: reading, length, progress, reading time, scroll, scroll progress, reading progress, read time estimate
 Requires at least: 3.8
-Tested up to: 6.0
-Stable tag: 1.12
+Tested up to: 6.1.1
+Stable tag: 1.13.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,15 @@ WordPress action hooks are used to insert small html tags above and below your p
 The plugin is as minimally distracting visually as it can be while still being easy to find. It auto-mutes any time the user does not need to visually reference it. Technically speaking, the html tags added to the DOM and corresponding CSS are very minimal and will not have any affect on the rest of the page DOM or any other plugins or your theme.
 
 == Changelog ==
+
+= 1.13.2 = 
+* Fixed: Menu priority glitch introduced in 1.13
+
+= 1.13 =
+* New Feature: Ability to display progress bar only on specific posts and pages
+* New Feature: Ability to display reading time only on specific posts and pages
+* Updated: Redux options framework from 4.3.12.7 to 4.3.21.2
+* Tested: Compatible with WordPress 6.1.1
 
 = 1.12 =
 * Tested: Compatible with WordPress 6.0 

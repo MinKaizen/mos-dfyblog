@@ -732,10 +732,10 @@ class GFExport {
 		$list_fields = GFAPI::get_fields_by_type( $form, array( 'list' ), true );
 
 		//only getting fields that have been exported
-		$field_ids = '';
+		$field_ids = array();
 		foreach ( $list_fields as $field ) {
 			if ( in_array( $field->id, $exported_field_ids ) && $field->enableColumns ) {
-				$field_ids .= $field->id . ',';
+				$field_ids[] = $field->id;
 			}
 		}
 
@@ -743,7 +743,7 @@ class GFExport {
 			return array();
 		}
 
-		$field_ids = substr( $field_ids, 0, strlen( $field_ids ) - 1 );
+		$field_ids = implode( ',', array_map( 'absint', $field_ids ) );
 
 		$page_size = 200;
 		$offset    = 0;
@@ -758,20 +758,18 @@ class GFExport {
 			if ( version_compare( GFFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
 				$sql = $wpdb->prepare( "SELECT d.field_number as field_id, d.value as value
                     FROM {$wpdb->prefix}rg_lead_detail d
-                    WHERE d.form_id=%d AND cast(d.field_number as decimal) IN (%d)
+                    WHERE d.form_id=%d AND cast(d.field_number as decimal) IN ({$field_ids})
                     LIMIT %d, %d",
 					$form['id'],
-					$field_ids,
 					$offset,
 					$page_size
 				);
 			} else {
 				$sql = $wpdb->prepare( "SELECT d.meta_key as field_id, d.meta_value as value
                     FROM {$wpdb->prefix}gf_entry_meta d
-                    WHERE d.form_id=%d AND d.meta_key IN (%d)
+                    WHERE d.form_id=%d AND d.meta_key IN ({$field_ids})
                     LIMIT %d, %d",
 					$form['id'],
-					$field_ids,
 					$offset,
 					$page_size
 				);
@@ -856,6 +854,16 @@ class GFExport {
 		$sorting = array( 'key' => 'id', 'direction' => 'DESC', 'type' => 'info' );
 
 		$form = self::add_default_export_fields( $form );
+
+		/**
+		 * Allows the search criteria to be filtered before exporting entries.
+		 *
+		 * @since 2.7
+		 *
+		 * @param array $search_criteria The search criteria array being filtered.
+		 * @param int   $form_id         The current form ID.
+		 */
+		$search_criteria = apply_filters( 'gform_search_criteria_export_entries', $search_criteria, $form_id );
 
 		$total_entry_count     = GFAPI::count_entries( $form_id, $search_criteria );
 		$remaining_entry_count = $offset == 0 ? $total_entry_count : $total_entry_count - $offset;
