@@ -162,4 +162,27 @@ class WPCode_File_Cache {
 		// Create empty index.html.
 		return file_put_contents( $index_file, '' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 	}
+
+	/**
+	 * Create .htaccess file in the specified directory if it doesn't exist.
+	 *
+	 * @param string $path The path to the directory.
+	 *
+	 * @return false|int
+	 */
+	public static function create_htaccess_file( $path ) {
+		if ( ! is_dir( $path ) || is_link( $path ) ) {
+			return false;
+		}
+
+		$htaccess_file = wp_normalize_path( trailingslashit( $path ) . '.htaccess' );
+
+		// Do nothing if index.html exists in the directory.
+		if ( file_exists( $htaccess_file ) ) {
+			return false;
+		}
+
+		// Create empty index.html.
+		return file_put_contents( $htaccess_file, 'deny from all' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	}
 }

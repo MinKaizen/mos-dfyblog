@@ -49,6 +49,10 @@ class WPCode_Install {
 
 		$activated = get_option( 'ihaf_activated', array() );
 
+		if ( ! is_array( $activated ) ) {
+			$activated = array();
+		}
+
 		if ( empty( $activated['wpcode'] ) ) {
 			$activated['wpcode'] = time();
 

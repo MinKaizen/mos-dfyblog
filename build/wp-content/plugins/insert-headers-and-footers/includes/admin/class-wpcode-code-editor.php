@@ -46,8 +46,15 @@ class WPCode_Code_Editor {
 			return false;
 		}
 		$editor_args = array(
-			'type'     => wpcode()->execute->get_mime_for_code_type( $code_type ),
-			'showHint' => true,
+			'type'       => wpcode()->execute->get_mime_for_code_type( $code_type ),
+			'showHint'   => true,
+			'codemirror' => array(
+				'matchBrackets'             => true,
+				'gutters'                   => array( 'CodeMirror-lint-markers', 'CodeMirror-foldgutter' ),
+				'foldGutter'                => true,
+				'autoCloseBrackets'         => true,
+				'highlightSelectionMatches' => true,
+			),
 		);
 		if ( ! current_user_can( 'wpcode_edit_snippets' ) ) {
 			$editor_args['codemirror']['readOnly'] = true;
@@ -109,7 +116,8 @@ class WPCode_Code_Editor {
 		wp_add_inline_script(
 			'code-editor',
 			sprintf(
-				'jQuery( function() {
+				'
+				jQuery( function() {
 							window.wpcode_editor = window.wpcode_editor ? window.wpcode_editor : {};
 							var ids = %1$s;
 							var settings = %2$s;

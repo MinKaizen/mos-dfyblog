@@ -472,3 +472,15 @@ function su_load_textdomain() {
 	load_textdomain( $domain, $mofile );
 
 }
+
+function su_current_user_can_read_post( $post_id ) {
+	if ( post_password_required( $post_id ) ) {
+		return false;
+	}
+
+	if ( 'publish' !== get_post_status( $post_id ) && ! current_user_can( 'read_post', $post_id ) ) {
+		return false;
+	}
+
+	return true;
+}

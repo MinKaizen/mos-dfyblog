@@ -570,6 +570,8 @@ abstract class WPCode_Admin_Page {
 	 * @return void
 	 */
 	public function metabox( $title, $content, $help = '' ) {
+		// translators: %s is the title of the metabox.
+		$button_title = sprintf( __( 'Collapse Metabox %s', 'insert-headers-and-footers' ), $title )
 		?>
 		<div class="wpcode-metabox">
 			<div class="wpcode-metabox-title">
@@ -578,7 +580,7 @@ abstract class WPCode_Admin_Page {
 					<?php $this->help_icon( $help ); ?>
 				</div>
 				<div class="wpcode-metabox-title-toggle">
-					<button class="wpcode-metabox-button-toggle" type="button">
+					<button class="wpcode-metabox-button-toggle" type="button" title="<?php echo esc_attr( $button_title ); ?>">
 						<svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M1.41 7.70508L6 3.12508L10.59 7.70508L12 6.29508L6 0.295079L-1.23266e-07 6.29508L1.41 7.70508Z" fill="#454545"/>
 						</svg>
@@ -596,12 +598,16 @@ abstract class WPCode_Admin_Page {
 	 * Output a help icon with the text passed to it.
 	 *
 	 * @param string $text The tooltip text.
+	 * @param bool   $echo Whether to echo or return the output.
 	 *
-	 * @return void
+	 * @return void|string
 	 */
-	public function help_icon( $text = '' ) {
+	public function help_icon( $text = '', $echo = true ) {
 		if ( empty( $text ) ) {
 			return;
+		}
+		if ( ! $echo ) {
+			ob_start();
 		}
 		?>
 		<span class="wpcode-help-tooltip">
@@ -609,6 +615,9 @@ abstract class WPCode_Admin_Page {
 			<span class="wpcode-help-tooltip-text"><?php echo wp_kses_post( $text ); ?></span>
 		</span>
 		<?php
+		if ( ! $echo ) {
+			return ob_get_clean();
+		}
 	}
 
 	/**
@@ -654,11 +663,11 @@ abstract class WPCode_Admin_Page {
 	/**
 	 * Get a checkbox wrapped with markup to be displayed as a toggle.
 	 *
-	 * @param bool   $checked Is it checked or not.
-	 * @param string $name The name for the input.
-	 * @param string $description Field description (optional).
+	 * @param bool       $checked Is it checked or not.
+	 * @param string     $name The name for the input.
+	 * @param string     $description Field description (optional).
 	 * @param string|int $value Field value (optional).
-	 * @param string $label Field label (optional).
+	 * @param string     $label Field label (optional).
 	 *
 	 * @return string
 	 */
@@ -1076,6 +1085,7 @@ abstract class WPCode_Admin_Page {
 		<?php
 		$editor = new WPCode_Code_Editor( 'text' );
 		$editor->set_setting( 'readOnly', 'nocursor' );
+		$editor->set_setting( 'gutters', array() );
 		$editor->register_editor( 'wpcode-code-preview' );
 		$editor->init_editor();
 	}

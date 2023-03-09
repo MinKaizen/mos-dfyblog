@@ -83,6 +83,7 @@ class WPCode_Admin_Page_Generator extends WPCode_Admin_Page {
 			if ( $this->snippet->get_post_data() ) {
 				WPCode_Notice::add(
 					sprintf(
+							// Translators: gets replaced with the snippet title.
 						__( 'You are now editing the generated snippet: "%s". Updating the snippet will override any edits you made to the code.', 'insert-headers-and-footers' ),
 						$this->snippet->get_title()
 					),

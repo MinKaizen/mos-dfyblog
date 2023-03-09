@@ -108,7 +108,6 @@ abstract class Block {
         }
 
         $_args['render_callback'] = function ( $attributes, $content ) {
-            FontLoader::load_gfonts( $attributes );
             return $content;
         };
 
@@ -117,7 +116,6 @@ abstract class Block {
                 if ( ! is_admin() ) {
                     $this->load_scripts();
                 }
-                FontLoader::load_gfonts( $attributes );
                 return $this->render_callback( $attributes, $content );
             };
         }
@@ -127,7 +125,6 @@ abstract class Block {
                 if ( ! is_admin() ) {
                     $this->load_scripts();
                 }
-                FontLoader::load_gfonts( $attributes );
                 return $content;
             };
         }

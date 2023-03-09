@@ -4,7 +4,7 @@ Tags: code, css, php, footer, functions, content, facebook pixel, footer code, f
 Requires at least: 4.6
 Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 2.0.7
+Stable tag: 2.0.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,6 +307,18 @@ Thank you
 Syed Balkhi
 
 == Changelog ==
+
+= 2.0.8.1 =
+* Fix: Improve compatibility with PHP 8.1 for our error handling class.
+
+= 2.0.8 =
+* New: We added the option to log PHP errors thrown by snippets added with WPCode to make it easier to track down issues.
+* New: We added a new auto-insert location to improve the available conditional logic rules you can use with PHP snippets.
+* Tweak: We added more info regarding the error thrown when trying to activate a PHP snippet with a syntax error.
+* Tweak: Conditional logic rules are now also applied to shortcodes for better control of output.
+* Tweak: We updated the code editor for PHP snippets to give you a better experience when editing snippets.
+* Fix: We adjusted the permission checks of some ajax endpoints to avoid any potential unwanted usage.
+* Fix: The Safe Mode notice was no longer being displayed on the WPCode pages, so we added that back when needed.
 
 = 2.0.7 =
 * New: We added the ability to resume editing snippets that were created using the WPCode snippet generator.

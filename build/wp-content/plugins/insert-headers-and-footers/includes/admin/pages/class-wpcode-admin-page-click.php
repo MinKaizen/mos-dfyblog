@@ -166,12 +166,12 @@ class WPCode_Admin_Page_Click extends WPCode_Admin_Page {
 
 				if ( ! isset( $snippet_request['status'] ) || 'success' !== $snippet_request['status'] ) {
 					// We have an error. Let's default to a generic message.
-					$error = __( 'We encountered an error loading your snippet, please try again in a few minutes', 'wpcode' );
+					$error = __( 'We encountered an error loading your snippet, please try again in a few minutes', 'insert-headers-and-footers' );
 					if ( isset( $snippet_request['message'] ) ) {
 						// If there is a message, let's use that instead.
 						$error = sprintf(
 						/* translators: %s: The error message from the API. */
-							__( 'We encountered the following error loading your snippet: %s', 'wpcode' ),
+							__( 'We encountered the following error loading your snippet: %s', 'insert-headers-and-footers' ),
 							$snippet_request['message']
 						);
 					}

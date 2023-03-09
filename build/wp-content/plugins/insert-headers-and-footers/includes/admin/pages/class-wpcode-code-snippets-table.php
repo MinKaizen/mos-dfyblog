@@ -167,6 +167,7 @@ class WPCode_Code_Snippets_Table extends WP_List_Table {
 		$markup = '<label class="wpcode-checkbox-toggle">';
 		$markup .= '<input data-id=' . absint( $snippet_id ) . ' type="checkbox" ' . checked( $active, true, false ) . ' class="wpcode-status-toggle" />';
 		$markup .= '<span class="wpcode-checkbox-toggle-slider"></span>';
+		$markup .= '<span class="screen-reader-text">' . esc_html__( 'Toggle Snippet Status', 'insert-headers-and-footers' ) . '</span>';
 		$markup .= '</label>';
 
 		return $markup;

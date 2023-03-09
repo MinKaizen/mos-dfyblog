@@ -206,7 +206,7 @@ class WPCode_Snippet_Execute {
 		if ( ! empty( $code_type ) ) {
 			switch ( $code_type ) {
 				case 'php':
-					$mime = 'text/x-php';
+					$mime = 'application/x-httpd-php-open';
 					break;
 				case 'universal':
 					$mime = 'application/x-httpd-php';
@@ -267,11 +267,13 @@ class WPCode_Snippet_Execute {
 		try {
 			eval( $code ); // phpcs:ignore Squiz.PHP.Eval.Discouraged
 		} catch ( Error $e ) {
-			// If WP_DEBUG & WP_DEBUG_LOG are on, we'll log the error.
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-				error_log( $e->getMessage() );
+			$error = array(
+				'message' => $e->getMessage(),
+			);
+			if ( $this->log_activation_errors() ) {
+				$error['snippet'] = $snippet->get_id();
 			}
-			wpcode()->error->add_error( $e );
+			wpcode()->error->add_error( $error );
 			$error = true;
 		}
 
@@ -288,9 +290,13 @@ class WPCode_Snippet_Execute {
 	 * @return void
 	 */
 	public function deactivate_last_snippet() {
-		$locations_to_auto_disable = array(
-			'everywhere',
-			'admin_only',
+		// Use this filter to add locations where the snippet should be auto disabled or disable auto-disable.
+		$locations_to_auto_disable = apply_filters(
+			'wpcode_error_locations_auto_disable',
+			array(
+				'everywhere',
+				'admin_only',
+			)
 		);
 		if ( isset( $this->snippet_executed ) && in_array( $this->snippet_executed->get_location(), $locations_to_auto_disable, true ) ) {
 			$this->snippet_executed->deactivate();
@@ -308,8 +314,12 @@ class WPCode_Snippet_Execute {
 		$error = error_get_last();
 
 		if ( $this->is_error_from_wpcode( $error ) ) {
-			// Deactivate the last ran snippet.
+			// If we have a clue about the snippet that caused the error, let's add it to the error object.
+			if ( $this->log_activation_errors() && isset( $this->snippet_executed ) ) {
+				$error['snippet'] = $this->snippet_executed->get_id();
+			}
 			wpcode()->error->add_error( $error );
+			// Deactivate the last ran snippet.
 			$this->deactivate_last_snippet();
 		}
 	}
@@ -370,20 +380,48 @@ class WPCode_Snippet_Execute {
 			$message = sprintf( '<p>%s</p>', __( 'WPCode has detected an error in one of the snippets which has now been automatically deactivated.', 'insert-headers-and-footers' ) );
 		}
 
-		if ( ! $doing_ajax && ! empty( $this->snippet_executed ) ) {
-			$snippet_edit_link = add_query_arg(
-				array(
-					'page'       => 'wpcode-snippet-manager',
-					'snippet_id' => $this->snippet_executed->get_id(),
-				),
-				admin_url( 'admin.php' )
-			);
-			// Translators: the placeholders add a link to edit the snippet that threw the error.
-			$message .= '<p>' . sprintf( __( '%1$sClick here%2$s to update the snippet that threw the error.', 'insert-headers-and-footers' ), '<a href="' . esc_url( $snippet_edit_link ) . '">', '</a>' ) . '</p>';
+		if ( ! $doing_ajax ) {
+			$message .= '<p>';
+			if ( ! empty( $this->snippet_executed ) ) {
+				$snippet_edit_link = add_query_arg(
+					array(
+						'page'       => 'wpcode-snippet-manager',
+						'snippet_id' => $this->snippet_executed->get_id(),
+					),
+					admin_url( 'admin.php' )
+				);
+
+				$message .= '<a href="' . esc_url( $snippet_edit_link ) . '" class="button button-primary">' . __( 'Edit Deactivated Snippet', 'insert-headers-and-footers' ) . '</a>&nbsp;';
+			}
+
+			if ( ! $this->is_doing_activation() ) {
+
+				if ( wpcode()->settings->get_option( 'error_logging' ) ) {
+					$url = add_query_arg(
+						array(
+							'page' => 'wpcode-tools',
+							'view' => 'logs',
+						),
+						admin_url( 'admin.php' )
+					);
+
+					$message .= '<a href="' . esc_url( $url ) . '" class="button" target="_blank">' . __( 'View error logs', 'insert-headers-and-footers' ) . '</a>';
+				} else {
+					$url = add_query_arg(
+						array(
+							'page' => 'wpcode-settings',
+						),
+						admin_url( 'admin.php' )
+					);
+
+					$message .= '<a href="' . esc_url( $url ) . '" class="button" target="_blank">' . __( 'Enable error logging', 'insert-headers-and-footers' ) . '</a>';
+				}
+			}
+			$message .= '</p>';
 		}
 
 		$message .= sprintf( '<p>%s</p>', __( 'Error message:', 'insert-headers-and-footers' ) );
-		$message .= sprintf( '<p>%s</p>', $error['message'] );
+		$message .= sprintf( '<code>%s</code>', $error['message'] );
 
 		return $message;
 	}
@@ -414,5 +452,18 @@ class WPCode_Snippet_Execute {
 	 */
 	public function not_doing_activation() {
 		$this->doing_activation = false;
+	}
+
+	/**
+	 * Check if we should log errors when activating snippets.
+	 *
+	 * @return bool
+	 */
+	public function log_activation_errors() {
+		if ( $this->is_doing_activation() && apply_filters( 'wpcode_log_activation_errors', false ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

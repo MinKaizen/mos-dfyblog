@@ -89,6 +89,17 @@ class WPCode_Admin_Page_Settings extends WPCode_Admin_Page {
 			'headers_footers_mode'
 		);
 
+		$this->common_settings();
+
+		wp_nonce_field( $this->action, $this->nonce_name );
+	}
+
+	/**
+	 * Move common settings to a separate method so we can use it in other versions of this page.
+	 *
+	 * @return void
+	 */
+	public function common_settings() {
 		$this->metabox_row(
 			__( 'WPCode Library Connection', 'insert-headers-and-footers' ),
 			$this->get_library_connection_input()
@@ -100,7 +111,21 @@ class WPCode_Admin_Page_Settings extends WPCode_Admin_Page {
 			'wpcode-editor-height'
 		);
 
-		wp_nonce_field( $this->action, $this->nonce_name );
+		$this->metabox_row(
+			__( 'Error Logging', 'insert-headers-and-footers' ),
+			$this->get_checkbox_toggle(
+				wpcode()->settings->get_option( 'error_logging' ),
+				'wpcode-error-logging',
+				sprintf(
+				// Translators: %1$s: opening anchor tag, %2$s: closing anchor tag.
+					esc_html__( 'Log errors thrown by snippets? %1$sView Logs%2$s', 'insert-headers-and-footers' ),
+					'<a href="' . esc_url( admin_url( 'admin.php?page=wpcode-tools&view=logs' ) ) . '">',
+					'</a>'
+				),
+				1
+			),
+			'wpcode-error-logging'
+		);
 	}
 
 	/**
@@ -160,6 +185,7 @@ class WPCode_Admin_Page_Settings extends WPCode_Admin_Page {
 			'headers_footers_mode' => isset( $_POST['headers_footers_mode'] ),
 			'editor_height_auto'   => isset( $_POST['editor_height_auto'] ),
 			'editor_height'        => isset( $_POST['editor_height'] ) ? absint( $_POST['editor_height'] ) : 300,
+			'error_logging'        => isset( $_POST['wpcode-error-logging'] ),
 		);
 
 		wpcode()->settings->bulk_update_options( $settings );
@@ -189,10 +215,12 @@ class WPCode_Admin_Page_Settings extends WPCode_Admin_Page {
 		$editor_auto_height = boolval( wpcode()->settings->get_option( 'editor_height_auto' ) );
 		$editor_height      = wpcode()->settings->get_option( 'editor_height', 300 );
 
-		$html = sprintf( '<input type="number" min="100" value="%1$d" id="wpcode-editor-height" name="editor_height" %2$s />',
+		$html = sprintf(
+			'<input type="number" min="100" value="%1$d" id="wpcode-editor-height" name="editor_height" %2$s />',
 			absint( $editor_height ),
 			disabled( $editor_auto_height, true, false )
 		);
+
 		$html .= $this->get_checkbox_toggle(
 			$editor_auto_height,
 			'editor_height_auto'

@@ -19,17 +19,27 @@ add_action( 'wp_ajax_wpcode_verify_ssl', 'wpcode_verify_ssl' );
 function wpcode_update_snippet_status() {
 	check_ajax_referer( 'wpcode_admin' );
 
-	if ( empty( $_POST['snippet_id'] ) ) {
-		return;
-	}
-	$snippet_id = absint( $_POST['snippet_id'] );
-	$active     = isset( $_POST['active'] ) && 'true' === $_POST['active'];
-
-	$snippet = new WPCode_Snippet( $snippet_id );
-	if ( $active ) {
-		$snippet->activate();
+	if ( ! current_user_can( 'wpcode_activate_snippets' ) ) {
+		wpcode()->error->add_error(
+			array(
+				'message' => __( 'You are not allowed to change snippet status, please contact your webmaster.', 'insert-headers-and-footers' ),
+				'type'    => 'permissions',
+			)
+		);
+		$active = false;
 	} else {
-		$snippet->deactivate();
+		if ( empty( $_POST['snippet_id'] ) ) {
+			return;
+		}
+		$snippet_id = absint( $_POST['snippet_id'] );
+		$active     = isset( $_POST['active'] ) && 'true' === $_POST['active'];
+
+		$snippet = new WPCode_Snippet( $snippet_id );
+		if ( $active ) {
+			$snippet->activate();
+		} else {
+			$snippet->deactivate();
+		}
 	}
 
 	if ( ! isset( $snippet->active ) || $active !== $snippet->active ) {
@@ -56,6 +66,10 @@ function wpcode_update_snippet_status() {
  */
 function wpcode_search_terms() {
 	check_ajax_referer( 'wpcode_admin' );
+
+	if ( ! current_user_can( 'wpcode_edit_snippets' ) ) {
+		wp_send_json_error();
+	}
 
 	$term = isset( $_GET['term'] ) ? sanitize_text_field( wp_unslash( $_GET['term'] ) ) : '';
 
@@ -98,6 +112,10 @@ function wpcode_generate_snippet() {
 
 	check_ajax_referer( 'wpcode_generate', 'nonce' );
 
+	if ( ! current_user_can( 'wpcode_edit_snippets' ) ) {
+		wp_send_json_error();
+	}
+
 	$generator_type = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
 
 	$generator = wpcode()->generator->get_type( $generator_type );
@@ -121,7 +139,7 @@ function wpcode_save_generated_snippet() {
 	check_ajax_referer( 'wpcode_generate', 'nonce' );
 
 	// If the current user can't edit snippets they should not be trying this.
-	if ( ! current_user_can('wpcode_edit_snippets') ) {
+	if ( ! current_user_can( 'wpcode_edit_snippets' ) ) {
 		wp_send_json_error();
 	}
 
@@ -150,7 +168,7 @@ function wpcode_save_generated_snippet() {
 
 	// If a snippet id is passed, let's attempt to update the snippet.
 	if ( ! empty( $snippet_id ) ) {
-		$snippet = new WPCode_Snippet($snippet_id);
+		$snippet = new WPCode_Snippet( $snippet_id );
 		// Let's make sure this is an id for a snippet.
 		if ( null !== $snippet->get_post_data() ) {
 			$snippet_data['id']     = $snippet_id;
@@ -185,6 +203,10 @@ function wpcode_save_generated_snippet() {
  * @return void
  */
 function wpcode_verify_ssl() {
+	if ( ! current_user_can( 'wpcode_edit_snippets' ) ) {
+		wp_send_json_error();
+	}
+
 	$response = wp_remote_post( 'https://wpcode.com' );
 
 	if ( 200 === wp_remote_retrieve_response_code( $response ) ) {

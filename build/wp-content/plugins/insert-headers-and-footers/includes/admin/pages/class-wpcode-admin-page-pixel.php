@@ -46,6 +46,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 	public function get_pixel_overlay() {
 
 		$text = sprintf(
+				// translators: %1$s and %2$s are <u> tags.
 			'<p>' . __( 'While you can always add pixels manually using code snippets, our Conversion Pixels addon helps you %1$ssave time%2$s while %1$sreducing errors%2$s. It lets you properly implement Facebook, Google, Pinterest, and TikTok ads tracking with deep integrations for eCommerce events, interaction measurement, and more. This addon is available on WPCode Plus plan or higher.', 'insert-headers-and-footers' ) . '</p>',
 			'<u>',
 			'</u>'
@@ -117,6 +118,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'facebook_pixel_id',
 				$this->get_option( 'facebook_pixel_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Facebook Pixel ID in the Facebook Ads Manager. %1$sRead our step by step directions%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-facebook-pixel-id-and-conversions-api-token/', 'conversion-pixels', 'facebook', 'pixel' ) . '">',
 					'</a>'
@@ -174,6 +176,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'google_analytics_id',
 				$this->get_option( 'google_analytics_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Google Analytics ID in the Google Analytics Admin panel. %1$sRead our step by step directions%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-google-analytics-id/', 'conversion-pixels', 'google', 'pixel' ) . '">',
 					'</a>'
@@ -187,6 +190,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'google_ads_id',
 				$this->get_option( 'google_ads_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Google Ads Tag ID in the Google Ads Settings under Google Tag. %1$sRead our step by step directions%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-google-ads-tag-id/', 'conversion-pixels', 'google', 'pixel' ) . '">',
 					'</a>'
@@ -200,6 +204,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'google_ads_label',
 				$this->get_option( 'google_ads_label', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'Add your Google Ads Conversion Label for tracking conversion events. %1$sLearn More%2$s.', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-google-ads-tag-id/', 'conversion-pixels', 'google', 'pixel' ) . '">',
 					'</a>'
@@ -218,7 +223,8 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 						'ecommerce'   => false,
 					),
 				),
-				'google_pixel_events' )
+				'google_pixel_events'
+			)
 		);
 		$this->metabox_row(
 			__( 'eCommerce Events Tracking', 'insert-headers-and-footers' ),
@@ -247,6 +253,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'pinterest_id',
 				$this->get_option( 'pinterest_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Tag id in your Pinterest Business account. %1$sRead our step by step directions%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-pinterest-tag-id-and-conversion-access-token/', 'conversion-pixels', 'pinterest', 'pixel' ) . '">',
 					'</a>'
@@ -260,6 +267,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'pinterest_ad_account_id',
 				$this->get_option( 'pinterest_ad_account_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Ad Account ID in your Pinterest Business account. %1$sRead more%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-pinterest-tag-id-and-conversion-access-token/', 'conversion-pixels', 'pinterest', 'pixel' ) . '">',
 					'</a>'
@@ -273,6 +281,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'pinterest_conversion_token',
 				$this->get_option( 'pinterest_conversion_token', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Conversion Access Token under Ads > Conversions > Conversion access token. %1$sRead more%2$s. ', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-pinterest-tag-id-and-conversion-access-token/', 'conversion-pixels', 'pinterest', 'pixel' ) . '">',
 					'</a>'
@@ -308,6 +317,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'tiktok_pixel_id',
 				$this->get_option( 'tiktok_pixel_id', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can find your Pixel id in your TikTok Business Account. %1$sRead our step by step directions%2$s.', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-tiktok-pixel-id-and-events-api-access-token/', 'conversion-pixels', 'tiktok', 'pixel' ) . '">',
 					'</a>'
@@ -321,6 +331,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 				'tiktok_access_token',
 				$this->get_option( 'tiktok_access_token', '' ),
 				sprintf(
+				// translators: %1$s and %2$s are the opening and closing anchor tags.
 					__( 'You can generate an access token in the Pixel Settings under Access Token Generation. %1$sRead more%2$s', 'insert-headers-and-footers' ),
 					'<a target="_blank" href="' . wpcode_utm_url( 'https://wpcode.com/docs/how-to-find-your-tiktok-pixel-id-and-events-api-access-token/', 'conversion-pixels', 'tiktok', 'pixel' ) . '">',
 					'</a>'
@@ -505,7 +516,7 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 			$input_name = $name . '[' . $input['name'] . ']';
 			$checked    = ! empty( $pixel_options[ $input['name'] ] );
 			if ( $input['ecommerce'] && empty( $ecommerce_vendors ) ) {
-				$row_class  = 'wpcode-checkbox-row-disabled';
+				$row_class = 'wpcode-checkbox-row-disabled';
 			}
 			$markup .= '<div class="wpcode-checkbox-row ' . $row_class . '">';
 			$markup .= $this->get_checkbox_toggle(
@@ -524,9 +535,10 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 	/**
 	 * Get a text field markup.
 	 *
-	 * @param $id
-	 * @param $value
-	 * @param $description
+	 * @param string $id The id of the text field.
+	 * @param string $value The value of the text field.
+	 * @param string $description The description of the text field.
+	 * @param bool   $wide Whether the text field should be wide.
 	 *
 	 * @return string
 	 */
@@ -546,10 +558,10 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 	/**
 	 * There's no actual value to show in this instance.
 	 *
-	 * @param $key
-	 * @param $default
+	 * @param string $key The key of the option.
+	 * @param mixed  $default The default value of the option.
 	 *
-	 * @return void
+	 * @return mixed
 	 */
 	public function get_option( $key, $default = false ) {
 		return $default;
@@ -565,6 +577,8 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 	}
 
 	/**
+	 * Get the markup for the eCommerce events input.
+	 *
 	 * @return string
 	 */
 	public function get_ecommerce_events_input() {
@@ -575,11 +589,13 @@ class WPCode_Admin_Page_Pixel extends WPCode_Admin_Page {
 			$markup .= '<p><strong>' . __( 'Disabled, no eCommerce Platform Detected', 'insert-headers-and-footers' ) . '</strong></p>';
 		} else {
 			foreach ( $providers as $provider ) {
+				// translators: %s is the name of the eCommerce provider.
 				$markup .= '<p><strong>' . sprintf( __( '%s Tracking Enabled', 'insert-headers-and-footers' ), $provider ) . '</strong></p>';
 			}
 		}
 		$markup .= '<p>';
 		$markup .= sprintf(
+				// translators: %s a html break.
 			__( 'Advanced eCommerce tracking is available for WooCommerce and Easy Digital Downloads. %s These plugins are detected automatically and when available you can toggle individual events using the options below.' ),
 			'</br>'
 		);

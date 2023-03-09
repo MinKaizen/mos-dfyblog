@@ -52,7 +52,7 @@ class GoogleMap extends Block {
             //Only for editor
             $this->assets_manager->register(
                 'google-map-script-editor',
-                'https://maps.googleapis.com/maps/api/js?key=' . $map_api . '&libraries=places&cache=' . rand( 10, 1000 ),
+                'https://maps.googleapis.com/maps/api/js?key=' . $map_api . '&callback=Function.prototype&libraries=places&cache=' . rand( 10, 1000 ),
                 ['essential-blocks-editor-script'],
                 [
                     'is_js' => true
@@ -61,7 +61,7 @@ class GoogleMap extends Block {
             //For frontend
             $this->assets_manager->register(
                 'google-map-script',
-                'https://maps.googleapis.com/maps/api/js?key=' . $map_api . '&libraries=places&cache=' . rand( 10, 1000 ),
+                'https://maps.googleapis.com/maps/api/js?key=' . $map_api . '&callback=Function.prototype&libraries=places&cache=' . rand( 10, 1000 ),
                 [],
                 [
                     'is_js' => true

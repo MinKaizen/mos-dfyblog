@@ -34,4 +34,6 @@ function wpcode_plugins_loaded_load_lite_files() {
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-woocommerce.php';
 	// Load EDD conditional logic.
 	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-edd.php';
+	// Load Schedule conditional logic.
+	require_once WPCODE_PLUGIN_PATH . 'includes/lite/conditional-logic/class-wpcode-conditional-schedule.php';
 }

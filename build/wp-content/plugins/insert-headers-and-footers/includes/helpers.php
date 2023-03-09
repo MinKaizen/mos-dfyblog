@@ -175,6 +175,10 @@ function wpcode_get_conditions_relation_labels() {
 		'!='          => __( 'Is not', 'insert-headers-and-footers' ),
 		'contains'    => __( 'Contains', 'insert-headers-and-footers' ),
 		'notcontains' => __( 'Doesn\'t Contain', 'insert-headers-and-footers' ),
+		'before'      => __( 'Is Before', 'insert-headers-and-footers' ),
+		'after'       => __( 'Is After', 'insert-headers-and-footers' ),
+		'before-or'   => __( 'Is on or Before', 'insert-headers-and-footers' ),
+		'after-or'    => __( 'Is on or After', 'insert-headers-and-footers' ),
 	);
 }
 

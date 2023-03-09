@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPCode Lite
  * Plugin URI: https://www.wpcode.com/
- * Version: 2.0.7
+ * Version: 2.0.8.1
  * Requires at least: 4.6
  * Requires PHP: 5.5
  * Tested up to: 6.1
@@ -260,6 +260,13 @@ class WPCode {
 	public $notice;
 
 	/**
+	 * Instance for logging errors.
+	 *
+	 * @var WPCode_File_Logger
+	 */
+	public $logger;
+
+	/**
 	 * Main instance of WPCode.
 	 *
 	 * @return WPCode
@@ -339,6 +346,8 @@ class WPCode {
 		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-capabilities.php';
 		// Install routines.
 		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-install.php';
+		// Logging class.
+		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-file-logger.php';
 
 		if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			require_once WPCODE_PLUGIN_PATH . 'includes/icons.php'; // This is not needed in the frontend atm.
@@ -387,6 +396,7 @@ class WPCode {
 		$this->conditional_logic = new WPCode_Conditional_Logic();
 		$this->cache             = new WPCode_Snippet_Cache();
 		$this->settings          = new WPCode_Settings();
+		$this->logger            = new WPCode_File_Logger();
 
 		if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			$this->file_cache        = new WPCode_File_Cache();
