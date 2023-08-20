@@ -4,7 +4,7 @@ Tags: Gutenberg, Block, Block Builder, Elementor, Design
 Requires at least: 5.6
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,6 +69,9 @@ We’ve integrated RTL and multi-language support, so you get a translated panel
 3. Adding Elementor Library block into Gutenberg
 
 == Changelog ==
+
+= 1.1.2 - 2023-06-28 =
+* Fix: The template preview doesn't appear in some edge cases
 
 = 1.1.1 - 2022-11-30 =
 * Fix: Remove deprecated error log by using different method ([Topic](https://wordpress.org/support/topic/debug-log-error-5/))

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WPCode Lite
  * Plugin URI: https://www.wpcode.com/
- * Version: 2.0.8.1
+ * Version: 2.1.1
  * Requires at least: 4.6
  * Requires PHP: 5.5
  * Tested up to: 6.1
@@ -267,6 +267,13 @@ class WPCode {
 	public $logger;
 
 	/**
+	 * Load the smart tags.
+	 *
+	 * @var WPCode_Smart_Tags
+	 */
+	public $smart_tags;
+
+	/**
 	 * Main instance of WPCode.
 	 *
 	 * @return WPCode
@@ -286,7 +293,7 @@ class WPCode {
 	private function __construct() {
 		$this->setup_constants();
 		$this->includes();
-		$this->load_components();
+		add_action( 'plugins_loaded', array( $this, 'load_components' ), - 1 );
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ), 15 );
 	}
@@ -324,6 +331,8 @@ class WPCode {
 		require_once WPCODE_PLUGIN_PATH . 'includes/global-output.php';
 		// Use the old class name for backwards compatibility.
 		require_once WPCODE_PLUGIN_PATH . 'includes/legacy.php';
+		// Add backwards compatibility for older versions of PHP or WP.
+		require_once WPCODE_PLUGIN_PATH . 'includes/compat.php';
 		// Register code snippets post type.
 		require_once WPCODE_PLUGIN_PATH . 'includes/post-type.php';
 		// The snippet class.
@@ -348,6 +357,10 @@ class WPCode {
 		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-install.php';
 		// Logging class.
 		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-file-logger.php';
+		// Smart tags class.
+		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-smart-tags.php';
+		// Admin bar info class.
+		require_once WPCODE_PLUGIN_PATH . 'includes/class-wpcode-admin-bar-info.php';
 
 		if ( is_admin() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 			require_once WPCODE_PLUGIN_PATH . 'includes/icons.php'; // This is not needed in the frontend atm.
@@ -407,9 +420,17 @@ class WPCode {
 			$this->notifications     = new WPCode_Notifications();
 			$this->admin_page_loader = new WPCode_Admin_Page_Loader_Lite();
 			$this->notice            = new WPCode_Notice();
+			$this->smart_tags        = new WPCode_Smart_Tags_Lite();
 
+			// Metabox class.
 			new WPCode_Metabox_Snippets_Lite();
+			// Usage tracking class.
+			new WPCode_Usage_Tracking_Lite();
 		}
+
+		new WPCode_Admin_Bar_Info_Lite();
+
+		do_action( 'wpcode_loaded' );
 	}
 
 	/**

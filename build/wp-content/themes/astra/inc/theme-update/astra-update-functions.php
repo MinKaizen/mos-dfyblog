@@ -825,7 +825,7 @@ function astra_theme_background_updater_4_0_0() {
 								$migrated_post_metadata[]   = $tax_slug;
 								$theme_options[ $tax_slug ] = 'category';
 
-								$tax_counter = $tax_counter + 1;
+								$tax_counter = ++$tax_counter;
 								$tax_slug    = 'ast-dynamic-single-' . esc_attr( $post_type ) . '-taxonomy-' . $tax_counter;
 							}
 							break;
@@ -834,7 +834,7 @@ function astra_theme_background_updater_4_0_0() {
 								$migrated_post_metadata[]   = $tax_slug;
 								$theme_options[ $tax_slug ] = 'post_tag';
 
-								$tax_counter = $tax_counter + 1;
+								$tax_counter = ++$tax_counter;
 								$tax_slug    = 'ast-dynamic-single-' . esc_attr( $post_type ) . '-taxonomy-' . $tax_counter;
 							}
 							break;
@@ -1010,3 +1010,384 @@ function astra_theme_background_updater_4_0_2() {
 		}
 	}
 }
+
+/**
+ * Handle backward compatibility on version 4.1.0
+ *
+ * @since 4.1.0
+ * @return void
+ */
+function astra_theme_background_updater_4_1_0() {
+
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['v4-1-0-update-migration'] ) ) {
+		$theme_options['v4-1-0-update-migration'] = true;
+		$current_payment_list                     = array();
+		$old_payment_list                         = isset( $theme_options['single-product-payment-list']['items'] ) ? $theme_options['single-product-payment-list']['items'] : array();
+
+		$visa_payment       = isset( $theme_options['single-product-payment-visa'] ) ? $theme_options['single-product-payment-visa'] : '';
+		$mastercard_payment = isset( $theme_options['single-product-payment-mastercard'] ) ? $theme_options['single-product-payment-mastercard'] : '';
+		$discover_payment   = isset( $theme_options['single-product-payment-discover'] ) ? $theme_options['single-product-payment-discover'] : '';
+		$paypal_payment     = isset( $theme_options['single-product-payment-paypal'] ) ? $theme_options['single-product-payment-paypal'] : '';
+		$apple_pay_payment  = isset( $theme_options['single-product-payment-apple-pay'] ) ? $theme_options['single-product-payment-apple-pay'] : '';
+
+		false !== $visa_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-100',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-visa',
+				'image'   => '',
+				'label'   => __( 'Visa', 'astra' ),
+			)
+		) : '';
+
+		false !== $mastercard_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-101',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-mastercard',
+				'image'   => '',
+				'label'   => __( 'Mastercard', 'astra' ),
+			)
+		) : '';
+
+		false !== $mastercard_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-102',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-amex',
+				'image'   => '',
+				'label'   => __( 'Amex', 'astra' ),
+			)
+		) : '';
+
+		false !== $discover_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-103',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-discover',
+				'image'   => '',
+				'label'   => __( 'Discover', 'astra' ),
+			)
+		) : '';
+
+		$paypal_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-104',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-paypal',
+				'image'   => '',
+				'label'   => __( 'Paypal', 'astra' ),
+			)
+		) : '';
+
+		$apple_pay_payment ? array_push(
+			$current_payment_list,
+			array(
+				'id'      => 'item-105',
+				'enabled' => true,
+				'source'  => 'icon',
+				'icon'    => 'cc-apple-pay',
+				'image'   => '',
+				'label'   => __( 'Apple Pay', 'astra' ),
+			)
+		) : '';
+
+		if ( $current_payment_list ) {
+			$theme_options['single-product-payment-list'] =
+			array(
+				'items' =>
+					array_merge(
+						$current_payment_list,
+						$old_payment_list
+					),
+			);
+
+			update_option( 'astra-settings', $theme_options );
+		}
+
+		if ( ! isset( $theme_options['woo_support_global_settings'] ) ) {
+			$theme_options['woo_support_global_settings'] = true;
+			update_option( 'astra-settings', $theme_options );
+		}
+
+		if ( isset( $theme_options['theme-dynamic-customizer-support'] ) ) {
+			$post_types = Astra_Posts_Structure_Loader::get_supported_post_types();
+			foreach ( $post_types as $index => $post_type ) {
+				$theme_options[ 'ast-dynamic-single-' . esc_attr( $post_type ) . '-title-font-extras' ]['text-transform'] = '';
+			}
+			update_option( 'astra-settings', $theme_options );
+		}
+	}
+}
+
+/**
+ * 4.1.4 backward handling cases.
+ *
+ * 1. Migrating users to combined color overlay option to new dedicated overlay options.
+ *
+ * @since 4.1.4
+ * @return void
+ */
+function astra_theme_background_updater_4_1_4() {
+	$theme_options = get_option( 'astra-settings', array() );
+	if ( ! isset( $theme_options['v4-1-4-update-migration'] ) ) {
+		$ast_bg_control_options = array(
+			'off-canvas-background',
+			'footer-adv-bg-obj',
+			'footer-bg-obj',
+		);
+
+		foreach ( $ast_bg_control_options as $key => $bg_option ) {
+			if ( isset( $theme_options[ $bg_option ] ) && ! isset( $theme_options[ $bg_option ]['overlay-type'] ) ) {
+				$bg_type = isset( $theme_options[ $bg_option ]['background-type'] ) ? $theme_options[ $bg_option ]['background-type'] : '';
+
+				$theme_options[ $bg_option ]['overlay-type']     = 'none';
+				$theme_options[ $bg_option ]['overlay-color']    = '';
+				$theme_options[ $bg_option ]['overlay-gradient'] = '';
+
+				if ( 'image' === $bg_type ) {
+					$bg_img   = isset( $theme_options[ $bg_option ]['background-image'] ) ? $theme_options[ $bg_option ]['background-image'] : '';
+					$bg_color = isset( $theme_options[ $bg_option ]['background-color'] ) ? $theme_options[ $bg_option ]['background-color'] : '';
+
+					if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
+						$theme_options[ $bg_option ]['overlay-type']     = 'classic';
+						$theme_options[ $bg_option ]['overlay-color']    = $bg_color;
+						$theme_options[ $bg_option ]['overlay-gradient'] = '';
+					}
+				}
+			}
+		}
+
+		$ast_resp_bg_control_options = array(
+			'hba-footer-bg-obj-responsive',
+			'hbb-footer-bg-obj-responsive',
+			'footer-bg-obj-responsive',
+			'footer-menu-bg-obj-responsive',
+			'hb-footer-bg-obj-responsive',
+			'hba-header-bg-obj-responsive',
+			'hbb-header-bg-obj-responsive',
+			'hb-header-bg-obj-responsive',
+			'header-mobile-menu-bg-obj-responsive',
+			'site-layout-outside-bg-obj-responsive',
+			'content-bg-obj-responsive',
+		);
+
+		$post_types = Astra_Posts_Structure_Loader::get_supported_post_types();
+		foreach ( $post_types as $index => $post_type ) {
+			$ast_resp_bg_control_options[] = 'ast-dynamic-archive-' . esc_attr( $post_type ) . '-banner-custom-bg';
+			$ast_resp_bg_control_options[] = 'ast-dynamic-single-' . esc_attr( $post_type ) . '-banner-background';
+		}
+
+		$component_limit = defined( 'ASTRA_EXT_VER' ) ? Astra_Builder_Helper::$component_limit : Astra_Builder_Helper::$num_of_header_menu;
+		for ( $index = 1; $index <= $component_limit; $index++ ) {
+			$_prefix                       = 'menu' . $index;
+			$ast_resp_bg_control_options[] = 'header-' . $_prefix . '-bg-obj-responsive';
+		}
+
+		foreach ( $ast_resp_bg_control_options as $key => $resp_bg_option ) {
+			// Desktop version.
+			/** @psalm-suppress PossiblyUndefinedStringArrayOffset */
+			if ( isset( $theme_options[ $resp_bg_option ]['desktop'] ) && is_array( $theme_options[ $resp_bg_option ]['desktop'] ) && ! isset( $theme_options[ $resp_bg_option ]['desktop']['overlay-type'] ) ) {
+				// @codingStandardsIgnoreStart
+				$desk_bg_type = isset( $theme_options[ $resp_bg_option ]['desktop']['background-type'] ) ? $theme_options[ $resp_bg_option ]['desktop']['background-type'] : '';
+				// @codingStandardsIgnoreEnd
+
+				$theme_options[ $resp_bg_option ]['desktop']['overlay-type']     = '';
+				$theme_options[ $resp_bg_option ]['desktop']['overlay-color']    = '';
+				$theme_options[ $resp_bg_option ]['desktop']['overlay-gradient'] = '';
+
+				if ( 'image' === $desk_bg_type ) {
+					$bg_img   = isset( $theme_options[ $resp_bg_option ]['desktop']['background-image'] ) ? $theme_options[ $resp_bg_option ]['desktop']['background-image'] : '';
+					$bg_color = isset( $theme_options[ $resp_bg_option ]['desktop']['background-color'] ) ? $theme_options[ $resp_bg_option ]['desktop']['background-color'] : '';
+
+					if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
+						$theme_options[ $resp_bg_option ]['desktop']['overlay-type']     = 'classic';
+						$theme_options[ $resp_bg_option ]['desktop']['overlay-color']    = $bg_color;
+						$theme_options[ $resp_bg_option ]['desktop']['overlay-gradient'] = '';
+					}
+				}
+			}
+
+			// Tablet version.
+			/** @psalm-suppress PossiblyUndefinedStringArrayOffset */
+			if ( isset( $theme_options[ $resp_bg_option ]['tablet'] ) && is_array( $theme_options[ $resp_bg_option ]['tablet'] ) && ! isset( $theme_options[ $resp_bg_option ]['tablet']['overlay-type'] ) ) {
+				// @codingStandardsIgnoreStart
+				$tablet_bg_type = isset( $theme_options[ $resp_bg_option ]['tablet']['background-type'] ) ? $theme_options[ $resp_bg_option ]['tablet']['background-type'] : '';
+				// @codingStandardsIgnoreEnd
+				$theme_options[ $resp_bg_option ]['tablet']['overlay-type']     = '';
+				$theme_options[ $resp_bg_option ]['tablet']['overlay-color']    = '';
+				$theme_options[ $resp_bg_option ]['tablet']['overlay-gradient'] = '';
+				if ( 'image' === $tablet_bg_type ) {
+					$bg_img   = isset( $theme_options[ $resp_bg_option ]['tablet']['background-image'] ) ? $theme_options[ $resp_bg_option ]['tablet']['background-image'] : '';
+					$bg_color = isset( $theme_options[ $resp_bg_option ]['tablet']['background-color'] ) ? $theme_options[ $resp_bg_option ]['tablet']['background-color'] : '';
+					if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
+						$theme_options[ $resp_bg_option ]['tablet']['overlay-type']     = 'classic';
+						$theme_options[ $resp_bg_option ]['tablet']['overlay-color']    = $bg_color;
+						$theme_options[ $resp_bg_option ]['tablet']['overlay-gradient'] = '';
+					}
+				}
+			}
+
+
+			// Mobile version.
+			/** @psalm-suppress PossiblyUndefinedStringArrayOffset */
+			if ( isset( $theme_options[ $resp_bg_option ]['mobile'] ) && is_array( $theme_options[ $resp_bg_option ]['mobile'] ) && ! isset( $theme_options[ $resp_bg_option ]['mobile']['overlay-type'] ) ) {
+				// @codingStandardsIgnoreStart
+				$mobile_bg_type = isset( $theme_options[ $resp_bg_option ]['mobile']['background-type'] ) ? $theme_options[ $resp_bg_option ]['mobile']['background-type'] : '';
+				// @codingStandardsIgnoreEnd
+				$theme_options[ $resp_bg_option ]['mobile']['overlay-type']     = '';
+				$theme_options[ $resp_bg_option ]['mobile']['overlay-color']    = '';
+				$theme_options[ $resp_bg_option ]['mobile']['overlay-gradient'] = '';
+
+				if ( 'image' === $mobile_bg_type ) {
+					$bg_img   = isset( $theme_options[ $resp_bg_option ]['mobile']['background-image'] ) ? $theme_options[ $resp_bg_option ]['mobile']['background-image'] : '';
+					$bg_color = isset( $theme_options[ $resp_bg_option ]['mobile']['background-color'] ) ? $theme_options[ $resp_bg_option ]['mobile']['background-color'] : '';
+
+					if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
+						$theme_options[ $resp_bg_option ]['mobile']['overlay-type']     = 'classic';
+						$theme_options[ $resp_bg_option ]['mobile']['overlay-color']    = $bg_color;
+						$theme_options[ $resp_bg_option ]['mobile']['overlay-gradient'] = '';
+					}
+				}
+			}
+		}
+
+		$theme_options['v4-1-4-update-migration'] = true;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/**
+ * Handle backward compatibility on version 4.1.6
+ *
+ * @since 4.1.6
+ * @return void
+ */
+function astra_theme_background_updater_4_1_6() {
+	$theme_options = get_option( 'astra-settings', array() );
+	if ( ! isset( $theme_options['list-block-vertical-spacing'] ) ) {
+		$theme_options['list-block-vertical-spacing'] = false;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/**
+ * Migrating users to new container layout options
+ *
+ * @since 4.2.0
+ * @return void
+ */
+function astra_theme_background_updater_4_2_0() {
+	$theme_options = get_option( 'astra-settings', array() );
+	if ( ! isset( $theme_options['v4-2-0-update-migration'] ) ) {
+
+		$post_types          = Astra_Posts_Structure_Loader::get_supported_post_types();
+		$theme_options       = get_option( 'astra-settings' );
+		$blog_types          = array( 'single', 'archive' );
+		$third_party_layouts = array( 'woocommerce', 'edd', 'lifterlms', 'lifterlms-course-lesson', 'learndash' );
+
+		// Global.
+		if ( isset( $theme_options['site-content-layout'] ) ) {
+			$theme_options = astra_apply_layout_migration( 'site-content-layout', 'ast-site-content-layout', 'site-content-style', 'site-sidebar-style', $theme_options );
+		}
+
+		// Single, archive.
+		foreach ( $blog_types as $index => $blog_type ) {
+			foreach ( $post_types as $index => $post_type ) {
+				$old_layout    = $blog_type . '-' . esc_attr( $post_type ) . '-content-layout';
+				$new_layout    = $blog_type . '-' . esc_attr( $post_type ) . '-ast-content-layout';
+				$content_style = $blog_type . '-' . esc_attr( $post_type ) . '-content-style';
+				$sidebar_style = $blog_type . '-' . esc_attr( $post_type ) . '-sidebar-style';
+
+				if ( isset( $theme_options[ $old_layout ] ) ) {
+					$theme_options = astra_apply_layout_migration( $old_layout, $new_layout, $content_style, $sidebar_style, $theme_options );
+				}
+			}
+		}
+
+		// Third party existing layout migrations to new layout options.
+		foreach ( $third_party_layouts as $index => $layout ) {
+			$old_layout    = $layout . '-content-layout';
+			$new_layout    = $layout . '-ast-content-layout';
+			$content_style = $layout . '-content-style';
+			$sidebar_style = $layout . '-sidebar-style';
+			if ( isset( $theme_options[ $old_layout ] ) ) {
+				if ( 'lifterlms' === $layout ) {
+
+					// Lifterlms course/lesson sidebar style migration case.
+					$theme_options = astra_apply_layout_migration( $old_layout, $new_layout, $content_style, 'lifterlms-course-lesson-sidebar-style', $theme_options );
+				}
+				$theme_options = astra_apply_layout_migration( $old_layout, $new_layout, $content_style, $sidebar_style, $theme_options );
+			}
+		}
+
+		if ( ! isset( $theme_options['fullwidth_sidebar_support'] ) ) {
+			$theme_options['fullwidth_sidebar_support'] = false;
+		}
+
+		$theme_options['v4-2-0-update-migration'] = true;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/**
+ * Handle migration from old to new layouts.
+ *
+ * Migration cases for old users, old layouts -> new layouts.
+ *
+ * @since 4.2.0
+ * @param mixed $old_layout
+ * @param mixed $new_layout
+ * @param mixed $content_style
+ * @param mixed $sidebar_style
+ * @param array $theme_options
+ * @return array $theme_options The updated theme options.
+ */
+function astra_apply_layout_migration( $old_layout, $new_layout, $content_style, $sidebar_style, $theme_options ) {
+	switch ( astra_get_option( $old_layout ) ) {
+		case 'boxed-container':
+			$theme_options[ $new_layout ]    = 'normal-width-container';
+			$theme_options[ $content_style ] = 'boxed';
+			$theme_options[ $sidebar_style ] = 'boxed';
+			break;
+		case 'content-boxed-container':
+			$theme_options[ $new_layout ]    = 'normal-width-container';
+			$theme_options[ $content_style ] = 'boxed';
+			$theme_options[ $sidebar_style ] = 'unboxed';
+			break;
+		case 'plain-container':
+			$theme_options[ $new_layout ]    = 'normal-width-container';
+			$theme_options[ $content_style ] = 'unboxed';
+			$theme_options[ $sidebar_style ] = 'unboxed';
+			break;
+		case 'page-builder':
+			$theme_options[ $new_layout ]    = 'full-width-container';
+			$theme_options[ $content_style ] = 'unboxed';
+			$theme_options[ $sidebar_style ] = 'unboxed';
+			break;
+		case 'narrow-container':
+			$theme_options[ $new_layout ]    = 'narrow-width-container';
+			$theme_options[ $content_style ] = 'unboxed';
+			$theme_options[ $sidebar_style ] = 'unboxed';
+			break;
+		default:
+			$theme_options[ $new_layout ]    = 'default';
+			$theme_options[ $content_style ] = 'default';
+			$theme_options[ $sidebar_style ] = 'default';
+			break;
+	}
+	return $theme_options;
+}
+

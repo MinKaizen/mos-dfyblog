@@ -30,7 +30,15 @@ abstract class WPCode_Snippet_Execute_Type {
 	 * @param WPCode_Snippet $snippet The snippet post or the id.
 	 */
 	public function __construct( $snippet ) {
+		if ( empty( $snippet->attributes ) ) {
+			$shortcode_attributes = $snippet->get_shortcode_attributes();
+			foreach ( $shortcode_attributes as $attribute ) {
+				$snippet->set_attribute( $attribute, '' );
+			}
+		}
+
 		$this->snippet = $snippet;
+
 	}
 
 	/**

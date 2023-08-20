@@ -1204,6 +1204,10 @@ $defaultValues = array(
 				'type'    => 'array',
 				'default' => [],
 			),
+			'excludedCategories'		   => array(
+				'type' => 'array',
+				'default' => [],
+			),
 			'className'                    => array(
 				'type'    => 'string',
 				'default' => ''
@@ -1444,7 +1448,7 @@ $defaultValues = array(
 			),
 			'callToActionBackColor'   => array(
 				'type'    => 'string',
-				'default' => '#f63d3d'
+				'default' => '#e11b4c'
 			),
 			'callToActionBorderColor' => array(
 				'type'    => 'string',
@@ -2239,5 +2243,65 @@ $defaultValues = array(
 				'default' => 30
 			]
 		]
-	]
+	],
+	'ub/icon'            => array(
+		'attributes' => array(
+			'icon' => array(
+				'type'    => 'array',
+				'default' => array()
+			),
+			'svgIcon'  => array(
+				'type'    => 'string',
+				'default' => ''
+			),
+			'size'     => array(
+				'type'    => 'string',
+				'default' => "40px"
+			),
+			'iconColor' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverColor' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconGradientBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'iconHoverGradientBackground' 	=> array(
+				'type'		=> "string",
+				'default'		=> null
+			),
+			'justification' 	=> array(
+				'type'		=> "string",
+				'default'		=> 'center'
+			),
+			'linkUrl' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
+			'linkRel' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
+			'linkTarget' => array(
+				'type' => 'string',
+				'default'	=> ''
+			),
+			'iconRotation' => array(
+				'type' => 'number',
+				'default'	=> 0
+			),
+		)
+	)
 );

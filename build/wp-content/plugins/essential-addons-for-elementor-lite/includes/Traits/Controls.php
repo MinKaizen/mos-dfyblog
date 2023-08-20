@@ -601,7 +601,10 @@ trait Controls
 			        'type'              => Controls_Manager::MEDIA,
 			        'condition'         => [
 				        'eael_show_fallback_img'    => 'yes'
-			        ]
+                    ],
+                    'ai' => [
+                        'active' => false,
+                    ],
 		        ]
 	        );
         }
@@ -906,6 +909,9 @@ trait Controls
                     'condition' => [
                         'eael_show_image_or_icon' => 'img',
                     ],
+                    'ai' => [
+                        'active' => false,
+                    ],
                 ]
             );
             $wb->add_control(
@@ -1069,12 +1075,28 @@ trait Controls
 				    ],
 			    ]
 		    );
+
+		    $wb->add_control(
+			    'eael_image_linkable',
+			    [
+				    'label'        => __( 'Image Clickable', 'essential-addons-for-elementor-lite' ),
+				    'type'         => Controls_Manager::SWITCHER,
+				    'label_on'     => __( 'Yes', 'essential-addons-for-elementor-lite' ),
+				    'label_off'    => __( 'No', 'essential-addons-for-elementor-lite' ),
+				    'return_value' => 'yes',
+				    'default'      => '',
+				    'condition'    => [
+					    'eael_show_image'              => 'yes',
+					    'eael_content_timeline_choose' => 'dynamic',
+				    ],
+			    ]
+		    );
 	    }
 
         $wb->add_control(
             'eael_show_excerpt',
             [
-                'label' => __('Show excerpt', 'essential-addons-for-elementor-lite'),
+                'label' => __('Show Excerpt', 'essential-addons-for-elementor-lite'),
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('Show', 'essential-addons-for-elementor-lite'),
                 'label_off' => __('Hide', 'essential-addons-for-elementor-lite'),
@@ -1168,6 +1190,65 @@ trait Controls
                 ],
             ]
         );
+
+        if (
+            'eael-content-timeline' === $wb->get_name()
+        ) {
+            $wb->add_control(
+                'eael_content_timeline_navigation_type',
+                array(
+                    'label'   => esc_html__( 'Navigation Type', 'essential-addons-elementor' ),
+                    'type'    => Controls_Manager::SELECT,
+                    'default' => 'scrollbar',
+                    'options' => array(
+                        'scrollbar' => esc_html__( 'Scrollbar', 'essential-addons-elementor' ),
+                        'arrows' => esc_html__( 'Arrows', 'essential-addons-elementor' ),
+                    ),
+                    'condition' => [
+                        'eael_dynamic_template_Layout' => 'horizontal',
+                    ],
+                )
+            );
+
+            $wb->add_control(
+                'eael_content_timeline_arrow_type',
+                array(
+                    'label'   => esc_html__( 'Arrow Type', 'essential-addons-elementor' ),
+                    'type'    => Controls_Manager::SELECT,
+                    'default' => 'fa fa-angle-left',
+                    'options' => array(
+                                    'fa fa-angle-left'          => __( 'Angle', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-chevron-left'        => __( 'Chevron', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-angle-double-left'   => __( 'Angle Double', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-arrow-left'          => __( 'Arrow', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-caret-left'          => __( 'Caret', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-long-arrow-alt-left' => __( 'Long Arrow', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-arrow-circle-left'   => __( 'Arrow Circle', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-chevron-circle-left' => __( 'Chevron Circle', 'essential-addons-for-elementor-lite' ),
+                                    'fa fa-caret-square-left'   => __( 'Caret Square', 'essential-addons-for-elementor-lite' ),
+                                ),
+                    'condition' => [
+                        'eael_dynamic_template_Layout' => 'horizontal',
+                        'eael_content_timeline_navigation_type' => 'arrows',
+                    ],
+                )
+            );
+
+            $content_timeline_range = range( 1, 3 );
+            $wb->add_responsive_control(
+                'eael_content_timeline_slides_to_scroll',
+                array(
+                    'label'     => esc_html__( 'Slides to Scroll', 'essential-addons-elementor' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'default'   => '1',
+                    'options'   => array_combine( $content_timeline_range, $content_timeline_range ),
+                    'condition' => [
+                        'eael_dynamic_template_Layout' => 'horizontal',
+                        'eael_content_timeline_navigation_type' => 'arrows',
+                    ],
+                )
+            );
+        }
 
         if (
             'eael-post-grid' === $wb->get_name()
@@ -1517,7 +1598,7 @@ trait Controls
         $wb->start_controls_section(
             'section_terms_style',
             [
-                'label' => __('Terms', 'essential-addons-elementor'),
+                'label' => __('Terms', 'essential-addons-for-elementor-lite'),
                 'tab' => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'eael_show_post_terms' => 'yes',
@@ -1528,7 +1609,7 @@ trait Controls
         $wb->add_control(
             'terms_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'essential-addons-for-elementor-lite'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
@@ -1541,7 +1622,7 @@ trait Controls
             Group_Control_Typography::get_type(),
             [
                 'name' => 'terms_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
+                'label' => __('Typography', 'essential-addons-for-elementor-lite'),
                 'selector' => '{{WRAPPER}} .post-carousel-categories li a',
             ]
         );
@@ -1549,19 +1630,19 @@ trait Controls
         $wb->add_responsive_control(
             'terms_color_alignment',
             [
-                'label' => __('Alignment', 'essential-addons-elementor'),
+                'label' => __('Alignment', 'essential-addons-for-elementor-lite'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => __('Left', 'essential-addons-elementor'),
+                        'title' => __('Left', 'essential-addons-for-elementor-lite'),
                         'icon' => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'essential-addons-elementor'),
+                        'title' => __('Center', 'essential-addons-for-elementor-lite'),
                         'icon' => 'eicon-text-align-center',
                     ],
                     'right' => [
-                        'title' => __('Right', 'essential-addons-elementor'),
+                        'title' => __('Right', 'essential-addons-for-elementor-lite'),
                         'icon' => 'eicon-text-align-right',
                     ],
                 ],
@@ -1574,7 +1655,7 @@ trait Controls
         $wb->add_control(
             'terms_spacing',
             [
-                'label' => __('Spacing', 'essential-addons-elementor'),
+                'label' => __('Spacing', 'essential-addons-for-elementor-lite'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [

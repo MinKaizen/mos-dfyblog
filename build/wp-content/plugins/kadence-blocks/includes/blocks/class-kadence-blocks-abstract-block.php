@@ -86,7 +86,7 @@ class Kadence_Blocks_Abstract_Block {
 	 * @param string $name the stylesheet name.
 	 */
 	public function should_render_inline_stylesheet( $name ) {
-		if ( ! is_admin() && ! wp_style_is( $name, 'done' ) && ! is_feed() ) {
+		if ( apply_filters( 'kadence_blocks_force_render_inline_stylesheet', false, $name ) || ( ! is_admin() && ! wp_style_is( $name, 'done' ) && ! is_feed() ) ) {
 			if ( function_exists( 'wp_is_block_theme' ) ) {
 				if ( ! doing_filter( 'the_content' ) && ! wp_is_block_theme() && 1 === did_action( 'wp_head' ) ) {
 					wp_print_styles( $name );
@@ -169,7 +169,7 @@ class Kadence_Blocks_Abstract_Block {
 			$css_class = Kadence_Blocks_CSS::get_instance();
 
 			// If filter didn't run in header (which would have enqueued the specific css id ) then filter attributes for easier dynamic css.
-			$attributes = apply_filters( 'kadence_blocks_' . str_replace( '-', '_', $this->block_name ) . '_render_block_attributes', $attributes );
+			$attributes = apply_filters( 'kadence_blocks_' . str_replace( '-', '_', $this->block_name ) . '_render_block_attributes', $attributes, $block_instance );
 
 			$content   = $this->build_html( $attributes, $unique_id, $content, $block_instance );
 			if ( ! $css_class->has_styles( 'kb-' . $this->block_name . $unique_style_id ) && ! is_feed() && apply_filters( 'kadence_blocks_render_inline_css', true, $this->block_name, $unique_id ) ) {

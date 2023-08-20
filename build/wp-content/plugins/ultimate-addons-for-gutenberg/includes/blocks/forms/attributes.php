@@ -13,6 +13,8 @@ $input_border_attribute           = UAGB_Block_Helper::uag_generate_border_attri
 $toggle_border_attribute          = UAGB_Block_Helper::uag_generate_border_attribute( 'checkBoxToggle' );
 $submit_border_attribute          = UAGB_Block_Helper::uag_generate_border_attribute( 'btn' );
 
+$inherit_from_theme = 'enabled' === UAGB_Admin_Helper::get_admin_settings_option( 'uag_btn_inherit_from_theme', 'disabled' );
+
 return array_merge(
 	array(
 		'block_id'                       => '',
@@ -199,7 +201,22 @@ return array_merge(
 		'submitborderColor'              => '',
 		'submitborderHoverColor'         => '',
 		'gradientValue'                  => 'linear-gradient(90deg, rgba(6, 147, 227, 0.5) 0%, rgba(155, 81, 224, 0.5) 100%)',
+		'gradientColor1'                 => '#06558a',
+		'gradientColor2'                 => '#0063A1',
+		'gradientType'                   => 'linear',
+		'gradientLocation1'              => 0,
+		'gradientLocation2'              => 100,
+		'gradientAngle'                  => 0,
+		'selectGradient'                 => 'basic',
 		'gradientHValue'                 => 'linear-gradient(90deg, rgba(6, 147, 227, 0.5) 0%, rgba(155, 81, 224, 0.5) 100%)',
+		'gradientHColor1'                => '#06558a',
+		'gradientHColor2'                => '#0170b9',
+		'gradientHType'                  => 'linear',
+		'gradientHLocation1'             => 0,
+		'gradientHLocation2'             => 100,
+		'gradientHAngle'                 => 0,
+		'selectHGradient'                => 'default',
+		'inheritFromTheme'               => $inherit_from_theme,
 	),
 	$success_message_border_attribute,
 	$failed_message_border_attribute,

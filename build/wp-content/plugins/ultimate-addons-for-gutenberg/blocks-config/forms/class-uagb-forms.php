@@ -58,6 +58,67 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 		}
 
 		/**
+		 * Return the blocks content for reusable block.
+		 *
+		 * @param int $reusable_ref_id reference id of reusable block.
+		 * @since 2.6.2
+		 * @return array
+		 */
+		public function reusable_block_content_on_page( $reusable_ref_id ) {
+			if ( is_int( $reusable_ref_id ) ) {
+				$content = get_post_field( 'post_content', $reusable_ref_id );
+				return parse_blocks( $content );
+			}
+		}
+
+		/**
+		 * Generates ids for all wp template part.
+		 *
+		 * @param array $block_attr attributes array.
+		 * @since 2.6.2
+		 * @return integer|boolean
+		 */
+		public function get_fse_template_part( $block_attr ) {
+			if ( empty( $block_attr['slug'] ) ) {
+				return false;
+			}
+
+			$id              = false;
+			$slug            = $block_attr['slug'];
+			$templates_parts = get_block_templates( array( 'slugs__in' => $slug ), 'wp_template_part' );
+			foreach ( $templates_parts as $templates_part ) {
+				if ( $slug === $templates_part->slug ) {
+					$id = $templates_part->wp_id;
+					break;
+				}
+			}
+			return $id;
+		}
+
+		/**
+		 * Return array of validated attributes.
+		 *
+		 * @param array $block_attr of Block.
+		 * @param int   $block_id of Block.
+		 * @since 2.6.2
+		 * @return array
+		 */
+		public function uagb_forms_block_attr_check( $block_attr, $block_id ) {
+			if ( ! empty( $block_attr['ref'] ) ) {
+				$reusable_blocks_content = $this->reusable_block_content_on_page( $block_attr['ref'] );
+				$block_attr              = $this->recursive_inner_forms( $reusable_blocks_content, $block_id );
+			}
+
+			if ( ! empty( $block_attr['slug'] ) ) {
+				$id                      = $this->get_fse_template_part( $block_attr );
+				$reusable_blocks_content = $this->reusable_block_content_on_page( $id );
+				$block_attr              = $this->recursive_inner_forms( $reusable_blocks_content, $block_id );
+			}
+
+			return ( is_array( $block_attr ) && $block_attr['block_id'] === $block_id ) ? $block_attr : false;
+		}
+
+		/**
 		 *  Get the Inner blocks array.
 		 *
 		 * @since 2.3.5
@@ -66,7 +127,7 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 		 * @param  array $blocks_array Block Array.
 		 * @param  int   $block_id of Block.
 		 *
-		 * @return array $recursive_inner_forms inner blocks Array.
+		 * @return mixed $recursive_inner_forms inner blocks Array.
 		 */
 		private function recursive_inner_forms( $blocks_array, $block_id ) {
 			if ( empty( $blocks_array ) ) {
@@ -77,20 +138,24 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 				if ( empty( $blocks ) ) {
 					continue;
 				}
-				if ( isset( $blocks['blockName'] ) && 'uagb/forms' === $blocks['blockName'] ) {
-					if ( ! empty( $blocks['attrs'] ) && isset( $blocks['attrs']['block_id'] ) && $blocks['attrs']['block_id'] === $block_id ) {
-						return $blocks['attrs'];
+
+				if ( ! empty( $blocks['attrs'] ) && isset( $blocks['blockName'] ) && ( 'uagb/forms' === $blocks['blockName'] || 'core/block' === $blocks['blockName'] || 'core/template-part' === $blocks['blockName'] ) ) {
+					$blocks_attrs = $this->uagb_forms_block_attr_check( $blocks['attrs'], $block_id );
+					if ( ! $blocks_attrs ) {
+						continue;
 					}
+					return $blocks_attrs;
 				} else {
 					if ( is_array( $blocks['innerBlocks'] ) && ! empty( $blocks['innerBlocks'] ) ) {
 						foreach ( $blocks['innerBlocks'] as $j => $inner_block ) {
-							if ( isset( $inner_block['blockName'] ) && 'uagb/forms' === $inner_block['blockName'] ) {
-								if ( ! empty( $inner_block['attrs'] ) && isset( $inner_block['attrs']['block_id'] ) && $inner_block['attrs']['block_id'] === $block_id ) {
-									return $inner_block['attrs'];
+							if ( ! empty( $inner_block['attrs'] ) && isset( $inner_block['blockName'] ) && ( 'uagb/forms' === $inner_block ['blockName'] || 'core/block' === $inner_block['blockName'] || 'core/template-part' === $blocks['blockName'] ) ) {
+								$inner_block_attrs = $this->uagb_forms_block_attr_check( $inner_block['attrs'], $block_id );
+								if ( ! $inner_block_attrs ) {
+									continue;
 								}
+								return $inner_block_attrs;
 							} else {
 								$temp_attrs = $this->recursive_inner_forms( $inner_block['innerBlocks'], $block_id );
-
 								if ( ! empty( $temp_attrs ) && isset( $temp_attrs['block_id'] ) && $temp_attrs['block_id'] === $block_id ) {
 									return $temp_attrs;
 								}
@@ -120,15 +185,88 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 			if ( empty( $_POST['post_id'] ) || empty( $_POST['block_id'] ) ) {
 				wp_send_json_error( 400 );
 			}
-
-			$block_id = sanitize_text_field( $_POST['block_id'] );
+			$current_block_attributes = false;
+			$block_id                 = sanitize_text_field( $_POST['block_id'] );
 
 			$post_content = get_post_field( 'post_content', sanitize_text_field( $_POST['post_id'] ) );
 
-			$blocks                   = parse_blocks( $post_content );
-			$current_block_attributes = false;
-			if ( ! empty( $blocks ) && is_array( $blocks ) ) {
-				$current_block_attributes = $this->recursive_inner_forms( $blocks, $block_id );
+			if ( has_block( 'uagb/forms', $post_content ) || has_block( 'core/block', $post_content ) ) {
+				$blocks = parse_blocks( $post_content );
+				if ( ! empty( $blocks ) && is_array( $blocks ) ) {
+					$current_block_attributes = $this->recursive_inner_forms( $blocks, $block_id );
+				}
+			}
+			if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
+				$wp_query_args        = array(
+					'post_status' => array( 'publish' ),
+					'post_type'   => 'wp_template',
+				);
+				$template_query       = new WP_Query( $wp_query_args );
+				$template_query_posts = $template_query->posts;
+				if ( ! empty( $template_query_posts ) && is_array( $template_query_posts ) ) {
+					foreach ( $template_query_posts as $post ) {
+						if ( ! function_exists( '_build_block_template_result_from_post' ) ) {
+							continue;
+						}
+						$template = _build_block_template_result_from_post( $post );
+						if ( is_wp_error( $template ) ) {
+							continue;
+						}
+						$template_post_content = $template->content . ( ! empty( $post_content ) ? $post_content : '' );
+						$template_content      = parse_blocks( $template_post_content );
+						if ( get_template() === $template->theme && ! empty( $template_content ) && is_array( $template_content ) ) {
+							$current_block_attributes = $this->recursive_inner_forms( $template_content, $block_id );
+						}
+					}
+				}
+			}
+
+			$widget_content = get_option( 'widget_block' );
+			if ( ! empty( $widget_content ) && is_array( $widget_content ) && empty( $current_block_attributes ) ) {
+				foreach ( $widget_content as $value ) {
+					if ( ! is_array( $value ) || empty( $value['content'] ) ) {
+						continue;
+					}
+					if ( has_block( 'uagb/forms', $value['content'] ) ) {
+						$current_block_attributes = $this->recursive_inner_forms( parse_blocks( $value['content'] ), $block_id );
+						if ( is_array( $current_block_attributes ) && $current_block_attributes['block_id'] === $block_id ) {
+							break;
+						}
+					}
+				}
+			}
+
+			if ( defined( 'ASTRA_ADVANCED_HOOKS_POST_TYPE' ) ) {
+				
+				$option = array(
+					'location'  => 'ast-advanced-hook-location',
+					'exclusion' => 'ast-advanced-hook-exclusion',
+					'users'     => 'ast-advanced-hook-users',
+				);
+				
+				$result = Astra_Target_Rules_Fields::get_instance()->get_posts_by_conditions( ASTRA_ADVANCED_HOOKS_POST_TYPE, $option );
+
+				if ( ! empty( $result ) && is_array( $result ) ) {
+					$post_ids = array_keys( $result );
+					
+					foreach ( $post_ids as $post_id ) {
+
+						$custom_post = get_post( $post_id );
+
+						if ( ! $custom_post instanceof WP_Post ) {
+							continue;
+						}
+
+						$post_content = $custom_post->post_content;
+						if ( has_block( 'uagb/forms', $post_content ) ) {
+							$blocks = parse_blocks( $post_content );
+							if ( ! empty( $blocks[0]['attrs']['block_id'] ) ) {
+								$block_id                 = $blocks[0]['attrs']['block_id'];
+								$current_block_attributes = $this->recursive_inner_forms( $blocks, $block_id );
+							}
+						}
+					}               
+				}
 			}
 
 			if ( empty( $current_block_attributes ) ) {
@@ -167,7 +305,7 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 
 				if ( empty( $google_recaptcha ) || empty( $remoteip ) ) {
 
-					$errors->add( 'invalid_api', __( 'Please try logging in again to verify that you are not a robot.', 'ultimate-addons-of-gutenberg' ) );
+					$errors->add( 'invalid_api', __( 'Please try logging in again to verify that you are not a robot.', 'ultimate-addons-for-gutenberg' ) );
 					return $errors;
 
 				} else {
@@ -183,7 +321,7 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 					);
 					if ( is_wp_error( $google_response ) ) {
 
-						$errors->add( 'invalid_recaptcha', __( 'Please try logging in again to verify that you are not a robot.', 'ultimate-addons-of-gutenberg' ) );
+						$errors->add( 'invalid_recaptcha', __( 'Please try logging in again to verify that you are not a robot.', 'ultimate-addons-for-gutenberg' ) );
 						return $errors;
 
 					} else {
@@ -235,6 +373,30 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 
 		}
 
+		/**
+		 * Validate emails from $to, $cc and $bcc.
+		 *
+		 * @param array $emails array.
+		 * @since 2.7.0
+		 * @return array
+		 */
+		public function get_valid_emails( $emails ) {
+			$valid_emails = array();
+
+			if ( is_array( $emails ) ) {
+				foreach ( $emails as $email ) {
+					$email = trim( $email );
+					$email = sanitize_email( $email );
+
+					if ( is_email( $email ) ) {
+						$valid_emails[] = $email;
+					}
+				}
+			}
+
+			return $valid_emails;
+		}
+
 
 		/**
 		 *
@@ -248,33 +410,55 @@ if ( ! class_exists( 'UAGB_Forms' ) ) {
 		 */
 		public function send_email( $body, $form_data, $args ) {
 
-			$to      = isset( $args['afterSubmitToEmail'] ) ? sanitize_email( $args['afterSubmitToEmail'] ) : sanitize_email( get_option( 'admin_email' ) );
-			$cc      = isset( $args['afterSubmitCcEmail'] ) ? sanitize_email( $args['afterSubmitCcEmail'] ) : '';
-			$bcc     = isset( $args['afterSubmitBccEmail'] ) ? sanitize_email( $args['afterSubmitBccEmail'] ) : '';
+			$to      = isset( $args['afterSubmitToEmail'] ) ? trim( $args['afterSubmitToEmail'] ) : sanitize_email( get_option( 'admin_email' ) );
+			$cc      = isset( $args['afterSubmitCcEmail'] ) ? trim( $args['afterSubmitCcEmail'] ) : '';
+			$bcc     = isset( $args['afterSubmitBccEmail'] ) ? trim( $args['afterSubmitBccEmail'] ) : '';
 			$subject = isset( $args['afterSubmitEmailSubject'] ) ? $args['afterSubmitEmailSubject'] : __( 'Form Submission', 'ultimate-addons-for-gutenberg' );
 
-			$headers = array(
-				'Reply-To-: ' . get_bloginfo( 'name' ) . ' <' . $to . '>',
-				'Content-Type: text/html; charset=UTF-8',
-				'cc: ' . get_bloginfo( 'name' ) . ' <' . $cc . '>',
-			);
+			if ( ! empty( $to ) && is_string( $to ) ) {
+				$to_emails = $this->get_valid_emails( explode( ',', $to ) );
+			}
 
-			$succefull_mail = wp_mail( $to, $subject, $body, $headers );
+			if ( ! empty( $cc ) && is_string( $cc ) ) {
+				$cc_emails = $this->get_valid_emails( explode( ',', $cc ) );
+			}
 
-			if ( $bcc && ! empty( $bcc ) ) {
-				$bcc_emails = explode( ',', $bcc );
-				foreach ( $bcc_emails as $bcc_email ) {
-					wp_mail( sanitize_email( trim( $bcc_email ) ), $subject, $body, $headers );
+			if ( ! empty( $bcc ) && is_string( $bcc ) ) {
+				$bcc_emails = $this->get_valid_emails( explode( ',', $bcc ) );
+			}
+
+			if ( empty( $to_emails ) ) {
+				wp_send_json_success( 400 );
+			}
+
+			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
+			foreach ( $to_emails as $email ) {
+				$headers[] = 'Reply-To: ' . get_bloginfo( 'name' ) . ' <' . $email . '>';
+			}
+
+			if ( ! empty( $cc_emails ) ) {
+				foreach ( $cc_emails as $email ) {
+					$headers[] = 'Cc: ' . $email;
 				}
 			}
-			if ( $succefull_mail ) {
+
+			if ( ! empty( $bcc_emails ) ) {
+				foreach ( $bcc_emails as $email ) {
+					$headers[] = 'Bcc: ' . $email;
+				}
+			}
+
+			$successful_mail = wp_mail( $to_emails, $subject, $body, $headers );
+
+			if ( $successful_mail ) {
 				do_action( 'uagb_form_success', $form_data );
 				wp_send_json_success( 200 );
 			} else {
 				wp_send_json_success( 400 );
 			}
-
 		}
+
 
 	}
 

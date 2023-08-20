@@ -5,7 +5,7 @@
  * Description: Custom Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
  * Author: Ultimate Blocks
  * Author URI: https://ultimateblocks.com/
- * Version: 2.5.6
+ * Version: 3.0.1
  * License: GPL3+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain: ultimate-blocks
@@ -15,6 +15,9 @@
  */
 
 // Exit if accessed directly.
+use Ultimate_Blocks\includes\Env_Manager;
+use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -43,7 +46,12 @@ define( 'ULTIMATE_BLOCKS_URL', Ultimate_Blocks_Constants::plugin_url() );
  */
 define( 'ULTIMATE_BLOCKS_TEXT_DOMAIN', Ultimate_Blocks_Constants::text_domain() );
 
-require_once trailingslashit(ULTIMATE_BLOCKS_PATH) . 'vendor/autoload.php';
+/**
+ * Plugin __FILE__
+ */
+define( 'ULTIMATE_BLOCKS_PLUGIN_FILE', __FILE__ );
+
+require_once trailingslashit( ULTIMATE_BLOCKS_PATH ) . 'vendor/autoload.php';
 
 /**
  * Block Initializer.
@@ -91,7 +99,7 @@ if ( ! function_exists( 'ub_safe_welcome_redirect' ) ) {
 		wp_safe_redirect( add_query_arg(
 			array(
 				'page' => 'ultimate-blocks-help'
-				),
+			),
 			admin_url( 'admin.php' )
 		) );
 
@@ -120,4 +128,11 @@ function run_ultimate_blocks() {
 	$plugin->run();
 
 }
-run_ultimate_blocks();
+
+// initialize env manager
+Env_Manager::init();
+
+// initialize license provider
+Pro_Manager::init_freemius();
+
+add_action( 'plugins_loaded', 'run_ultimate_blocks', 10, 1 );

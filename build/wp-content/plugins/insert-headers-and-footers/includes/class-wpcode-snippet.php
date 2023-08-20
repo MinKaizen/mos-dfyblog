@@ -192,6 +192,28 @@ class WPCode_Snippet {
 	public $schedule;
 
 	/**
+	 * Location extra parameters.
+	 * This is used to store extra parameters for the location.
+	 *
+	 * @var array
+	 */
+	public $location_extra;
+
+	/**
+	 * Get an array of the shortcode attributes for this snippet.
+	 *
+	 * @var array
+	 */
+	public $shortcode_attributes;
+
+	/**
+	 * Used to store the shortcode attributes values.
+	 *
+	 * @var array
+	 */
+	public $attributes;
+
+	/**
 	 * Constructor. If the post passed is not the correct post type
 	 * the object will clear itself.
 	 *
@@ -435,6 +457,8 @@ class WPCode_Snippet {
 			$post_args['post_status'] = $this->active ? 'publish' : 'draft';
 		}
 
+		do_action( 'wpcode_before_snippet_save', $this );
+
 		if ( isset( $post_args['ID'] ) ) {
 			$insert_result = wp_update_post( $post_args );
 		} else {
@@ -448,6 +472,9 @@ class WPCode_Snippet {
 			return false;
 		}
 		$this->id = $insert_result;
+
+		// Remove recently deactivated snippet meta.
+		$this->reset_recently_deactivated();
 
 		if ( isset( $this->code_type ) ) {
 			wp_set_post_terms( $this->id, $this->code_type, $this->code_type_taxonomy );
@@ -492,6 +519,9 @@ class WPCode_Snippet {
 		if ( isset( $this->generator_data ) ) {
 			update_post_meta( $this->id, '_wpcode_generator_data', $this->generator_data );
 		}
+		if ( isset( $this->location_extra ) ) {
+			update_post_meta( $this->id, '_wpcode_location_extra', $this->location_extra );
+		}
 		if ( isset( $this->cloud_id ) ) {
 			$auth_username = wpcode()->library_auth->get_auth_username();
 			$cloud_ids     = get_post_meta( $this->id, '_wpcode_cloud_id', true );
@@ -522,6 +552,9 @@ class WPCode_Snippet {
 		}
 		if ( isset( $this->schedule ) ) {
 			update_post_meta( $this->id, '_wpcode_schedule', $this->schedule );
+		}
+		if ( isset( $this->shortcode_attributes ) ) {
+			update_post_meta( $this->id, '_wpcode_shortcode_attributes', $this->shortcode_attributes );
 		}
 
 		/**
@@ -624,6 +657,73 @@ class WPCode_Snippet {
 		$this->active = false;
 		$this->get_id();
 		$this->save();
+	}
+
+	/**
+	 * This deactivates the snippet without regardless of user permissions.
+	 * Should only be used for unattended auto-deactivation when a snippet throws a potentially blocking error.
+	 *
+	 * @return void
+	 */
+	public function force_deactivate() {
+		global $wpdb;
+
+		// We need to make a direct call as using wp_update_post will load the post content and if the current user
+		// doesn't have the unfiltered_html capability, the code will be changed unexpectedly.
+		$update = $wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->posts,
+			array(
+				'post_status' => 'draft',
+			),
+			array(
+				'ID' => $this->get_id(),
+			)
+		);
+
+		if ( $update ) {
+			wpcode()->error->add_error(
+				array(
+					'message' => sprintf(
+					/* translators: %s: Snippet title and ID used in the error log for clarity. */
+						esc_html__( 'Snippet %s was automatically deactivated due to a fatal error.', 'insert-headers-and-footers' ),
+						sprintf( '"%s" (#%d)', $this->get_title(), $this->get_id() )
+					),
+				)
+			);
+
+			// Rebuild cache to avoid the snippet being loaded again.
+			wpcode()->cache->cache_all_loaded_snippets();
+
+			// Finally, if all went well, let's mark the snippet as recently deactivated and keep a log of the time when this happened.
+			$this->set_recently_deactivated();
+		}
+	}
+
+	/**
+	 * Add a meta to mark the snippet as recently deactivated + keep a timestamp of when the snippet was deactivated.
+	 *
+	 * @return void
+	 */
+	public function set_recently_deactivated() {
+		update_post_meta( $this->get_id(), '_wpcode_recently_deactivated', time() );
+	}
+
+	/**
+	 * Remove the meta that marks the snippet as recently deactivated.
+	 *
+	 * @return void
+	 */
+	public function reset_recently_deactivated() {
+		delete_post_meta( $this->get_id(), '_wpcode_recently_deactivated' );
+	}
+
+	/**
+	 * Remove the meta that marks the snippet as recently deactivated.
+	 *
+	 * @return mixed
+	 */
+	public function get_recently_deactivated_time() {
+		return get_post_meta( $this->get_id(), '_wpcode_recently_deactivated', time() );
 	}
 
 	/**
@@ -760,16 +860,18 @@ class WPCode_Snippet {
 	 */
 	public function get_data_for_caching() {
 		return array(
-			'id'            => $this->get_id(),
-			'title'         => $this->get_title(),
-			'code'          => $this->get_code(),
-			'code_type'     => $this->get_code_type(),
-			'location'      => $this->get_location(),
-			'auto_insert'   => $this->get_auto_insert(),
-			'insert_number' => $this->get_auto_insert_number(),
-			'use_rules'     => $this->conditional_rules_enabled(),
-			'rules'         => $this->get_conditional_rules(),
-			'priority'      => $this->get_priority(),
+			'id'                   => $this->get_id(),
+			'title'                => $this->get_title(),
+			'code'                 => $this->get_code(),
+			'code_type'            => $this->get_code_type(),
+			'location'             => $this->get_location(),
+			'auto_insert'          => $this->get_auto_insert(),
+			'insert_number'        => $this->get_auto_insert_number(),
+			'use_rules'            => $this->conditional_rules_enabled(),
+			'rules'                => $this->get_conditional_rules(),
+			'priority'             => $this->get_priority(),
+			'location_extra'       => $this->get_location_extra(),
+			'shortcode_attributes' => $this->get_shortcode_attributes(),
 		);
 	}
 
@@ -900,5 +1002,81 @@ class WPCode_Snippet {
 		$schedule = $this->get_schedule();
 
 		return ! empty( $schedule['start'] ) || ! empty( $schedule['end'] );
+	}
+
+	/**
+	 * Extra data for the selected auto-insert location.
+	 *
+	 * @return array
+	 */
+	public function get_location_extra() {
+		if ( ! isset( $this->location_extra ) ) {
+			$this->location_extra = get_post_meta( $this->get_id(), '_wpcode_location_extra', true );
+		}
+
+		return $this->location_extra;
+	}
+
+	/**
+	 * Load the shortcode attributes and return.
+	 *
+	 * @return array
+	 */
+	public function get_shortcode_attributes() {
+		if ( ! isset( $this->shortcode_attributes ) ) {
+			$attributes = get_post_meta( $this->get_id(), '_wpcode_shortcode_attributes', true );
+			if ( ! is_array( $attributes ) ) {
+				$attributes = array();
+			}
+			$this->shortcode_attributes = $attributes;
+		}
+
+		return $this->shortcode_attributes;
+	}
+
+	/**
+	 * Set shortcode attribute value.
+	 *
+	 * @param string $key The attribute key.
+	 * @param string $value The value for the attribute.
+	 *
+	 * @return void
+	 */
+	public function set_attribute( $key, $value ) {
+		$this->attributes[ $key ] = $value;
+	}
+
+	/**
+	 * Duplicates a snippet with all its data.
+	 *
+	 * @return void
+	 */
+	public function duplicate() {
+		$this->get_data_for_caching();
+		$this->get_note();
+		$this->get_tags();
+		$this->get_custom_shortcode();
+		$this->get_device_type();
+		$this->get_schedule();
+		// Add a suffix to the title.
+		$this->title = $this->get_title() . ' - Copy';
+		// Make sure the snippet is not active.
+		$this->post_data->post_status = 'draft';
+		/**
+		 * Fires before a snippet that is about to be duplicated is saved.
+		 *
+		 * @param WPCode_Snippet $snippet The snippet object.
+		 */
+		do_action( 'wpcode_before_snippet_duplicated', $this );
+		// Remove the id to create a new snippet.
+		unset( $this->id );
+		// Save the new snippet.
+		$this->save();
+		/**
+		 * Fires after a snippet has been duplicated.
+		 *
+		 * @param WPCode_Snippet $snippet The snippet object.
+		 */
+		do_action( 'wpcode_after_snippet_duplicated', $this );
 	}
 }

@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms
 Plugin URI: https://gravityforms.com
 Description: Easily create web forms and manage form entries within the WordPress admin.
-Version: 2.7.2
+Version: 2.7.12
 Requires at least: 4.0
 Requires PHP: 5.6
 Author: Gravity Forms
@@ -121,7 +121,7 @@ define( 'GF_SUPPORTED_WP_VERSION', version_compare( get_bloginfo( 'version' ), G
  *
  * @var string GF_MIN_WP_VERSION_SUPPORT_TERMS The version number
  */
-define( 'GF_MIN_WP_VERSION_SUPPORT_TERMS', '6.0' );
+define( 'GF_MIN_WP_VERSION_SUPPORT_TERMS', '6.1' );
 
 /**
  * The filesystem path of the directory that contains the plugin, includes trailing slash.
@@ -245,7 +245,7 @@ class GFForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.7.2';
+	public static $version = '2.7.12';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -1071,7 +1071,7 @@ class GFForms {
 		global $wp_styles;
 		$wp_required_styles = array( 'admin-bar', 'colors', 'ie', 'wp-admin', 'editor-style' );
 		$gf_required_styles = array(
-			'common'                     => array( 'gform_tooltip', 'gform_font_awesome', 'gform_admin', 'gform_settings' ),
+			'common'                     => array( 'gform_tooltip', 'gform_font_awesome', 'gform_admin', 'gform_settings', 'setup_wizard_styles' ),
 			'gf_edit_forms'              => array(
 				'thickbox',
 				'editor-buttons',
@@ -1082,6 +1082,7 @@ class GFForms {
 				'gform_chosen',
 				'gform_editor',
 				'gform_admin_theme',
+				'template_library_styles'
 			),
 			'gf_edit_forms_settings' => array(
 				'thickbox',
@@ -1090,7 +1091,7 @@ class GFForms {
 				'media-views',
 				'buttons',
 			),
-			'gf_new_form'                => array( 'thickbox' ),
+			'gf_new_form'                => array( 'thickbox', 'template_library_styles' ),
 			'gf_entries'                 => array( 'thickbox', 'gform_chosen', 'gform_admin_theme' ),
 			'gf_settings'                => array(),
 			'gf_export'                  => array(),
@@ -2108,6 +2109,9 @@ class GFForms {
 		$form_id = isset( $args['form_id'] ) ? absint( $args['form_id'] ) : 0;
 
 		require_once( GFCommon::get_base_path() . '/form_display.php' );
+
+		// Make sure block styles are enqueued.
+		\GFFormDisplay::enqueue_scripts();
 
 		if ( GFFormDisplay::is_submit_form_id_valid( $form_id ) ) {
 			$display_title       = ! isset( $args['title'] ) || ! empty( $args['title'] ) ? true : false;
@@ -5445,7 +5449,7 @@ class GFForms {
 			}
 
 			$sub_menu_items[] = array(
-				'url'          => $url,
+				'url'          => esc_url( $url ),
 				'label'        => $tab['label'],
 				'icon'         => GFCommon::get_icon_markup( $tab ),
 				'capabilities' => ( isset( $tab['capabilities'] ) ) ? $tab['capabilities'] : array( 'gravityforms_edit_forms' ),

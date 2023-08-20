@@ -61,7 +61,7 @@ final class MonsterInsights_API_Auth {
 	}
 
 	public function generate_tt() {
-		return hash( 'sha512', wp_generate_password( 128, true, true ) . AUTH_SALT . uniqid( "", true ) );
+		return defined( 'AUTH_SALT' ) ? hash( 'sha512', wp_generate_password( 128, true, true ) . AUTH_SALT . uniqid( "", true ) ) : hash( 'sha512', wp_generate_password( 128, true, true ) . uniqid( "", true ) );
 	}
 
 	public function validate_tt( $passed_tt = '' ) {
@@ -95,7 +95,7 @@ final class MonsterInsights_API_Auth {
 			wp_send_json_error( array( 'message' => $message ) );
 		}
 
-		if ( ! empty( $_REQUEST['isnetwork'] ) && $_REQUEST['isnetwork'] ) {
+		if ( ! empty( $_REQUEST['isnetwork'] ) && $_REQUEST['isnetwork'] ) { // phpcs:ignore
 			define( 'WP_NETWORK_ADMIN', true );
 		}
 
@@ -120,14 +120,13 @@ final class MonsterInsights_API_Auth {
 			// Translators: Support link tag starts with url, Support link tag ends.
 			$message = sprintf(
 				__( 'Oops! There has been an error authenticating. Please try again in a few minutes. If the problem persists, please %1$scontact our support%2$s team.', 'google-analytics-for-wordpress' ),
-				'<a target="_blank href="' . monsterinsights_get_url( 'notice', 'error-authenticating', 'https://www.monsterinsights.com/my-account/support/' ) . '">',
+				'<a target="_blank" href="' . monsterinsights_get_url( 'notice', 'error-authenticating', 'https://www.monsterinsights.com/my-account/support/' ) . '">',
 				'</a>'
 			);
 			wp_send_json_error( array( 'message' => $message ) );
 		}
 
 		$sitei = $this->get_sitei();
-		//update_network_option(  get_current_network_id(), 'monsterinsights_network_sitei', $sitei );
 
 		$siteurl = add_query_arg( array(
 			'tt'        => $this->get_tt(),
@@ -164,8 +163,8 @@ final class MonsterInsights_API_Auth {
 		// Check for missing params
 		$reqd_args = array( 'key', 'token', 'miview', 'a', 'w', 'p', 'tt', 'network' );
 
-		if ( empty( $_REQUEST['ua'] ) && empty( $_REQUEST['v4'] ) ) {
-			$this->send_missing_args_error( 'ua/v4' );
+		if ( empty( $_REQUEST['v4'] ) ) {
+			$this->send_missing_args_error( 'v4' );
 		}
 
 		foreach ( $reqd_args as $arg ) {
@@ -178,7 +177,7 @@ final class MonsterInsights_API_Auth {
 			define( 'WP_NETWORK_ADMIN', true );
 		}
 
-		if ( ! $this->validate_tt( $_REQUEST['tt'] ) ) {
+		if ( ! $this->validate_tt( $_REQUEST['tt'] ) ) { // phpcs:ignore
 			wp_send_json_error(
 				array(
 					'error'   => 'authenticate_invalid_tt',
@@ -217,18 +216,12 @@ final class MonsterInsights_API_Auth {
 			empty( $_REQUEST['a'] ) ||
 			empty( $_REQUEST['w'] ) ||
 			empty( $_REQUEST['p'] ) ||
-			( empty( $_REQUEST['ua'] ) && empty( $_REQUEST['v4'] ) )
+			empty( $_REQUEST['v4'] )
 		) {
 			return;
 		}
 
-		if ( ! empty( $_REQUEST['ua'] ) ) {
-			$code_key   = 'ua';
-			$code_value = monsterinsights_is_valid_ua( $_REQUEST['ua'] );
-		} else if ( ! empty( $_REQUEST['v4'] ) ) {
-			$code_key   = 'v4';
-			$code_value = monsterinsights_is_valid_v4_id( $_REQUEST['v4'] );
-		}
+        $code_value = monsterinsights_is_valid_v4_id( $_REQUEST['v4'] ); // phpcs:ignore
 
 		if ( empty( $code_value ) ) {
 			return;
@@ -243,14 +236,13 @@ final class MonsterInsights_API_Auth {
 			'p'             => sanitize_text_field( $_REQUEST['p'] ), // View ID
 			'siteurl'       => site_url(),
 			'neturl'        => network_admin_url(),
-			'connectedtype' => $code_key,
 		);
 
 		if ( ! empty( $_REQUEST['mp'] ) ) {
 			$profile['measurement_protocol_secret'] = sanitize_text_field( $_REQUEST['mp'] );
 		}
 
-		$profile[ $code_key ] = $code_value;
+		$profile['v4'] = $code_value;
 
 		$worked = $this->verify_auth( $profile );
 		if ( ! $worked || is_wp_error( $worked ) ) {
@@ -292,7 +284,7 @@ final class MonsterInsights_API_Auth {
 			wp_send_json_error( array( 'message' => $message ) );
 		}
 
-		if ( ! empty( $_REQUEST['isnetwork'] ) && $_REQUEST['isnetwork'] ) {
+		if ( ! empty( $_REQUEST['isnetwork'] ) && filter_var($_REQUEST['isnetwork'], FILTER_VALIDATE_BOOLEAN) ) {
 			define( 'WP_NETWORK_ADMIN', true );
 		}
 
@@ -362,13 +354,13 @@ final class MonsterInsights_API_Auth {
 		}
 
 		// Invalid request
-		if ( empty( $_REQUEST['tt'] ) || ! $this->validate_tt( $_REQUEST['tt'] ) ) {
+		if ( empty( $_REQUEST['tt'] ) || ! $this->validate_tt( $_REQUEST['tt'] ) ) { // phpcs:ignore
 			return;
 		}
 
 		// Make sure has required params
 		if (
-			( empty( $_REQUEST['ua'] ) && empty( $_REQUEST['v4'] ) ) ||
+            empty( $_REQUEST['v4'] ) ||
 			empty( $_REQUEST['miview'] ) ||
 			empty( $_REQUEST['a'] ) ||
 			empty( $_REQUEST['w'] ) ||
@@ -377,13 +369,7 @@ final class MonsterInsights_API_Auth {
 			return;
 		}
 
-		if ( ! empty( $_REQUEST['ua'] ) ) {
-			$code_key   = 'ua';
-			$code_value = monsterinsights_is_valid_ua( $_REQUEST['ua'] );
-		} else if ( ! empty( $_REQUEST['v4'] ) ) {
-			$code_key   = 'v4';
-			$code_value = monsterinsights_is_valid_v4_id( $_REQUEST['v4'] );
-		}
+        $code_value = monsterinsights_is_valid_v4_id( $_REQUEST['v4'] ); // phpcs:ignore
 
 		if ( empty( $code_value ) ) {
 			return;
@@ -402,18 +388,16 @@ final class MonsterInsights_API_Auth {
 			'a'             => sanitize_text_field( $_REQUEST['a'] ),
 			'w'             => sanitize_text_field( $_REQUEST['w'] ),
 			'p'             => sanitize_text_field( $_REQUEST['p'] ),
-			'ua'            => $existing['ua'],
 			'v4'            => $existing['v4'],
 			'siteurl'       => site_url(),
 			'neturl'        => network_admin_url(),
-			'connectedtype' => $code_key,
 		);
 
 		if ( ! empty( $_REQUEST['mp'] ) ) {
 			$profile['measurement_protocol_secret'] = sanitize_text_field( $_REQUEST['mp'] );
 		}
 
-		$profile[ $code_key ] = $code_value;
+		$profile['v4'] = $code_value;
 
 		// Save Profile
 		$this->is_network_admin() ? MonsterInsights()->auth->set_network_analytics_profile( $profile ) : MonsterInsights()->auth->set_analytics_profile( $profile );
@@ -449,7 +433,7 @@ final class MonsterInsights_API_Auth {
 			wp_send_json_error( array( 'message' => $message ) );
 		}
 
-		if ( ! empty( $_REQUEST['isnetwork'] ) && $_REQUEST['isnetwork'] ) {
+		if ( ! empty( $_REQUEST['isnetwork'] ) && filter_var($_REQUEST['isnetwork'], FILTER_VALIDATE_BOOL) ) {
 			define( 'WP_NETWORK_ADMIN', true );
 		}
 
@@ -549,7 +533,7 @@ final class MonsterInsights_API_Auth {
 			wp_send_json_error( array( 'message' => $message ) );
 		}
 
-		if ( ! empty( $_REQUEST['isnetwork'] ) && $_REQUEST['isnetwork'] ) {
+		if ( ! empty( $_REQUEST['isnetwork'] ) && filter_var($_REQUEST['isnetwork'], FILTER_VALIDATE_BOOL) ) {
 			define( 'WP_NETWORK_ADMIN', true );
 		}
 
@@ -658,7 +642,6 @@ final class MonsterInsights_API_Auth {
 				MonsterInsights()->auth->delete_network_analytics_profile( true );
 			} else {
 				MonsterInsights()->auth->delete_analytics_profile( true );
-
 			}
 
 			return true;
@@ -722,17 +705,7 @@ final class MonsterInsights_API_Auth {
 		// 	return $sitei;
 		// }
 
-		$auth_key        = defined( 'AUTH_KEY' ) ? AUTH_KEY : '';
-		$secure_auth_key = defined( 'SECURE_AUTH_KEY' ) ? SECURE_AUTH_KEY : '';
-		$logged_in_key   = defined( 'LOGGED_IN_KEY' ) ? LOGGED_IN_KEY : '';
-
-		$sitei = $auth_key . $secure_auth_key . $logged_in_key;
-		$sitei = preg_replace( '/[^a-zA-Z0-9]/', '', $sitei );
-		$sitei = sanitize_text_field( $sitei );
-		$sitei = trim( $sitei );
-		$sitei = ( strlen( $sitei ) > 30 ) ? substr( $sitei, 0, 30 ) : $sitei;
-
-		return $sitei;
+		return monsterinsights_get_sitei();
 	}
 
 	/**
@@ -769,9 +742,9 @@ final class MonsterInsights_API_Auth {
 	 * Save the measurement protocol that Relay pushes to this site
 	 */
 	public function handle_relay_mp_token_push() {
-		$mp_token  = sanitize_text_field( $_POST['mp_token'] );
-		$timestamp = (int) sanitize_text_field( $_POST['timestamp'] );
-		$signature = sanitize_text_field( $_POST['signature'] );
+		$mp_token  = sanitize_text_field( $_POST['mp_token'] ); // phpcs:ignore
+		$timestamp = (int) sanitize_text_field( $_POST['timestamp'] ); // phpcs:ignore
+		$signature = sanitize_text_field( $_POST['signature'] ); // phpcs:ignore
 
 		// check if expired
 		if ( time() > $timestamp + 1000 ) {
@@ -787,7 +760,7 @@ final class MonsterInsights_API_Auth {
 			: $auth->get_key();
 
 		$hashed_data = array(
-			'mp_token'  => $_POST['mp_token'],
+			'mp_token'  => sanitize_text_field($_POST['mp_token']),
 			'timestamp' => $timestamp,
 		);
 

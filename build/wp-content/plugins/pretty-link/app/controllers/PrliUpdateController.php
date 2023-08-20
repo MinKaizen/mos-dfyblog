@@ -171,6 +171,8 @@ class PrliUpdateController {
 
     $act = $this->deactivate_license();
 
+    PrliAuthenticatorController::clear_connection_data();
+
     $output = sprintf('<div class="notice notice-success"><p>%s</p></div>', esc_html($act['message']));
 
     ob_start();
@@ -589,8 +591,8 @@ class PrliUpdateController {
   public function send_mothership_request( $endpoint,
                                            $args=array(),
                                            $method='get',
-                                           $domain='http://mothership.caseproof.com',
                                            $blocking=true ) {
+    $domain = defined('PRLI_MOTHERSHIP_DOMAIN') ? PRLI_MOTHERSHIP_DOMAIN : 'http://mothership.caseproof.com';
     $uri = "{$domain}{$endpoint}";
 
     $arg_array = array(
@@ -676,14 +678,15 @@ class PrliUpdateController {
     die(json_encode(array('state' => ($this->edge_updates ? 'true' : 'false'))));
   }
 
-  public function addons($return_object=false, $force=false) {
+  public function addons($return_object=false, $force=false, $all = false) {
     $license = $this->mothership_license;
+    $transient = $all ? 'prli_all_addons' : 'prli_addons';
 
     if($force) {
-      delete_site_transient('prli_addons');
+      delete_site_transient($transient);
     }
 
-    if(($addons = get_site_transient('prli_addons'))) {
+    if(($addons = get_site_transient($transient))) {
       $addons = json_decode($addons);
     }
     else {
@@ -694,6 +697,10 @@ class PrliUpdateController {
           $domain = urlencode(PrliUtils::site_domain());
           $args = compact('domain');
 
+          if($all) {
+            $args['all'] = 'true';
+          }
+
           if(defined('PRETTYLINK_EDGE') && PRETTYLINK_EDGE) { $args['edge'] = 'true'; }
           $addons = $this->send_mothership_request('/versions/addons/'.PRLI_EDITION."/{$license}", $args);
         }
@@ -703,7 +710,7 @@ class PrliUpdateController {
       }
 
       $json = json_encode($addons);
-      set_site_transient('prli_addons',$json,(HOUR_IN_SECONDS*12));
+      set_site_transient($transient, $json, (HOUR_IN_SECONDS * 12));
 
       if($return_object) {
         $addons = json_decode($json);
@@ -745,6 +752,12 @@ class PrliUpdateController {
     include_once PRLI_VIEWS_PATH . "/admin/upgrade/reports.php";
   }
 
+  public function upgrade_groups() {
+    $section_title = esc_html__( 'Display Groups', 'pretty-link' );
+    $upgrade_link = 'https://prettylinks.com/pl/main-menu/upgrade?groups';
+    include_once PRLI_VIEWS_PATH . "/admin/upgrade/groups.php";
+  }
+
   public function upgrade_import_export() {
     $section_title = esc_html__( 'Import / Export', 'pretty-link' );
     $upgrade_link = 'https://prettylinks.com/pl/main-menu/upgrade?import-export';
@@ -767,6 +780,26 @@ class PrliUpdateController {
     delete_site_transient('prli_update_info');
     delete_site_transient('prli_addons');
     delete_site_transient('prli_all_addons');
+  }
+
+  public function get_license_info() {
+    $license_info = get_site_transient('prli_license_info');
+    $mothership_license = $this->mothership_license;
+
+
+    if(!$license_info && !empty($mothership_license)) {
+      try {
+        $domain = urlencode(PrliUtils::site_domain());
+        $args = compact('domain');
+        $license_info = $this->send_mothership_request("/versions/info/{$mothership_license}", $args, 'post');
+
+        set_site_transient('prli_license_info', $license_info, (24*HOUR_IN_SECONDS));
+      } catch (Exception $e) {
+        // Fail silently, license info will return false.
+      }
+    }
+
+    return $license_info;
   }
 
 } //End class

@@ -147,11 +147,14 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 
 			$xpath = new DOMXPath( $doc );
 
-			// Delete div.uagb-toc-hide-heading from doc.
-			foreach ( $xpath->query( '//div[contains(attribute::class, "uagb-toc-hide-heading")]' ) as $e ) {
-				// Delete this node from doc.
-				$e->parentNode->removeChild( $e );
+			$tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div' );
+			// Delete $tags[$s].uagb-toc-hide-heading from doc.
+			foreach ( $tags as $tag ) {
+				$query = sprintf( '//%s[contains(attribute::class, "uagb-toc-hide-heading")]', $tag );
 
+				foreach ( $xpath->query( $query ) as $e ) {
+					$e->parentNode->removeChild( $e );
+				}
 			}
 
 			// Get all non-empty heading elements in the post content.
@@ -207,8 +210,8 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 
 			$string = preg_replace( '/[\x00-\x1F\x7F]*/u', '', $string );
 			$string = str_replace( array( '&amp;', '&nbsp;' ), ' ', $string );
-			// Remove all except alphbets, space, `-` and `_`.
-			$string = preg_replace( '/[^A-Za-z0-9 _-]/', '', $string );
+			// Remove all except alphbets, space, `-`,`_` and latin characters.
+			$string = preg_replace( '/[^a-zA-Z0-9\p{L} _-]/u', '', $string );
 			// Convert space characters to an `_` (underscore).
 			$string = preg_replace( '/\s+/', '_', $string );
 			// Replace multiple `_` (underscore) with a single `-` (hyphen).
@@ -292,10 +295,9 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 
 			foreach ( $nested_heading_list as $anchor => $heading ) {
 
-				$level    = $heading['heading']['level'];
-				$title    = $heading['heading']['content'];
-				$id       = $heading['heading']['id'];
-				$li_added = false;
+				$level = $heading['heading']['level'];
+				$title = $heading['heading']['content'];
+				$id    = $heading['heading']['id'];
 
 				if ( 0 === $anchor ) {
 					$first_level = $level;
@@ -321,7 +323,6 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 
 						$toc                  .= '<li class="uagb-toc__list">';
 						$depth_array[ $level ] = $current_depth;
-						$li_added              = true;
 
 					} elseif ( $level < $last_level ) {
 
@@ -340,16 +341,12 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 					}
 				}
 
-				if ( $li_added ) {
-					$toc .= sprintf( '<a href="#%s">%s</a>', esc_attr( $id ), $title );
-				} else {
-					$toc .= sprintf( '<li class="uagb-toc__list"><a href="#%s">%s</a>', esc_attr( $id ), $title );
-				}
+				$toc .= sprintf( '<li class="uagb-toc__list"><a href="#%s" class="uagb-toc-link__trigger">%s</a>', esc_attr( $id ), esc_html( $title ) );
 
 				$last_level = $level;
 			}
 
-			$toc .= str_repeat( '</li></ul>', $current_depth );
+			$toc .= str_repeat( '</ul>', $current_depth );
 			$toc .= '</ol>';
 
 			return $toc;
@@ -450,8 +447,15 @@ if ( ! class_exists( 'UAGB_Table_Of_Content' ) ) {
 			$uagb_toc_heading_content = ! empty( $uagb_toc_options['_uagb_toc_headings'] ) ? $uagb_toc_options['_uagb_toc_headings'] : '';
 
 			if ( empty( $uagb_toc_heading_content ) || UAGB_ASSET_VER !== $uagb_toc_version ) {
-				$uagb_toc_heading_content          = $this->table_of_contents_get_headings_from_content( get_post( $post->ID )->post_content );
-				$blocks                            = parse_blocks( get_post( $post->ID )->post_content );
+				global $_wp_current_template_content;
+				// If the current template contents exist, use that - else get the content from the post ID.
+				if ( $_wp_current_template_content ) {
+					$content = $_wp_current_template_content;
+				} else {
+					$content = get_post( $post->ID )->post_content;
+				}
+				$uagb_toc_heading_content          = $this->table_of_contents_get_headings_from_content( $content );
+				$blocks                            = parse_blocks( $content );
 				$uagb_toc_reusable_heading_content = $this->toc_recursive_reusable_heading( $blocks );
 				$uagb_toc_heading_content          = array_merge( $uagb_toc_heading_content, $uagb_toc_reusable_heading_content );
 

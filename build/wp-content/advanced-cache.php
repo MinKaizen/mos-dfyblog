@@ -13,7 +13,7 @@ $rocket_config_path = '/home/mosahost/listbuildingauthority/wp-content/wp-rocket
 $rocket_cache_path  = '/home/mosahost/listbuildingauthority/wp-content/cache/wp-rocket/';
 
 if (
-	version_compare( phpversion(), '7.0', '<' )
+	version_compare( phpversion(), '7.3', '<' )
 	|| ! file_exists( $rocket_path )
 	|| ! file_exists( $rocket_config_path )
 	|| ! file_exists( $rocket_cache_path )

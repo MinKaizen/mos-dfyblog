@@ -106,8 +106,8 @@ class MonsterInsights_WP_Site_Health_Lite {
 	public function is_tracking() {
 
 		if ( ! isset( $this->is_tracking ) ) {
-			$ua                = monsterinsights_get_ua();
-			$this->is_tracking = ! empty( $ua );
+			$tracking_id                = monsterinsights_get_v4_id();
+			$this->is_tracking = ! empty( $tracking_id );
 		}
 
 		return $this->is_tracking;
@@ -261,10 +261,10 @@ class MonsterInsights_WP_Site_Health_Lite {
 		$this->is_authed = MonsterInsights()->auth->is_authed() || MonsterInsights()->auth->is_network_authed();
 
 		if ( ! $this->is_authed ) {
-			if ( '' !== monsterinsights_get_ua() ) {
-				// Using Manual UA.
+			if ( '' !== monsterinsights_get_v4_id() ) {
+				// Using Manual V4.
 				$result['status']      = 'recommended';
-				$result['label']       = __( 'You are using Manual UA code output', 'google-analytics-for-wordpress' );
+				$result['label']       = __( 'You are using Manual GA4 Measurement ID output', 'google-analytics-for-wordpress' );
 				$result['description'] = __( 'We highly recommend authenticating with MonsterInsights so that you can access our new reporting area and take advantage of new MonsterInsights features.', 'google-analytics-for-wordpress' );
 				$result['actions']     = sprintf(
 					'<p><a href="%s" target="_blank" rel="noopener noreferrer">%s</a></p>',

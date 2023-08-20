@@ -65,6 +65,36 @@ if ( ! class_exists( 'Astra_Elementor' ) ) :
 			add_action( 'rest_request_after_callbacks', array( $this, 'elementor_add_theme_colors' ), 999, 3 );
 			add_filter( 'rest_request_after_callbacks', array( $this, 'display_global_colors_front_end' ), 999, 3 );
 			add_filter( 'astra_dynamic_theme_css', array( $this, 'generate_global_elementor_style' ), 11 );
+
+			/**
+			 * Compatibility for Elementor title disable from editor and elementor builder.
+			 *
+			 * @since  4.1.0
+			 */
+			add_filter( 'astra_entry_header_class', array( $this, 'astra_entry_header_class_custom' ), 1, 99 );
+		}
+
+
+		/**
+		 * Astra post layout 2 disable compatibility.
+		 *
+		 * @param array $classes Array of elementor edit mode check.
+		 *
+		 * @since 4.1.0
+		 */
+		function astra_entry_header_class_custom( $classes ) {
+			$edit_mode         = get_post_meta( astra_get_post_id(), '_elementor_edit_mode', true );
+			$astra_layout_type = astra_get_option( 'ast-dynamic-single-' . get_post_type() . '-layout', 'layout-1' );
+
+			if ( ( $edit_mode && $edit_mode === 'builder' ) || ( $edit_mode === 'builder' && $astra_layout_type === 'layout-2' ) ) {
+				$classes[] = 'ast-header-without-markup';
+				/** @psalm-suppress InvalidArgument */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				if ( $astra_layout_type === 'layout-2' && in_array( 'ast-header-without-markup', $classes ) ) {
+					unset( $classes[ array_search( 'ast-header-without-markup', $classes ) ] );
+				}
+			}
+
+			return $classes;
 		}
 
 		/**

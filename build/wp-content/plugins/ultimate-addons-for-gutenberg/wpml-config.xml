@@ -3,6 +3,7 @@
 	<gutenberg-blocks>
 		<gutenberg-block type="uagb/advanced-heading" translate="1">
 			<xpath>//*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6]</xpath>
+			<xpath>//div/div[@class="uagb-heading-text"]</xpath>
 			<xpath>//div/p[@class="uagb-desc-text"]</xpath>
 			<key name="customUrl" />
 		</gutenberg-block>
@@ -37,7 +38,8 @@
 		<gutenberg-block type="uagb/google-map" translate="0"/>
 		<gutenberg-block type="uagb/info-box" translate="1">
 			<xpath>//span[@class="uagb-ifb-title-prefix"]</xpath>
-			<xpath>//a/@href</xpath>
+			<xpath type="link">//a/@href</xpath>
+			<xpath>//a/span</xpath>
 			<xpath>//*[self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6]</xpath>
 			<xpath>//p[@class="uagb-ifb-desc"]</xpath>
 			<key name="ctaText" />
@@ -114,6 +116,7 @@
 		<gutenberg-block type="uagb/counter" translate="1">
 			<xpath>//*[@class="uagb-counter-block-prefix"]</xpath>
 			<xpath>//*[@class="uagb-counter-block-suffix"]</xpath>
+			<xpath>//div[@class="wp-block-uagb-counter__title"]</xpath>
 			<key name="numberPrefix" />
 			<key name="numberSuffix" />
 			<key name="heading" />
@@ -122,6 +125,15 @@
 			<key name="paginateButtonText" />
 			<key name="imageDefaultCaption" />
 			<xpath>//div[@class="spectra-image-gallery__media-thumbnail-caption"]</xpath>
+			<xpath>//div[@class="spectra-image-gallery__control-lightbox--caption"]</xpath>
+			<xpath>//div[@class="spectra-image-gallery__control-lightbox--count"]</xpath>
 		</gutenberg-block>
+		<gutenberg-block type="uagb/countdown" translate="1">
+			<key name="labelDays" />
+			<key name="labelHours" />
+			<key name="labelMinutes" />
+			<key name="labelSeconds" />
+		</gutenberg-block>
+		<gutenberg-block type="uagb/container" translate="0"></gutenberg-block>
 	</gutenberg-blocks>
 </wpml-config>

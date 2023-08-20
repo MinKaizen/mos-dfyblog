@@ -84,11 +84,15 @@ class Kadence_Blocks_Singlebtn_Block extends Kadence_Blocks_Abstract_Block {
 
 		$css->set_style_id( 'kb-' . $this->block_name . $unique_style_id );
 
-		$css->set_selector( '.wp-block-kadence-advancedbtn .kb-btn' . $unique_id . '.kb-button' );
 		$width_type = ! empty( $attributes['widthType'] ) ? $attributes['widthType'] : 'auto';
 		if ( 'fixed' === $width_type ) {
+			$css->set_selector( '.wp-block-kadence-advancedbtn .kb-btn' . $unique_id . '.kb-button, ul.menu .wp-block-kadence-advancedbtn .kb-btn' . $unique_id . '.kb-button' );
 			$css->render_responsive_range( $attributes, 'width', 'width', 'widthUnit' );
+		} else {
+			$css->set_selector( 'ul.menu .wp-block-kadence-advancedbtn .kb-btn' . $unique_id . '.kb-button' );
+			$css->add_property( 'width', 'initial' );
 		}
+		$css->set_selector( '.wp-block-kadence-advancedbtn .kb-btn' . $unique_id . '.kb-button' );
 		$bg_type = ! empty( $attributes['backgroundType'] ) ? $attributes['backgroundType'] : 'normal';
 		$bg_hover_type = ! empty( $attributes['backgroundHoverType'] ) ? $attributes['backgroundHoverType'] : 'normal';
 		if ( ! empty( $attributes['color'] ) ) {
@@ -101,7 +105,7 @@ class Kadence_Blocks_Singlebtn_Block extends Kadence_Blocks_Abstract_Block {
 			$css->add_property( 'background', $attributes['gradient'] . ' !important' );
 		}
 		$css->render_typography( $attributes, 'typography' );
-		$css->render_measure_output( $attributes, 'borderRadius', 'border-radius' );
+		$css->render_measure_output( $attributes, 'borderRadius', 'border-radius', array( 'unit_key' => 'borderRadiusUnit' ) );
 		$css->render_border_styles( $attributes, 'borderStyle', true );
 		$css->render_measure_output( $attributes, 'padding', 'padding', [ 'unit_key' => 'paddingUnit' ] );
 		$css->render_measure_output( $attributes, 'margin', 'margin', [ 'unit_key' => 'marginUnit' ] );
@@ -146,12 +150,17 @@ class Kadence_Blocks_Singlebtn_Block extends Kadence_Blocks_Abstract_Block {
 			}
 		}
 		// Hover before.
-		$css->set_selector( '.kb-btn' . $unique_id . '.kb-button:hover::before' );
 		if ( 'gradient' === $bg_type && 'normal' === $bg_hover_type && ! empty( $attributes['backgroundHover'] ) ) {
+			$css->set_selector( '.kb-btn' . $unique_id . '.kb-button:hover::before' );
 			$css->add_property( 'background', $css->render_color( $attributes['backgroundHover'] ) );
+			$css->set_selector( '.kb-btn' . $unique_id . '.kb-button::before' );
+			$css->add_property( 'transition', 'opacity .3s ease-in-out' );
 		}
 		if ( 'gradient' === $bg_hover_type && ! empty( $attributes['gradientHover'] ) ) {
+			$css->set_selector( '.kb-btn' . $unique_id . '.kb-button:hover::before' );
 			$css->add_property( 'background', $attributes['gradientHover'] );
+			$css->set_selector( '.kb-btn' . $unique_id . '.kb-button::before' );
+			$css->add_property( 'transition', 'opacity .3s ease-in-out' );
 		}
 		// Only Icon.
 		if ( isset( $attributes['onlyIcon'][0] ) && '' !== $attributes['onlyIcon'][0] && true == $attributes['onlyIcon'][0] ) {
@@ -231,7 +240,6 @@ class Kadence_Blocks_Singlebtn_Block extends Kadence_Blocks_Abstract_Block {
 				$wrapper_args['rel'] = $rel_add;
 			}
 		}
-		$wrapper_args = kadence_apply_aos_wrapper_args( $attributes, $wrapper_args );
 		$wrapper_attributes = get_block_wrapper_attributes( $wrapper_args );
 
 		$text       = ! empty( $attributes['text'] ) ? '<span class="kt-btn-inner-text">' . $attributes['text'] . '</span>' : '';
@@ -251,6 +259,21 @@ class Kadence_Blocks_Singlebtn_Block extends Kadence_Blocks_Abstract_Block {
 		$icon_right = ! empty( $svg_icon ) && ! empty( $attributes['iconSide'] ) && 'right' === $attributes['iconSide'] ? '<span class="kb-svg-icon-wrap kb-svg-icon-' . esc_attr( $attributes['icon'] ) . ' kt-btn-icon-side-right">' . $svg_icon . '</span>' : '';
 		$html_tag   = ! empty( $attributes['link'] ) ? 'a' : 'span';
 		$content    = sprintf( '<%1$s %2$s>%3$s%4$s%5$s</%1$s>', $html_tag, $wrapper_attributes, $icon_left, $text, $icon_right );
+
+		/*  Wrap in div is AOS is enabled. AOS transitions will interfere with hover transitions. */
+		$aos_args = array();
+		$aos_args = kadence_apply_aos_wrapper_args( $attributes, $aos_args );
+		if ( ! empty( $aos_args ) ) {
+			$aos_classes = array( 'kb-blocks-button-aos' );
+			$aos_classes[] = ! empty( $attributes['widthType'] ) ? 'kb-btn-width-type-' . $attributes['widthType'] : 'kb-btn-width-type-auto';
+			$aos_args['class'] = implode( ' ', $aos_classes );
+			$normalized_attributes = array();
+			foreach ( $aos_args as $key => $value ) {
+				$normalized_attributes[] = $key . '="' . esc_attr( $value ) . '"';
+			}
+			$content = sprintf( '<div %1$s>%2$s</div>', implode( ' ', $normalized_attributes ), $content );
+		}
+
 		return $content;
 	}
 

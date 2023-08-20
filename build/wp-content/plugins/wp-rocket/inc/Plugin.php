@@ -9,6 +9,7 @@ use WP_Rocket\Engine\Admin\API\ServiceProvider as APIServiceProvider;
 use WP_Rocket\Event_Management\Event_Manager;
 use WP_Rocket\ThirdParty\Hostings\HostResolver;
 use WP_Rocket\Addon\ServiceProvider as AddonServiceProvider;
+use WP_Rocket\Addon\Cloudflare\ServiceProvider as CloudflareServiceProvider;
 use WP_Rocket\Addon\Varnish\ServiceProvider as VarnishServiceProvider;
 use WP_Rocket\Engine\Admin\Beacon\ServiceProvider as BeaconServiceProvider;
 use WP_Rocket\Engine\Admin\Database\ServiceProvider as AdminDatabaseServiceProvider;
@@ -38,7 +39,7 @@ use WP_Rocket\ServiceProvider\Options as OptionsServiceProvider;
 use WP_Rocket\ThirdParty\Hostings\ServiceProvider as HostingsServiceProvider;
 use WP_Rocket\ThirdParty\ServiceProvider as ThirdPartyServiceProvider;
 use WP_Rocket\ThirdParty\Themes\ServiceProvider as ThemesServiceProvider;
-
+use WP_Rocket\Engine\Admin\DomainChange\ServiceProvider as DomainChangeServiceProvider;
 /**
  * Plugin Manager.
  */
@@ -192,6 +193,7 @@ class Plugin {
 		$this->container->addServiceProvider( SettingsServiceProvider::class );
 		$this->container->addServiceProvider( EngineAdminServiceProvider::class );
 		$this->container->addServiceProvider( OptimizationAdminServiceProvider::class );
+		$this->container->addServiceProvider( DomainChangeServiceProvider::class );
 
 		return [
 			'beacon',
@@ -213,6 +215,7 @@ class Plugin {
 			'minify_admin_subscriber',
 			'action_scheduler_check',
 			'actionscheduler_admin_subscriber',
+			'domain_change_subscriber',
 		];
 	}
 
@@ -257,6 +260,7 @@ class Plugin {
 	private function init_common_subscribers() {
 		$this->container->addServiceProvider( CapabilitiesServiceProvider::class );
 		$this->container->addServiceProvider( AddonServiceProvider::class );
+
 		$this->container->addServiceProvider( VarnishServiceProvider::class );
 		$this->container->addServiceProvider( PreloadServiceProvider::class );
 		$this->container->addServiceProvider( PreloadLinksServiceProvider::class );
@@ -347,6 +351,7 @@ class Plugin {
 			'wpml',
 			'xstore',
 			'cloudflare_plugin_subscriber',
+			'cache_config',
 			'uncode',
 			'rocket_lazy_load',
 			'cache_config',
@@ -354,6 +359,9 @@ class Plugin {
 			'admin_api_subscriber',
 			'perfmatters',
 			'rapidload',
+			'translatepress',
+			'themify',
+			'wpgeotargeting',
 		];
 
 		$host_type = HostResolver::get_host_service();
@@ -363,6 +371,9 @@ class Plugin {
 		}
 
 		if ( $this->options->get( 'do_cloudflare', false ) ) {
+			$this->container->addServiceProvider( CloudflareServiceProvider::class );
+
+			$common_subscribers[] = 'cloudflare_admin_subscriber';
 			$common_subscribers[] = 'cloudflare_subscriber';
 		}
 

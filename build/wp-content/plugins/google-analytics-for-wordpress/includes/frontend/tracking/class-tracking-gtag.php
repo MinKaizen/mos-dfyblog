@@ -60,18 +60,17 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 	 * generally dimensions and turned on GA features.
 	 *
 	 * @param bool $encoded Whether to return a JavaScript object representation of the options
-	 * @param mixed $type
 	 *
 	 * @return array|string options for the gtag config
 	 *
 	 * @since 7.15.0
 	 */
-	public function frontend_tracking_options( $type = 'ua', $encoded = false ) {
+	public function frontend_tracking_options( $encoded = false ) {
 		global $wp_query;
 		$options = [];
 
-		$tracking_ids = monsterinsights_get_tracking_ids();
-		if ( empty( $tracking_ids ) ) {
+		$tracking_id = monsterinsights_get_v4_id();
+		if ( empty( $tracking_id ) ) {
 			return $encoded ? wp_json_encode( $options ) : $options;
 		}
 
@@ -80,16 +79,6 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 		if ( $encoded ) {
 			$placeholder = '!@#';
 		}
-
-		//		$track_user = monsterinsights_track_user();
-//
-		//		if ( ! $track_user ) {
-		//			$options['create']   = "'create', '" . esc_js( $ua_code ) . "', '" . esc_js( 'auto' ) . "'";
-		//			$options['forceSSL'] = "'set', 'forceSSL', true";
-		//			$options['send']     = "'send','pageview'";
-//
-		//			return $options;
-		//		}
 
 		$cross_domains = monsterinsights_get_option( 'cross_domains', [] );
 		$allow_anchor  = monsterinsights_get_option( 'allow_anchor', false );
@@ -133,8 +122,8 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 			$options['debug_mode'] = true;
 		}
 
-		$options = apply_filters( 'monsterinsights_frontend_tracking_options_gtag_before_pageview', $options, $type );
-		$options = apply_filters( 'monsterinsights_frontend_tracking_options_before_pageview', $options, $this->name, $this->version, $type );
+		$options = apply_filters( 'monsterinsights_frontend_tracking_options_gtag_before_pageview', $options );
+		$options = apply_filters( 'monsterinsights_frontend_tracking_options_before_pageview', $options, $this->name, $this->version );
 
 		if ( is_404() ) {
 			if ( monsterinsights_get_option( 'hash_tracking', false ) ) {
@@ -157,12 +146,12 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 			$options['page_path'] = "{$placeholder}location.pathname + location.search + location.hash{$placeholder}";
 		}
 
-		if ( $type === 'v4' && monsterinsights_get_option( 'userid', false ) && is_user_logged_in() ) {
+		if ( monsterinsights_get_option( 'userid', false ) && is_user_logged_in() ) {
 			$value                 = get_current_user_id();
 			$options['wp_user_id'] = $value;
 		}
 
-		$options = apply_filters( 'monsterinsights_frontend_tracking_options_gtag_end', $options, $type );
+		$options = apply_filters( 'monsterinsights_frontend_tracking_options_gtag_end', $options );
 
 		if ( $encoded ) {
 			return str_replace(
@@ -187,14 +176,10 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 	 * @since 7.15.0
 	 */
 	public function frontend_output() {
-		$options        = $this->frontend_tracking_options( 'ua', true );
-		$options_v4     = $this->frontend_tracking_options( 'v4', true );
+		$options_v4     = $this->frontend_tracking_options( true );
 		$persistent     = $this->frontend_tracking_options_persistent();
-		$connected_type = MonsterInsights()->auth->get_connected_type();
 		$v4_id          = monsterinsights_get_v4_id_to_output();
-		$ua             = monsterinsights_get_ua_to_output();
-		$main_id        = 'ua' === $connected_type ? $ua : $v4_id;
-		$src            = apply_filters( 'monsterinsights_frontend_output_gtag_src', '//www.googletagmanager.com/gtag/js?id=' . $main_id );
+		$src            = apply_filters( 'monsterinsights_frontend_output_gtag_src', '//www.googletagmanager.com/gtag/js?id=' . $v4_id );
 		$compat_mode    = apply_filters( 'monsterinsights_get_option_gtagtracker_compatibility_mode', true );
 		$compat         = $compat_mode ? 'window.gtag = __gtagTracker;' : '';
 		$track_user     = monsterinsights_track_user();
@@ -203,9 +188,9 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 		$attr_string    = monsterinsights_get_frontend_analytics_script_atts();
 		$gtag_async     = apply_filters( 'monsterinsights_frontend_gtag_script_async', true ) ? 'async' : '';
 		ob_start(); ?>
-		<!-- This site uses the Google Analytics by MonsterInsights plugin v<?php echo MONSTERINSIGHTS_VERSION; ?> - Using Analytics tracking - https://www.monsterinsights.com/ -->
+		<!-- This site uses the Google Analytics by MonsterInsights plugin v<?php echo MONSTERINSIGHTS_VERSION; // phpcs:ignore ?> - Using Analytics tracking - https://www.monsterinsights.com/ -->
 		<?php if ( ! $track_user ) {
-			if ( empty( $v4_id ) && empty( $ua ) ) {
+			if ( empty( $v4_id ) ) {
 				$reason = __( 'Note: MonsterInsights is not currently configured on this site. The site owner needs to authenticate with Google Analytics in the MonsterInsights settings panel.', 'google-analytics-for-wordpress' );
 				$output .= '<!-- ' . esc_html( $reason ) . ' -->' . PHP_EOL;
 			} elseif ( current_user_can( 'monsterinsights_save_settings' ) ) {
@@ -215,13 +200,13 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 				$reason = __( 'Note: The site owner has disabled Google Analytics tracking for your user role.', 'google-analytics-for-wordpress' );
 				$output .= '<!-- ' . esc_html( $reason ) . ' -->' . PHP_EOL;
 			}
-			echo $output;
+			echo $output; // phpcs:ignore
 		} ?>
-		<?php if ( ! empty( $v4_id ) || ! empty( $ua ) ) { ?>
-			<script
-				src="<?php echo esc_attr( $src ); ?>" <?php echo $attr_string; ?> <?php echo esc_attr( $gtag_async ); ?>></script>
-			<script<?php echo $attr_string; ?>>
-				var mi_version = '<?php echo MONSTERINSIGHTS_VERSION; ?>';
+		<?php if ( ! empty( $v4_id ) ) {
+			?>
+			<script src="<?php echo $src; // phpcs:ignore ?>" <?php echo $attr_string; // phpcs:ignore ?> <?php echo esc_attr( $gtag_async ); ?>></script>
+			<script<?php echo $attr_string; // phpcs:ignore ?>>
+				var mi_version = '<?php echo MONSTERINSIGHTS_VERSION; // phpcs:ignore ?>';
 				var mi_track_user = <?php echo $track_user ? 'true' : 'false'; ?>;
 				var mi_no_track_reason = <?php echo $reason ? "'" . esc_js( $reason ) . "'" : "''"; ?>;
 				<?php do_action( 'monsterinsights_tracking_gtag_frontend_output_after_mi_track_user' ); ?>
@@ -230,9 +215,6 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 				var disableStrs = [
 					<?php if (! empty( $v4_id )) { ?>
 					'ga-disable-<?php echo esc_js( $v4_id ); ?>',
-					<?php } ?>
-					<?php if (! empty( $ua )) { ?>
-					'ga-disable-<?php echo esc_js( $ua ); ?>',
 					<?php } ?>
 				];
 
@@ -304,10 +286,6 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 							}
 							<?php } ?>
 
-							<?php if ($ua) { ?>
-							parameters.send_to = monsterinsights_frontend.ua;
-							__gtagDataLayer(type, name, parameters);
-							<?php } ?>
 						} else {
 							__gtagDataLayer.apply(null, arguments);
 						}
@@ -325,12 +303,9 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 						?>
 					});
 					<?php if (! empty( $v4_id )) { ?>
-					__gtagTracker('config', '<?php echo esc_js( $v4_id ); ?>', <?php echo $options_v4; ?> );
+					__gtagTracker('config', '<?php echo esc_js( $v4_id ); ?>', <?php echo $options_v4; // phpcs:ignore ?> );
 					<?php } ?>
-					<?php if (! empty( $ua )) { ?>
-					__gtagTracker('config', '<?php echo esc_js( $ua ); ?>', <?php echo $options; ?> );
 					<?php
-					}
 					/*
 					 * Extend or enhance the functionality by adding custom code to frontend
 					 * tracking via this hook.
@@ -466,7 +441,7 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract {
 				}
 			</script>
 		<?php } else { ?>
-			<!-- No UA code set -->
+			<!-- No tracking code set -->
 		<?php } ?>
 		<!-- / Google Analytics by MonsterInsights -->
 		<?php

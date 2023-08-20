@@ -220,6 +220,16 @@ trait Helper
 		return $html;
 	}
 
+	public function eael_woo_cart_empty_action() {
+		if ( ! function_exists( 'WC' ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['empty_cart'] ) && 'yes' === esc_html( $_GET['empty_cart'] ) ) {
+			WC()->cart->empty_cart();
+		}
+	}
+
     /**
 	 * Update Checkout Cart Quantity via ajax call.
 	 */
@@ -237,7 +247,7 @@ trait Helper
 			WC()->cart->set_quantity( $cart_item_key, $cart_item_quantity, true );
 			wp_send_json_success(
                 array(
-                    'message' => __( 'Quantity updated successfully.', 'essential-addons-elementor' ),
+                    'message' => __( 'Quantity updated successfully.', 'essential-addons-for-elementor-lite' ),
                     // 'cart_item_key' => $cart_item_key,
                     'cart_item_quantity' => $cart_item_quantity,
                     'cart_item_subtotal' => WC()->cart->get_product_subtotal( $cart_item['data'], $cart_item_quantity ),
@@ -248,7 +258,7 @@ trait Helper
 		} else {
     		wp_send_json_error(
                 array(
-                    'message' => __( 'Quantity update failed.', 'essential-addons-elementor' ),
+                    'message' => __( 'Quantity update failed.', 'essential-addons-for-elementor-lite' ),
                 )
             );
         }
@@ -292,7 +302,7 @@ trait Helper
                             <img src="<?php echo esc_url( EAEL_PLUGIN_URL . 'assets/admin/images/templately/logo.svg' ); ?>" alt="">
                         </div>
                         <ul class="eael-promo-temp__feature__list">
-                            <li><?php _e('3,000+ Stunning Templates','essential-addons-for-elementor-lite'); ?></li>
+                            <li><?php _e('4,000+ Stunning Templates','essential-addons-for-elementor-lite'); ?></li>
                             <li><?php _e('Supports Elementor & Gutenberg','essential-addons-for-elementor-lite'); ?></li>
                             <li><?php _e('Powering up 200,000+ Websites','essential-addons-for-elementor-lite'); ?></li>
                             <li><?php _e('Cloud Collaboration with Team','essential-addons-for-elementor-lite'); ?></li>
@@ -443,7 +453,19 @@ trait Helper
 		$hastag      = sanitize_text_field( $_POST['hastag'] );
 		$c_key       = sanitize_text_field( $_POST['c_key'] );
 		$c_secret    = sanitize_text_field( $_POST['c_secret'] );
+		$widget_id   = sanitize_text_field( $_POST['widget_id'] );
+		$permalink   = sanitize_text_field( $_POST['page_permalink'] );
+        $page_id     = url_to_postid($permalink);
+        
+        $settings = $this->eael_get_widget_settings($page_id, $widget_id);
+        $twitter_v2 = ! empty( $settings['eael_twitter_api_v2'] ) && 'yes' === $settings['eael_twitter_api_v2'] ? true : false;
+
 		$key_pattern = '_transient_' . $ac_name . '%' . md5( $hastag . $c_key . $c_secret ) . '_tf_cache';
+        
+        if( $twitter_v2 ){
+            $bearer_token = $settings['eael_twitter_feed_bearer_token'];
+            $key_pattern = '_transient_' . $ac_name . '%' . md5( $hastag . $c_key . $c_secret . $bearer_token ) . '_tf_cache';
+        }
 
 		$sql     = "SELECT `option_name` AS `name`
             FROM  $wpdb->options
@@ -463,7 +485,7 @@ trait Helper
 		?>
         <div id="eael-admin-promotion-message" class="eael-admin-promotion-message">
             <i class="e-notice__dismiss eael-admin-promotion-close" role="button" aria-label="Dismiss" tabindex="0"></i>
-			<?php printf( __( "<p> <i>📣</i> NEW: Essential Addons 5.6 is here, with new '<a target='_blank' href='%s'>Business Reviews</a>' widget & more! Check out the <a target='_blank' href='%s'>Changelog</a> for more details 🎉</p>", "essential-addons-for-elementor-lite" ), esc_url( 'https://essential-addons.com/elementor/business-reviews/' ), esc_url( 'https://essential-addons.com/elementor/changelog/' ) ); ?>
+			<?php printf( __( "<p> <i>📣</i> NEW: Essential Addons Pro 5.5 is here, with new '<a target='_blank' href='%s'>Woo Thank You</a>' widget & more! Check out the <a target='_blank' href='%s'>Changelog</a> for more details 🎉</p>", "essential-addons-for-elementor-lite" ), esc_url( 'https://essential-addons.com/elementor/woo-thank-you' ), esc_url( 'https://essential-addons.com/elementor/changelog/' ) ); ?>
         </div>
 		<?php
 	}
@@ -488,7 +510,7 @@ trait Helper
 
 			/*Added admin notice which is basically uses for display new promotion message*/
 			if ( get_option( 'eael_admin_promotion' ) < self::EAEL_PROMOTION_FLAG ) {
-				add_action( 'eael_admin_notices', array( $this, 'promotion_message_on_admin_screen' ) );
+				add_action( 'eael_admin_notices', array( $this, 'promotion_message_on_admin_screen' ), 1 );
 			}
 		}
 	}
@@ -559,6 +581,7 @@ trait Helper
                         </div>
                     </div>
                     <div class="eael-gb-eb-footer">
+	                    <button class="eael-gb-eb-never-show" data-nonce="<?php echo esc_attr( $nonce ); ?>"><?php esc_html_e( 'Never Show Again', 'essential-addons-for-elementor-lite' ); ?></button>
                         <button class="eael-gb-eb-prev"><?php esc_html_e( 'Previous', 'essential-addons-for-elementor-lite' ); ?></button>
                         <button class="eael-gb-eb-next"><?php esc_html_e( 'Next', 'essential-addons-for-elementor-lite' ); ?></button>
                     </div>

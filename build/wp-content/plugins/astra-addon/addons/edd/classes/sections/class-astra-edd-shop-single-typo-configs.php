@@ -3,8 +3,6 @@
  * Shop Options for our theme.
  *
  * @package     Astra Addon
- * @author      Brainstorm Force
- * @copyright   Copyright (c) 2020, Brainstorm Force
  * @link        https://www.brainstormforce.com
  * @since       Astra 1.6.10
  */
@@ -25,7 +23,7 @@ if ( ! class_exists( 'Astra_Edd_Shop_Single_Typo_Configs' ) ) {
 	 * Register Blog Single Layout Configurations.
 	 */
 	// @codingStandardsIgnoreStart
-	class Astra_Edd_Shop_Single_Typo_Configs extends Astra_Customizer_Config_Base { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+	class Astra_Edd_Shop_Single_Typo_Configs extends Astra_Customizer_Config_Base {
 		// @codingStandardsIgnoreEnd
 
 		/**
@@ -118,7 +116,7 @@ if ( ! class_exists( 'Astra_Edd_Shop_Single_Typo_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,
@@ -204,7 +202,7 @@ if ( ! class_exists( 'Astra_Edd_Shop_Single_Typo_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,

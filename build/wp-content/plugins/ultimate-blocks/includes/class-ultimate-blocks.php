@@ -1,7 +1,12 @@
 <?php
 
 use Ultimate_Blocks\includes\Editor_Data_Manager;
+use Ultimate_Blocks\includes\Env_Manager;
+use Ultimate_Blocks\includes\managers\Render_Assistant;
+use Ultimate_Blocks\includes\pro_manager\Pro_Manager;
+use Ultimate_Blocks\includes\Saved_Styles_Manager;
 use Ultimate_Blocks\includes\Ultimate_Blocks_Version_Control;
+use Ultimate_Blocks\includes\Version_Sync_Manager;
 
 /**
  * The file that defines the core plugin class
@@ -162,13 +167,23 @@ class Ultimate_Blocks {
 		$this->loader->add_action( 'wp_ajax_UltimateBlocksReviewNoticeHide', $plugin_admin,
 			'UltimateBlocks_hide_review_notify' );
 
+		// initialize version sync manager
+		Version_Sync_Manager::init();
+
 		// initialize version control manager
 		Ultimate_Blocks_Version_Control::init();
 
 		// initialize editor data manager
 		Editor_Data_Manager::init();
 
+		// initialize pro manager
+		Pro_Manager::init();
 
+		// initialize saved styles manager
+		Saved_Styles_Manager::init();
+
+		// initialize render assistant
+		Render_Assistant::init();
 	}
 
 	/**

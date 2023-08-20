@@ -1,9 +1,9 @@
 === Ultimate Blocks - Gutenberg Blocks Plugin ===
-Contributors: dotcamp, ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, erdembircan, wpleaders1, wpcdplugin, wptb
+Contributors: ultimateblocks, imtiazrayhan, istiakrayhan, alexius08, wpleaders1, wpcdplugin, wptb
 Tags: block, blocks, gutenberg blocks, gutenberg, block editor
 Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 2.5.6
+Tested up to: 6.2
+Stable tag: 3.0.1
 Requires PHP: 5.6
 License: GPL3+
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -11,6 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 Custom Gutenberg Blocks for Bloggers and Marketers. Create Better Content With Gutenberg.
 
 == Description ==
+
+[Get Pro](https://ultimateblocks.com/pricing/) | [Documentation](https://ultimateblocks.com/docs/)
 
 Ultimate Blocks is a Gutenberg blocks Plugin for bloggers and marketers. Our goal is to make it insanely easy for you to create better and engaging content with Gutenberg.
 
@@ -132,6 +134,63 @@ That's it. You're done!
 
 == Changelog ==
 
+= 3.0.1 =
+
+* NEW: Icon Block.
+* IMPROVE: Version synchronization.
+* FIX: PHP 8.1 compatibility updates.
+* FIX: Progress bar toolbar range control not working.
+* PRO: FIX: Some client libraries not being included in plugin zip file.
+* PRO: FIX: Tabbed content saved styles overwriting none style related block attributes.
+* PRO: FIX: Image slider dependency not being available.
+* PRO: FIX: Assigned default styles being applied to previously inserted blocks on edit.
+
+= 3.0.0 =
+
+* NEW: Pro version release.
+* NEW: Saved styles preview for supported blocks.
+* PRO: NEW: Saved styles for supported blocks. Save/apply/set default styles for supported blocks.
+* PRO: NEW: Button
+    - Hover animations.
+* PRO: NEW: Content Toggle
+    - Search functionality within content.
+    - Search summary to display amount of results matched.
+    - Highlight color to indicate matched search results inside content toggle.
+* PRO: NEW: Divider
+    - Icons for divider elements.
+* PRO: NEW: Expand
+    - Fade animation for smooth transitions.
+* PRO: NEW: Image slider
+    - Thumbnails for images.
+* PRO: NEW: Review
+    - Pros/Cons tables for reviews.
+    - Different layouts for pros/cons tables(table, data-driven-graph).
+* PRO: NEW: Tabbed content.
+    - Call to action headers.
+    - Secondary informative text for tab headers.
+    - Tab header icons.
+* PRO: NEW: Tabbed content.
+    - Call to action headers.
+    - Secondary informative text for tab headers.
+    - Tab header icons.
+* PRO: NEW: Table of contents.
+    - Section icons.
+
+= 2.5.8 - March 27th, 2023 =
+
+* NEW: Compatibility with WordPress 6.2.
+* NEW: Ultimate Blocks now appear in the new Style Book.
+* Fix: Enqueue scroll polyfill only when needed.
+
+= 2.5.7 - March 19th, 2023 =
+
+* Advanced Heading - Fix Google Fonts embed.
+* Content Toggle - Set number of initial panels to 2.
+* Post Grid - Add way to exclude categories.
+* Tabbed Content - Save last-selected tab in browser history.
+* Other - Added block previews.
+* Other - Improved block options.
+
 = 2.5.6 - February 2nd, 2023 =
 
 * Social share - Fix icon shape display when outline is enabled.
@@ -169,20 +228,20 @@ That's it. You're done!
 
 = 2.5.3 - September 19th, 2022 =
 
-Table of Contents - Hide everything except Allowed Headings in Table of Contents inspector by default.
-Table of Contents - Set color of show/hide button in ToC to color of title.
-Table of Contents - Fix issue with table of contents scrolling with reference element.
-Advanced Video - Add play button when using custom thumbnail in advanced video.
-Advanced Video - Fix issue with inserting URLs for custom thumbnails in advanced video.
-Advanced Video - Add option to make video automatically fit within its container.
-Button - Remove default nofollow from button links.
-Button - Fix Sponsored option not working for button links.
-Divider - Add option to convert core separator into divider.
-Expand - Add option to scroll show button of expand into view after clicking hide.
-Other - Fix styling for reusable blocks with more than one top-level block.
-Other - Revise block settings page.
-Other - Add option to rollback to older versions.
-Expand - Add option to scroll show button of expand into view after clicking hide.
+* Table of Contents - Hide everything except Allowed Headings in Table of Contents inspector by default.
+* Table of Contents - Set color of show/hide button in ToC to color of title.
+* Table of Contents - Fix issue with table of contents scrolling with reference element.
+* Advanced Video - Add play button when using custom thumbnail in advanced video.
+* Advanced Video - Fix issue with inserting URLs for custom thumbnails in advanced video.
+* Advanced Video - Add option to make video automatically fit within its container.
+* Button - Remove default nofollow from button links.
+* Button - Fix Sponsored option not working for button links.
+* Divider - Add option to convert core separator into divider.
+* Expand - Add option to scroll show button of expand into view after clicking hide.
+* Other - Fix styling for reusable blocks with more than one top-level block.
+* Other - Revise block settings page.
+* Other - Add option to rollback to older versions.
+* Expand - Add option to scroll show button of expand into view after clicking hide.
 
 = 2.5.2 - July 25th, 2022 =
 

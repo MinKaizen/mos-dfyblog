@@ -501,20 +501,20 @@ class Kadence_Blocks_CSS {
 		// Switch through the property types and add prefixed rules.
 		switch ( $property ) {
 			case 'border-top-left-radius':
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
+				$this->add_rule( $property, $value );
 				break;
 			case 'border-top-right-radius':
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
+				$this->add_rule( $property, $value );
 				break;
 			case 'border-bottom-left-radius':
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
+				$this->add_rule( $property, $value );
 				break;
 			case 'border-bottom-right-radius':
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
+				$this->add_rule( $property, $value );
 				break;
 			case 'background-image':
 				$this->add_rule( $property, sprintf( "url('%s')", $value ) );
@@ -523,13 +523,13 @@ class Kadence_Blocks_CSS {
 				$this->add_rule( $property, sprintf( '%s', $value ) );
 				break;
 			case 'flex':
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
+				$this->add_rule( $property, $value );
 				break;
 			default:
-				$this->add_rule( $property, $value );
 				$this->add_rule( $property, $value, '-webkit-' );
 				$this->add_rule( $property, $value, '-moz-' );
+				$this->add_rule( $property, $value );
 				break;
 		}
 
@@ -787,7 +787,7 @@ class Kadence_Blocks_CSS {
 			$this->add_property( 'font-style', $font['style'] );
 		}
 		if ( isset( $font['weight'] ) && ! empty( $font['weight'] ) ) {
-			$this->add_property( 'font-weight', $font['weight'] );
+			$this->add_property( 'font-weight', $this->render_font_weight( $font['weight'] ) );
 		}
 		$size_type = ( isset( $font['sizeType'] ) && ! empty( $font['sizeType'] ) ? $font['sizeType'] : 'px' );
 		$line_type = ( isset( $font['lineType'] ) ? $font['lineType'] : '' );
@@ -1769,7 +1769,6 @@ class Kadence_Blocks_CSS {
 			'fourth_prop' => 'border-left',
 		);
 		$args = wp_parse_args( $args, $defaults );
-
 		$sides_prop_keys = array(
 			'top' => 'first_prop',
 			'right' => 'second_prop',
@@ -1781,10 +1780,8 @@ class Kadence_Blocks_CSS {
 			'tablet',
 			'mobile',
 		);
-
 		foreach ( $sizes as $size ) {
 			$this->set_media_state( $size );
-
 			foreach ( $sides_prop_keys as $side => $prop_key ) {
 				$width = $this->get_border_value( $attributes, $args, $side, $size, 'width', $single_styles );
 				$color = $this->get_border_value( $attributes, $args, $side, $size, 'color', $single_styles );
@@ -2310,7 +2307,9 @@ class Kadence_Blocks_CSS {
 	 * @return string
 	 */
 	public function css_output() {
-		$this->render_media_queries();
+		if ( apply_filters( 'kadence_blocks_css_output_media_queries', true ) ) {
+			$this->render_media_queries();
+		}
 		// Add current selector's rules to output
 		$this->add_selector_rules_to_output();
 

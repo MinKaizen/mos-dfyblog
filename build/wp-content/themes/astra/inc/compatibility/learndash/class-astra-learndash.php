@@ -103,8 +103,7 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 			$btn_bg_color   = astra_get_option( 'button-bg-color', '', $theme_color );
 			$btn_bg_h_color = astra_get_option( 'button-bg-h-color', '', $link_h_color );
 
-			$btn_border_radius = astra_get_option( 'button-radius' );
-
+			$btn_border_radius_fields     = astra_get_option( 'button-radius-fields' );
 			$archive_post_title_font_size = astra_get_option( 'font-size-page-title' );
 
 			$css_output = array(
@@ -112,10 +111,13 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 					'font-family' => astra_get_font_family( $body_font_family ),
 				),
 				'body #ld_course_list .btn, body a.btn-blue, body a.btn-blue:visited, body a#quiz_continue_link, body .btn-join, body .learndash_checkout_buttons input.btn-join[type="button"], body #btn-join, body .learndash_checkout_buttons input.btn-join[type="submit"], body .wpProQuiz_content .wpProQuiz_button2' => array(
-					'color'            => $btn_color,
-					'border-color'     => $btn_bg_color,
-					'background-color' => $btn_bg_color,
-					'border-radius'    => astra_get_css_value( $btn_border_radius, 'px' ),
+					'color'                      => $btn_color,
+					'border-color'               => $btn_bg_color,
+					'background-color'           => $btn_bg_color,
+					'border-top-left-radius'     => astra_responsive_spacing( $btn_border_radius_fields, 'top', 'desktop' ),
+					'border-top-right-radius'    => astra_responsive_spacing( $btn_border_radius_fields, 'right', 'desktop' ),
+					'border-bottom-right-radius' => astra_responsive_spacing( $btn_border_radius_fields, 'bottom', 'desktop' ),
+					'border-bottom-left-radius'  => astra_responsive_spacing( $btn_border_radius_fields, 'left', 'desktop' ),
 				),
 				'body #ld_course_list .btn:hover, body #ld_course_list .btn:focus, body a.btn-blue:hover, body a.btn-blue:focus, body a#quiz_continue_link:hover, body a#quiz_continue_link:focus, body .btn-join:hover, body .learndash_checkout_buttons input.btn-join[type="button"]:hover, body .btn-join:focus, body .learndash_checkout_buttons input.btn-join[type="button"]:focus, .wpProQuiz_content .wpProQuiz_button2:hover, .wpProQuiz_content .wpProQuiz_button2:focus, body #btn-join:hover, body .learndash_checkout_buttons input.btn-join[type="submit"]:hover, body #btn-join:focus, body .learndash_checkout_buttons input.btn-join[type="submit"]:focus' => array(
 					'color'            => $btn_h_color,
@@ -170,6 +172,12 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 			$css_output = astra_parse_css( $css_output );
 
 			$tablet_typography = array(
+				'body #ld_course_list .btn, body a.btn-blue, body a.btn-blue:visited, body a#quiz_continue_link, body .btn-join, body .learndash_checkout_buttons input.btn-join[type="button"], body #btn-join, body .learndash_checkout_buttons input.btn-join[type="submit"], body .wpProQuiz_content .wpProQuiz_button2' => array(
+					'border-top-left-radius'     => astra_responsive_spacing( $btn_border_radius_fields, 'top', 'tablet' ),
+					'border-top-right-radius'    => astra_responsive_spacing( $btn_border_radius_fields, 'right', 'tablet' ),
+					'border-bottom-right-radius' => astra_responsive_spacing( $btn_border_radius_fields, 'bottom', 'tablet' ),
+					'border-bottom-left-radius'  => astra_responsive_spacing( $btn_border_radius_fields, 'left', 'tablet' ),
+				),
 				'#ld_course_list .entry-title' => array(
 					'font-size' => astra_responsive_font( $archive_post_title_font_size, 'tablet', 30 ),
 				),
@@ -199,6 +207,12 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 			$css_output .= astra_parse_css( $mobile_min_width_css, astra_get_mobile_breakpoint( '', 1 ) );
 
 			$mobile_typography = array(
+				'body #ld_course_list .btn, body a.btn-blue, body a.btn-blue:visited, body a#quiz_continue_link, body .btn-join, body .learndash_checkout_buttons input.btn-join[type="button"], body #btn-join, body .learndash_checkout_buttons input.btn-join[type="submit"], body .wpProQuiz_content .wpProQuiz_button2' => array(
+					'border-top-left-radius'     => astra_responsive_spacing( $btn_border_radius_fields, 'top', 'mobile' ),
+					'border-top-right-radius'    => astra_responsive_spacing( $btn_border_radius_fields, 'right', 'mobile' ),
+					'border-bottom-right-radius' => astra_responsive_spacing( $btn_border_radius_fields, 'bottom', 'mobile' ),
+					'border-bottom-left-radius'  => astra_responsive_spacing( $btn_border_radius_fields, 'left', 'mobile' ),
+				),
 				'#ld_course_list .entry-title'          => array(
 					'font-size' => astra_responsive_font( $archive_post_title_font_size, 'mobile', 30 ),
 				),
@@ -290,7 +304,7 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 			$defaults['learndash-differentiate-rows']   = true;
 
 			// Container.
-			$defaults['learndash-content-layout'] = 'plain-container';
+			$defaults['learndash-ast-content-layout'] = 'normal-width-container';
 
 			// Sidebar.
 			$defaults['learndash-sidebar-layout'] = 'default';
@@ -384,7 +398,7 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 
 			if ( is_singular( 'sfwd-courses' ) || is_singular( 'sfwd-lessons' ) || is_singular( 'sfwd-topic' ) || is_singular( 'sfwd-quiz' ) || is_singular( 'sfwd-certificates' ) || is_singular( 'sfwd-assignment' ) ) {
 
-				$learndash_layout = astra_get_option( 'learndash-content-layout' );
+				$learndash_layout = astra_toggle_layout( 'learndash-ast-content-layout', 'global', false );
 
 				if ( 'default' !== $learndash_layout ) {
 					$layout = $learndash_layout;
@@ -397,10 +411,10 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 					$dynamic_sidebar_layout = '';
 
 					if ( is_singular() ) {
-						$dynamic_sidebar_layout = astra_get_option( 'single-' . $post_type . '-content-layout' );
+						$dynamic_sidebar_layout = astra_toggle_layout( 'single-' . $post_type . '-ast-content-layout', 'single', false );
 					}
 					if ( is_archive() ) {
-						$dynamic_sidebar_layout = astra_get_option( 'archive-' . $post_type . '-content-layout' );
+						$dynamic_sidebar_layout = astra_toggle_layout( 'archive-' . $post_type . '-ast-content-layout', 'archive', false );
 					}
 
 					if ( ! empty( $dynamic_sidebar_layout ) && 'default' !== $dynamic_sidebar_layout ) {
@@ -409,6 +423,11 @@ if ( ! class_exists( 'Astra_LearnDash' ) ) :
 				}
 
 				$learndash_layout = astra_get_option_meta( 'site-content-layout', '', true );
+				if ( isset( $learndash_layout ) ) {
+					$learndash_layout = astra_toggle_layout( 'ast-site-content-layout', 'meta', false, $learndash_layout );
+				} else {
+					$learndash_layout = astra_toggle_layout( 'ast-site-content-layout', 'meta', false );
+				}
 
 				if ( 'default' !== $learndash_layout && ! empty( $learndash_layout ) ) {
 					$layout = $learndash_layout;

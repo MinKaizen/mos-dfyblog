@@ -7,7 +7,7 @@
  * Author:              MonsterInsights
  * Author URI:          https://www.monsterinsights.com/lite/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=authoruri&utm_content=7%2E0%2E0
  *
- * Version:             8.12.1
+ * Version:             8.18
  * Requires at least:   4.8.0
  * Requires PHP:        5.6
  *
@@ -71,7 +71,7 @@ final class MonsterInsights_Lite
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
-	public $version = '8.12.1';
+	public $version = '8.18';
 
 	/**
 	 * Plugin file.
@@ -235,8 +235,8 @@ final class MonsterInsights_Lite
 			self::$instance->require_files();
 
 			// This does the version to version background upgrade routines and initial install
-			$mi_version = get_option('monsterinsights_current_version', '5.5.3');
-			if (version_compare($mi_version, '7.15.0', '<')) {
+			$mi_version = get_option( 'monsterinsights_current_version', '5.5.3' );
+            if ( version_compare( $mi_version, '8.13.0', '<' ) ) {
 				monsterinsights_lite_call_install_and_upgrade();
 			}
 
@@ -450,7 +450,7 @@ final class MonsterInsights_Lite
 		}
 ?>
 		<div class="error">
-			<p><?php echo sprintf(esc_html__('Please %1$suninstall%2$s the MonsterInsights Lite Plugin. Your Pro version of MonsterInsights may not work as expected until the Lite version is uninstalled.', 'google-analytics-for-wordpress'), '<a href="' . $url . '">', '</a>'); ?></p>
+			<p><?php echo sprintf(esc_html__('Please %1$suninstall%2$s the MonsterInsights Lite Plugin. Your Pro version of MonsterInsights may not work as expected until the Lite version is uninstalled.', 'google-analytics-for-wordpress'), '<a href="' . $url . '">', '</a>'); // phpcs:ignore ?></p>
 		</div>
 <?php
 
@@ -570,6 +570,7 @@ final class MonsterInsights_Lite
 
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/exclude-page-metabox.php';
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/frontend/verified-badge/Controller.php';
+		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/admin/site-notes/Controller.php';
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/api-request.php';
 
 		if (is_admin() || (defined('DOING_CRON') && DOING_CRON)) {
@@ -579,7 +580,6 @@ final class MonsterInsights_Lite
 
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/frontend/frontend.php';
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/frontend/seedprod.php';
-		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/measurement-protocol.php';
 		require_once MONSTERINSIGHTS_PLUGIN_DIR . 'includes/measurement-protocol-v4.php';
 	}
 
@@ -624,7 +624,7 @@ function monsterinsights_lite_activation_hook($network_wide)
 
 	if (class_exists('MonsterInsights')) {
 		deactivate_plugins(plugin_basename(__FILE__));
-		wp_die(sprintf(esc_html__('Please uninstall and remove MonsterInsights Pro before activating Google Analytics for WordPress by MonsterInsights. The Lite version has not been activated. %1$sClick here to return to the Dashboard%2$s.', 'google-analytics-by-wordpress'), '<a href="' . $url . '">', '</a>'));
+		wp_die(sprintf(esc_html__('Please uninstall and remove MonsterInsights Pro before activating Google Analytics for WordPress by MonsterInsights. The Lite version has not been activated. %1$sClick here to return to the Dashboard%2$s.', 'google-analytics-by-wordpress'), '<a href="' . $url . '">', '</a>')); // phpcs:ignore
 	}
 
 	require_once plugin_dir_path(__FILE__) . 'includes/compatibility-check.php';
@@ -654,6 +654,9 @@ function monsterinsights_lite_uninstall_hook()
 	// both plugins. If it needs to be pro specific, then include a file that
 	// has that method.
 	$instance = MonsterInsights();
+
+    $instance->define_globals();
+    $instance->load_settings();
 
 	// If uninstalling via wp-cli load admin-specific files only here.
 	if (defined('WP_CLI') && WP_CLI) {

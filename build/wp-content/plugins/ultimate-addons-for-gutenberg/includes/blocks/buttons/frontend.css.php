@@ -10,8 +10,6 @@
 // Adds Fonts.
 UAGB_Block_JS::blocks_buttons_gfont( $attr );
 
-$block_name = 'buttons';
-
 $m_selectors = array();
 $t_selectors = array();
 $selectors   = array();
@@ -20,7 +18,7 @@ if ( 'desktop' === $attr['stack'] ) {
 
 	$selectors[' .uagb-buttons__wrap ']   = array(
 		'flex-direction' => 'column',
-		'row-gap'        => UAGB_Helper::get_css_value( UAGB_Block_Helper::get_fallback_number( $attr['gap'], 'gap', $block_name ), 'px' ),
+		'row-gap'        => UAGB_Helper::get_css_value( $attr['gap'], 'px' ),
 	);
 	$t_selectors[' .uagb-buttons__wrap '] = array(
 		'row-gap' => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
@@ -32,8 +30,7 @@ if ( 'desktop' === $attr['stack'] ) {
 } elseif ( 'tablet' === $attr['stack'] ) {
 
 	$selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap  .uagb-buttons__wrap '] = array(
-		'column-gap'  => UAGB_Helper::get_css_value( UAGB_Block_Helper::get_fallback_number( $attr['gap'], 'gap', $block_name ), 'px' ),
-		'align-items' => 'center',
+		'column-gap' => UAGB_Helper::get_css_value( $attr['gap'], 'px' ),
 	);
 	$t_selectors[' .uagb-buttons__wrap'] = array(
 		'flex-direction' => 'column',
@@ -47,30 +44,29 @@ if ( 'desktop' === $attr['stack'] ) {
 } elseif ( 'mobile' === $attr['stack'] ) {
 
 	$selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap ']  = array(
-		'column-gap'  => UAGB_Helper::get_css_value( UAGB_Block_Helper::get_fallback_number( $attr['gap'], 'gap', $block_name ), 'px' ),
-		'align-items' => 'center',
+		'flex-direction' => 'row',
+		'column-gap'     => UAGB_Helper::get_css_value( $attr['gap'], 'px' ),
+		'row-gap'        => UAGB_Helper::get_css_value( $attr['gap'], 'px' ),
 	);
 	$t_selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap'] = array(
-		'column-gap'  => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
-		'align-items' => 'center',
+		'column-gap' => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
+		'row-gap'    => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
 	);
-	$m_selectors[' .uagb-buttons__wrap'] = array(
+	$m_selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap'] = array(
 		'flex-direction' => 'column',
 		'row-gap'        => UAGB_Helper::get_css_value( $attr['gapMobile'], 'px' ),
+		'column-gap'     => UAGB_Helper::get_css_value( $attr['gapMobile'], 'px' ),
 	);
 
 } elseif ( 'none' === $attr['stack'] ) {
 	$selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap ']  = array(
-		'column-gap'  => UAGB_Helper::get_css_value( UAGB_Block_Helper::get_fallback_number( $attr['gap'], 'gap', $block_name ), 'px' ),
-		'align-items' => 'center',
+		'column-gap' => UAGB_Helper::get_css_value( $attr['gap'], 'px' ),
 	);
 	$t_selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap'] = array(
-		'column-gap'  => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
-		'align-items' => 'center',
+		'column-gap' => UAGB_Helper::get_css_value( $attr['gapTablet'], 'px' ),
 	);
 	$m_selectors['.wp-block-uagb-buttons.uagb-buttons__outer-wrap .uagb-buttons__wrap'] = array(
-		'column-gap'  => UAGB_Helper::get_css_value( $attr['gapMobile'], 'px' ),
-		'align-items' => 'center',
+		'column-gap' => UAGB_Helper::get_css_value( $attr['gapMobile'], 'px' ),
 	);
 }
 $alignment       = ( 'left' === $attr['align'] ) ? 'flex-start' : ( ( 'right' === $attr['align'] ) ? 'flex-end' : 'center' );
@@ -141,7 +137,7 @@ if ( $attr['childMigrate'] ) {
 	);
 
 	$button_tablet_style = array(
-		'font-size'      => UAGB_Helper::get_css_value( $attr['fontSizeTablet'], $attr['fontSizeType'] ),
+		'font-size'      => UAGB_Helper::get_css_value( $attr['fontSizeTablet'], $attr['fontSizeTypeTablet'] ),
 		'line-height'    => UAGB_Helper::get_css_value( $attr['lineHeightTablet'], $attr['lineHeightType'] ),
 		'letter-spacing' => UAGB_Helper::get_css_value( $attr['fontLetterSpacingTablet'], $attr['fontLetterSpacingType'] ),
 		'padding-top'    => UAGB_Helper::get_css_value( $attr['topTabletPadding'], $attr['tabletPaddingUnit'] ),
@@ -155,7 +151,7 @@ if ( $attr['childMigrate'] ) {
 	);
 
 	$button_mobile_style = array(
-		'font-size'      => UAGB_Helper::get_css_value( $attr['fontSizeMobile'], $attr['fontSizeType'] ),
+		'font-size'      => UAGB_Helper::get_css_value( $attr['fontSizeMobile'], $attr['fontSizeTypeMobile'] ),
 		'line-height'    => UAGB_Helper::get_css_value( $attr['lineHeightMobile'], $attr['lineHeightType'] ),
 		'letter-spacing' => UAGB_Helper::get_css_value( $attr['fontLetterSpacingMobile'], $attr['fontLetterSpacingType'] ),
 		'padding-top'    => UAGB_Helper::get_css_value( $attr['topMobilePadding'], $attr['mobilePaddingUnit'] ),
@@ -178,7 +174,13 @@ if ( $attr['childMigrate'] ) {
 
 if ( ! $attr['childMigrate'] ) {
 
-	$defaults = include UAGB_DIR . 'includes/blocks/buttons-child/attributes.php';
+	$defaults = UAGB_DIR . 'includes/blocks/buttons-child/attributes.php';
+
+	if ( file_exists( $defaults ) ) {
+		$default_attr = include $defaults;
+	}
+
+	$default_attr = ( ! empty( $default_attr ) && is_array( $default_attr ) ) ? $default_attr : array();
 
 	foreach ( $attr['buttons'] as $key => $button ) {
 
@@ -186,7 +188,7 @@ if ( ! $attr['childMigrate'] ) {
 			break;
 		}
 
-		$button = array_merge( $defaults, $button );
+		$button = array_merge( $default_attr, $button );
 
 		$wrapper = ( ! $attr['childMigrate'] ) ? ' .uagb-buttons-repeater-' . $key . '.uagb-button__wrapper' : ' .uagb-buttons-repeater';
 

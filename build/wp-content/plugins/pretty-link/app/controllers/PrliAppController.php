@@ -43,14 +43,16 @@ class PrliAppController extends PrliBaseController {
     // DB upgrades/installs will happen here, as a non-blocking process hopefully
     add_action('init', array($this, 'install'));
 
-    add_filter( 'plugin_action_links_' . PRLI_PLUGIN_SLUG, array($this,'add_plugin_action_links') );
+    add_filter('plugin_action_links_' . PRLI_PLUGIN_SLUG, array($this,'add_plugin_action_links'));
 
     add_action('in_admin_header', array($this,'pl_admin_header'), 0);
 
-    add_action( 'wp_ajax_pl_dismiss_upgrade_header', array( $this, 'dismiss_upgrade_header' ) );
+    add_action('wp_ajax_pl_dismiss_upgrade_header', array($this, 'dismiss_upgrade_header'));
+    add_action('wp_ajax_prli_dismiss_daily_notice', array($this, 'dismiss_daily_notice'));
 
     // Admin footer text.
-    add_filter( 'admin_footer_text', array( $this, 'admin_footer' ), 1, 2 );
+    add_filter('admin_footer_text', array($this, 'admin_footer'), 1, 2);
+    add_action('in_admin_footer', array($this, 'promote_pretty_links'));
   }
 
   /**
@@ -114,6 +116,15 @@ class PrliAppController extends PrliBaseController {
     }
   }
 
+  public function dismiss_daily_notice() {
+    if(check_ajax_referer('prli_dismiss_notice', false, false) && isset($_POST['notice']) && is_string($_POST['notice'])) {
+      $notice = sanitize_key($_POST['notice']);
+      set_transient("prli_dismiss_notice_${notice}", true, DAY_IN_SECONDS);
+    }
+
+    wp_send_json_success();
+  }
+
   private function on_pretty_link_page() {
     global $current_screen;
     return (isset($current_screen->id) && strpos($current_screen->id,'pretty-link') !== false);
@@ -155,6 +166,14 @@ class PrliAppController extends PrliBaseController {
       );
       add_submenu_page(
         "edit.php?post_type={$pl_link_cpt}",
+        esc_html__('Display Groups', 'pretty-link'),
+        esc_html__('Display Groups', 'pretty-link'),
+        $role,
+        "pretty-link-upgrade-groups",
+        array( $plp_update, 'upgrade_groups' )
+      );
+      add_submenu_page(
+        "edit.php?post_type={$pl_link_cpt}",
         esc_html__('Import / Export', 'pretty-link'),
         esc_html__('Import / Export', 'pretty-link'),
         $role,
@@ -186,8 +205,10 @@ class PrliAppController extends PrliBaseController {
       }
     }
 
-    $onboarding_ctrl = new PrliOnboardingController();
-    add_submenu_page('options.php', __('Welcome', 'pretty-link'), null, $role, 'pretty-link-welcome', array($onboarding_ctrl, 'welcome_route'));
+    add_submenu_page('options.php', __('Welcome', 'pretty-link'), null, $role, 'pretty-link-onboarding', 'PrliOnboardingController::route');
+
+    $addons_ctrl = new PrliAddonsController();
+    add_submenu_page("edit.php?post_type={$pl_link_cpt}", esc_html__('Add-ons', 'pretty-link'), '<span style="color:#8CBD5A;">' . esc_html__('Add-ons', 'pretty-link') . '</span>', $role, 'pretty-link-addons', array($addons_ctrl, 'route'));
   }
 
   /**
@@ -269,6 +290,7 @@ class PrliAppController extends PrliBaseController {
 
     $categories_ctax = class_exists('PlpLinkCategoriesController') ? PlpLinkCategoriesController::$ctax : 'pretty-link-category';
     $tags_ctax = class_exists('PlpLinkTagsController') ? PlpLinkTagsController::$ctax : 'pretty-link-tag';
+    $groups_cpt = class_exists('\Pretty_Link\Product_Displays\Controllers\GroupsCtrl') ? \Pretty_Link\Product_Displays\Models\Group::$cpt : 'pretty-link-groups';
 
     $include_array = array(
       $slug,
@@ -282,6 +304,8 @@ class PrliAppController extends PrliBaseController {
       'pretty-link-clicks',
       'plp-reports',
       'https://prettylinks.com/pl/main-menu/upgrade?reports',
+      "edit.php?post_type={$groups_cpt}",
+      "post-new.php?post_type={$groups_cpt}",
       'pretty-link-tools',
       'pretty-link-options',
       'plp-import-export',
@@ -316,7 +340,7 @@ class PrliAppController extends PrliBaseController {
 
     if($plp_update->is_installed_and_activated()) {
       $pllinks[] = '<a href="https://prettylinks.com/pl/plugin-actions/activated/docs" target="_blank">'.esc_html__('Docs', 'pretty-link').'</a>';
-      $pllinks[] = '<a href="'. esc_url( get_admin_url(null, 'admin.php?page=pretty-link-updates') ) .'">'.esc_html__('Activate', 'pretty-link').'</a>';
+      $pllinks[] = '<a href="'. esc_url( get_admin_url(null, 'admin.php?page=pretty-link-updates') ) .'">'.esc_html__('Manage License', 'pretty-link').'</a>';
     }
     else if($plp_update->is_installed()) {
       $pllinks[] = '<a href="'. esc_url( get_admin_url(null, 'admin.php?page=pretty-link-updates') ) .'" class="prli-menu-green">'.esc_html__('Activate Pro License', 'pretty-link').'</a>';
@@ -348,7 +372,7 @@ class PrliAppController extends PrliBaseController {
 
       wp_enqueue_script(
         'pretty-link-richtext-format',
-        PRLI_JS_URL . '/editor.js',
+        PRLI_JS_URL . '/build/editor.js',
         $prereqs,
         PRLI_VERSION,
         true
@@ -357,6 +381,8 @@ class PrliAppController extends PrliBaseController {
       wp_localize_script('pretty-link-richtext-format', 'plEditor', array(
         'homeUrl' => trailingslashit(get_home_url())
       ));
+
+      do_action('prli_enqueue_block_scripts', $prereqs);
     }
 
     // If we're in 3.8 now then use a font for the admin image
@@ -364,6 +390,8 @@ class PrliAppController extends PrliBaseController {
       wp_enqueue_style( 'prli-menu-styles', PRLI_CSS_URL.'/menu-styles.css',
                         array('prli-fontello-pretty-link'), PRLI_VERSION );
     }
+
+    wp_enqueue_style('prli-admin-global', PRLI_CSS_URL . '/admin_global.css', array(), PRLI_VERSION);
 
     $is_pl_page           = $this->is_pretty_link_page();
     $is_link_page         = $this->is_pretty_link_link_page();
@@ -422,6 +450,15 @@ class PrliAppController extends PrliBaseController {
         PRLI_VERSION
       );
 
+      wp_localize_script(
+        'prli-admin-shared',
+        'PrliAdminShared',
+        array(
+          'ajax_url' => admin_url('admin-ajax.php'),
+          'dismiss_notice_nonce' => wp_create_nonce('prli_dismiss_notice')
+        )
+      );
+
       if($is_link_edit_page || $is_link_new_page) {
         global $prli_link, $post, $prli_blogurl;
 
@@ -463,7 +500,7 @@ class PrliAppController extends PrliBaseController {
         'reset_str' => __('Are you sure you want to reset your Pretty Link? This will delete all of the statistical data about this Pretty Link in your database.', 'pretty-link'),
         'reset_security' => wp_create_nonce('reset_pretty_link'),
         'broken_link_text' => sprintf(
-          __('To access Link Health, upgrade to <a href="%s">Pretty Links Pro.</a>', 'pretty-link'),
+          __('To access Link Health, upgrade to <a href="%s" class="prli-link-health-upgrade">Pretty Links Pro.</a>', 'pretty-link'),
           esc_url(admin_url('edit.php?post_type=pretty-link&page=pretty-link-updates#prli_upgrade'))
         )
       );
@@ -471,6 +508,8 @@ class PrliAppController extends PrliBaseController {
     }
 
     if( preg_match('/_page_pretty-link-options$/', $hook) ) {
+      wp_enqueue_style('wp-color-picker');
+      wp_enqueue_script('wp-color-picker');
       wp_enqueue_style('pl-options', PRLI_CSS_URL.'/admin_options.css', null, PRLI_VERSION);
       wp_enqueue_script('pl-options', PRLI_JS_URL.'/admin_options.js', array('jquery'), PRLI_VERSION);
     }
@@ -593,6 +632,11 @@ class PrliAppController extends PrliBaseController {
 
   /********* ADD REDIRECTS FOR STANDARD MODE ***********/
   public function redirect() {
+    // Bail out early if we're performing a search.
+    if(isset($_GET['s']) && !empty($_GET['s'])) {
+      return;
+    }
+
     global $prli_link;
 
     // Remove the trailing slash if there is one
@@ -775,6 +819,37 @@ class PrliAppController extends PrliBaseController {
     }
 
     return $text;
+  }
+
+  /**
+   * Pre-footer promotion block displayed on all Pretty Links admin pages.
+   *
+   * @access public
+   * @return void
+   */
+  public function promote_pretty_links() {
+    global $current_screen, $plp_update;
+
+    if(empty($current_screen->id) || !$this->is_pretty_link_page()) {
+      return;
+    }
+
+    $links = array(
+      array(
+        'url' => $plp_update->is_installed() ? 'https://prettylinks.com/premium-support-request/' : 'https://wordpress.org/support/plugin/pretty-link/',
+        'text' => __('Support', 'pretty-link'),
+        'target' => '_blank'
+      ),
+      array(
+        'url' => 'https://prettylinks.com/docs/',
+        'text' => __('Docs', 'pretty-link'),
+        'target' => '_blank'
+      )
+    );
+
+    $title = __('Made with ♥ by the Pretty Links Team', 'pretty-link');
+
+    require_once(PRLI_VIEWS_PATH . '/admin/promotion.php');
   }
 
   private function get_screen_id($hook=null) {

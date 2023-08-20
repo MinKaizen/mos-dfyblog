@@ -59,11 +59,20 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 			//Section inside Section compatablity.
 			// $css->set_selector( '.wp-block-kadence-column>.kt-inside-inner-col>.kadence-column' . $unique_id );
 			// $css->add_property( 'flex', '1 ' . $attributes['maxWidth'][0] . ( isset( $attributes['maxWidthUnit'] ) ? $attributes['maxWidthUnit'] : 'px' ) );
-			$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal>.kt-inside-inner-col>.kadence-column' . $unique_id );
+			$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal:not(.kb-section-md-dir-vertical)>.kt-inside-inner-col>.kadence-column' . $unique_id );
 			$css->add_property( 'flex', '0 1 ' . $attributes['maxWidth'][0] . ( isset( $attributes['maxWidthUnit'] ) ? $attributes['maxWidthUnit'] : 'px' ) );
 			$css->add_property( 'max-width', 'unset' );
 			$css->add_property( 'margin-left', 'unset' );
 			$css->add_property( 'margin-right', 'unset' );
+			if ( apply_filters( 'kadence_blocks_css_output_media_queries', true ) ) {
+				$css->set_media_state( 'desktopOnly' );
+				$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal>.kt-inside-inner-col>.kadence-column' . $unique_id );
+				$css->add_property( 'flex', '0 1 ' . $attributes['maxWidth'][0] . ( isset( $attributes['maxWidthUnit'] ) ? $attributes['maxWidthUnit'] : 'px' ) );
+				$css->add_property( 'max-width', 'unset' );
+				$css->add_property( 'margin-left', 'unset' );
+				$css->add_property( 'margin-right', 'unset' );
+				$css->set_media_state( 'desktop' );
+			}
 		}
 		// Margin, check old first.
 		if ( $css->is_number( $attributes['topMargin'] ) || $css->is_number( $attributes['bottomMargin'] ) || $css->is_number( $attributes['rightMargin'] ) || $css->is_number( $attributes['leftMargin'] ) || $css->is_number( $attributes['topMarginT'] ) || $css->is_number( $attributes['bottomMarginT'] ) || $css->is_number( $attributes['rightMarginT'] ) || $css->is_number( $attributes['leftMarginT'] ) || $css->is_number( $attributes['topMarginM'] ) || $css->is_number( $attributes['bottomMarginM'] ) || $css->is_number( $attributes['rightMarginM'] ) || $css->is_number( $attributes['leftMarginM'] ) ) {
@@ -309,6 +318,12 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 			$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col > *, .kadence-column' . $unique_id . ' > .kt-inside-inner-col > figure.wp-block-image, .kadence-column' . $unique_id . ' > .kt-inside-inner-col > figure.wp-block-kadence-image' );
 			$css->add_property( 'margin-top', '0px' );
 			$css->add_property( 'margin-bottom', '0px' );
+
+			if ( ! empty( $attributes['flexBasis'][0] ) ) {
+				$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal.kadence-column' . $unique_id . ' > .kt-inside-inner-col > *' );
+				$basis_unit = ! empty( $attributes['flexBasisUnit'] ) ? $attributes['flexBasisUnit'] : 'px';
+				$css->add_property( 'flex', '1 1 ' . $attributes['flexBasis'][0] . $basis_unit );
+			}
 		} else {
 			if ( ! empty( $attributes['verticalAlignment'] ) ) {
 				switch ( $attributes['verticalAlignment'] ) {
@@ -328,6 +343,15 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 				$css->add_property( 'display', 'flex' );
 				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col > .aligncenter' );
 				$css->add_property( 'width', '100%' );
+			}
+			if ( !empty( $attributes['rowGap'][0] ) ) {
+				$row_gap      = isset( $attributes['rowGap'] ) && is_array( $attributes['rowGap'] ) && isset( $attributes['rowGap'][0] ) && is_numeric( $attributes['rowGap'][0] ) ? $attributes['rowGap'][0] : 0;
+				$row_gap_unit = ! empty( $attributes['rowGapUnit'] ) ? $attributes['rowGapUnit'] : 'px';
+
+				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
+				$css->add_property( 'flex-direction', 'column' );
+				$css->add_property( 'display', 'flex' );
+				$css->add_property( 'row-gap', $row_gap . $row_gap_unit );
 			}
 		}
 		// inside of Row.
@@ -484,7 +508,7 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 		}
 		// Hover Text colors.
 		if ( isset( $attributes['textColorHover'] ) ) {
-			$css->set_selector( '.kadence-column' . $unique_id . ':hover, .kadence-column' . $unique_id . ' h1, .kadence-column' . $unique_id . ' h2, .kadence-column' . $unique_id . ' h3, .kadence-column' . $unique_id . ' h4, .kadence-column' . $unique_id . ' h5, .kadence-column' . $unique_id . ' h6' );
+			$css->set_selector( '.kadence-column' . $unique_id . ':hover, .kadence-column' . $unique_id . ':hover h1, .kadence-column' . $unique_id . ':hover h2, .kadence-column' . $unique_id . ':hover h3, .kadence-column' . $unique_id . ':hover h4, .kadence-column' . $unique_id . ':hover h5, .kadence-column' . $unique_id . ':hover h6' );
 			$css->add_property( 'color', $css->render_color( $attributes['textColorHover'] ) );
 		}
 		if ( isset( $attributes['linkColorHover'] ) ) {
@@ -529,7 +553,19 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
 				$css->add_property( 'display', 'block' );
 			}
+
+			if ( !empty( $attributes['rowGap'][1] ) ) {
+				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
+				$row_gap      = isset( $attributes['rowGap'][1] ) && is_numeric( $attributes['rowGap'][1] ) ? $attributes['rowGap'][1] : 0;
+				$row_gap_unit = ! empty( $attributes['rowGapUnit'] ) ? $attributes['rowGapUnit'] : 'px';
+				$css->add_property( 'row-gap', $row_gap . $row_gap_unit );
+			}
 		} elseif ( 'horizontal' === $tablet_direction ) {
+			if( !empty( $attributes['flexBasis'][1] ) ) {
+				$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal.kadence-column' . $unique_id . ' > .kt-inside-inner-col > *' );
+				$basis_unit = ! empty( $attributes['flexBasisUnit'] ) ? $attributes['flexBasisUnit'] : 'px';
+				$css->add_property( 'flex', '1 1 ' . $attributes['flexBasis'][1] . $basis_unit );
+			}
 			if ( $desktop_direction === 'vertical' && ! empty( $attributes['verticalAlignment'] ) ) {
 				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
 				$css->add_property( 'justify-content', 'inherit' );
@@ -634,7 +670,21 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col > *' );
 				$css->add_property( 'margin-left', '0px' );;
 			}
+
+			if ( ! empty( $attributes['rowGap'][2] ) ) {
+				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
+				$row_gap      = isset( $attributes['rowGap'][2] ) && is_numeric( $attributes['rowGap'][2] ) ? $attributes['rowGap'][2] : 0;
+				$row_gap_unit = ! empty( $attributes['rowGapUnit'] ) ? $attributes['rowGapUnit'] : 'px';
+				$css->add_property( 'row-gap', $row_gap . $row_gap_unit );
+			}
 		} elseif ( 'horizontal' === $mobile_direction ) {
+
+			if ( ! empty( $attributes['flexBasis'][2] ) ) {
+				$css->set_selector( '.wp-block-kadence-column.kb-section-dir-horizontal.kadence-column' . $unique_id . ' > .kt-inside-inner-col > *' );
+				$basis_unit = ! empty( $attributes['flexBasisUnit'] ) ? $attributes['flexBasisUnit'] : 'px';
+				$css->add_property( 'flex', '1 1 ' . $attributes['flexBasis'][2] . $basis_unit );
+			}
+
 			if ( $desktop_direction === 'vertical' && ! empty( $attributes['verticalAlignment'] ) ) {
 				$css->set_selector( '.kadence-column' . $unique_id . ' > .kt-inside-inner-col' );
 				$css->add_property( 'justify-content', 'inherit' );
@@ -696,9 +746,7 @@ class Kadence_Blocks_Column_Block extends Kadence_Blocks_Abstract_Block {
 		if ( isset( $attributes['kadenceBlockCSS'] ) && ! empty( $attributes['kadenceBlockCSS'] ) ) {
 			$css->add_css_string( str_replace( 'selector', '.kadence-column' . $unique_id, $attributes['kadenceBlockCSS'] ) );
 		}
-		// Filter with cdn support.
-		$css_output = apply_filters( 'as3cf_filter_post_local_to_provider', $css->css_output() );
-		return $css_output;
+		return $css->css_output();
 	}
 }
 Kadence_Blocks_Column_Block::get_instance();

@@ -65,7 +65,7 @@ class MonsterInsights_Measurement_Protocol_V4 {
 
 		return add_query_arg(
 			array(
-				'api_secret'     => $api_secret,
+				'api_secret'     => apply_filters('monsterinsights_get_mp_call_secret', $api_secret),
 				'measurement_id' => $this->measurement_id,
 			),
 			$this->get_base_url()
@@ -196,8 +196,8 @@ class MonsterInsights_Measurement_Protocol_V4 {
 
 	public function collect( $args ) {
 		// Detect if browser request is a prefetch
-		if ( ( isset( $_SERVER["HTTP_X_PURPOSE"] ) && ( 'prefetch' === strtolower( $_SERVER["HTTP_X_PURPOSE"] ) ) ) ||
-		     ( isset( $_SERVER["HTTP_X_MOZ"] ) && ( 'prefetch' === strtolower( $_SERVER["HTTP_X_MOZ"] ) ) ) ) {
+		if ( ( isset( $_SERVER["HTTP_X_PURPOSE"] ) && ( 'prefetch' === strtolower( sanitize_text_field($_SERVER["HTTP_X_PURPOSE"]) ) ) ) ||
+		     ( isset( $_SERVER["HTTP_X_MOZ"] ) && ( 'prefetch' === strtolower( sanitize_text_field($_SERVER["HTTP_X_MOZ"]) ) ) ) ) {
 			return;
 		}
 

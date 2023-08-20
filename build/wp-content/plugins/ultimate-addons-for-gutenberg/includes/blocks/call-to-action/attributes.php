@@ -10,10 +10,13 @@
 $cta_border_attribute        = UAGB_Block_Helper::uag_generate_border_attribute( 'btn' );
 $second_cta_border_attribute = UAGB_Block_Helper::uag_generate_border_attribute( 'secondCta' );
 
+$inherit_from_theme = 'enabled' === UAGB_Admin_Helper::get_admin_settings_option( 'uag_btn_inherit_from_theme', 'disabled' );
+
 return array_merge(
 	array(
 		'classMigrate'                    => false,
-		'inheritFromTheme'                => false,
+		'inheritFromTheme'                => $inherit_from_theme,
+		'secInheritFromTheme'             => $inherit_from_theme,
 		'textAlign'                       => 'left',
 		'titleColor'                      => '',
 		'descColor'                       => '',
@@ -21,6 +24,8 @@ return array_merge(
 		'titleTag'                        => '',
 		'titleFontSize'                   => '',
 		'titleFontSizeType'               => 'px',
+		'titleFontSizeTypeTablet'         => 'px',
+		'titleFontSizeTypeMobile'         => 'px',
 		'titleFontSizeMobile'             => '',
 		'titleFontSizeTablet'             => '',
 		'titleFontFamily'                 => '',
@@ -32,6 +37,8 @@ return array_merge(
 		'titleLoadGoogleFonts'            => false,
 		'descFontSize'                    => '',
 		'descFontSizeType'                => 'px',
+		'descFontSizeTypeTablet'          => 'px',
+		'descFontSizeTypeMobile'          => 'px',
 		'descFontSizeMobile'              => '',
 		'descFontSizeTablet'              => '',
 		'descFontFamily'                  => '',
@@ -62,6 +69,8 @@ return array_merge(
 		'ctaLink'                         => '#',
 		'ctaFontSize'                     => 14,
 		'ctaFontSizeType'                 => 'px',
+		'ctaFontSizeTypeTablet'           => 'px',
+		'ctaFontSizeTypeMobile'           => 'px',
 		'ctaFontSizeMobile'               => '',
 		'ctaFontSizeTablet'               => '',
 		'ctaFontFamily'                   => '',
@@ -142,8 +151,10 @@ return array_merge(
 		'secondCtaHoverBackground'        => '',
 		'secondCtaFontSize'               => 14,
 		'secondCtaFontSizeType'           => 'px',
-		'secondCtaFontSizeMobile'         => 14,
-		'secondCtaFontSizeTablet'         => 14,
+		'secondCtaFontSizeTypeTablet'     => 'px',
+		'secondCtaFontSizeTypeMobile'     => 'px',
+		'secondCtaFontSizeMobile'         => '',
+		'secondCtaFontSizeTablet'         => '',
 		'secondCtaIcon'                   => 'right-long',
 		'secondCtaIconPosition'           => 'right',
 		'secondCtaIconSpace'              => 10,

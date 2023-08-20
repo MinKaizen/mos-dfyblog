@@ -3,8 +3,6 @@
  * Section [Archive] options for astra theme.
  *
  * @package     Astra Addon
- * @author      Brainstorm Force
- * @copyright   Copyright (c) 2020, Brainstorm Force
  * @link        https://www.brainstormforce.com
  * @since       1.0.0
  */
@@ -135,7 +133,7 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,
@@ -214,7 +212,7 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,
@@ -281,7 +279,7 @@ if ( ! class_exists( 'Astra_Archive_Advanced_Typo_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,

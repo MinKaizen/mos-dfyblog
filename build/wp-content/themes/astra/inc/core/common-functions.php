@@ -346,11 +346,21 @@ if ( ! function_exists( 'astra_get_background_obj' ) ) {
 					break;
 
 				case 'image':
-					if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
-						$gen_bg_css['background-image'] = 'linear-gradient(to right, ' . $bg_color . ', ' . $bg_color . '), url(' . $bg_img . ');';
-					}
-					if ( '' === $bg_color || is_numeric( strpos( $bg_color, 'linear-gradient' ) ) || is_numeric( strpos( $bg_color, 'radial-gradient' ) ) && '' !== $bg_img ) {
-						$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+					$overlay_type  = isset( $bg_obj['overlay-type'] ) ? $bg_obj['overlay-type'] : 'none';
+					$overlay_color = isset( $bg_obj['overlay-color'] ) ? $bg_obj['overlay-color'] : '';
+					$overlay_grad  = isset( $bg_obj['overlay-gradient'] ) ? $bg_obj['overlay-gradient'] : '';
+					if ( '' !== $bg_img ) {
+						if ( 'none' !== $overlay_type ) {
+							if ( 'classic' === $overlay_type && '' !== $overlay_color ) {
+								$gen_bg_css['background-image'] = 'linear-gradient(to right, ' . $overlay_color . ', ' . $overlay_color . '), url(' . $bg_img . ');';
+							} elseif ( 'gradient' === $overlay_type && '' !== $overlay_grad ) {
+								$gen_bg_css['background-image'] = $overlay_grad . ', url(' . $bg_img . ');';
+							} else {
+								$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+							}
+						} else {
+							$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+						}
 					}
 					break;
 
@@ -523,6 +533,9 @@ if ( ! function_exists( 'astra_update_option' ) ) {
 		$theme_options = get_option( ASTRA_THEME_SETTINGS );
 
 		// Update value in options array.
+		if ( ! is_array( $theme_options ) ) {
+			$theme_options = array();
+		}
 		$theme_options[ $option ] = $value;
 
 		update_option( ASTRA_THEME_SETTINGS, $theme_options );
@@ -928,7 +941,7 @@ if ( ! function_exists( 'astra_get_the_title' ) ) {
 function astra_use_dynamic_blog_layouts() {
 	$astra_settings                         = get_option( ASTRA_THEME_SETTINGS );
 	$astra_settings['dynamic-blog-layouts'] = isset( $astra_settings['dynamic-blog-layouts'] ) ? $astra_settings['dynamic-blog-layouts'] : true;
-	return apply_filters( 'astra_get_option_dynamic-blog-layouts', $astra_settings['dynamic-blog-layouts'] );
+	return apply_filters( 'astra_get_option_dynamic_blog_layouts', $astra_settings['dynamic-blog-layouts'] );
 }
 
 /**
@@ -1471,11 +1484,26 @@ function astra_get_responsive_background_obj( $bg_obj_res, $device ) {
 				break;
 
 			case 'image':
-				if ( '' !== $bg_img && '' !== $bg_color && ( ! is_numeric( strpos( $bg_color, 'linear-gradient' ) ) && ! is_numeric( strpos( $bg_color, 'radial-gradient' ) ) ) ) {
-					$gen_bg_css['background-image'] = 'linear-gradient(to right, ' . $bg_color . ', ' . $bg_color . '), url(' . $bg_img . ');';
-				}
-				if ( '' === $bg_color || is_numeric( strpos( $bg_color, 'linear-gradient' ) ) || is_numeric( strpos( $bg_color, 'radial-gradient' ) ) && '' !== $bg_img ) {
-					$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+				/** @psalm-suppress PossiblyUndefinedStringArrayOffset */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				$overlay_type = isset( $bg_obj['overlay-type'] ) ? $bg_obj['overlay-type'] : 'none';
+				/** @psalm-suppress PossiblyUndefinedStringArrayOffset */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				$overlay_color = isset( $bg_obj['overlay-color'] ) ? $bg_obj['overlay-color'] : '';
+				/** @psalm-suppress PossiblyUndefinedStringArrayOffset */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+				$overlay_grad = isset( $bg_obj['overlay-gradient'] ) ? $bg_obj['overlay-gradient'] : '';
+				/** @psalm-suppress PossiblyUndefinedStringArrayOffset */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
+
+				if ( '' !== $bg_img ) {
+					if ( 'none' !== $overlay_type ) {
+						if ( 'classic' === $overlay_type && '' !== $overlay_color ) {
+							$gen_bg_css['background-image'] = 'linear-gradient(to right, ' . $overlay_color . ', ' . $overlay_color . '), url(' . $bg_img . ');';
+						} elseif ( 'gradient' === $overlay_type && '' !== $overlay_grad ) {
+							$gen_bg_css['background-image'] = $overlay_grad . ', url(' . $bg_img . ');';
+						} else {
+							$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+						}
+					} else {
+						$gen_bg_css['background-image'] = 'url(' . $bg_img . ');';
+					}
 				}
 				break;
 
@@ -1635,4 +1663,22 @@ function astra_narrow_container_width( $location, $narrow_container_max_width ) 
 	} else {
 		return '';
 	}
+}
+
+/**
+ * Function which will return the Sidebar Layout to determine default body classes for Editor.
+ * 
+ * @since 4.2.0
+ * @param string $post_type Post Type.
+ * @return string Sidebar Layout.
+ */
+function astra_get_sidebar_layout_for_editor( $post_type ) {
+
+	$sidebar_layout = astra_get_option( 'single-' . $post_type . '-sidebar-layout' );
+
+	if ( 'default' === $sidebar_layout ) {
+		$sidebar_layout = astra_get_option( 'site-sidebar-layout' );
+	}
+
+	return $sidebar_layout;
 }

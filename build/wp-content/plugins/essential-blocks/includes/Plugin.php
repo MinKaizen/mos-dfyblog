@@ -11,12 +11,14 @@ use EssentialBlocks\Utils\Settings;
 use EssentialBlocks\Core\FontLoader;
 use EssentialBlocks\Core\Maintenance;
 use EssentialBlocks\Integrations\NFT;
+use EssentialBlocks\Core\ModifyWPCore;
 use EssentialBlocks\Core\PageTemplates;
 use EssentialBlocks\Core\BlocksPatterns;
 use EssentialBlocks\Traits\HasSingletone;
 use EssentialBlocks\Integrations\GoogleMap;
 use EssentialBlocks\Integrations\Instagram;
 use EssentialBlocks\Integrations\OpenVerse;
+use EssentialBlocks\Integrations\Pagination;
 use EssentialBlocks\Integrations\GlobalStyles;
 use EssentialBlocks\Integrations\AssetGeneration;
 use EssentialBlocks\Integrations\PluginInstaller;
@@ -24,7 +26,8 @@ use EssentialBlocks\Integrations\PluginInstaller;
 final class Plugin {
     use HasSingletone;
 
-    public $version = '4.0.2';
+
+    public $version = '4.2.0';
 
     public $admin;
     /**
@@ -80,7 +83,7 @@ final class Plugin {
             self::$blocks->register_blocks( $this->assets );
         } );
 
-        FontLoader::get_instance('essential-blocks');
+        FontLoader::get_instance( 'essential-blocks' );
 
         // Templates
         PageTemplates::get_instance();
@@ -112,7 +115,12 @@ final class Plugin {
         //Global Style Ajax for Store
         GlobalStyles::get_instance();
 
+        // pagination
+        Pagination::get_instance();
+
         add_action( 'plugins_loaded', [$this, 'plugins_loaded'] );
+
+        add_action( 'wp_loaded', [$this, 'wp_loaded'] );
         /**
          * Initialize.
          */
@@ -149,6 +157,15 @@ final class Plugin {
     }
 
     /**
+     * Initializing Things on WP Loaded
+     * @return void
+     */
+    public function wp_loaded() {
+
+        ModifyWPCore::get_instance();
+    }
+
+    /**
      * Define CONSTANTS
      *
      * @since 2.0.0
@@ -156,7 +173,7 @@ final class Plugin {
      */
     public function define_constants() {
         $this->define( 'ESSENTIAL_BLOCKS_WP_VERSION', (float) get_bloginfo( 'version' ) );
-        $this->define( 'ESSENTIAL_BLOCKS_WHATSNEW_REDIRECT', 'redirect' );
+        $this->define( 'ESSENTIAL_BLOCKS_WHATSNEW_REDIRECT', 'none' );
         $this->define( 'ESSENTIAL_BLOCKS_NAME', 'essential-blocks' );
         $this->define( 'ESSENTIAL_BLOCKS_DIR_PATH', plugin_dir_path( ESSENTIAL_BLOCKS_FILE ) );
         $this->define( 'ESSENTIAL_BLOCKS_BLOCK_DIR', ESSENTIAL_BLOCKS_DIR_PATH . '/blocks/' );
@@ -164,7 +181,10 @@ final class Plugin {
         $this->define( 'ESSENTIAL_BLOCKS_ADMIN_URL', plugin_dir_url( ESSENTIAL_BLOCKS_FILE ) );
         $this->define( 'ESSENTIAL_BLOCKS_PLUGIN_BASENAME', plugin_basename( ESSENTIAL_BLOCKS_FILE ) );
         $this->define( 'ESSENTIAL_BLOCKS_VERSION', $this->version );
+        $this->define( 'ESSENTIAL_BLOCKS_IS_PRO_ACTIVE', class_exists( 'EssentialBlocks\Pro\Plugin' ) ? true : false );
         $this->define( 'ESSENTIAL_BLOCKS_SITE_URL', 'https://essential-blocks.com/' );
+        $this->define( 'ESSENTIAL_BLOCKS_UPGRADE_PRO_URL', 'https://essential-blocks.com/upgrade' );
+        $this->define( 'ESSENTIAL_BLOCKS_PLACEHOLDER_IMAGE', ESSENTIAL_BLOCKS_URL . 'assets/images/placeholder.png' );
     }
 
     /**

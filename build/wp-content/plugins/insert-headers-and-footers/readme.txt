@@ -1,10 +1,10 @@
 === WPCode - Insert Headers and Footers + Custom Code Snippets - WordPress Code Manager ===
-Contributors: WPbeginner, smub, gripgrip
+Contributors: WPbeginner, smub, gripgrip, wpcodeteam
 Tags: code, css, php, footer, functions, content, facebook pixel, footer code, footer scripts, footers, google analytics, head, header, header code, header scripts, headers, insert, insert code, insert scripts, js, meta, meta tags, scripts, html, javascript, multisite, code snippets
 Requires at least: 4.6
-Tested up to: 6.1
+Tested up to: 6.3
 Requires PHP: 5.5
-Stable tag: 2.0.8.1
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Easily add code snippets in WordPress. Insert header and footer scripts, add PHP
 
 = Insert Headers & Footers + Full WordPress Code Snippets Plugin =
 
-<a href="https://wpcode.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin" rel="friend" title="WPCode">WPCode</a> (formerly known as Insert Headers and Footers by WPBeginner) is the most popular code snippets plugin for WordPress used by over 1 million websites.
+<a href="https://wpcode.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteplugin" rel="friend" title="WPCode">WPCode</a> (formerly known as Insert Headers and Footers by WPBeginner) is the most popular code snippets plugin for WordPress used by over 2 million websites.
 
 We make it easy for you to add code snippets in WordPress without having to edit your theme's functions.php file.
 
@@ -307,6 +307,46 @@ Thank you
 Syed Balkhi
 
 == Changelog ==
+
+= 2.1.1 =
+* New: Easily duplicate a snippet with all of its settings with the new Duplicate link in the list of snippets.
+* Fix: Taxonomy page conditional logic was not being correctly assigned for category and tags archives.
+* Tweak: Adjust admin bar markup to avoid using a heading.
+
+= 2.1.0 =
+* New: See exactly which scripts and snippets are loaded on the current page with the WPCode admin bar info menu.
+* Tweak: Minor update to connect process.
+
+= 2.0.13.1 =
+* Fix: Improve compatibility with older WordPress versions before version 4.7.
+* Fix: Add escaping to tag filter links in the list of snippets.
+
+= 2.0.13 =
+* New: We have added user customization options for the list of snippets in the admin. Now, you can choose snippet list columns, determine the number of snippets to display, and set the default order of the snippets.
+* New: When you save a snippet, the WPCode editor will retain the cursor position, making it easier for you to continue editing larger snippets.
+
+= 2.0.12 =
+* New: You can now add shortcode attributes and use them in snippets. Any attribute you define becomes available as a variable in PHP & Universal code snippets.
+* Tweak: We improved the way the editor is loaded when users enable the “Disable syntax highlighting when editing code” in their profile.
+* Tweak: We adjusted the way the editor gets refreshed when changing a snippet code type.
+* Fix: The Auto-Insert location was getting reset with every code type change.
+
+= 2.0.11 =
+* New: Automatically disabled snippets due to errors will now be highlighted in the list for easier debugging.
+* New: We added a filter to allow users to easily customize the Codemirror settings for the WPCode editor.
+* Tweak: We extended our plugin-specific snippet loading to allow plugin version checks.
+
+= 2.0.10 =
+* New: We added a way to load more snippets in the WPCode Library relevant to other plugins you are using.
+* Fix: We added an extra filter removal to prevent WordPress core from automatically adding the rel tag to snippets where it may break the syntax.
+* Fix: We improved backwards compatibility with older WordPress versions.
+
+= 2.0.9 =
+* New: We redesigned the auto-insert location picker to make it easier to find the right place to insert your snippets.
+* Fix: We fixed an edge-case where a snippet getting automatically deactivated due to throwing an error would have its code changed.
+* Fix: Inserting a snippet as a shortcode was ignoring the conditional logic rules enable toggle and always applying rules.
+* Fix: We updated the way we check the taxonomy term id when applying conditional logic rules.
+* Fix: Security hardening for deleting logs.
 
 = 2.0.8.1 =
 * Fix: Improve compatibility with PHP 8.1 for our error handling class.

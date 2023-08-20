@@ -3,8 +3,6 @@
  * [Primary Menu] options for astra theme.
  *
  * @package     Astra Addon
- * @author      Brainstorm Force
- * @copyright   Copyright (c) 2020, Brainstorm Force
  * @link        https://www.brainstormforce.com
  * @since       3.0.0
  */
@@ -130,7 +128,7 @@ if ( ! class_exists( 'Astra_Builder_Menu_Configs' ) ) {
 							'px' => array(
 								'min'  => 0,
 								'step' => 1,
-								'max'  => 100,
+								'max'  => 200,
 							),
 							'em' => array(
 								'min'  => 0,
@@ -243,7 +241,7 @@ if ( ! class_exists( 'Astra_Builder_Menu_Configs' ) ) {
 								'px' => array(
 									'min'  => 0,
 									'step' => 1,
-									'max'  => 100,
+									'max'  => 200,
 								),
 								'em' => array(
 									'min'  => 0,
@@ -424,7 +422,7 @@ if ( ! class_exists( 'Astra_Builder_Menu_Configs' ) ) {
 						'px' => array(
 							'min'  => 0,
 							'step' => 1,
-							'max'  => 100,
+							'max'  => 200,
 						),
 						'em' => array(
 							'min'  => 0,

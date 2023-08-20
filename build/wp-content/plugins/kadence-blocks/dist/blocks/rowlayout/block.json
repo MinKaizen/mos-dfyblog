@@ -1,12 +1,15 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "kadence/rowlayout",
   "title": "Row Layout",
   "category": "kadence-blocks",
   "usesContext": [
     "postId",
-    "queryId"
+    "queryId",
+    "kadence/dynamicSource",
+    "kadence/repeaterRowData",
+    "kadence/repeaterRow"
   ],
   "textdomain": "kadence-blocks",
   "attributes": {
@@ -282,6 +285,10 @@
       "type": "number",
       "default": ""
     },
+    "topSepHeightUnit": {
+      "type": "string",
+      "default": "px"
+    },
     "bottomSep": {
       "type": "string",
       "default": "none"
@@ -309,6 +316,10 @@
     "bottomSepWidthMobile": {
       "type": "number",
       "default": ""
+    },
+    "bottomSepHeightUnit": {
+      "type": "string",
+      "default": "px"
     },
     "bottomSepHeightTab": {
       "type": "number",
@@ -812,6 +823,14 @@
         }
       ]
     },
+    "breakoutLeft": {
+      "type": "boolean",
+      "default": false
+    },
+    "breakoutRight": {
+      "type": "boolean",
+      "default": false
+    },
     "anchor": {
       "type": "string"
     },
@@ -836,6 +855,7 @@
     "anchor": true,
     "ktdynamic": true,
     "kbcss": true,
-    "html": false
+    "html": false,
+    "kbMetadata": true
   }
 }

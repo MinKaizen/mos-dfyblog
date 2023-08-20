@@ -57,7 +57,6 @@ if ( ! class_exists( 'UAGB_Admin' ) ) {
 			add_action( 'admin_init', array( $this, 'update_old_user_option_by_url_params' ) );
 
 			add_action( 'admin_post_uag_rollback', array( $this, 'post_uagb_rollback' ) );
-
 		}
 
 		/**
@@ -153,7 +152,7 @@ if ( ! class_exists( 'UAGB_Admin' ) ) {
 								'page' => UAGB_SLUG,
 								'spectra-activation-redirect' => true,
 							),
-							admin_url( 'options-general.php' )
+							admin_url( 'admin.php' )
 						)
 					);
 					exit();
@@ -233,7 +232,7 @@ if ( ! class_exists( 'UAGB_Admin' ) ) {
 
 			if ( class_exists( 'Classic_Editor' ) ) {
 				$editor_option = get_option( 'classic-editor-replace' );
-				if ( isset( $editor_option ) && 'block' !== $editor_option ) {
+				if ( 'block' !== $editor_option ) {
 					Astra_Notices::add_notice(
 						array(
 							'id'                         => 'uagb-classic-editor',
@@ -260,8 +259,10 @@ if ( ! class_exists( 'UAGB_Admin' ) ) {
 		 * @since 1.8.0
 		 */
 		public function notice_styles_scripts() {
-			// Styles.
+			// Admin Notice Styles.
 			wp_enqueue_style( 'uagb-notice-settings', UAGB_URL . 'admin/assets/admin-notice.css', array(), UAGB_VER );
+			// Admin Spectra Submenu Styles.
+			wp_enqueue_style( 'uagb-submenu-settings', UAGB_URL . 'admin/assets/spectra-submenu.css', array(), UAGB_VER );
 		}
 
 		/**
@@ -273,8 +274,6 @@ if ( ! class_exists( 'UAGB_Admin' ) ) {
 			$plugins['ultimate-addons-for-gutenberg/ultimate-addons-for-gutenberg.php'] = 'Spectra';
 			return $plugins;
 		}
-
-
 	}
 
 	UAGB_Admin::get_instance();

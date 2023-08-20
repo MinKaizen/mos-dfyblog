@@ -741,7 +741,8 @@ final class GF_Entry_List_Table extends WP_List_Table {
 			$sort_field_meta = GFAPI::get_field( $form_id, $sort_field );
 
 			if ( $sort_field_meta instanceof GF_Field ) {
-				$is_numeric = $sort_field_meta->get_input_type() == 'number';
+				$numeric_fields = array( 'number', 'total', 'calculation', 'price', 'quantity', 'shipping', 'singleshipping', 'product', 'singleproduct' );
+				$is_numeric = in_array( $sort_field_meta->get_input_type(), $numeric_fields );
 			} else {
 				$entry_meta = GFFormsModel::get_entry_meta( $form_id );
 				$is_numeric = rgars( $entry_meta, $sort_field . '/is_numeric' );
@@ -1006,12 +1007,16 @@ final class GF_Entry_List_Table extends WP_List_Table {
 			default:
 				if ( $field !== null ) {
 					$value = $field->get_value_entry_list( $value, $entry, $field_id, $columns, $form );
-				} else {
+				} else if ( ! is_array( $value ) ) {
 					$value = esc_html( $value );
 				}
 		}
 
 		$value = apply_filters( 'gform_entries_field_value', $value, $form_id, $field_id, $entry );
+
+		if ( is_array( $value ) ) {
+			$value = esc_html( implode( ', ', $value ) );
+		}
 
 		$primary      = $this->get_primary_column_name();
 		$query_string = $this->get_detail_query_string( $entry );

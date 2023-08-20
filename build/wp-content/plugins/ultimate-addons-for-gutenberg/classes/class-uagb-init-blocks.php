@@ -72,8 +72,103 @@ class UAGB_Init_Blocks {
 			add_action( 'render_block', array( $this, 'render_block' ), 5, 2 );
 		}
 
+		if ( current_user_can( 'edit_posts' ) ) {
+			add_action( 'wp_ajax_uagb_svg_confirmation', array( $this, 'confirm_svg_upload' ) );
+		}
+
+		add_action( 'init', array( $this, 'register_popup_builder' ) );
 	}
-	
+
+	/**
+	 * Register the Popup Builder CPT.
+	 *
+	 * @return void
+	 *
+	 * @since 2.6.0
+	 */
+	public function register_popup_builder() {
+		$supports = array(
+			'title',
+			'editor',
+			'custom-fields',
+			'author',
+		);
+
+		$labels = array(
+			'name'               => _x( 'Popup Builder', 'plural', 'ultimate-addons-for-gutenberg' ),
+			'singular_name'      => _x( 'Spectra Popup', 'singular', 'ultimate-addons-for-gutenberg' ),
+			'view_item'          => __( 'View Popup', 'ultimate-addons-for-gutenberg' ),
+			'add_new_item'       => __( 'Create New Popup', 'ultimate-addons-for-gutenberg' ),
+			'add_new'            => __( 'Create Popup', 'ultimate-addons-for-gutenberg' ),
+			'edit_item'          => __( 'Edit Popup', 'ultimate-addons-for-gutenberg' ),
+			'search_items'       => __( 'Search Popups', 'ultimate-addons-for-gutenberg' ),
+			'update_item'        => __( 'Update Popup', 'ultimate-addons-for-gutenberg' ),
+			'item_updated'       => __( 'Popup Updated', 'ultimate-addons-for-gutenberg' ),
+			'not_found'          => __( 'No Popups Found', 'ultimate-addons-for-gutenberg' ),
+			'not_found_in_trash' => __( 'No Popups in Trash', 'ultimate-addons-for-gutenberg' ),
+		);
+
+		$type_args = array(
+			'supports'          => $supports,
+			'labels'            => $labels,
+			'public'            => false,
+			'show_in_menu'      => false,
+			'show_in_admin_bar' => true,
+			'show_ui'           => true,
+			'show_in_rest'      => true,
+			'template_lock'     => 'all',
+			'template'          => array(
+				array( 'uagb/popup-builder', array() ),
+			),
+			'rewrite'           => array(
+				'slug'       => 'spectra-popup',
+				'with-front' => false,
+				'pages'      => false,
+			),
+		);
+
+		$meta_args_popup_type = array(
+			'single'        => true,
+			'type'          => 'string',
+			'default'       => 'unset',
+			'auth_callback' => '__return_true',
+			'show_in_rest'  => true,
+		);
+
+		$meta_args_popup_enabled = array(
+			'single'        => true,
+			'type'          => 'boolean',
+			'default'       => false,
+			'auth_callback' => '__return_true',
+			'show_in_rest'  => true,
+		);
+
+		$meta_args_popup_repetition = array(
+			'single'        => true,
+			'type'          => 'number',
+			'default'       => 1,
+			'auth_callback' => '__return_true',
+			'show_in_rest'  => true,
+		);
+
+		register_post_type( 'spectra-popup', $type_args );
+
+		register_post_meta( 'spectra-popup', 'spectra-popup-type', $meta_args_popup_type );
+		register_post_meta( 'spectra-popup', 'spectra-popup-enabled', $meta_args_popup_enabled );
+		register_post_meta( 'spectra-popup', 'spectra-popup-repetition', $meta_args_popup_repetition );
+		do_action( 'register_spectra_pro_popup_meta' );
+
+		$spectra_popup_dashboard = UAGB_Popup_Builder::create_for_admin();
+
+		add_action( 'admin_enqueue_scripts', array( $spectra_popup_dashboard, 'popup_toggle_scripts' ) );
+		add_action( 'wp_ajax_uag_update_popup_status', array( $spectra_popup_dashboard, 'update_popup_status' ) );
+
+		do_action( 'spectra_pro_popup_dashboard' );
+
+		add_filter( 'manage_spectra-popup_posts_columns', array( $spectra_popup_dashboard, 'popup_builder_admin_headings' ) );
+		add_action( 'manage_spectra-popup_posts_custom_column', array( $spectra_popup_dashboard, 'popup_builder_admin_content' ), 10, 2 );
+	}
+
 	/**
 	 * Render block.
 	 *
@@ -84,38 +179,60 @@ class UAGB_Init_Blocks {
 	 */
 	public function render_block( $block_content, $block ) {
 
-		if ( isset( $block['attrs'] ) ) {
+		if ( ! empty( $block['attrs']['UAGDisplayConditions'] ) ) {
+			switch ( $block['attrs']['UAGDisplayConditions'] ) {
+				case 'userstate':
+					$block_content = $this->user_state_visibility( $block['attrs'], $block_content );
+					break;
 
-			$block_attributes = $block['attrs'];
+				case 'userRole':
+					$block_content = $this->user_role_visibility( $block['attrs'], $block_content );
+					break;
 
-			if ( isset( $block_attributes['UAGDisplayConditions'] ) && array_key_exists( 'UAGDisplayConditions', $block_attributes ) ) {
+				case 'browser':
+					$block_content = $this->browser_visibility( $block['attrs'], $block_content );
+					break;
 
-				switch ( $block_attributes['UAGDisplayConditions'] ) {
-
-					case 'userstate':
-						$block_content = $this->user_state_visibility( $block_attributes, $block_content );
-						break;
-
-					case 'userRole':
-						$block_content = $this->user_role_visibility( $block_attributes, $block_content );
-						break;
-
-					case 'browser':
-						$block_content = $this->browser_visibility( $block_attributes, $block_content );
-						break;
-
-					case 'os':
-						$block_content = $this->os_visibility( $block_attributes, $block_content );
-						break;
-
-					default:
-						// code...
-						break;
-				}
+				case 'os':
+					$block_content = $this->os_visibility( $block['attrs'], $block_content );
+					break;
+				case 'day':
+					$block_content = $this->day_visibility( $block['attrs'], $block_content );
+					break;
+				default:
+					// code...
+					break;
 			}
 		}
+
+		// Check if animations extension is enabled and an animation type is selected.
+		if (
+			'enabled' === \UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_animations_extension', 'enabled' ) &&
+			! empty( $block['attrs']['UAGAnimationType'] ) &&
+			$block['attrs']['UAGAnimationType']
+		) {
+
+			$attrs = $block['attrs'];
+
+			// Defaults aren't received here, hence we set them.
+			// Without these defaults, empty data is sent to markup (which doesn't affect the functionality at all but still it's a good practice to follow).
+			$attrs['UAGAnimationTime']   = isset( $attrs['UAGAnimationTime'] ) ? $attrs['UAGAnimationTime'] : 400;
+			$attrs['UAGAnimationDelay']  = isset( $attrs['UAGAnimationDelay'] ) ? $attrs['UAGAnimationDelay'] : 0;
+			$attrs['UAGAnimationEasing'] = isset( $attrs['UAGAnimationEasing'] ) ? $attrs['UAGAnimationEasing'] : 'ease';
+			$attrs['UAGAnimationRepeat'] = isset( $attrs['UAGAnimationRepeat'] ) ? 'false' : 'true';
+
+			$aos_attributes = '<div data-aos= "' . esc_attr( $attrs['UAGAnimationType'] ) . '" data-aos-duration="' . esc_attr( $attrs['UAGAnimationTime'] ) . '" data-aos-delay="' . esc_attr( $attrs['UAGAnimationDelay'] ) . '" data-aos-easing="' . esc_attr( $attrs['UAGAnimationEasing'] ) . '" data-aos-once="' . esc_attr( $attrs['UAGAnimationRepeat'] ) . '" ';
+
+			$block_content = preg_replace( '/<div /', $aos_attributes, $block_content, 1 );
+
+		}
+
+		// Render Block Manipulation for Spectra Pro Blocks.
+		$block_content = apply_filters( 'spectra_pro_render_block', $block_content, $block );
+
 		return $block_content;
 	}
+
 	/**
 	 * User State Visibility.
 	 *
@@ -126,19 +243,14 @@ class UAGB_Init_Blocks {
 	 * @return mixed Returns the new block content.
 	 */
 	public function user_role_visibility( $block_attributes, $block_content ) {
+		if ( empty( $block_attributes['UAGUserRole'] ) ) {
+			return $block_content;
+		}
 
 		$user = wp_get_current_user();
-
-		if ( isset( $block_attributes['UAGUserRole'] ) && array_key_exists( 'UAGUserRole', $block_attributes ) ) {
-
-			$value = $block_attributes['UAGUserRole'];
-
-			if ( is_user_logged_in() && in_array( $value, $user->roles, true ) ) {
-				return '';
-			}
-		}
-		return $block_content;
+		return is_user_logged_in() && ! empty( $user->roles ) && in_array( $block_attributes['UAGUserRole'], $user->roles, true ) ? '' : $block_content;
 	}
+
 	/**
 	 * User State Visibility.
 	 *
@@ -149,11 +261,9 @@ class UAGB_Init_Blocks {
 	 */
 	public function os_visibility( $block_attributes, $block_content ) {
 
-		if ( ! array_key_exists( 'UAGSystem', $block_attributes ) ) {
+		if ( empty( $block_attributes['UAGSystem'] ) ) {
 			return $block_content;
 		}
-
-		$value = $block_attributes['UAGSystem'];
 
 		$os = array(
 			'iphone'   => '(iPhone)',
@@ -166,12 +276,10 @@ class UAGB_Init_Blocks {
 		);
 
 		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ) : '';
-		if ( preg_match( '@' . $os[ $value ] . '@', $user_agent ) ) {
-			return '';
-		}
 
-		return $block_content;
+		return isset( $os[ $block_attributes['UAGSystem'] ] ) && preg_match( '@' . $os[ $block_attributes['UAGSystem'] ] . '@', $user_agent ) ? '' : $block_content;
 	}
+
 	/**
 	 * User State Visibility.
 	 *
@@ -183,18 +291,15 @@ class UAGB_Init_Blocks {
 	 */
 	public function browser_visibility( $block_attributes, $block_content ) {
 
-		if ( ! array_key_exists( 'UAGBrowser', $block_attributes ) ) {
+		if ( empty( $block_attributes['UAGBrowser'] ) ) {
 			return $block_content;
 		}
 
-		$value = $block_attributes['UAGBrowser'];
-
 		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? UAGB_Helper::get_browser_name( sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 
-		$show = ( $value === $user_agent ) ? true : false;
-
-		return ( $show ) ? '' : $block_content;
+		return $block_attributes['UAGBrowser'] === $user_agent ? '' : $block_content;
 	}
+
 	/**
 	 * User State Visibility.
 	 *
@@ -206,15 +311,37 @@ class UAGB_Init_Blocks {
 	 */
 	public function user_state_visibility( $block_attributes, $block_content ) {
 
-		if ( isset( $block_attributes['UAGLoggedIn'] ) && $block_attributes['UAGLoggedIn'] && is_user_logged_in() ) {
+		if ( ! empty( $block_attributes['UAGLoggedIn'] ) && is_user_logged_in() ) {
 			return '';
 		}
 
-		if ( isset( $block_attributes['UAGLoggedOut'] ) && $block_attributes['UAGLoggedOut'] && ! is_user_logged_in() ) {
+		if ( ! empty( $block_attributes['UAGLoggedOut'] ) && ! is_user_logged_in() ) {
 			return '';
 		}
 
 		return $block_content;
+
+	}
+
+	/**
+	 * Day Visibility.
+	 *
+	 * @param array $block_attributes The block data.
+	 * @param mixed $block_content The block content.
+	 *
+	 * @since 2.1.3
+	 * @return mixed Returns the new block content.
+	 */
+	public function day_visibility( $block_attributes, $block_content ) {
+
+		// If not set restriction.
+		if ( empty( $block_attributes['UAGDay'] ) ) {
+			return $block_content;
+		}
+
+		$current_day = strtolower( current_datetime()->format( 'l' ) );
+		// Check in restricted day.
+		return ! in_array( $current_day, $block_attributes['UAGDay'] ) ? $block_content : '';
 
 	}
 
@@ -432,6 +559,24 @@ class UAGB_Init_Blocks {
 	}
 
 	/**
+	 * Localize SVG icon scripts in chunks.
+	 * Ex - if 1800 icons available so we will localize 4 variables for it.
+	 *
+	 * @since 2.7.0
+	 * @return void
+	 */
+	public function add_svg_icon_assets() {
+		$localize_icon_chunks = UAGB_Helper::backend_load_font_awesome_icons();
+		if ( ! $localize_icon_chunks ) {
+			return;
+		}
+
+		foreach ( $localize_icon_chunks as $chunk_index => $value ) {
+			wp_localize_script( 'uagb-block-editor-js', "uagb_svg_icons_{$chunk_index}", $value );
+		}
+	}
+
+	/**
 	 * Enqueue Gutenberg block assets for backend editor.
 	 *
 	 * @since 1.0.0
@@ -557,9 +702,6 @@ class UAGB_Init_Blocks {
 
 		$content_width = \UAGB_Admin_Helper::get_global_content_width();
 
-		if ( '' === $content_width ) {
-			$content_width = 1140;
-		}
 
 		$container_padding = UAGB_Admin_Helper::get_admin_settings_option( 'uag_container_global_padding', 'default' );
 
@@ -569,57 +711,71 @@ class UAGB_Init_Blocks {
 		}
 
 		$container_elements_gap = UAGB_Admin_Helper::get_admin_settings_option( 'uag_container_global_elements_gap', 20 );
+		$screen                 = get_current_screen();
 
 		wp_localize_script(
 			'uagb-block-editor-js',
 			'uagb_blocks_info',
 			array(
-				'cf7_is_active'                      => class_exists( 'WPCF7_ContactForm' ),
-				'gf_is_active'                       => class_exists( 'GFForms' ),
-				'category'                           => 'uagb',
-				'ajax_url'                           => admin_url( 'admin-ajax.php' ),
-				'cf7_forms'                          => $this->get_cf7_forms(),
-				'gf_forms'                           => $this->get_gravity_forms(),
-				'tablet_breakpoint'                  => UAGB_TABLET_BREAKPOINT,
-				'mobile_breakpoint'                  => UAGB_MOBILE_BREAKPOINT,
-				'image_sizes'                        => UAGB_Helper::get_image_sizes(),
-				'post_types'                         => UAGB_Helper::get_post_types(),
-				'uagb_ajax_nonce'                    => $uagb_ajax_nonce,
-				'uagb_home_url'                      => home_url(),
-				'user_role'                          => $this->get_user_role(),
-				'uagb_url'                           => UAGB_URL,
-				'uagb_mime_type'                     => UAGB_Helper::get_mime_type(),
-				'uagb_site_url'                      => UAGB_URI,
-				'enableConditions'                   => apply_filters_deprecated( 'enable_block_condition', array( $display_condition ), '1.23.4', 'uag_enable_block_condition' ),
-				'enableConditionsForCoreBlocks'      => apply_filters( 'enable_block_condition_for_core', true ),
-				'enableMasonryGallery'               => apply_filters( 'uag_enable_masonry_gallery', UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_masonry_gallery', 'enabled' ) ),
-				'enableResponsiveConditions'         => apply_filters( 'enable_block_responsive', UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_block_responsive', 'enabled' ) ),
-				'uagb_svg_icons'                     => UAGB_Helper::backend_load_font_awesome_icons(),
-				'uagb_enable_extensions_for_blocks'  => apply_filters( 'uagb_enable_extensions_for_blocks', array() ),
-				'uagb_exclude_blocks_from_extension' => $uagb_exclude_blocks_from_extension,
-				'uag_load_select_font_globally'      => $enable_selected_fonts,
-				'uag_select_font_globally'           => $selected_fonts,
-				'uagb_old_user_less_than_2'          => get_option( 'uagb-old-user-less-than-2' ),
-				'collapse_panels'                    => UAGB_Admin_Helper::get_admin_settings_option( 'uag_collapse_panels', 'enabled' ),
-				'enable_legacy_blocks'               => UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_legacy_blocks', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'yes' : 'no' ),
-				'copy_paste'                         => UAGB_Admin_Helper::get_admin_settings_option( 'uag_copy_paste', 'enabled' ),
-				'content_width'                      => $content_width,
-				'container_global_padding'           => $container_padding,
-				'container_elements_gap'             => $container_elements_gap,
-				'recaptcha_site_key_v2'              => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_site_key_v2', '' ),
-				'recaptcha_site_key_v3'              => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_site_key_v3', '' ),
-				'recaptcha_secret_key_v2'            => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_secret_key_v2', '' ),
-				'recaptcha_secret_key_v3'            => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_secret_key_v3', '' ),
-				'blocks_editor_spacing'              => UAGB_Admin_Helper::get_admin_settings_option( 'uag_blocks_editor_spacing', 0 ),
-				'load_font_awesome_5'                => UAGB_Admin_Helper::get_admin_settings_option( 'uag_load_font_awesome_5', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'enabled' : 'disabled' ),
-				'auto_block_recovery'                => UAGB_Admin_Helper::get_admin_settings_option( 'uag_auto_block_recovery', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'enabled' : 'disabled' ),
-				'font_awesome_5_polyfill'            => array(),
-				'spectra_custom_fonts'               => apply_filters( 'spectra_system_fonts', array() ),
-				'spectra_pro_status'                 => is_plugin_active( 'spectra-pro/spectra-pro.php' ),
-				'spectra_custom_css_example'         => __(
+				'cf7_is_active'                           => class_exists( 'WPCF7_ContactForm' ),
+				'gf_is_active'                            => class_exists( 'GFForms' ),
+				'category'                                => 'uagb',
+				'ajax_url'                                => admin_url( 'admin-ajax.php' ),
+				'cf7_forms'                               => $this->get_cf7_forms(),
+				'gf_forms'                                => $this->get_gravity_forms(),
+				'tablet_breakpoint'                       => UAGB_TABLET_BREAKPOINT,
+				'mobile_breakpoint'                       => UAGB_MOBILE_BREAKPOINT,
+				'image_sizes'                             => UAGB_Helper::get_image_sizes(),
+				'post_types'                              => UAGB_Helper::get_post_types(),
+				'uagb_ajax_nonce'                         => $uagb_ajax_nonce,
+				'uagb_svg_confirmation_nonce'             => current_user_can( 'edit_posts' ) ? wp_create_nonce( 'uagb_confirm_svg_nonce' ) : '',
+				'svg_confirmation'                        => current_user_can( 'edit_posts' ) ? get_option( 'spectra_svg_confirmation' ) : '',
+				'uagb_home_url'                           => home_url(),
+				'user_role'                               => $this->get_user_role(),
+				'uagb_url'                                => UAGB_URL,
+				'uagb_mime_type'                          => UAGB_Helper::get_mime_type(),
+				'uagb_site_url'                           => UAGB_URI,
+				'enableConditions'                        => apply_filters_deprecated( 'enable_block_condition', array( $display_condition ), '1.23.4', 'uag_enable_block_condition' ),
+				'enableConditionsForCoreBlocks'           => apply_filters( 'enable_block_condition_for_core', true ),
+				'enableResponsiveConditionsForCoreBlocks' => apply_filters( 'enable_responsive_condition_for_core', true ),
+				'enableMasonryGallery'                    => apply_filters( 'uag_enable_masonry_gallery', UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_masonry_gallery', 'enabled' ) ),
+				'enableAnimationsExtension'               => apply_filters( 'uag_enable_animations_extension', UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_animations_extension', 'enabled' ) ),
+				'enableResponsiveConditions'              => apply_filters( 'enable_block_responsive', UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_block_responsive', 'enabled' ) ),
+				'number_of_icon_chunks'                   => UAGB_Helper::$number_of_icon_chunks,
+				'uagb_enable_extensions_for_blocks'       => apply_filters( 'uagb_enable_extensions_for_blocks', array() ),
+				'uagb_exclude_blocks_from_extension'      => $uagb_exclude_blocks_from_extension,
+				'uag_load_select_font_globally'           => $enable_selected_fonts,
+				'uag_select_font_globally'                => $selected_fonts,
+				'uagb_old_user_less_than_2'               => get_option( 'uagb-old-user-less-than-2' ),
+				'collapse_panels'                         => UAGB_Admin_Helper::get_admin_settings_option( 'uag_collapse_panels', 'enabled' ),
+				'enable_legacy_blocks'                    => UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_legacy_blocks', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'yes' : 'no' ),
+				'copy_paste'                              => UAGB_Admin_Helper::get_admin_settings_option( 'uag_copy_paste', 'enabled' ),
+				'enable_on_page_css_button'               => UAGB_Admin_Helper::get_admin_settings_option( 'uag_enable_on_page_css_button', 'yes' ),
+				'content_width'                           => $content_width,
+				'container_global_padding'                => $container_padding,
+				'container_elements_gap'                  => $container_elements_gap,
+				'recaptcha_site_key_v2'                   => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_site_key_v2', '' ),
+				'recaptcha_site_key_v3'                   => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_site_key_v3', '' ),
+				'recaptcha_secret_key_v2'                 => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_secret_key_v2', '' ),
+				'recaptcha_secret_key_v3'                 => UAGB_Admin_Helper::get_admin_settings_option( 'uag_recaptcha_secret_key_v3', '' ),
+				'blocks_editor_spacing'                   => apply_filters( 'uagb_default_blocks_editor_spacing', UAGB_Admin_Helper::get_admin_settings_option( 'uag_blocks_editor_spacing', 0 ) ),
+				'load_font_awesome_5'                     => UAGB_Admin_Helper::get_admin_settings_option( 'uag_load_font_awesome_5', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'enabled' : 'disabled' ),
+				'auto_block_recovery'                     => UAGB_Admin_Helper::get_admin_settings_option( 'uag_auto_block_recovery', ( 'yes' === get_option( 'uagb-old-user-less-than-2' ) ) ? 'enabled' : 'disabled' ),
+				'font_awesome_5_polyfill'                 => array(),
+				'spectra_custom_fonts'                    => apply_filters( 'spectra_system_fonts', array() ),
+				'spectra_pro_status'                      => is_plugin_active( 'spectra-pro/spectra-pro.php' ),
+				'spectra_custom_css_example'              => __(
 					'Use custom class added in block\'s advanced settings to target your desired block. Examples:
-				.my-class {text-align: center;} // my-class is a custom selector'
+			.my-class {text-align: center;} // my-class is a custom selector',
+					'ultimate-addons-for-gutenberg'
 				),
+				'is_rtl'                                  => is_rtl(),
+				'insta_linked_accounts'                   => UAGB_Admin_Helper::get_admin_settings_option( 'uag_insta_linked_accounts', array() ),
+				'insta_all_users_media'                   => apply_filters( 'uag_instagram_transients', array() ),
+				'is_site_editor'                          => $screen->id,
+				'current_post_id'                         => get_the_ID(),
+				'btn_inherit_from_theme'                  => UAGB_Admin_Helper::get_admin_settings_option( 'uag_btn_inherit_from_theme', 'disabled' ),
+				'wp_version'                              => get_bloginfo( 'version' ),
 			)
 		);
 		// To match the editor with frontend.
@@ -629,6 +785,9 @@ class UAGB_Init_Blocks {
 		UAGB_Scripts_Utils::enqueue_blocks_styles();
 		// RTL Styles.
 		UAGB_Scripts_Utils::enqueue_blocks_rtl_styles();
+
+		// Add svg icons in chunks.
+		$this->add_svg_icon_assets();
 	}
 
 	/**
@@ -727,6 +886,22 @@ class UAGB_Init_Blocks {
 		}
 
 		return $field_options;
+	}
+
+	/**
+	 * Ajax call to confirm add users confirmation option in database
+	 *
+	 * @return void
+	 * @since 2.4.0
+	 */
+	public function confirm_svg_upload() {
+		check_ajax_referer( 'uagb_confirm_svg_nonce', 'svg_nonce' );
+		if ( empty( $_POST['confirmation'] ) || 'yes' !== sanitize_text_field( $_POST['confirmation'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid request', 'ultimate-addons-for-gutenberg' ) ) );
+		}
+
+		update_option( 'spectra_svg_confirmation', 'yes' );
+		wp_send_json_success();
 	}
 }
 

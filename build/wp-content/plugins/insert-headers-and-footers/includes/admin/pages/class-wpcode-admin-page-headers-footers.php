@@ -56,10 +56,16 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 	 */
 	public function add_page() {
 		if ( $this->settings_submenu ) {
-			add_options_page( $this->menu_title, $this->page_title, 'wpcode_edit_snippets', $this->page_slug, array(
-				wpcode()->admin_page_loader,
-				'admin_menu_page'
-			) );
+			add_options_page(
+				$this->menu_title,
+				$this->page_title,
+				'wpcode_edit_snippets',
+				$this->page_slug,
+				array(
+					wpcode()->admin_page_loader,
+					'admin_menu_page',
+				)
+			);
 
 			return;
 		}
@@ -147,11 +153,11 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 			esc_html__( 'These scripts will be printed above the closing %s tag.', 'insert-headers-and-footers' ),
 			'<code>&lt;/body&gt;</code>'
 		);
-		$this->textarea_field( 'ihaf_insert_header', __( 'Header', 'insert-headers-and-footers' ), $header_desc );
+		$this->textarea_field( 'header', __( 'Header', 'insert-headers-and-footers' ), $header_desc );
 		if ( $this->body_supported() ) {
-			$this->textarea_field( 'ihaf_insert_body', __( 'Body', 'insert-headers-and-footers' ), $body_desc );
+			$this->textarea_field( 'body', __( 'Body', 'insert-headers-and-footers' ), $body_desc );
 		}
-		$this->textarea_field( 'ihaf_insert_footer', __( 'Footer', 'insert-headers-and-footers' ), $footer_desc );
+		$this->textarea_field( 'footer', __( 'Footer', 'insert-headers-and-footers' ), $footer_desc );
 		wp_nonce_field( $this->action, $this->nonce_name );
 	}
 
@@ -174,11 +180,12 @@ class WPCode_Admin_Page_Headers_Footers extends WPCode_Admin_Page {
 	 * @return void
 	 */
 	public function textarea_field( $option, $title, $desc ) {
-		$value = esc_html( wp_unslash( get_option( $option ) ) );
+		$value = esc_html( wp_unslash( get_option( 'ihaf_insert_' . $option ) ) );
 		?>
-		<div class="wpcode-code-textarea">
-			<h2><label for="<?php echo esc_attr( $option ); ?>"><?php echo esc_html( $title ); ?></label></h2>
-			<textarea name="<?php echo esc_attr( $option ); ?>" id="<?php echo esc_attr( $option ); ?>" class="widefat" rows="8" <?php disabled( ! current_user_can( 'unfiltered_html' ) ); ?>><?php echo $value; ?></textarea>
+		<div class="wpcode-code-textarea" id="wpcode-global-<?php echo esc_attr( $option ); ?>">
+			<h2><label for="ihaf_insert_<?php echo esc_attr( $option ); ?>"><?php echo esc_html( $title ); ?></label>
+			</h2>
+			<textarea name="ihaf_insert_<?php echo esc_attr( $option ); ?>" id="ihaf_insert_<?php echo esc_attr( $option ); ?>" class="widefat" rows="8" <?php disabled( ! current_user_can( 'unfiltered_html' ) ); ?>><?php echo $value; ?></textarea>
 			<p>
 				<?php echo wp_kses( $desc, array( 'code' => array() ) ); ?>
 			</p>

@@ -63,6 +63,9 @@ class Kadence_Blocks_Image_Block extends Kadence_Blocks_Abstract_Block {
 
 		$key_positions = [ 'top', 'right', 'bottom', 'left' ];
 		$css->set_selector( '.wp-block-kadence-image.kb-image' . $unique_id . ':not(.kb-specificity-added):not(.kb-extra-specificity-added)' );
+		if ( ! empty( $attributes['align'] ) && ( 'left' === $attributes['align'] || 'right' === $attributes['align'] ) ) {
+			$css->set_selector( '.wp-block-kadence-image.kb-image' . $unique_id . ':not(.kb-specificity-added):not(.kb-extra-specificity-added) > figure' );
+		}
 
 		// Margins
 		$css->render_measure_output( $attributes, 'marginDesktop', 'margin', array(
@@ -129,6 +132,29 @@ class Kadence_Blocks_Image_Block extends Kadence_Blocks_Abstract_Block {
 			'mobile_key'  => 'paddingMobile',
 			'unit_key' => 'paddingUnit'
 		) );
+
+		// Overlay.
+		$overlay_type = ! empty( $attributes['overlayType'] ) ? $attributes['overlayType'] : 'normal';
+		$css->set_selector( '.kb-image' . $unique_id . ' .kb-image-has-overlay:after' );
+		$opacity = isset( $attributes['overlayOpacity'] ) ? $attributes['overlayOpacity'] : 0.3;
+		if ( $css->is_number( $opacity ) ) {
+			$css->add_property( 'opacity', $opacity );
+		}
+		if ( ! empty( $attributes['overlayBlendMode'] ) ) {
+			$css->add_property( 'mix-blend-mode', $attributes['overlayBlendMode'] );
+		}
+		switch ( $overlay_type ) {
+			case 'normal':
+				if ( ! empty( $attributes['overlay'] ) ) {
+					$css->add_property( 'background-color', $css->render_color( $attributes['overlay'] ) );
+				}
+				break;
+			case 'gradient':
+				if ( ! empty( $attributes['overlayGradient'] ) ) {
+					$css->add_property( 'background-image', $attributes['overlayGradient'] );
+				}
+				break;
+		}
 		$css->set_selector( '.kb-image' . $unique_id . ' img.kb-img, .kb-image' . $unique_id . ' .kb-img img' );
 
 		// Support borders saved pre 3.0
@@ -160,7 +186,6 @@ class Kadence_Blocks_Image_Block extends Kadence_Blocks_Abstract_Block {
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
 			$css->add_property( 'background-color', $css->render_color( $attributes['backgroundColor'] ) );
 		}
-
 		// Border Radius.
 		$css->render_measure_output( $attributes, 'borderRadius', 'border-radius', array( 'unit_key' => 'borderRadiusUnit' ) );
 
@@ -170,27 +195,31 @@ class Kadence_Blocks_Image_Block extends Kadence_Blocks_Abstract_Block {
 					$mask_size     = ( ! empty( $attributes['maskSize'] ) ? $attributes['maskSize'] : 'auto' );
 					$mask_position = ( ! empty( $attributes['maskPosition'] ) ? $attributes['maskPosition'] : 'center center' );
 					$mask_repeat   = ( ! empty( $attributes['maskRepeat'] ) ? $attributes['maskRepeat'] : 'no-repeat' );
-					$css->add_property( 'mask-image', 'url(' . $attributes['maskUrl'] . ')' );
-					$css->add_property( 'mask-size', $mask_size );
-					$css->add_property( 'mask-repeat', $mask_repeat );
-					$css->add_property( 'mask-position', $mask_position );
-
 					$css->add_property( '-webkit-mask-image', 'url(' . $attributes['maskUrl'] . ')' );
+					$css->add_property( 'mask-image', 'url(' . $attributes['maskUrl'] . ')' );
+
 					$css->add_property( '-webkit-mask-size', $mask_size );
+					$css->add_property( 'mask-size', $mask_size );
+
 					$css->add_property( '-webkit-mask-repeat', $mask_repeat );
+					$css->add_property( 'mask-repeat', $mask_repeat );
+
 					$css->add_property( '-webkit-mask-position', $mask_position );
+					$css->add_property( 'mask-position', $mask_position );
 				}
 			} else {
 				$mask_base_url = KADENCE_BLOCKS_URL . 'includes/assets/images/masks/';
-				$css->add_property( 'mask-image', 'url(' . $mask_base_url . $attributes['maskSvg'] . '.svg)' );
-				$css->add_property( 'mask-size', 'auto' );
-				$css->add_property( 'mask-repeat', 'no-repeat' );
-				$css->add_property( 'mask-position', 'center' );
-
 				$css->add_property( '-webkit-mask-image', 'url(' . $mask_base_url . $attributes['maskSvg'] . '.svg)' );
+				$css->add_property( 'mask-image', 'url(' . $mask_base_url . $attributes['maskSvg'] . '.svg)' );
+
 				$css->add_property( '-webkit-mask-size', 'auto' );
+				$css->add_property( 'mask-size', 'auto' );
+
 				$css->add_property( '-webkit-mask-repeat', 'no-repeat' );
+				$css->add_property( 'mask-repeat', 'no-repeat' );
+
 				$css->add_property( '-webkit-mask-position', 'center' );
+				$css->add_property( 'mask-position', 'center' );
 			}
 		}
 

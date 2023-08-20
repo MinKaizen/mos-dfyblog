@@ -16,7 +16,7 @@ class PrliFlyoutMenuController {
    */
   public function output() {
 
-    if ( empty( $_GET['post_type'] ) || 'pretty-link' !== $_GET['post_type'] ) {
+    if ( empty( $_GET['post_type'] ) || ( 'pretty-link' !== $_GET['post_type'] && 'pretty-link-groups' !== $_GET['post_type'] ) ) {
       return;
     }
 
