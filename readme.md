@@ -10,6 +10,8 @@ Script for installing "DFY Blog" for My Online Startup members. It's basically j
 
 ## Usage
 
+> NOTE: after running the script, you still need to manually activate the Elementor Licence!
+
 Before you run the script, make sure:
 - Wordpress is already installed
 - WP CLI is installed
