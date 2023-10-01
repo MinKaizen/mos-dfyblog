@@ -2,7 +2,11 @@
 
 ## Description
 
-Script for installing "DFY Blog" for My Online Startup members. It's basically just a bash script
+Script for installing "DFY Blog" for My Online Startup members. It's basically just a bash script that:
+
+1. Deletes all plugins
+2. Imports the source site plugins, theme and settings
+3. Sets the admin user email and password to the `email` argument
 
 ## Usage
 
