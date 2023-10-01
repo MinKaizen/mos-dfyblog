@@ -8,6 +8,8 @@ Script for installing "DFY Blog" for My Online Startup members. It's basically j
 
 Before you run the script, make sure:
 - Wordpress is already installed
+- WP CLI is installed
+- Composer is installed
 - You have access to their terminal (e.g. via cPanel)
 - You know the path to their wordpress directory
 
