@@ -8,16 +8,22 @@ Script for installing "DFY Blog" for My Online Startup members. It's basically j
 2. Imports the source site plugins, theme and settings
 3. Sets the admin user email and password to the `email` argument
 
+## Requirements
+
+On the SOURCE site (the site that all DFY Blogs will be cloned from):
+- Wordpress
+- WB Migrate installed and activated with licence
+
+On the DESTINATION site (the client's site that you're about to build):
+- Wordpress
+- WP CLI
+- Composer
+- Make sure you have access toterminal (e.g. via cPanel)
+- Make sure you have you know the path to their wordpress directory
+
 ## Usage
 
 > NOTE: after running the script, you still need to manually activate the Elementor Licence!
-
-Before you run the script, make sure:
-- Wordpress is already installed
-- WP CLI is installed
-- Composer is installed
-- You have access to their terminal (e.g. via cPanel)
-- You know the path to their wordpress directory
 
 To run the script, `cd` into the wordperss directory and then run:
 ```bash
