@@ -107,10 +107,14 @@ function main() {
   wp plugin uninstall --all
 
   # Change DB Prefix
-  msg "Changing DB Prefix..."
-  wp package install iandunn/wp-cli-rename-db-prefix
-  wp rename-db-prefix "$db_prefix" --no-confirm
-  wp package uninstall iandunn/wp-cli-rename-db-prefix
+  if [ "$(wp db prefix --porcelain)" = "$db_prefix" ]; then
+    msg "Changing DB Prefix..."
+    wp package install iandunn/wp-cli-rename-db-prefix
+    wp rename-db-prefix "$db_prefix" --no-confirm
+    wp package uninstall iandunn/wp-cli-rename-db-prefix
+  else
+    msg "DB Prefix is [$db_prefix]. Skipping..."
+  fi
 
   # Installing WP Migrate
   msg "Installing WP Migrate using composer..."
